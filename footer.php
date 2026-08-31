@@ -40,15 +40,14 @@ require_once __DIR__ . '/config.php';
                     </ul>
                 </div>
 
-                <!-- Col 3: Assembly Constituencies -->
+                <!-- Col 3: Legal & Policy Documents -->
                 <div class="col-6 col-md-4 col-lg-3">
-                    <h3 class="h6 text-white fw-bold mb-3">Assembly Seats</h3>
+                    <h3 class="h6 text-white fw-bold mb-3">Legal &amp; Policy</h3>
                     <ul class="list-unstyled footer-links small">
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mla/118-chapra" class="text-white-50 text-decoration-none">AC 118 - Chapra</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mla/182-bankipur" class="text-white-50 text-decoration-none">AC 182 - Bankipur</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mla/128-raghopur" class="text-white-50 text-decoration-none">AC 128 - Raghopur</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mla/117-marhaura" class="text-white-50 text-decoration-none">AC 117 - Marhaura</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mla/120-amnour" class="text-white-50 text-decoration-none">AC 120 - Amnour</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/terms-and-conditions" class="text-white-50 text-decoration-none">📜 Terms &amp; Conditions</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/disclaimer" class="text-white-50 text-decoration-none">⚠️ Disclaimer Notice</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/privacy-policy" class="text-white-50 text-decoration-none">🔒 Privacy Policy</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mission-and-vision" class="text-white-50 text-decoration-none">🎯 Mission &amp; Vision</a></li>
                     </ul>
                 </div>
 
