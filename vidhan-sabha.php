@@ -56,7 +56,7 @@ require_once __DIR__ . '/header.php';
                 <a href="https://api.whatsapp.com/send?text=<?php echo urlencode("Bihar Vidhan Sabha AC {$ac['ac_no']} {$ac['name']} official election results & candidate breakdown: " . SITE_URL . "/vidhan-sabha.php?ac=" . $ac['ac_no']); ?>" target="_blank" class="btn btn-success fw-bold px-3 py-2 d-inline-flex align-items-center gap-2 shadow-sm">
                     <i class="bi bi-whatsapp"></i> Share AC Result on WhatsApp
                 </a>
-                <a href="advertise.php?sponsor_ac=<?php echo $ac['ac_no']; ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
+                <a href="<?php echo getAdvertiseUrl(['sponsor_ac' => $ac['ac_no']]); ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
                     <i class="bi bi-megaphone"></i> Sponsor This Seat (₹4,999/yr)
                 </a>
             </div>
@@ -340,7 +340,7 @@ require_once __DIR__ . '/header.php';
                     <h3 class="h6 fw-bold mb-1"><?php echo htmlspecialchars($ac['name']); ?> Page Sponsor</h3>
                     <p class="small text-white-50 mb-3">Showcase your coaching academy, medical clinic, legal firm, or business to thousands of active local voters.</p>
                     <div class="h5 fw-bold text-warning mb-3">₹4,999 / year</div>
-                    <a href="advertise.php?sponsor_ac=<?php echo $ac['ac_no']; ?>" class="btn btn-warning btn-sm w-100 fw-bold text-dark">
+                    <a href="<?php echo getAdvertiseUrl(['sponsor_ac' => $ac['ac_no']]); ?>" class="btn btn-warning btn-sm w-100 fw-bold text-dark">
                         Book This AC Slot &rarr;
                     </a>
                 </div>

@@ -1048,4 +1048,17 @@ function getCensusUrl($districtSlug = '', $subdistrictSlug = '') {
     return SITE_URL . "/census";
 }
 
+function getAdvertiseUrl($params = []) {
+    $baseUrl = SITE_URL . "/advertise";
+    if (!empty($params)) {
+        if (is_array($params)) {
+            return $baseUrl . '?' . http_build_query($params);
+        } elseif (is_string($params) || is_numeric($params)) {
+            return $baseUrl . '?' . ltrim((string)$params, '?');
+        }
+    }
+    return $baseUrl;
+}
+
+
 

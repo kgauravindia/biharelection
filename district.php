@@ -60,7 +60,7 @@ require_once __DIR__ . '/header.php';
                 <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="btn btn-success fw-bold px-3 py-2 d-inline-flex align-items-center gap-2 shadow-sm">
                     <i class="bi bi-whatsapp"></i> Join <?php echo htmlspecialchars($district['name']); ?> WhatsApp Channel
                 </a>
-                <a href="advertise.php?sponsor_district=<?php echo $district['slug']; ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
+                <a href="<?php echo getAdvertiseUrl(['sponsor_district' => $district['slug']]); ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
                     <i class="bi bi-megaphone"></i> List Business in <?php echo htmlspecialchars($district['name']); ?> (₹1,999/yr)
                 </a>
             </div>
@@ -616,7 +616,7 @@ require_once __DIR__ . '/header.php';
                     </h2>
                     <p class="small text-muted mb-0">Legal counsels, coaching academies, medical clinics, and election campaign vendors</p>
                 </div>
-                <a href="advertise.php?sponsor_district=<?php echo $district['slug']; ?>" class="btn btn-warning btn-sm fw-bold text-dark rounded-pill px-3 shadow-sm">
+                <a href="<?php echo getAdvertiseUrl(['sponsor_district' => $district['slug']]); ?>" class="btn btn-warning btn-sm fw-bold text-dark rounded-pill px-3 shadow-sm">
                     + List Your Business (₹1,999/yr)
                 </a>
             </div>
@@ -629,7 +629,7 @@ require_once __DIR__ . '/header.php';
                             <h3 class="h6 fw-bold mb-1" style="color: var(--primary-navy);">Advocates & Legal Directory</h3>
                             <p class="small text-muted mb-3">Civil court, land revenue, and election law consultants</p>
                         </div>
-                        <a href="advertise.php" class="small fw-bold text-decoration-none" style="color: var(--accent-saffron);">Book Listing Slot &rarr;</a>
+                        <a href="<?php echo getAdvertiseUrl(['category' => 'legal', 'sponsor_district' => $district['slug']]); ?>" class="small fw-bold text-decoration-none" style="color: var(--accent-saffron);">Book Listing Slot &rarr;</a>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -639,7 +639,7 @@ require_once __DIR__ . '/header.php';
                             <h3 class="h6 fw-bold mb-1" style="color: var(--primary-navy);">Coaching & Academies</h3>
                             <p class="small text-muted mb-3">BPSC, SSC, Railway, NEET, and IIT-JEE coaching institutes</p>
                         </div>
-                        <a href="advertise.php" class="small fw-bold text-decoration-none" style="color: var(--accent-saffron);">Book Listing Slot &rarr;</a>
+                        <a href="<?php echo getAdvertiseUrl(['category' => 'education', 'sponsor_district' => $district['slug']]); ?>" class="small fw-bold text-decoration-none" style="color: var(--accent-saffron);">Book Listing Slot &rarr;</a>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -649,7 +649,7 @@ require_once __DIR__ . '/header.php';
                             <h3 class="h6 fw-bold mb-1" style="color: var(--primary-navy);">Printing & Campaign Vendors</h3>
                             <p class="small text-muted mb-3">Flex banners, hoardings, audio systems, and digital PR agencies</p>
                         </div>
-                        <a href="advertise.php" class="small fw-bold text-decoration-none" style="color: var(--accent-saffron);">Book Listing Slot &rarr;</a>
+                        <a href="<?php echo getAdvertiseUrl(['category' => 'vendor', 'sponsor_district' => $district['slug']]); ?>" class="small fw-bold text-decoration-none" style="color: var(--accent-saffron);">Book Listing Slot &rarr;</a>
                     </div>
                 </div>
             </div>

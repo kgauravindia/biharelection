@@ -44,10 +44,10 @@ require_once __DIR__ . '/header.php';
                     Official candidate profiles and affidavit disclosures will be published here in real-time as candidate nominations and party declarations for the 2026 election are announced.
                 </p>
                 <div class="d-flex justify-content-center flex-wrap gap-3">
-                    <a href="vidhan-sabha.php" class="btn btn-outline-primary fw-bold px-4 py-2">
+                    <a href="<?php echo SITE_URL; ?>/vidhan-sabha" class="btn btn-outline-primary fw-bold px-4 py-2">
                         Explore 243 Assembly Seats &rarr;
                     </a>
-                    <a href="advertise.php?category=candidate" class="btn btn-warning fw-bold px-4 py-2 text-dark shadow-sm">
+                    <a href="<?php echo getAdvertiseUrl(['category' => 'candidate']); ?>" class="btn btn-warning fw-bold px-4 py-2 text-dark shadow-sm">
                         <i class="bi bi-patch-check me-1"></i> Register / Claim Candidate Profile
                     </a>
                 </div>
@@ -208,7 +208,7 @@ require_once __DIR__ . '/header.php';
                     <p class="small text-white-50 mb-3">
                         Publish your complete manifesto, video gallery, and WhatsApp broadcast channels to 10,000+ local voters.
                     </p>
-                    <a href="advertise.php?category=candidate&claim=<?php echo $candidate['slug']; ?>" class="btn btn-warning btn-sm w-100 fw-bold text-dark">
+                    <a href="<?php echo getAdvertiseUrl(['category' => 'candidate', 'claim' => $candidate['slug']]); ?>" class="btn btn-warning btn-sm w-100 fw-bold text-dark">
                         Upgrade to VIP Profile &rarr;
                     </a>
                 </div>

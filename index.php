@@ -259,7 +259,7 @@ require_once __DIR__ . '/header.php';
                     <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">Candidate & Political Leaders Directory</h2>
                     <p class="small text-muted mb-0">Verified biographies, declared assets, criminal record disclosures, and election histories</p>
                 </div>
-                <a href="advertise.php?category=candidate" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3">
+                <a href="<?php echo getAdvertiseUrl(['category' => 'candidate']); ?>" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3">
                     Submit Candidate Profile &rarr;
                 </a>
             </div>
@@ -311,7 +311,7 @@ require_once __DIR__ . '/header.php';
                     <p class="small text-muted mx-auto mb-3" style="max-width: 600px;">
                         Candidate profiles, affidavits, and asset disclosures are published in real-time as nominations and verified party lists are finalized.
                     </p>
-                    <a href="advertise.php?category=candidate" class="btn btn-primary btn-sm fw-bold px-4 py-2" style="background: var(--secondary-navy); border: none;">
+                    <a href="<?php echo getAdvertiseUrl(['category' => 'candidate']); ?>" class="btn btn-primary btn-sm fw-bold px-4 py-2" style="background: var(--secondary-navy); border: none;">
                         <i class="bi bi-patch-check me-1"></i> Register Verified Candidate Profile
                     </a>
                 </div>
@@ -335,7 +335,7 @@ require_once __DIR__ . '/header.php';
                     </div>
                 </div>
                 <div class="col-12 col-lg-4 text-lg-end">
-                    <a href="advertise.php" class="btn btn-warning fw-bold px-4 py-2 text-dark shadow-sm">
+                    <a href="<?php echo getAdvertiseUrl(); ?>" class="btn btn-warning fw-bold px-4 py-2 text-dark shadow-sm">
                         View Packages & Rates &rarr;
                     </a>
                 </div>
