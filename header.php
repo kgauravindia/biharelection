@@ -21,14 +21,14 @@ $activeNav = $activeNav ?? 'home';
     <?php renderSeoMeta($pageTitle, $pageDescription, $pageKeywords, $pageCanonical); ?>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/image/logo.png">
+    <link rel="icon" type="image/png" href="<?php echo SITE_URL; ?>/assets/image/logo.png">
     
     <!-- Bootstrap 5.3 CSS & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <!-- Custom Theme Styling -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css?v=2.6">
     
     <?php if (defined('GOOGLE_ADS_ENABLED') && GOOGLE_ADS_ENABLED && defined('GOOGLE_ADSENSE_CLIENT') && GOOGLE_ADSENSE_CLIENT !== 'ca-pub-XXXXXXXXXXXXXXXX'): ?>
     <!-- Google AdSense Official Script -->

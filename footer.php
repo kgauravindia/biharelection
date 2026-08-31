@@ -14,7 +14,7 @@ require_once __DIR__ . '/config.php';
                 <div class="col-12 col-lg-4">
                     <div class="d-flex align-items-center gap-3 mb-3 text-nowrap">
                         <div class="bg-white p-2 rounded-3 shadow-sm d-inline-flex align-items-center justify-content-center">
-                            <img src="assets/image/logo.png" alt="Bihar Election Logo" class="footer-logo-img" height="38">
+                            <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" alt="Bihar Election Logo" class="footer-logo-img" height="38">
                         </div>
                         <h2 class="h5 mb-0 text-white fw-bold text-nowrap" style="font-family: 'Outfit', sans-serif;">Bihar <span style="color: var(--accent-saffron);">Election</span></h2>
                     </div>
@@ -81,7 +81,7 @@ require_once __DIR__ . '/config.php';
                             </a>
                         </li>
                         <li class="mt-3">
-                            <a href="advertise.php" class="btn btn-warning btn-sm fw-bold px-3 py-1 text-dark shadow-sm">
+                            <a href="<?php echo SITE_URL; ?>/advertise" class="btn btn-warning btn-sm fw-bold px-3 py-1 text-dark shadow-sm">
                                 <i class="bi bi-megaphone"></i> Advertise
                             </a>
                         </li>
@@ -92,7 +92,7 @@ require_once __DIR__ . '/config.php';
 
             <!-- Bottom Copyright & Social Icons Row -->
             <div class="pt-3 mt-3 border-top border-white border-opacity-10 d-flex flex-wrap justify-content-between align-items-center gap-3 small text-white-50">
-                <div>&copy; <?php echo date('Y'); ?> Bihar Election. All Rights Reserved. &bull; <a href="<?php echo SITE_URL; ?>/mission-and-vision" class="text-white-50 text-decoration-none">Mission &amp; Vision</a> &bull; <a href="<?php echo SITE_URL; ?>/disclaimer" class="text-white-50 text-decoration-none">Disclaimer</a> &bull; <a href="<?php echo SITE_URL; ?>/privacy-policy" class="text-white-50 text-decoration-none">Privacy Policy</a> &bull; <a href="<?php echo SITE_URL; ?>/terms-and-conditions" class="text-white-50 text-decoration-none">Terms &amp; Conditions</a> &bull; <a href="admin/login.php" class="text-white-50 text-decoration-none"><i class="bi bi-shield-lock"></i> Admin Portal</a></div>
+                <div>&copy; <?php echo date('Y'); ?> Bihar Election. All Rights Reserved. &bull; <a href="<?php echo SITE_URL; ?>/mission-and-vision" class="text-white-50 text-decoration-none">Mission &amp; Vision</a> &bull; <a href="<?php echo SITE_URL; ?>/disclaimer" class="text-white-50 text-decoration-none">Disclaimer</a> &bull; <a href="<?php echo SITE_URL; ?>/privacy-policy" class="text-white-50 text-decoration-none">Privacy Policy</a> &bull; <a href="<?php echo SITE_URL; ?>/terms-and-conditions" class="text-white-50 text-decoration-none">Terms &amp; Conditions</a> &bull; <a href="<?php echo SITE_URL; ?>/admin/login.php" class="text-white-50 text-decoration-none"><i class="bi bi-shield-lock"></i> Admin Portal</a></div>
                 <div class="d-flex gap-3 align-items-center">
                     <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-whatsapp"></i></a>
                     <a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-instagram"></i></a>
@@ -106,6 +106,6 @@ require_once __DIR__ . '/config.php';
 
     <!-- Bootstrap 5.3 JavaScript Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="assets/js/app.js"></script>
+    <script src="<?php echo SITE_URL; ?>/assets/js/app.js"></script>
 </body>
 </html>

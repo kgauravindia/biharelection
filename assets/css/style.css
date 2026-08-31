@@ -550,3 +550,64 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ---------------- Site Footer Design ---------------- */
+.site-footer {
+  background: linear-gradient(180deg, #0b192c 0%, #060d17 100%) !important;
+  color: #94a3b8 !important;
+  border-top: 3px solid var(--accent-saffron);
+  position: relative;
+}
+
+.site-footer h2,
+.site-footer h3,
+.site-footer h4,
+.site-footer h5,
+.site-footer h6 {
+  color: #ffffff !important;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.3px;
+}
+
+.site-footer p {
+  color: #94a3b8;
+}
+
+.site-footer .footer-links a {
+  color: #94a3b8 !important;
+  transition: all 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.site-footer .footer-links a:hover {
+  color: #ffffff !important;
+  transform: translateX(4px);
+}
+
+.site-footer .disclaimer-box {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-left: 3px solid #f59e0b !important;
+  color: #cbd5e1 !important;
+  font-size: 0.825rem;
+  line-height: 1.5;
+}
+
+.site-footer .footer-logo-img {
+  max-height: 38px;
+  width: auto;
+}
+
+.site-footer .border-top {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.site-footer a.text-white-50 {
+  color: rgba(255, 255, 255, 0.6) !important;
+  transition: color 0.2s ease;
+}
+
+.site-footer a.text-white-50:hover {
+  color: #ffffff !important;
+}
+
+
