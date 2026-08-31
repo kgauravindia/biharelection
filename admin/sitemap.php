@@ -19,9 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_sitemap'])) 
     // 1. Static Pages
     $static_pages = [
         ['url' => '/', 'priority' => '1.0', 'changefreq' => 'daily'],
-        ['url' => '/panchayat.php', 'priority' => '0.9', 'changefreq' => 'weekly'],
-        ['url' => '/advertise.php', 'priority' => '0.8', 'changefreq' => 'monthly'],
-        ['url' => '/whatsapp.php', 'priority' => '0.8', 'changefreq' => 'weekly'],
+        ['url' => '/panchayat', 'priority' => '0.9', 'changefreq' => 'daily'],
+        ['url' => '/mukhiya', 'priority' => '0.9', 'changefreq' => 'daily'],
+        ['url' => '/sarpanch', 'priority' => '0.9', 'changefreq' => 'daily'],
+        ['url' => '/zila-parishad', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/panchayat-samiti', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/mp', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/mlc', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/rajya-sabha', 'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['url' => '/census', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/advertise', 'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['url' => '/whatsapp', 'priority' => '0.8', 'changefreq' => 'weekly'],
     ];
     foreach ($static_pages as $sp) {
         $xml .= "    <url>\n";
@@ -35,17 +43,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_sitemap'])) 
     // 2. 38 Districts
     foreach ($districts as $d) {
         $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars($base_url . '/district.php?slug=' . urlencode($d['slug'])) . "</loc>\n";
+        $xml .= "        <loc>" . htmlspecialchars(getDistrictUrl($d['slug'])) . "</loc>\n";
         $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
         $xml .= "        <changefreq>daily</changefreq>\n";
         $xml .= "        <priority>0.9</priority>\n";
+        $xml .= "    </url>\n";
+
+        // District Mukhiya Hub
+        $xml .= "    <url>\n";
+        $xml .= "        <loc>" . htmlspecialchars(getMukhiyaUrl($d['slug'])) . "</loc>\n";
+        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+        $xml .= "        <changefreq>weekly</changefreq>\n";
+        $xml .= "        <priority>0.85</priority>\n";
+        $xml .= "    </url>\n";
+
+        // District Sarpanch Hub
+        $xml .= "    <url>\n";
+        $xml .= "        <loc>" . htmlspecialchars(getSarpanchUrl($d['slug'])) . "</loc>\n";
+        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+        $xml .= "        <changefreq>weekly</changefreq>\n";
+        $xml .= "        <priority>0.85</priority>\n";
+        $xml .= "    </url>\n";
+
+        // District Census Hub
+        $xml .= "    <url>\n";
+        $xml .= "        <loc>" . htmlspecialchars(getCensusUrl($d['slug'])) . "</loc>\n";
+        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+        $xml .= "        <changefreq>weekly</changefreq>\n";
+        $xml .= "        <priority>0.8</priority>\n";
         $xml .= "    </url>\n";
     }
 
     // 3. 243 Constituencies
     foreach ($constituencies as $c) {
         $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars($base_url . '/vidhan-sabha.php?slug=' . urlencode($c['slug'])) . "</loc>\n";
+        $xml .= "        <loc>" . htmlspecialchars(getMlaUrl($c)) . "</loc>\n";
         $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
         $xml .= "        <changefreq>daily</changefreq>\n";
         $xml .= "        <priority>0.85</priority>\n";
@@ -55,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_sitemap'])) 
     // 4. Candidate Profiles
     foreach ($candidates as $cand) {
         $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars($base_url . '/candidate.php?slug=' . urlencode($cand['slug'])) . "</loc>\n";
+        $xml .= "        <loc>" . htmlspecialchars($base_url . '/candidate/' . urlencode($cand['slug'])) . "</loc>\n";
         $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
         $xml .= "        <changefreq>weekly</changefreq>\n";
         $xml .= "        <priority>0.8</priority>\n";
@@ -65,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_sitemap'])) 
     $xml .= '</urlset>';
 
     if (file_put_contents($sitemap_path, $xml)) {
-        $total_links = count($static_pages) + count($districts) + count($constituencies) + count($candidates);
+        $total_links = count($static_pages) + (count($districts) * 4) + count($constituencies) + count($candidates);
         $message = "Sitemap XML generated successfully with {$total_links} total indexed URLs!";
     } else {
         $error = "Error writing sitemap.xml file. Check file write permissions.";

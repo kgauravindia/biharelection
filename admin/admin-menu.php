@@ -82,6 +82,9 @@ if ($db_menu) {
         <a href="sitemap.php" class="nav-link-custom <?php echo ($current_page == 'sitemap.php') ? 'active' : ''; ?>" title="XML Sitemap & SEO Tools">
             <i class="fas fa-sitemap text-warning"></i> <span>Sitemap & SEO</span>
         </a>
+        <a href="documentation.php" class="nav-link-custom <?php echo ($current_page == 'documentation.php') ? 'active' : ''; ?>" title="Admin Documentation & Developer Knowledge Base">
+            <i class="fas fa-book-bookmark text-info"></i> <span>Documentation</span>
+        </a>
         <a href="users.php" class="nav-link-custom <?php echo ($current_page == 'users.php') ? 'active' : ''; ?>" title="Admin Users & Roles">
             <i class="fas fa-user-shield text-secondary"></i> <span>Admin Users</span>
         </a>
