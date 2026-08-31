@@ -1,0 +1,552 @@
+/* ==========================================================================
+   Bihar Election - Bootstrap 5.3 Enhanced Design System & Theme Styles
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --primary-navy: #0b192c;
+  --secondary-navy: #1e3e62;
+  --accent-saffron: #ff6500;
+  --accent-saffron-light: #fff3eb;
+  --accent-emerald: #00875a;
+  --accent-emerald-light: #e6f7f0;
+  --accent-crimson: #d32f2f;
+  
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-muted: #f1f5f9;
+  
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --text-white: #ffffff;
+  
+  --border-color: #e2e8f0;
+  --border-focus: #ff6500;
+  
+  --font-base: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-hi: 'Noto Sans Devanagari', sans-serif;
+}
+
+body {
+  font-family: var(--font-base);
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ---------------- Top Broadcast Ticker ---------------- */
+.top-ticker {
+  background: var(--primary-navy);
+  color: #e2e8f0;
+  font-size: 0.825rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top-ticker a {
+  color: #ff9d5c;
+  font-weight: 600;
+}
+
+.badge-live {
+  background: #ef4444;
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: pulseLive 2s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ---------------- Brand Logo ---------------- */
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.brand-logo-img {
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.brand-logo:hover .brand-logo-img {
+  transform: scale(1.04);
+}
+
+.brand-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--primary-navy);
+  margin-bottom: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.footer-logo-img {
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--accent-saffron), var(--accent-emerald));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 900;
+  box-shadow: 0 4px 10px rgba(255, 101, 0, 0.25);
+  flex-shrink: 0;
+}
+
+/* ---------------- Hero Section ---------------- */
+.hero-section {
+  background: linear-gradient(135deg, #0b192c 0%, #1e3e62 100%);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 101, 0, 0.15) 0%, rgba(0,0,0,0) 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffd8a8;
+  max-width: 100%;
+}
+
+.hero-title span {
+  color: var(--accent-saffron);
+}
+
+/* ---------------- Realtime Search Widget ---------------- */
+.search-widget {
+  position: relative;
+  z-index: 50;
+}
+
+.search-input-group {
+  display: flex;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 6px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+  gap: 6px;
+}
+
+.search-input-group:focus-within {
+  border-color: var(--border-focus);
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  color: var(--text-dark);
+  min-width: 0;
+}
+
+.search-input::placeholder {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.btn-search {
+  background: var(--accent-saffron);
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.btn-search:hover {
+  background: #e55a00;
+}
+
+/* Search Dropdown */
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  max-height: 400px;
+  overflow-y: auto;
+  display: none;
+  z-index: 100;
+  text-align: left;
+}
+
+.search-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.2s;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.search-item:last-child {
+  border-bottom: none;
+}
+
+.search-item:hover {
+  background: var(--bg-muted);
+}
+
+.search-item-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ---------------- Quick Links Pills ---------------- */
+.pill-link {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.8rem;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.pill-link:hover {
+  background: var(--accent-saffron);
+  border-color: var(--accent-saffron);
+  color: #ffffff;
+}
+
+/* ---------------- Live Stat Cards ---------------- */
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--accent-saffron-light);
+  color: var(--accent-saffron);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+/* ---------------- Card Tags & Party Badges ---------------- */
+.ac-tag {
+  font-size: 0.75rem;
+  background: var(--bg-muted);
+  color: var(--secondary-navy);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.ac-tag:hover {
+  background: var(--accent-saffron);
+  color: #ffffff;
+}
+
+.ac-no-badge {
+  background: var(--primary-navy);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.badge-party {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.badge-party.bjp { background: #ff9933; color: #ffffff; }
+.badge-party.rjd { background: #009933; color: #ffffff; }
+.badge-party.jdu { background: #006600; color: #ffffff; }
+.badge-party.inc { background: #0080ff; color: #ffffff; }
+.badge-party.cpiml { background: #cc0000; color: #ffffff; }
+.badge-party.other { background: #64748b; color: #ffffff; }
+
+/* ---------------- Candidate Cards ---------------- */
+.candidate-card-header {
+  height: 64px;
+  background: linear-gradient(135deg, var(--secondary-navy), var(--primary-navy));
+}
+
+.candidate-card-avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: 9999px;
+  border: 3px solid #ffffff;
+  margin: -38px auto 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.verified-icon {
+  color: #0284c7;
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+/* ---------------- Floating WhatsApp Button ---------------- */
+.whatsapp-float-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1050;
+  background: #25d366;
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.whatsapp-float-widget:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 24px rgba(37, 211, 102, 0.5);
+  color: #ffffff;
+}
+
+.site-footer {
+  background: var(--primary-navy);
+  color: #cbd5e1;
+  border-top: 4px solid var(--accent-saffron);
+}
+
+/* ---------------- Touch & Mobile Improvements ---------------- */
+@media (max-width: 576px) {
+  .search-input-group {
+    flex-direction: column;
+  }
+  .btn-search {
+    width: 100%;
+    justify-content: center;
+  }
+  .whatsapp-float-widget {
+    padding: 10px 14px;
+  }
+}
+
+/* ---------------- Google AdSense Responsive Placements ---------------- */
+.ad-slot-wrapper {
+  margin: 1.5rem auto;
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.ad-slot-header {
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+}
+
+.ad-badge {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.ad-slot-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.ad-placeholder-box {
+  width: 100%;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 18px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: border-color 0.2s;
+}
+
+.ad-placeholder-box:hover {
+  border-color: var(--accent-saffron);
+}
+
+.ad-placeholder-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #64748b;
+}
+
+.ad-text-wrap {
+  text-align: left;
+}
+
+.ad-title {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--primary-navy);
+}
+
+.ad-dims {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.ad-leaderboard-slot .ad-placeholder-box {
+  min-height: 90px;
+  max-width: 970px;
+}
+
+.ad-infeed-slot .ad-placeholder-box {
+  min-height: 100px;
+  background: #ffffff;
+  border: 1px dashed #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.ad-sidebar-slot .ad-placeholder-box {
+  min-height: 250px;
+  max-width: 336px;
+  flex-direction: column;
+}
+
+.ad-sidebar-slot .ad-placeholder-content {
+  flex-direction: column;
+  text-align: center;
+}
+
+.ad-sidebar-slot .ad-text-wrap {
+  text-align: center;
+}
+
+.ad-table-slot .ad-placeholder-box {
+  min-height: 80px;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .ad-slot-wrapper {
+    margin: 1rem auto;
+  }
+  .ad-placeholder-box {
+    padding: 12px 8px;
+  }
+}
+
+/* ---------------- Premium Navbar Dropdowns ---------------- */
+.navbar .dropdown-menu {
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  min-width: 260px;
+}
+
+.navbar .dropdown-item {
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: var(--bg-muted);
+  transform: translateX(3px);
+}
+
+@media (min-width: 992px) {
+  .navbar .dropdown:hover > .dropdown-menu {
+    display: block;
+    animation: fadeInDropdown 0.2s ease forwards;
+  }
+}
+
+@keyframes fadeInDropdown {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

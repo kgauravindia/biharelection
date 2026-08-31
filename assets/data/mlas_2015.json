@@ -1,0 +1,2189 @@
+[
+    {
+        "ac_no": 1,
+        "ac_name": "Valmiki Nagar",
+        "slug": "valmiki-nagar",
+        "mla_name": "Dhirendra Pratap Singh Alias Rinku Singh",
+        "party": "IND",
+        "mobile": "9798105666",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 2,
+        "ac_name": "Ramnagar",
+        "slug": "ramnagar",
+        "mla_name": "Bhagirathi Devi",
+        "party": "BJP",
+        "mobile": "9431023640",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 3,
+        "ac_name": "Narkatiaganj",
+        "slug": "narkatiaganj",
+        "mla_name": "Vinay Varma",
+        "party": "INC",
+        "mobile": "9771595777",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 4,
+        "ac_name": "Bagaha",
+        "slug": "bagaha",
+        "mla_name": "Raghav Sharn Panday",
+        "party": "BJP",
+        "mobile": "9810609404",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 5,
+        "ac_name": "Lauriya",
+        "slug": "lauriya",
+        "mla_name": "Vinay Bihari",
+        "party": "BJP",
+        "mobile": "9431203456",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 6,
+        "ac_name": "Nautan",
+        "slug": "nautan",
+        "mla_name": "Narayan Prasad",
+        "party": "BJP",
+        "mobile": "9939587607 ,9431212097",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 7,
+        "ac_name": "Chanpatia",
+        "slug": "chanpatia",
+        "mla_name": "Prakash Rai",
+        "party": "BJP",
+        "mobile": "9431212011, 0624-242383",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 8,
+        "ac_name": "Bettiah",
+        "slug": "bettiah",
+        "mla_name": "Madan Mohan Tiwari",
+        "party": "INC",
+        "mobile": "9431275421",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 9,
+        "ac_name": "Sikta",
+        "slug": "sikta",
+        "mla_name": "Khursheed Alias* Firoz Ahmad",
+        "party": "JD(U)",
+        "mobile": "9431809613, 9631978813",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 10,
+        "ac_name": "Raxaul",
+        "slug": "raxaul",
+        "mla_name": "Dr. Ajay Kumar Singh",
+        "party": "BJP",
+        "mobile": "06115-234016, 9431233031",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 11,
+        "ac_name": "Sugauli",
+        "slug": "sugauli",
+        "mla_name": "Ramchandra Sahani",
+        "party": "BJP",
+        "mobile": "9431053271",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 12,
+        "ac_name": "Narkatia",
+        "slug": "narkatia",
+        "mla_name": "Shamim Ahmad",
+        "party": "RJD",
+        "mobile": "9771764110, 7766976999",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 13,
+        "ac_name": "Harsidhi",
+        "slug": "harsidhi",
+        "mla_name": "Rajendra Kumar",
+        "party": "RJD",
+        "mobile": "9934608512",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 14,
+        "ac_name": "Govindganj",
+        "slug": "govindganj",
+        "mla_name": "Raju Tiwari",
+        "party": "LJP",
+        "mobile": "9471005499",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 15,
+        "ac_name": "Kesariya",
+        "slug": "kesariya",
+        "mla_name": "Dr. Rajesh Kumar",
+        "party": "RJD",
+        "mobile": "9431294027, 9431054921",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 16,
+        "ac_name": "KalyanpurSc",
+        "slug": "kalyanpursc",
+        "mla_name": "Sachindra Prasad Singh",
+        "party": "BJP",
+        "mobile": "9471005877, 9661219350",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 17,
+        "ac_name": "Pipra",
+        "slug": "pipra",
+        "mla_name": "Shyambabu Prasad Yadav",
+        "party": "BJP",
+        "mobile": "9431811089",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 18,
+        "ac_name": "Madhuban",
+        "slug": "madhuban",
+        "mla_name": "Rana Randhir*",
+        "party": "BJP",
+        "mobile": "9939941022, 8002651029",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 19,
+        "ac_name": "Motihari",
+        "slug": "motihari",
+        "mla_name": "Pramod Kumar*",
+        "party": "BJP",
+        "mobile": "06252-222576, 9431811031",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 20,
+        "ac_name": "Chiraia",
+        "slug": "chiraia",
+        "mla_name": "Lalbabu Prasad Gupta",
+        "party": "BJP",
+        "mobile": "8002753890",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 21,
+        "ac_name": "Dhaka",
+        "slug": "dhaka",
+        "mla_name": "Faisal Rahman",
+        "party": "RJD",
+        "mobile": "9431233700",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 22,
+        "ac_name": "Sheohar",
+        "slug": "sheohar",
+        "mla_name": "Sharfuddin",
+        "party": "JD(U)",
+        "mobile": "9473199337",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 23,
+        "ac_name": "Riga",
+        "slug": "riga",
+        "mla_name": "Amit Kumar",
+        "party": "INC",
+        "mobile": "9431104327, 9955034975",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 24,
+        "ac_name": "Bathnaha",
+        "slug": "bathnaha",
+        "mla_name": "Dinkar Ram",
+        "party": "BJP",
+        "mobile": "2524421",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 25,
+        "ac_name": "Parihar",
+        "slug": "parihar",
+        "mla_name": "Gayatri Devi",
+        "party": "BJP",
+        "mobile": "9430442548, 9955313826",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 26,
+        "ac_name": "Sursand",
+        "slug": "sursand",
+        "mla_name": "Syed Abu Dojana",
+        "party": "RJD",
+        "mobile": "9334112227",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 27,
+        "ac_name": "Bajpatti",
+        "slug": "bajpatti",
+        "mla_name": "Dr. Ranju Geeta",
+        "party": "JD(U)",
+        "mobile": "9473400227, 9097826241, 0612-2217733",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 28,
+        "ac_name": "Sitamarhi",
+        "slug": "sitamarhi",
+        "mla_name": "Sunil Kumar",
+        "party": "RJD",
+        "mobile": "9504003232",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 29,
+        "ac_name": "Runisaidpur",
+        "slug": "runisaidpur",
+        "mla_name": "Mangita Devi",
+        "party": "RJD",
+        "mobile": "8873181648",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 30,
+        "ac_name": "Belsand",
+        "slug": "belsand",
+        "mla_name": "Sunita Singh Chauhan",
+        "party": "JD(U)",
+        "mobile": "9471001542",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 31,
+        "ac_name": "Harlakhi",
+        "slug": "harlakhi",
+        "mla_name": "Sudhanshu Shekhar",
+        "party": "JD(U)",
+        "mobile": "9801720403, 8809041093",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 32,
+        "ac_name": "Benipatti",
+        "slug": "benipatti",
+        "mla_name": "Bhawana Jha",
+        "party": "INC",
+        "mobile": "9470051222",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 33,
+        "ac_name": "Khajauli",
+        "slug": "khajauli",
+        "mla_name": "Sita Ram Yadav",
+        "party": "RJD",
+        "mobile": "9955066046",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 34,
+        "ac_name": "Babubarhi",
+        "slug": "babubarhi",
+        "mla_name": "Kapil Deo Kamat*",
+        "party": "JD(U)",
+        "mobile": "9431477632, 9973535120",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 35,
+        "ac_name": "Bisfi",
+        "slug": "bisfi",
+        "mla_name": "Dr. Faiyaz Ahmad",
+        "party": "RJD",
+        "mobile": "9471650157, 0612-2234786, 6276",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 36,
+        "ac_name": "Madhubani",
+        "slug": "madhubani",
+        "mla_name": "Samir Kumar Mahaseth",
+        "party": "RJD",
+        "mobile": "9431011416, 9835030015",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 37,
+        "ac_name": "Rajnagar",
+        "slug": "rajnagar",
+        "mla_name": "Ram Prit Paswan",
+        "party": "BJP",
+        "mobile": "9431402258, 9431801258",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 38,
+        "ac_name": "Jhanjharpur",
+        "slug": "jhanjharpur",
+        "mla_name": "Gulab Yadav",
+        "party": "RJD",
+        "mobile": "9325565151",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 39,
+        "ac_name": "Phulparas",
+        "slug": "phulparas",
+        "mla_name": "Guljar Devi",
+        "party": "JD(U)",
+        "mobile": "9471009030",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 40,
+        "ac_name": "Laukaha",
+        "slug": "laukaha",
+        "mla_name": "Lakshmeshwar Roy *",
+        "party": "JD(U)",
+        "mobile": "9430446648",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 41,
+        "ac_name": "Nirmali",
+        "slug": "nirmali",
+        "mla_name": "Anirudha Prasad Yadav",
+        "party": "JD(U)",
+        "mobile": "9431821910",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 42,
+        "ac_name": "Pipra Supaul",
+        "slug": "pipra-supaul",
+        "mla_name": "Yadubansh Kumar Yadav",
+        "party": "RJD",
+        "mobile": "9431288556",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 43,
+        "ac_name": "Supaul",
+        "slug": "supaul",
+        "mla_name": "Bijender Prasad* Yadav",
+        "party": "JD(U)",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 44,
+        "ac_name": "Tribeniganj",
+        "slug": "tribeniganj",
+        "mla_name": "Vina Bharti",
+        "party": "JD(U)",
+        "mobile": "9939194427",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 45,
+        "ac_name": "Chhatapur",
+        "slug": "chhatapur",
+        "mla_name": "Niraj Kumar Singh",
+        "party": "BJP",
+        "mobile": "9431243590",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 46,
+        "ac_name": "Narpatganj",
+        "slug": "narpatganj",
+        "mla_name": "Anil Kumar Yadav",
+        "party": "RJD",
+        "mobile": "9431292691, 9006722722",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 47,
+        "ac_name": "Raniganj",
+        "slug": "raniganj",
+        "mla_name": "Achmit Rishidev",
+        "party": "JD(U)",
+        "mobile": "9631553857",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 48,
+        "ac_name": "Forbesganj",
+        "slug": "forbesganj",
+        "mla_name": "Vidya Sagar Keshri",
+        "party": "BJP",
+        "mobile": "9572457987, 9470487987",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 49,
+        "ac_name": "Araria",
+        "slug": "araria",
+        "mla_name": "Abidur Rahman",
+        "party": "INC",
+        "mobile": "9771299500",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 50,
+        "ac_name": "Jokihat",
+        "slug": "jokihat",
+        "mla_name": "Shahnawaz",
+        "party": "RJD",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 51,
+        "ac_name": "Sikti",
+        "slug": "sikti",
+        "mla_name": "Vijay Kumar Mandal",
+        "party": "BJP",
+        "mobile": "9430928531, 8521882398",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 52,
+        "ac_name": "Bahadurganj",
+        "slug": "bahadurganj",
+        "mla_name": "Md. Tauseef Alam",
+        "party": "INC",
+        "mobile": "9431816786, 9931600786",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 53,
+        "ac_name": "Thakurganj",
+        "slug": "thakurganj",
+        "mla_name": "Naushad Alam***",
+        "party": "JD(U)",
+        "mobile": "9471007100",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 54,
+        "ac_name": "Kishanganj",
+        "slug": "kishanganj",
+        "mla_name": "Qamrul Hoda",
+        "party": "ALL INDIA MAJLIS-E-ITTEHADUL MUSLIMEEN",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 55,
+        "ac_name": "Kochadhaman",
+        "slug": "kochadhaman",
+        "mla_name": "Mujahid Alam",
+        "party": "JD(U)",
+        "mobile": "9431204127, 9523777680",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 56,
+        "ac_name": "Amour",
+        "slug": "amour",
+        "mla_name": "Abdul Jalil Mastan",
+        "party": "INC",
+        "mobile": "7250140188",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 57,
+        "ac_name": "Baisi",
+        "slug": "baisi",
+        "mla_name": "Abdus Subhan",
+        "party": "RJD",
+        "mobile": "7759032786",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 58,
+        "ac_name": "Kasba",
+        "slug": "kasba",
+        "mla_name": "Md.afaque Alam",
+        "party": "INC",
+        "mobile": "9473199249, 9801540149",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 59,
+        "ac_name": "Banmankhi",
+        "slug": "banmankhi",
+        "mla_name": "Krishna Kumar* Rishi",
+        "party": "BJP",
+        "mobile": "9431800562, 9934197500",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 60,
+        "ac_name": "Rupauli",
+        "slug": "rupauli",
+        "mla_name": "Bima Bharti *",
+        "party": "JD(U)",
+        "mobile": "9431800563",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 61,
+        "ac_name": "Dhamdaha",
+        "slug": "dhamdaha",
+        "mla_name": "Leshi Singh",
+        "party": "JD(U)",
+        "mobile": "9102270293, 06454-228893",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 62,
+        "ac_name": "Purnia",
+        "slug": "purnia",
+        "mla_name": "Vijay Kumar Khemka",
+        "party": "BJP",
+        "mobile": "9572714733, 9102090151",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 63,
+        "ac_name": "Katihar",
+        "slug": "katihar",
+        "mla_name": "Tarkishore *** Prasad",
+        "party": "BJP",
+        "mobile": "06452-231944, 9431814944",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 64,
+        "ac_name": "Kadwa",
+        "slug": "kadwa",
+        "mla_name": "Shakeel Ahmad Khan",
+        "party": "INC",
+        "mobile": "8505805777, 9801920739",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 65,
+        "ac_name": "Balrampur",
+        "slug": "balrampur",
+        "mla_name": "Mahboob Alam",
+        "party": "CPI(ML)",
+        "mobile": "8521116610",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 66,
+        "ac_name": "Pranpur",
+        "slug": "pranpur",
+        "mla_name": "Binod Kumar Singh*",
+        "party": "BJP",
+        "mobile": "0612-2287367, 9473199360, 9431077125",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 67,
+        "ac_name": "Manihari",
+        "slug": "manihari",
+        "mla_name": "Manohar Prasad Singh",
+        "party": "INC",
+        "mobile": "9473198222, 9199933999",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 68,
+        "ac_name": "Barari",
+        "slug": "barari",
+        "mla_name": "Niraj Kumar",
+        "party": "RJD",
+        "mobile": "9471281546",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 69,
+        "ac_name": "Korha",
+        "slug": "korha",
+        "mla_name": "Sushri Punam Paswan",
+        "party": "INC",
+        "mobile": "9431667552",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 70,
+        "ac_name": "Alamnagar",
+        "slug": "alamnagar",
+        "mla_name": "Narendra Narayan * Yadav",
+        "party": "JD(U)",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 71,
+        "ac_name": "Bihariganj",
+        "slug": "bihariganj",
+        "mla_name": "Niranjan Kumar Mehta",
+        "party": "JD(U)",
+        "mobile": "9801577116, 9431657271",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 72,
+        "ac_name": "Singheshwar",
+        "slug": "singheshwar",
+        "mla_name": "Ramesh Rishidev*",
+        "party": "JD(U)",
+        "mobile": "9431800558",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 73,
+        "ac_name": "Madhepura",
+        "slug": "madhepura",
+        "mla_name": "Chandra Shekhar",
+        "party": "RJD",
+        "mobile": "9473194231",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 74,
+        "ac_name": "Sonbarsa",
+        "slug": "sonbarsa",
+        "mla_name": "Ratnesh Sada***",
+        "party": "JD(U)",
+        "mobile": "9473199255",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 75,
+        "ac_name": "Saharsa",
+        "slug": "saharsa",
+        "mla_name": "Arun Kumar",
+        "party": "RJD",
+        "mobile": "06478-225569, 9470079654",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 76,
+        "ac_name": "Simri Bakhtiarpur",
+        "slug": "simri-bakhtiarpur",
+        "mla_name": "Zafar Alam",
+        "party": "RJD",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 77,
+        "ac_name": "Mahishi",
+        "slug": "mahishi",
+        "mla_name": "Vacant",
+        "party": "IND",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 78,
+        "ac_name": "Kusheshwar Asthan",
+        "slug": "kusheshwar-asthan",
+        "mla_name": "Shashi Bushan Hajari",
+        "party": "JD(U)",
+        "mobile": "9473199994",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 79,
+        "ac_name": "Gora Bauram",
+        "slug": "gora-bauram",
+        "mla_name": "Madan Sahani*",
+        "party": "JD(U)",
+        "mobile": "9431800962",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 80,
+        "ac_name": "Benipur",
+        "slug": "benipur",
+        "mla_name": "Sunil Choudhary",
+        "party": "JD(U)",
+        "mobile": "9431594315",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 81,
+        "ac_name": "Alinagar",
+        "slug": "alinagar",
+        "mla_name": "Abdul Bari Siddiqui",
+        "party": "RJD",
+        "mobile": "0612-2226903, 0612-2217894, 9471000707",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 82,
+        "ac_name": "Darbhanga Rural",
+        "slug": "darbhanga-rural",
+        "mla_name": "Lalit Kumar** Yadav",
+        "party": "RJD",
+        "mobile": "9431821873",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 83,
+        "ac_name": "Darbhanga",
+        "slug": "darbhanga",
+        "mla_name": "Sanjay Saravagi",
+        "party": "BJP",
+        "mobile": "0672-247604, 9431219050",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 84,
+        "ac_name": "Hayaghat",
+        "slug": "hayaghat",
+        "mla_name": "Amar Nath Gami",
+        "party": "JD(U)",
+        "mobile": "9431286598",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 85,
+        "ac_name": "Bahadurpur",
+        "slug": "bahadurpur",
+        "mla_name": "Bhola Yadav",
+        "party": "RJD",
+        "mobile": "7250090555",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 86,
+        "ac_name": "Keoti",
+        "slug": "keoti",
+        "mla_name": "Faraz Fatmi",
+        "party": "RJD",
+        "mobile": "9708181666, 9650592167",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 87,
+        "ac_name": "Jale",
+        "slug": "jale",
+        "mla_name": "Jibesh Kumar",
+        "party": "BJP",
+        "mobile": "9955997002, 9650625678",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 88,
+        "ac_name": "Gaighat",
+        "slug": "gaighat",
+        "mla_name": "Maheshwar Prasad Yadav",
+        "party": "RJD",
+        "mobile": "9431239019",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 89,
+        "ac_name": "Aurai",
+        "slug": "aurai",
+        "mla_name": "Surendra Kumar",
+        "party": "RJD",
+        "mobile": "9572040502",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 90,
+        "ac_name": "Minapur",
+        "slug": "minapur",
+        "mla_name": "Rajeev Kumar Alias Munna Yadav",
+        "party": "RJD",
+        "mobile": "9471820527, 9931477202",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 91,
+        "ac_name": "Bochaha",
+        "slug": "bochaha",
+        "mla_name": "Baby Kumari",
+        "party": "IND",
+        "mobile": "9709584262",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 92,
+        "ac_name": "Sakra",
+        "slug": "sakra",
+        "mla_name": "Lal Babu Ram",
+        "party": "RJD",
+        "mobile": "9431067245, 9939569980",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 93,
+        "ac_name": "Kurhani",
+        "slug": "kurhani",
+        "mla_name": "Kedar Pd. Gupta",
+        "party": "BJP",
+        "mobile": "9334218308, 9931209231",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 94,
+        "ac_name": "Muzaffarpur",
+        "slug": "muzaffarpur",
+        "mla_name": "Suresh Kumar* Sharma",
+        "party": "BJP",
+        "mobile": "9431603807, 0621-2244700",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 95,
+        "ac_name": "Kanti",
+        "slug": "kanti",
+        "mla_name": "Ashok Kumar Choudhary",
+        "party": "IND",
+        "mobile": "9334392511",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 96,
+        "ac_name": "Baruraj",
+        "slug": "baruraj",
+        "mla_name": "Nand Kumar Rai",
+        "party": "RJD",
+        "mobile": "9431238360",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 97,
+        "ac_name": "Paroo",
+        "slug": "paroo",
+        "mla_name": "Ashok Kumar Singh",
+        "party": "BJP",
+        "mobile": "9934872525",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 98,
+        "ac_name": "Sahebganj",
+        "slug": "sahebganj",
+        "mla_name": "Ram Vichar Ray",
+        "party": "RJD",
+        "mobile": "9934953852",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 99,
+        "ac_name": "Baikunthpur",
+        "slug": "baikunthpur",
+        "mla_name": "Mithilesh Tiwari",
+        "party": "BJP",
+        "mobile": "9431035735",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 100,
+        "ac_name": "Barauli",
+        "slug": "barauli",
+        "mla_name": "Md. Nematullah",
+        "party": "RJD",
+        "mobile": "9471810596, 9934400036",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 101,
+        "ac_name": "Gopalganj",
+        "slug": "gopalganj",
+        "mla_name": "Sri Subhas Singh***",
+        "party": "BJP",
+        "mobile": "06156-225035, 9431217130",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 102,
+        "ac_name": "Kuchaikote",
+        "slug": "kuchaikote",
+        "mla_name": "Amarendra Kumar Panday",
+        "party": "JD(U)",
+        "mobile": "9431812497, 9931444674",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 103,
+        "ac_name": "Bhore",
+        "slug": "bhore",
+        "mla_name": "Anil Kumar",
+        "party": "INC",
+        "mobile": "9931280133",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 104,
+        "ac_name": "Hathua",
+        "slug": "hathua",
+        "mla_name": "Ramsewak Singh*",
+        "party": "JD(U)",
+        "mobile": "9431812442, 9973975818",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 105,
+        "ac_name": "Siwan",
+        "slug": "siwan",
+        "mla_name": "Vyas Dev Prasad",
+        "party": "BJP",
+        "mobile": "9431009825",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 106,
+        "ac_name": "Ziradei",
+        "slug": "ziradei",
+        "mla_name": "Ramesh Singh Khuswaha",
+        "party": "JD(U)",
+        "mobile": "9472672518, 8002718705",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 107,
+        "ac_name": "Darauli",
+        "slug": "darauli",
+        "mla_name": "Sri Satyadeo Ram",
+        "party": "CPI(ML)",
+        "mobile": "9934448133",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 108,
+        "ac_name": "Raghunathpur",
+        "slug": "raghunathpur",
+        "mla_name": "Hari Shankar Yadav",
+        "party": "RJD",
+        "mobile": "9931757965",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 109,
+        "ac_name": "Daraundha",
+        "slug": "daraundha",
+        "mla_name": "Karnjeet Singh Alias Vyas Singh",
+        "party": "INDEPENDENT",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 110,
+        "ac_name": "Barharia",
+        "slug": "barharia",
+        "mla_name": "Shri Shyam Bahadur Singh",
+        "party": "JD(U)",
+        "mobile": "9471004655, 9973633655",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 111,
+        "ac_name": "Goriyakothi",
+        "slug": "goriyakothi",
+        "mla_name": "Satyadeo Prasad Singh",
+        "party": "RJD",
+        "mobile": "9470615040",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 112,
+        "ac_name": "Maharajganj",
+        "slug": "maharajganj",
+        "mla_name": "Hemnarayan Shah",
+        "party": "JD(U)",
+        "mobile": "9939270921",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 113,
+        "ac_name": "Ekma",
+        "slug": "ekma",
+        "mla_name": "Manoranjan Singh",
+        "party": "JD(U)",
+        "mobile": "0612-2281561, 9471004848",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 114,
+        "ac_name": "Manjhi",
+        "slug": "manjhi",
+        "mla_name": "Vijay Shankar Dubey",
+        "party": "INC",
+        "mobile": "9431015231",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 115,
+        "ac_name": "Baniapur",
+        "slug": "baniapur",
+        "mla_name": "Kedarnath Singh",
+        "party": "RJD",
+        "mobile": "0612-2205904, 9431812521",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 116,
+        "ac_name": "Taraiya",
+        "slug": "taraiya",
+        "mla_name": "Mudrika Prasad Roy",
+        "party": "RJD",
+        "mobile": "9973418201, 9473101235",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 117,
+        "ac_name": "Marhaura",
+        "slug": "marhaura",
+        "mla_name": "Jitendra Kumar Ray",
+        "party": "RJD",
+        "mobile": "9471004128",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 118,
+        "ac_name": "Chapra",
+        "slug": "chapra",
+        "mla_name": "Dr. C.n Gupta",
+        "party": "BJP",
+        "mobile": "06152-232878, 9431218881",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 119,
+        "ac_name": "Garkha",
+        "slug": "garkha",
+        "mla_name": "Muneshwar Chaudhary",
+        "party": "RJD",
+        "mobile": "0612-2215591, 9431479103",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 120,
+        "ac_name": "Amnour",
+        "slug": "amnour",
+        "mla_name": "Shatrudhan Tiwary",
+        "party": "BJP",
+        "mobile": "9546719985",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 121,
+        "ac_name": "Parsa",
+        "slug": "parsa",
+        "mla_name": "Chandrika Roy",
+        "party": "RJD",
+        "mobile": "9631883888",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 122,
+        "ac_name": "Sonepur",
+        "slug": "sonepur",
+        "mla_name": "Dr. Ramanuj Prasad",
+        "party": "RJD",
+        "mobile": "9431812900",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 123,
+        "ac_name": "Hajipur",
+        "slug": "hajipur",
+        "mla_name": "Awadhesh Singh",
+        "party": "BJP",
+        "mobile": "9430023287",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 124,
+        "ac_name": "Lalganj",
+        "slug": "lalganj",
+        "mla_name": "Rajkumar Sah",
+        "party": "LJP",
+        "mobile": "9334368246",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 125,
+        "ac_name": "Vaishali",
+        "slug": "vaishali",
+        "mla_name": "Raj Kishore Singh",
+        "party": "JD(U)",
+        "mobile": "9431441362, 9279940282",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 126,
+        "ac_name": "Mahua",
+        "slug": "mahua",
+        "mla_name": "Tej Pratap Yadav",
+        "party": "RJD",
+        "mobile": "0612-2217222",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 127,
+        "ac_name": "Raja Pakar",
+        "slug": "raja-pakar",
+        "mla_name": "Shivchandra Ram",
+        "party": "RJD",
+        "mobile": "9431018339",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 128,
+        "ac_name": "Raghopur",
+        "slug": "raghopur",
+        "mla_name": "Tejashwi Prasad Yadav",
+        "party": "RJD",
+        "mobile": "0612-2217222",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 129,
+        "ac_name": "Manhar",
+        "slug": "manhar",
+        "mla_name": "Umesh Singh Kushwaha",
+        "party": "JD(U)",
+        "mobile": "9934928553, 9472341551",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 130,
+        "ac_name": "Patepur",
+        "slug": "patepur",
+        "mla_name": "Prema Chaudharay",
+        "party": "RJD",
+        "mobile": "9835668567",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 131,
+        "ac_name": "Kalyanpur",
+        "slug": "kalyanpur",
+        "mla_name": "Maheshwar * Hajari",
+        "party": "JD(U)",
+        "mobile": "9473193337",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 132,
+        "ac_name": "Warisnagar",
+        "slug": "warisnagar",
+        "mla_name": "Ashok Kumar",
+        "party": "JD(U)",
+        "mobile": "9473199993 99348355480612-2574745",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 133,
+        "ac_name": "Samastipur",
+        "slug": "samastipur",
+        "mla_name": "Akhtarul Islam Shahin",
+        "party": "RJD",
+        "mobile": "9472455555",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 134,
+        "ac_name": "Ujiarpur",
+        "slug": "ujiarpur",
+        "mla_name": "Alok Kumar Mehta",
+        "party": "RJD",
+        "mobile": "9431807369",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 135,
+        "ac_name": "Morwa",
+        "slug": "morwa",
+        "mla_name": "Vidya Sagar Singh Nishad",
+        "party": "J.D.(U)",
+        "mobile": "9.5466764747677499E+19",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 136,
+        "ac_name": "Sarairanjan",
+        "slug": "sarairanjan",
+        "mla_name": "Vijay Kumar✪ Choudhary",
+        "party": "JD(U)",
+        "mobile": "9534099997",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 137,
+        "ac_name": "Mohiuddinnagar",
+        "slug": "mohiuddinnagar",
+        "mla_name": "Ejya Yadav",
+        "party": "RJD",
+        "mobile": "9771025400",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 138,
+        "ac_name": "Bibhutpur",
+        "slug": "bibhutpur",
+        "mla_name": "Ram Balak Singh",
+        "party": "JD(U)",
+        "mobile": "9431010807",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 139,
+        "ac_name": "Rosera",
+        "slug": "rosera",
+        "mla_name": "Dr. Ashok Kumar",
+        "party": "INC",
+        "mobile": "9431021170",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 140,
+        "ac_name": "Hasanpur",
+        "slug": "hasanpur",
+        "mla_name": "Raj Kumar Ray",
+        "party": "JD(U)",
+        "mobile": "9473400382, 9955204980",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 141,
+        "ac_name": "Cheria Bariarpur",
+        "slug": "cheria-bariarpur",
+        "mla_name": "Kumari Manju Verma",
+        "party": "JD(U)",
+        "mobile": "9431005001, 9473100000",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 142,
+        "ac_name": "Bachwara",
+        "slug": "bachwara",
+        "mla_name": "Ramdeo Ray",
+        "party": "INC",
+        "mobile": "9409881598, 9430054918",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 143,
+        "ac_name": "Teghra",
+        "slug": "teghra",
+        "mla_name": "Birendra Kumar",
+        "party": "RJD",
+        "mobile": "0612-2673617, 2672828 94312-02828, 94310-15690",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 144,
+        "ac_name": "Matihani",
+        "slug": "matihani",
+        "mla_name": "Narendra Kumar Singh Alias Bogo Singh",
+        "party": "JD(U)",
+        "mobile": "9431211413 9955787413",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 145,
+        "ac_name": "Sahebpur Kamal",
+        "slug": "sahebpur-kamal",
+        "mla_name": "Sri Narayan Yadav",
+        "party": "RJD",
+        "mobile": "9661113707",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 146,
+        "ac_name": "Begusarai",
+        "slug": "begusarai",
+        "mla_name": "Amita Bhushan",
+        "party": "INC",
+        "mobile": "9199824317",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 147,
+        "ac_name": "Bakhri",
+        "slug": "bakhri",
+        "mla_name": "Upendra Paswan",
+        "party": "RJD",
+        "mobile": "9631400349",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 148,
+        "ac_name": "Alauli",
+        "slug": "alauli",
+        "mla_name": "Chandan Kumar",
+        "party": "RJD",
+        "mobile": "9430446931",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 149,
+        "ac_name": "Khagaria",
+        "slug": "khagaria",
+        "mla_name": "Punam Devi Yadav",
+        "party": "JD(U)",
+        "mobile": "9431455773",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 150,
+        "ac_name": "Beldaur",
+        "slug": "beldaur",
+        "mla_name": "Panna Lal Singh \"patel\"",
+        "party": "JD(U)",
+        "mobile": "9431231033",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 151,
+        "ac_name": "Parbatta",
+        "slug": "parbatta",
+        "mla_name": "Ramanand Prasad Singh",
+        "party": "JD(U)",
+        "mobile": "9431821887",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 152,
+        "ac_name": "Bihpur",
+        "slug": "bihpur",
+        "mla_name": "Versha Rani",
+        "party": "RJD",
+        "mobile": "9431296000",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 153,
+        "ac_name": "Gopalpur",
+        "slug": "gopalpur",
+        "mla_name": "Narendra Kumar Niraj",
+        "party": "J.D.(U)",
+        "mobile": "9431022014",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 154,
+        "ac_name": "Pirpainti",
+        "slug": "pirpainti",
+        "mla_name": "Ram Vilash Paswan",
+        "party": "RJD",
+        "mobile": "9431204895 9801644464",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 155,
+        "ac_name": "Kahalgaon",
+        "slug": "kahalgaon",
+        "mla_name": "Sadanand Singh",
+        "party": "INC",
+        "mobile": "0612-2350954, 2206157",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 156,
+        "ac_name": "Bhagalpur",
+        "slug": "bhagalpur",
+        "mla_name": "Ajit Sharma",
+        "party": "INC",
+        "mobile": "9431214911, 8877777744",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 157,
+        "ac_name": "Sultanganj",
+        "slug": "sultanganj",
+        "mla_name": "Subodh Rai",
+        "party": "JD(U)",
+        "mobile": "0612-2215718 , 9473199436",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 158,
+        "ac_name": "Nathnagar",
+        "slug": "nathnagar",
+        "mla_name": "Lakshmikant Mandal",
+        "party": "JDU",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 159,
+        "ac_name": "Amarpur",
+        "slug": "amarpur",
+        "mla_name": "Janaradan Manjhi",
+        "party": "JD(U)",
+        "mobile": "943100555",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 160,
+        "ac_name": "Dhuraiya",
+        "slug": "dhuraiya",
+        "mla_name": "Manish Kumar",
+        "party": "JD(U)",
+        "mobile": "0612-2344040",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 161,
+        "ac_name": "Banka",
+        "slug": "banka",
+        "mla_name": "Ram Narayan* Mandal",
+        "party": "BJP",
+        "mobile": "9473192725",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 162,
+        "ac_name": "Katoria",
+        "slug": "katoria",
+        "mla_name": "Sweety Sima Hembrom",
+        "party": "RJD",
+        "mobile": "9955934625",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 163,
+        "ac_name": "Belhar",
+        "slug": "belhar",
+        "mla_name": "Ramdeo Yadav",
+        "party": "RJD",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 164,
+        "ac_name": "Tarapur",
+        "slug": "tarapur",
+        "mla_name": "Mewa Lal Choudhary",
+        "party": "JD(U)",
+        "mobile": "9523959981",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 165,
+        "ac_name": "Munger",
+        "slug": "munger",
+        "mla_name": "Bijay Kumar 'bijay'",
+        "party": "RJD",
+        "mobile": "9431236056",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 166,
+        "ac_name": "Jamalpur",
+        "slug": "jamalpur",
+        "mla_name": "Shailesh Kumar*",
+        "party": "JD(U)",
+        "mobile": "0612-2290429, 9431024629",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 167,
+        "ac_name": "Surajgarha",
+        "slug": "surajgarha",
+        "mla_name": "Prahlad Yadav",
+        "party": "RJD",
+        "mobile": "9801810924",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 168,
+        "ac_name": "Lakhisarai",
+        "slug": "lakhisarai",
+        "mla_name": "Vijay Kumar Sinha*",
+        "party": "BJP",
+        "mobile": "0612-2321275, 9473400218, 9431011811",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 169,
+        "ac_name": "Sheikhpura",
+        "slug": "sheikhpura",
+        "mla_name": "Randhir Kumar Soni",
+        "party": "JD(U)",
+        "mobile": "9473195703",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 170,
+        "ac_name": "Barbigha",
+        "slug": "barbigha",
+        "mla_name": "Sudarshan Kumar",
+        "party": "INC",
+        "mobile": "9955333333",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 171,
+        "ac_name": "Asthawan",
+        "slug": "asthawan",
+        "mla_name": "Jitendra Kumar",
+        "party": "JD(U)",
+        "mobile": "9431815846",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 172,
+        "ac_name": "Biharsharif",
+        "slug": "biharsharif",
+        "mla_name": "Dr. Sunil Kumar",
+        "party": "BJP",
+        "mobile": "9431815596",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 173,
+        "ac_name": "Rajgir",
+        "slug": "rajgir",
+        "mla_name": "Ravi Jyoti Kumar",
+        "party": "JD(U)",
+        "mobile": "9431402749",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 174,
+        "ac_name": "Islampur",
+        "slug": "islampur",
+        "mla_name": "Chandra Sen Prasad",
+        "party": "JD(U)",
+        "mobile": "9430248251",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 175,
+        "ac_name": "Hilsa",
+        "slug": "hilsa",
+        "mla_name": "Atri Muni Alias Shakti Singh Yadav",
+        "party": "RJD",
+        "mobile": "9430015024",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 176,
+        "ac_name": "Nalanda",
+        "slug": "nalanda",
+        "mla_name": "Sharwan Kumar*",
+        "party": "JD(U)",
+        "mobile": "9431023194 , 2215472",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 177,
+        "ac_name": "Harnaut",
+        "slug": "harnaut",
+        "mla_name": "Hari Narayan Singh",
+        "party": "JD(U)",
+        "mobile": "9431821883, 9801945617",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 178,
+        "ac_name": "MOKAMA",
+        "slug": "mokama",
+        "mla_name": "Anant Kumar Singh",
+        "party": "INDEPENDENT",
+        "mobile": "9431800577",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 179,
+        "ac_name": "Barh",
+        "slug": "barh",
+        "mla_name": "Gyanendra Kumar Singh",
+        "party": "BJP",
+        "mobile": "0612-2291688",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 180,
+        "ac_name": "Bakhtiarpur",
+        "slug": "bakhtiarpur",
+        "mla_name": "Ranvijay Singh",
+        "party": "BJP",
+        "mobile": "9771045321",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 181,
+        "ac_name": "Digha",
+        "slug": "digha",
+        "mla_name": "Sanjeev Chaurasia",
+        "party": "BJP",
+        "mobile": "9431020110",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 182,
+        "ac_name": "Bankipur",
+        "slug": "bankipur",
+        "mla_name": "Nitin Navin",
+        "party": "BJP",
+        "mobile": "9431011451, 0612-2225316",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 183,
+        "ac_name": "Kumhrarh",
+        "slug": "kumhrarh",
+        "mla_name": "Arun Kumar** Sinha",
+        "party": "BJP",
+        "mobile": "0612-2667556, 9431800613",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 184,
+        "ac_name": "Patna Sahib",
+        "slug": "patna-sahib",
+        "mla_name": "Nand Kishore* Yadav",
+        "party": "BJP",
+        "mobile": "0612-2641531, 9431022112",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 185,
+        "ac_name": "Fatwa",
+        "slug": "fatwa",
+        "mla_name": "Dr. Ramanand Yadav",
+        "party": "RJD",
+        "mobile": "0612-2504681",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 186,
+        "ac_name": "Danapur",
+        "slug": "danapur",
+        "mla_name": "Asha Devi",
+        "party": "BJP",
+        "mobile": "9431023934",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 187,
+        "ac_name": "Maner",
+        "slug": "maner",
+        "mla_name": "Bhai Virendra",
+        "party": "RJD",
+        "mobile": "9473386304",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 188,
+        "ac_name": "Phulwari",
+        "slug": "phulwari",
+        "mla_name": "Shyam Rajak*",
+        "party": "JD(U)",
+        "mobile": "9431022200, 0612-2205740",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 189,
+        "ac_name": "Masaurhi",
+        "slug": "masaurhi",
+        "mla_name": "Rekha Devi",
+        "party": "RJD",
+        "mobile": "9430253147, 9708820406",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 190,
+        "ac_name": "Paliganj",
+        "slug": "paliganj",
+        "mla_name": "Jai Vardhan Yadav",
+        "party": "RJD",
+        "mobile": "74880-66060, 94310-11052",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 191,
+        "ac_name": "Bikram",
+        "slug": "bikram",
+        "mla_name": "Sidharth",
+        "party": "INC",
+        "mobile": "9570363680",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 192,
+        "ac_name": "Sandesh",
+        "slug": "sandesh",
+        "mla_name": "Arun Kumar",
+        "party": "RJD",
+        "mobile": "9431027266, 7277777707",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 193,
+        "ac_name": "Barhara",
+        "slug": "barhara",
+        "mla_name": "Saroj Yadav",
+        "party": "RJD",
+        "mobile": "9471246715, 8084995098",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 194,
+        "ac_name": "Arrah",
+        "slug": "arrah",
+        "mla_name": "Md. Navwaj Alam",
+        "party": "RJD",
+        "mobile": "9835059616",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 195,
+        "ac_name": "Agiaon",
+        "slug": "agiaon",
+        "mla_name": "Prabhunath Prasad",
+        "party": "J.D(U)",
+        "mobile": "9546273885",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 196,
+        "ac_name": "Tarari",
+        "slug": "tarari",
+        "mla_name": "Sudama Prasad",
+        "party": "CPI(ML)",
+        "mobile": "07292997354, 9931453952",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 197,
+        "ac_name": "Jagdishpur",
+        "slug": "jagdishpur",
+        "mla_name": "Ram Vishun Singh",
+        "party": "RJD",
+        "mobile": "8292360090",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 198,
+        "ac_name": "Shahpur",
+        "slug": "shahpur",
+        "mla_name": "Rahul Tiwari",
+        "party": "RJD",
+        "mobile": "9334101221",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 199,
+        "ac_name": "Berhampur",
+        "slug": "berhampur",
+        "mla_name": "Shambhu Nath Yadav",
+        "party": "RJD",
+        "mobile": "9661352225",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 200,
+        "ac_name": "Buxar",
+        "slug": "buxar",
+        "mla_name": "Sanjay Kumar Tiwari Alias Munna Tiwari",
+        "party": "INC",
+        "mobile": "9431433758",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 201,
+        "ac_name": "Dumraon",
+        "slug": "dumraon",
+        "mla_name": "Dadan Yadav",
+        "party": "JD(U)",
+        "mobile": "9431027411",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 202,
+        "ac_name": "Rajpur",
+        "slug": "rajpur",
+        "mla_name": "Santosh Kumar* Nirala",
+        "party": "JD(U)",
+        "mobile": "9473199276",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 203,
+        "ac_name": "Ramgarh",
+        "slug": "ramgarh",
+        "mla_name": "Ashok Kumar Singh",
+        "party": "BJP",
+        "mobile": "9973170228, 9431410928",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 204,
+        "ac_name": "Mohania",
+        "slug": "mohania",
+        "mla_name": "Niranjan Ram",
+        "party": "BJP",
+        "mobile": "9430436711",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 205,
+        "ac_name": "Bhabua",
+        "slug": "bhabua",
+        "mla_name": "Rinky Rani Pandey",
+        "party": "BJP",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 206,
+        "ac_name": "Chainpur",
+        "slug": "chainpur",
+        "mla_name": "Brij Kishor Bind*",
+        "party": "BJP",
+        "mobile": "9431630473",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 207,
+        "ac_name": "Chenari",
+        "slug": "chenari",
+        "mla_name": "Lalan Paswan",
+        "party": "JD(U)",
+        "mobile": "9431800501 9431222079 9431483540",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 208,
+        "ac_name": "Sasaram",
+        "slug": "sasaram",
+        "mla_name": "Ashok Kumar",
+        "party": "RJD",
+        "mobile": "9431286901",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 209,
+        "ac_name": "Kargahar",
+        "slug": "kargahar",
+        "mla_name": "Bashisth Singh",
+        "party": "JD(U)",
+        "mobile": "9431430231, 7739978878",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 210,
+        "ac_name": "Dinara",
+        "slug": "dinara",
+        "mla_name": "Jai Kumar Singh*",
+        "party": "JD(U)",
+        "mobile": "9199449228",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 211,
+        "ac_name": "Nokha",
+        "slug": "nokha",
+        "mla_name": "Anita Devi",
+        "party": "RJD",
+        "mobile": "8969238790",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 212,
+        "ac_name": "Dehri",
+        "slug": "dehri",
+        "mla_name": "Satyanarayan Singh",
+        "party": "BJP",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 213,
+        "ac_name": "Karakat",
+        "slug": "karakat",
+        "mla_name": "Sanjay Kumar Singh",
+        "party": "RJD",
+        "mobile": "9699122550",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 214,
+        "ac_name": "Arwal",
+        "slug": "arwal",
+        "mla_name": "Ravindra Singh",
+        "party": "RJD",
+        "mobile": "9931403728",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 215,
+        "ac_name": "Kurtha",
+        "slug": "kurtha",
+        "mla_name": "Satyadev Singh",
+        "party": "JD(U)",
+        "mobile": "9473199343",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 216,
+        "ac_name": "Jehanabad",
+        "slug": "jehanabad",
+        "mla_name": "Kumar Karishna Mohan Alias Suday Yadav",
+        "party": "RJD",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 217,
+        "ac_name": "Ghosi",
+        "slug": "ghosi",
+        "mla_name": "Krishan Nandan* Prasad Verma",
+        "party": "JD(U)",
+        "mobile": "7739996228",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 218,
+        "ac_name": "Makhdumpur",
+        "slug": "makhdumpur",
+        "mla_name": "Subedar Das",
+        "party": "RJD",
+        "mobile": "9199211408",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 219,
+        "ac_name": "Goh",
+        "slug": "goh",
+        "mla_name": "Manoj Kumar",
+        "party": "BJP",
+        "mobile": "9431103200",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 220,
+        "ac_name": "Obra",
+        "slug": "obra",
+        "mla_name": "Birendra Kumar Sinha",
+        "party": "RJD",
+        "mobile": "8084484418",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 221,
+        "ac_name": "Nabinagar",
+        "slug": "nabinagar",
+        "mla_name": "Virendra Kumar Singh",
+        "party": "JD(U)",
+        "mobile": "0612-2212111, 9473199355, 9955000093",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 222,
+        "ac_name": "Kutumba",
+        "slug": "kutumba",
+        "mla_name": "Rajesh Kumar",
+        "party": "INC",
+        "mobile": "9431821817",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 223,
+        "ac_name": "Aurangabad",
+        "slug": "aurangabad",
+        "mla_name": "Anand Shankar Singh",
+        "party": "INC",
+        "mobile": "8002854499, 9155066300",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 224,
+        "ac_name": "Rafiganj",
+        "slug": "rafiganj",
+        "mla_name": "Ashok Kumar Singh",
+        "party": "JD(U)",
+        "mobile": "9431074565, 8002294455",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 225,
+        "ac_name": "Gurua",
+        "slug": "gurua",
+        "mla_name": "Rajiv Nandan",
+        "party": "BJP",
+        "mobile": "9431083177",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 226,
+        "ac_name": "Sherghati",
+        "slug": "sherghati",
+        "mla_name": "Vinod Prasad Yadav",
+        "party": "JD(U)",
+        "mobile": "9471006789",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 227,
+        "ac_name": "Imamganj",
+        "slug": "imamganj",
+        "mla_name": "Jitan Ram Manjhi",
+        "party": "HINDUSTANI AWAM MOURCHA",
+        "mobile": "0612-2217156",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 228,
+        "ac_name": "Barachatti",
+        "slug": "barachatti",
+        "mla_name": "Samta Devi",
+        "party": "RJD",
+        "mobile": "9955948707, 89866532707",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 229,
+        "ac_name": "Bodh Gaya",
+        "slug": "bodh-gaya",
+        "mla_name": "Kumar Sarvjeet",
+        "party": "RJD",
+        "mobile": "9431229898",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 230,
+        "ac_name": "Gaya Town",
+        "slug": "gaya-town",
+        "mla_name": "Prem Kumar*",
+        "party": "BJP",
+        "mobile": "9473400422",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 231,
+        "ac_name": "Tikari",
+        "slug": "tikari",
+        "mla_name": "Abhay Kumar Sinha",
+        "party": "JD(U)",
+        "mobile": "9199242301, 9162071496",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 232,
+        "ac_name": "Belaganj",
+        "slug": "belaganj",
+        "mla_name": "Surendar Prasad Yadav",
+        "party": "RJD",
+        "mobile": "0612-2215520",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 233,
+        "ac_name": "Atri",
+        "slug": "atri",
+        "mla_name": "Kunti Devi",
+        "party": "RJD",
+        "mobile": "9801702946",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 234,
+        "ac_name": "Wazirganj",
+        "slug": "wazirganj",
+        "mla_name": "Awadhesh Kumar Singh",
+        "party": "INC",
+        "mobile": "9431224081",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 235,
+        "ac_name": "Rajauli",
+        "slug": "rajauli",
+        "mla_name": "Prakash Veer",
+        "party": "RJD",
+        "mobile": "9525427339",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 236,
+        "ac_name": "Hisua",
+        "slug": "hisua",
+        "mla_name": "Anil Singh***",
+        "party": "BJP",
+        "mobile": "9431280305",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 237,
+        "ac_name": "Nawada",
+        "slug": "nawada",
+        "mla_name": "Kaushal Yadav",
+        "party": "JD(U)",
+        "mobile": "",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 238,
+        "ac_name": "Gobindpur",
+        "slug": "gobindpur",
+        "mla_name": "Purnima Yadav",
+        "party": "INC",
+        "mobile": "9431227228",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 239,
+        "ac_name": "Warsaliganj",
+        "slug": "warsaliganj",
+        "mla_name": "Aruna Devi",
+        "party": "BJP",
+        "mobile": "7783832672",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 240,
+        "ac_name": "Sikandra",
+        "slug": "sikandra",
+        "mla_name": "Sudhir Kumar Alias Bunty Choudhary",
+        "party": "INC",
+        "mobile": "9473424782, 9135425782",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 241,
+        "ac_name": "Jamui",
+        "slug": "jamui",
+        "mla_name": "Vijay Prasash",
+        "party": "RJD",
+        "mobile": "9471402621, OFF. - 2215474",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 242,
+        "ac_name": "Jhajha",
+        "slug": "jhajha",
+        "mla_name": "Rabindra Yadav",
+        "party": "BJP",
+        "mobile": "9934987719, 0612-229155",
+        "tenure": "2015–2020"
+    },
+    {
+        "ac_no": 243,
+        "ac_name": "Chakai",
+        "slug": "chakai",
+        "mla_name": "Savitri Devi",
+        "party": "RJD",
+        "mobile": "9430774126",
+        "tenure": "2015–2020"
+    }
+]

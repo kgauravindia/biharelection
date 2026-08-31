@@ -1,0 +1,12 @@
+# Ignore blog directory
+/blog
+/blog/
+
+# Environment and sensitive configs
+.env
+.env.local
+
+# Temp and logs
+*.log
+scratch/
+tmp/
