@@ -5,7 +5,60 @@
 
 define('SITE_NAME', 'Bihar Election');
 define('SITE_TAGLINE', 'Bihar\'s Premier Election Data & Political Intelligence Platform');
-define('SITE_URL', 'http://localhost/biharelection');
+
+// =========================================================================
+// Environment & Dynamic Base URL (Online Production vs Offline Localhost)
+// =========================================================================
+$serverHost = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$isLocalEnv = in_array($serverHost, ['localhost', '127.0.0.1', '::1']) 
+    || (function_exists('str_ends_with') && (str_ends_with($serverHost, '.test') || str_ends_with($serverHost, '.local') || str_ends_with($serverHost, '.laragon')))
+    || (substr($serverHost, -5) === '.test' || substr($serverHost, -6) === '.local');
+
+define('IS_LOCAL', $isLocalEnv);
+
+if ($isLocalEnv) {
+    // Offline / Localhost / Laragon Environment
+    $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') 
+        || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) 
+        || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+    $protocol = $isHttps ? 'https://' : 'http://';
+    
+    $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
+    $reqUri = str_replace('\\', '/', $_SERVER['REQUEST_URI'] ?? '');
+    
+    $basePath = '';
+    // If accessed via localhost or 127.0.0.1, default subfolder is /biharelection
+    if (in_array($serverHost, ['localhost', '127.0.0.1', '::1']) || strpos($scriptDir, '/biharelection') !== false || strpos($reqUri, '/biharelection') !== false) {
+        if (!str_ends_with($serverHost, '.test') && !str_ends_with($serverHost, '.local') && !str_ends_with($serverHost, '.laragon')) {
+            $basePath = '/biharelection';
+        }
+    }
+    $computedBase = rtrim($protocol . $serverHost . $basePath, '/');
+} else {
+    // Online / Live Production Environment
+    $computedBase = 'https://biharelection.com';
+}
+
+if (!defined('SITE_URL')) {
+    define('SITE_URL', $computedBase);
+}
+if (!defined('BASE_URL')) {
+    define('BASE_URL', SITE_URL);
+}
+
+/**
+ * Universal Base URL helper function
+ * Usage: base_url('assets/image/logo.png') -> http://localhost/biharelection/assets/image/logo.png
+ *
+ * @param string $path
+ * @return string
+ */
+function base_url(string $path = ''): string {
+    if (empty($path)) {
+        return SITE_URL;
+    }
+    return SITE_URL . '/' . ltrim($path, '/');
+}
 
 // Official Channels & Social Media
 define('WHATSAPP_CHANNEL_URL', 'https://whatsapp.com/channel/0029VaoSYQlBadmZzfwQMy0q');
