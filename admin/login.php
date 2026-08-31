@@ -158,14 +158,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="form-label small fw-bold text-muted text-uppercase">Username or Email</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0"><i class="fas fa-user text-muted"></i></span>
-                    <input type="text" name="username" class="form-control border-start-0" placeholder="admin" required autofocus value="<?php echo htmlspecialchars($_POST['username'] ?? 'admin'); ?>">
+                    <input type="text" name="username" class="form-control border-start-0" placeholder="Enter username or email" required autofocus value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
                 </div>
             </div>
 
             <div class="mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-1">
                     <label class="form-label small fw-bold text-muted text-uppercase mb-0">Password</label>
-                    <span class="small text-muted" style="font-size: 0.75rem;">Default: Admin@@2026</span>
+                    <a href="forgot-password.php" class="small text-decoration-none text-primary fw-semibold" style="font-size: 0.85rem;">Forgot Password?</a>
                 </div>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0"><i class="fas fa-lock text-muted"></i></span>

@@ -109,6 +109,8 @@
     RewriteRule ^register/?$ register.php [L,QSA]
     RewriteRule ^dashboard/?$ dashboard.php [L,QSA]
     RewriteRule ^logout/?$ logout.php [L,QSA]
+    RewriteRule ^terms-and-conditions/?$ terms-and-conditions.php [L,QSA]
+    RewriteRule ^terms/?$ terms-and-conditions.php [L,QSA]
     RewriteRule ^advertise/?$ advertise.php [L,QSA]
     RewriteRule ^whatsapp/?$ whatsapp.php [L,QSA]
 </IfModule>
