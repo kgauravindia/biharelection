@@ -24,13 +24,22 @@ if (in_array($rawTab, ['zila', 'jila', 'zila-parishad', 'jila-parishad', 'jila-p
 
 $mukhiyas = DataProvider::getMukhiyaData($selectedDistrict ?: null);
 $sarpanchs = DataProvider::getSarpanchData($selectedDistrict ?: null);
-$zilaMembers = DataProvider::getZilaParishadMembers($selectedDistrict ?: null);
+$allZilaMembers = DataProvider::getZilaParishadMembers();
+$zilaMembers = $selectedDistrict ? DataProvider::getZilaParishadMembers($selectedDistrict) : $allZilaMembers;
 $zilaOfficials = DataProvider::getZilaParishadOfficials();
 $zilaSummary = DataProvider::getZilaParishadSummary();
 $panchayatSummary = DataProvider::getPanchayatSummary();
 $samiti2016 = DataProvider::getPanchayatSamiti2016($selectedDistrict ?: null);
 $zila2016 = DataProvider::getZilaParishad2016($selectedDistrict ?: null);
 $mukhiyas2016 = DataProvider::getMukhiyas2016($selectedDistrict ?: null);
+
+$zilaDistrictCounts = [];
+foreach ($allZilaMembers as $zm) {
+    $ds = strtolower($zm['district_slug'] ?? slugify($zm['district'] ?? ''));
+    if (!empty($ds)) {
+        $zilaDistrictCounts[$ds] = ($zilaDistrictCounts[$ds] ?? 0) + 1;
+    }
+}
 
 $distLabel = $districtObj ? "({$districtObj['name']} District)" : "Across 38 Districts";
 
@@ -561,178 +570,475 @@ require_once __DIR__ . '/header.php';
             <!-- TAB 3: ZILA PARISHAD MEMBERS DIRECTORY                    -->
             <!-- ========================================================= -->
             <div class="tab-pane fade <?php echo $selectedTab === 'zila' ? 'show active' : ''; ?>" id="zila-pane" role="tabpanel">
-                <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white" id="zila-directory">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                        <div>
-                            <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="badge bg-warning bg-opacity-10 text-warning-emphasis fw-bold px-2 py-1">District Apex Tier</span>
-                                <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-2 py-1">Tenure: 2021–2026</span>
-                            </div>
-                            <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">
-                                🏛️ Bihar Zila Parishad Members Table (जिला परिषद् सदस्य सूची)
-                            </h2>
-                            <p class="small text-muted mb-0">Searchable database of all 1,099 elected territorial ward members across all 38 districts</p>
-                        </div>
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-primary rounded-pill px-3 py-2" id="totalMembersCount">
-                                <?php echo count($zilaMembers); ?> Members Loaded
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Search & Filter Controls -->
-                    <div class="row g-2 mb-4 bg-light p-3 rounded-3 border">
-                        <div class="col-12 col-lg-4">
-                            <label class="form-label small fw-bold text-muted mb-1">Search Ward Member / Block:</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                                <input type="text" id="globalZilaSearch" class="form-control border-start-0" placeholder="Search by member name, block, ward no...">
+                
+                <?php if (empty($selectedDistrict)): ?>
+                    <!-- ========================================================= -->
+                    <!-- 1. ALL 38 DISTRICTS & WARD COUNTS SUMMARY TABLE           -->
+                    <!-- ========================================================= -->
+                    <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white" id="zila-district-summary">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
+                            <div>
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <span class="badge bg-warning bg-opacity-10 text-warning-emphasis fw-bold px-2 py-1">Apex Tier Directory</span>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-2 py-1">38 District Boards</span>
+                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">1,099 Total Elected Wards</span>
+                                </div>
+                                <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">
+                                    🏛️ Bihar Zila Parishad — 38 District Summary &amp; Ward Counts
+                                </h2>
+                                <p class="small text-muted mb-0">Showing all 38 districts with total ward counts, Chairperson (अध्यक्ष) &amp; Vice-Chairperson (उपाध्यक्ष). Click any district to view its elected ward members.</p>
                             </div>
                         </div>
-                        <div class="col-6 col-lg-3">
-                            <label class="form-label small fw-bold text-muted mb-1">Filter District:</label>
-                            <select id="globalDistrictFilter" class="form-select bg-white">
-                                <option value="">All 38 Districts</option>
-                                <?php foreach ($districts as $d): ?>
-                                    <option value="<?php echo htmlspecialchars((string)($d['slug'] ?? '')); ?>">
-                                        <?php echo htmlspecialchars((string)($d['name'] ?? '')); ?> (<?php echo htmlspecialchars((string)($d['name_hi'] ?? '')); ?>)
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="col-6 col-lg-2">
-                            <label class="form-label small fw-bold text-muted mb-1">Gender:</label>
-                            <select id="globalGenderFilter" class="form-select bg-white">
-                                <option value="">All Genders</option>
-                                <option value="Female">महिला (Women)</option>
-                                <option value="Male">पुरूष (Men)</option>
-                            </select>
-                        </div>
-                        <div class="col-12 col-lg-3">
-                            <label class="form-label small fw-bold text-muted mb-1">Reservation / Category:</label>
-                            <select id="globalCategoryFilter" class="form-select bg-white">
-                                <option value="">All Categories</option>
-                                <option value="महिला">Women Reserved</option>
-                                <option value="पिछड़ा">OBC / EBC (पिछड़ा वर्ग)</option>
-                                <option value="अनुसूचित जाति">SC (अनुसूचित जाति)</option>
-                                <option value="अनुसूचित जनजाति">ST (अनुसूचित जनजाति)</option>
-                                <option value="अनारक्षित">Unreserved (सामान्य)</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <!-- Table Pagination & Page Size Toolbar -->
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                        <div class="d-flex align-items-center gap-2">
-                            <label class="small text-muted fw-bold mb-0">Show</label>
-                            <select id="zilaPageSize" class="form-select form-select-sm" style="width: 85px;">
-                                <option value="25">25</option>
-                                <option value="50" selected>50</option>
-                                <option value="100">100</option>
-                                <option value="250">250</option>
-                            </select>
-                            <label class="small text-muted mb-0">per page</label>
+                        <!-- District Summary Quick Filter -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+                                    <input type="text" id="zilaDistSummarySearch" class="form-control border-start-0 bg-light" placeholder="Filter district name (e.g. Patna, Saran, Gaya)...">
+                                </div>
+                            </div>
                         </div>
-                        <div class="small text-muted" id="zilaPageInfo">
-                            Loading Members...
-                        </div>
-                        <div id="zilaTopPagination"></div>
-                    </div>
 
-                    <!-- Responsive Table -->
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0 small" id="allZilaTable">
-                            <thead class="table-light">
-                                <tr>
-                                    <th class="py-3">District</th>
-                                    <th class="py-3">Ward / क्षे० सं०</th>
-                                    <th class="py-3">Block / प्रखंड</th>
-                                    <th class="py-3">Elected Member</th>
-                                    <th class="py-3">Gender / Category</th>
-                                    <th class="py-3">Reservation Status</th>
-                                    <th class="py-3">Contact / Address</th>
-                                </tr>
-                            </thead>
-                            <tbody id="zilaTableBody">
-                                <?php foreach ($zilaMembers as $m): 
-                                    $zmDistSlug = (string)($m['district_slug'] ?? '');
-                                    $zmDist = (string)($m['district'] ?? '');
-                                    $zmBlock = (string)($m['block'] ?? '');
-                                    $zmWard = (string)($m['territory_no'] ?? '');
-                                    $zmName = (string)($m['candidate_name'] ?? '');
-                                    $zmFh = (string)($m['father_husband_name'] ?? '');
-                                    $zmGen = (string)($m['gender'] ?? '');
-                                    $zmGenHi = (string)($m['gender_hi'] ?? '');
-                                    $zmAge = $m['age'] ?? null;
-                                    $zmCat = (string)($m['category'] ?? '');
-                                    $zmRes = (string)($m['reservation'] ?? '');
-                                    $zmAddr = (string)($m['address'] ?? '');
-                                    $zmMob = (string)($m['mobile'] ?? '');
-                                ?>
-                                    <tr class="global-zila-row"
-                                        data-name="<?php echo htmlspecialchars(strtolower($zmName . ' ' . $zmFh)); ?>"
-                                        data-district="<?php echo htmlspecialchars($zmDistSlug); ?>"
-                                        data-district-name="<?php echo htmlspecialchars(strtolower($zmDist)); ?>"
-                                        data-block="<?php echo htmlspecialchars(strtolower($zmBlock)); ?>"
-                                        data-ward="<?php echo htmlspecialchars($zmWard); ?>"
-                                        data-gender="<?php echo htmlspecialchars($zmGen); ?>"
-                                        data-category="<?php echo htmlspecialchars(strtolower($zmCat . ' ' . $zmRes)); ?>">
-                                        <td class="fw-bold">
-                                            <a href="district.php?slug=<?php echo htmlspecialchars($zmDistSlug); ?>" class="text-decoration-none" style="color: var(--primary-navy);">
-                                                <?php echo htmlspecialchars($zmDist); ?>
-                                            </a>
-                                        </td>
-                                        <td class="text-center">
-                                            <span class="badge bg-secondary rounded-pill px-2 py-1">
-                                                #<?php echo htmlspecialchars($zmWard); ?>
-                                            </span>
-                                        </td>
-                                        <td class="fw-semibold text-dark">
-                                            <?php echo htmlspecialchars($zmBlock); ?>
-                                        </td>
-                                        <td>
-                                            <div class="fw-bold text-primary" style="font-size: 0.95rem;">
-                                                <?php echo htmlspecialchars($zmName); ?>
-                                            </div>
-                                            <?php if (!empty($zmFh)): ?>
-                                                <div class="text-muted small">W/o or S/o: <?php echo htmlspecialchars($zmFh); ?></div>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span class="badge <?php echo $zmGen === 'Female' ? 'bg-danger bg-opacity-10 text-danger' : 'bg-primary bg-opacity-10 text-primary'; ?> fw-semibold">
-                                                    <?php echo htmlspecialchars($zmGenHi ?: $zmGen); ?> <?php echo $zmAge ? "({$zmAge} yrs)" : ''; ?>
-                                                </span>
-                                            </div>
-                                            <div class="text-muted small mt-1"><?php echo htmlspecialchars($zmCat); ?></div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-light text-dark border">
-                                                <?php echo htmlspecialchars($zmRes ?: 'General'); ?>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <?php if (!empty($zmMob)): ?>
-                                                <span class="badge bg-light text-secondary border py-1 px-2 fw-semibold mb-1 d-inline-flex align-items-center gap-1" title="Contact Protected">
-                                                    <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($zmMob)); ?>
-                                                </span>
-                                            <?php endif; ?>
-                                            <div class="text-muted small text-truncate" style="max-width: 200px;" title="<?php echo htmlspecialchars($zmAddr); ?>">
-                                                <?php echo htmlspecialchars($zmAddr); ?>
-                                            </div>
-                                        </td>
+                        <!-- District Summary Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0 small" id="zilaDistrictSummaryTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="py-3 text-center" style="width: 50px;">#</th>
+                                        <th class="py-3">District / जिला</th>
+                                        <th class="py-3">Division / प्रमंडल</th>
+                                        <th class="py-3 text-center">Total Wards / सदस्य</th>
+                                        <th class="py-3">Chairperson (अध्यक्ष)</th>
+                                        <th class="py-3">Vice-Chairperson (उपाध्यक्ष)</th>
+                                        <th class="py-3 text-center" style="width: 170px;">Action</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    $dIdx = 1;
+                                    foreach ($districts as $d): 
+                                        $dSlug = $d['slug'] ?? '';
+                                        $dName = $d['name'] ?? '';
+                                        $dNameHi = $d['name_hi'] ?? '';
+                                        $dDiv = $d['division'] ?? '';
+                                        $wCount = $zilaDistrictCounts[$dSlug] ?? ($zilaSummary[$dSlug]['total_wards'] ?? 0);
+                                        $sum = $zilaSummary[$dSlug] ?? null;
+                                        $ch = $sum['chairman'] ?? null;
+                                        $vch = $sum['vice_chairman'] ?? null;
+                                    ?>
+                                        <tr class="zila-dist-summary-row" data-search="<?php echo htmlspecialchars(strtolower($dName . ' ' . $dNameHi . ' ' . $dDiv)); ?>">
+                                            <td class="text-muted fw-bold text-center"><?php echo $dIdx++; ?></td>
+                                            <td>
+                                                <div class="fw-bold fs-6" style="color: var(--primary-navy);">
+                                                    <?php echo htmlspecialchars($dName); ?>
+                                                </div>
+                                                <div class="text-muted small"><?php echo htmlspecialchars($dNameHi); ?></div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-dark border"><?php echo htmlspecialchars($dDiv); ?></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge bg-primary rounded-pill px-3 py-2 fs-6 fw-bold">
+                                                    <?php echo $wCount; ?> Wards
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <?php if (!empty($ch['candidate_name'])): ?>
+                                                    <div class="fw-bold text-dark">
+                                                        <i class="bi bi-award-fill text-warning me-1"></i><?php echo htmlspecialchars($ch['candidate_name']); ?>
+                                                    </div>
+                                                    <div class="text-muted extra-small">
+                                                        <?php echo htmlspecialchars($ch['category'] ?? ''); ?> <?php echo !empty($ch['gender_hi']) ? "({$ch['gender_hi']})" : ''; ?>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <span class="text-muted fst-italic">Not Disclosed</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if (!empty($vch['candidate_name'])): ?>
+                                                    <div class="fw-semibold text-dark">
+                                                        <i class="bi bi-shield-check text-info me-1"></i><?php echo htmlspecialchars($vch['candidate_name']); ?>
+                                                    </div>
+                                                    <div class="text-muted extra-small">
+                                                        <?php echo htmlspecialchars($vch['category'] ?? ''); ?>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <span class="text-muted fst-italic">Not Disclosed</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="panchayat.php?tab=zila&district=<?php echo urlencode($dSlug); ?>" class="btn btn-warning btn-sm fw-bold px-3 py-1 text-dark shadow-sm text-nowrap">
+                                                    View <?php echo $wCount; ?> Members &rarr;
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Collapsible Universal Search Section for All 1,099 Members -->
+                    <div class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <div>
+                                <h3 class="h5 fw-bold mb-1" style="color: var(--primary-navy);">
+                                    🔍 Search Across All 1,099 Ward Members (Bihar-wide)
+                                </h3>
+                                <p class="small text-muted mb-0">Search and filter across all 38 districts simultaneously</p>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm fw-bold px-3 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#allMembersCollapse" aria-expanded="false" aria-controls="allMembersCollapse">
+                                <i class="bi bi-arrows-expand me-1"></i> Expand / Collapse All Members Table
+                            </button>
+                        </div>
+
+                        <div class="collapse mt-3" id="allMembersCollapse">
+                            <!-- Search & Filter Controls -->
+                            <div class="row g-2 mb-4 bg-light p-3 rounded-3 border">
+                                <div class="col-12 col-lg-4">
+                                    <label class="form-label small fw-bold text-muted mb-1">Search Ward Member / Block:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                                        <input type="text" id="globalZilaSearch" class="form-control border-start-0" placeholder="Search by member name, block, ward no...">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <label class="form-label small fw-bold text-muted mb-1">Filter District:</label>
+                                    <select id="globalDistrictFilter" class="form-select bg-white">
+                                        <option value="">All 38 Districts</option>
+                                        <?php foreach ($districts as $d): ?>
+                                            <option value="<?php echo htmlspecialchars((string)($d['slug'] ?? '')); ?>">
+                                                <?php echo htmlspecialchars((string)($d['name'] ?? '')); ?> (<?php echo htmlspecialchars((string)($d['name_hi'] ?? '')); ?>)
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="col-6 col-lg-2">
+                                    <label class="form-label small fw-bold text-muted mb-1">Gender:</label>
+                                    <select id="globalGenderFilter" class="form-select bg-white">
+                                        <option value="">All Genders</option>
+                                        <option value="Female">महिला (Women)</option>
+                                        <option value="Male">पुरूष (Men)</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <label class="form-label small fw-bold text-muted mb-1">Reservation / Category:</label>
+                                    <select id="globalCategoryFilter" class="form-select bg-white">
+                                        <option value="">All Categories</option>
+                                        <option value="महिला">Women Reserved</option>
+                                        <option value="पिछड़ा">OBC / EBC (पिछड़ा वर्ग)</option>
+                                        <option value="अनुसूचित जाति">SC (अनुसूचित जाति)</option>
+                                        <option value="अनुसूचित जनजाति">ST (अनुसूचित जनजाति)</option>
+                                        <option value="अनारक्षित">Unreserved (सामान्य)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Table Pagination & Page Size Toolbar -->
+                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
+                                <div class="d-flex align-items-center gap-2">
+                                    <label class="small text-muted fw-bold mb-0">Show</label>
+                                    <select id="zilaPageSize" class="form-select form-select-sm" style="width: 85px;">
+                                        <option value="25">25</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100">100</option>
+                                        <option value="250">250</option>
+                                    </select>
+                                    <label class="small text-muted mb-0">per page</label>
+                                </div>
+                                <div class="small text-muted" id="zilaPageInfo">Loading Members...</div>
+                                <div id="zilaTopPagination"></div>
+                            </div>
+
+                            <!-- Responsive Table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0 small" id="allZilaTable">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="py-3">District</th>
+                                            <th class="py-3">Ward / क्षे० सं०</th>
+                                            <th class="py-3">Block / प्रखंड</th>
+                                            <th class="py-3">Elected Member</th>
+                                            <th class="py-3">Gender / Category</th>
+                                            <th class="py-3">Reservation Status</th>
+                                            <th class="py-3">Contact / Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="zilaTableBody">
+                                        <?php foreach ($allZilaMembers as $m): 
+                                            $zmDistSlug = (string)($m['district_slug'] ?? '');
+                                            $zmDist = (string)($m['district'] ?? '');
+                                            $zmBlock = (string)($m['block'] ?? '');
+                                            $zmWard = (string)($m['territory_no'] ?? '');
+                                            $zmName = (string)($m['candidate_name'] ?? '');
+                                            $zmFh = (string)($m['father_husband_name'] ?? '');
+                                            $zmGen = (string)($m['gender'] ?? '');
+                                            $zmGenHi = (string)($m['gender_hi'] ?? '');
+                                            $zmAge = $m['age'] ?? null;
+                                            $zmCat = (string)($m['category'] ?? '');
+                                            $zmRes = (string)($m['reservation'] ?? '');
+                                            $zmAddr = (string)($m['address'] ?? '');
+                                            $zmMob = (string)($m['mobile'] ?? '');
+                                        ?>
+                                            <tr class="global-zila-row"
+                                                data-name="<?php echo htmlspecialchars(strtolower($zmName . ' ' . $zmFh)); ?>"
+                                                data-district="<?php echo htmlspecialchars($zmDistSlug); ?>"
+                                                data-district-name="<?php echo htmlspecialchars(strtolower($zmDist)); ?>"
+                                                data-block="<?php echo htmlspecialchars(strtolower($zmBlock)); ?>"
+                                                data-ward="<?php echo htmlspecialchars($zmWard); ?>"
+                                                data-gender="<?php echo htmlspecialchars($zmGen); ?>"
+                                                data-category="<?php echo htmlspecialchars(strtolower($zmCat . ' ' . $zmRes)); ?>">
+                                                <td class="fw-bold">
+                                                    <a href="panchayat.php?tab=zila&district=<?php echo htmlspecialchars($zmDistSlug); ?>" class="text-decoration-none" style="color: var(--primary-navy);">
+                                                        <?php echo htmlspecialchars($zmDist); ?>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="badge bg-secondary rounded-pill px-2 py-1">
+                                                        #<?php echo htmlspecialchars($zmWard); ?>
+                                                    </span>
+                                                </td>
+                                                <td class="fw-semibold text-dark">
+                                                    <?php echo htmlspecialchars($zmBlock); ?>
+                                                </td>
+                                                <td>
+                                                    <div class="fw-bold text-primary" style="font-size: 0.95rem;">
+                                                        <?php echo htmlspecialchars($zmName); ?>
+                                                    </div>
+                                                    <?php if (!empty($zmFh)): ?>
+                                                        <div class="text-muted small">W/o or S/o: <?php echo htmlspecialchars($zmFh); ?></div>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <span class="badge <?php echo $zmGen === 'Female' ? 'bg-danger bg-opacity-10 text-danger' : 'bg-primary bg-opacity-10 text-primary'; ?> fw-semibold">
+                                                            <?php echo htmlspecialchars($zmGenHi ?: $zmGen); ?> <?php echo $zmAge ? "({$zmAge} yrs)" : ''; ?>
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-muted small mt-1"><?php echo htmlspecialchars($zmCat); ?></div>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-light text-dark border">
+                                                        <?php echo htmlspecialchars($zmRes ?: 'General'); ?>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <?php if (!empty($zmMob)): ?>
+                                                        <span class="badge bg-light text-secondary border py-1 px-2 fw-semibold mb-1 d-inline-flex align-items-center gap-1" title="Contact Protected">
+                                                            <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($zmMob)); ?>
+                                                        </span>
+                                                    <?php endif; ?>
+                                                    <div class="text-muted small text-truncate" style="max-width: 200px;" title="<?php echo htmlspecialchars($zmAddr); ?>">
+                                                        <?php echo htmlspecialchars($zmAddr); ?>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Bottom Pagination Bar -->
+                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
+                                <div class="small text-muted" id="zilaBottomInfo"></div>
+                                <div id="zilaPagination"></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Bottom Pagination Bar -->
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
-                        <div class="small text-muted" id="zilaBottomInfo"></div>
-                        <div id="zilaPagination"></div>
-                    </div>
-                </section>
+                <?php else: ?>
+                    <!-- ========================================================= -->
+                    <!-- 2. SELECTED DISTRICT WARD MEMBERS VIEW                    -->
+                    <!-- ========================================================= -->
+                    <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white" id="zila-directory">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
+                            <div>
+                                <a href="panchayat.php?tab=zila" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-1 mb-2">
+                                    &larr; View All 38 District Summary
+                                </a>
+                                <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">
+                                    🏛️ <?php echo htmlspecialchars($districtObj['name'] ?? $selectedDistrict); ?> District Zila Parishad Ward Members
+                                </h2>
+                                <p class="small text-muted mb-0">Elected territorial ward members for <?php echo htmlspecialchars($districtObj['name'] ?? $selectedDistrict); ?> District Board (Tenure: 2021–2026)</p>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-primary rounded-pill px-3 py-2 fs-6" id="totalMembersCount">
+                                    <?php echo count($zilaMembers); ?> Wards Loaded
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Leadership Cards for this district -->
+                        <?php 
+                        $curSlug = $districtObj['slug'] ?? strtolower($selectedDistrict);
+                        $curSum = $zilaSummary[$curSlug] ?? null;
+                        $curCh = $curSum['chairman'] ?? null;
+                        $curVch = $curSum['vice_chairman'] ?? null;
+                        if ($curCh || $curVch):
+                        ?>
+                            <div class="row g-3 mb-4">
+                                <?php if ($curCh): ?>
+                                    <div class="col-12 col-md-6">
+                                        <div class="p-3 rounded-3 bg-light border-start border-4 border-warning">
+                                            <div class="small text-muted fw-semibold">अध्यक्ष / Chairperson</div>
+                                            <div class="h5 fw-bold text-dark mb-0 mt-1">
+                                                👑 <?php echo htmlspecialchars($curCh['candidate_name'] ?? 'N/A'); ?>
+                                            </div>
+                                            <?php if (!empty($curCh['category'])): ?>
+                                                <div class="text-muted extra-small mt-1"><?php echo htmlspecialchars($curCh['category']); ?> <?php echo !empty($curCh['gender_hi']) ? "({$curCh['gender_hi']})" : ''; ?></div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($curVch): ?>
+                                    <div class="col-12 col-md-6">
+                                        <div class="p-3 rounded-3 bg-light border-start border-4 border-info">
+                                            <div class="small text-muted fw-semibold">उपाध्यक्ष / Vice-Chairperson</div>
+                                            <div class="h5 fw-bold text-dark mb-0 mt-1">
+                                                🎖️ <?php echo htmlspecialchars($curVch['candidate_name'] ?? 'N/A'); ?>
+                                            </div>
+                                            <?php if (!empty($curVch['category'])): ?>
+                                                <div class="text-muted extra-small mt-1"><?php echo htmlspecialchars($curVch['category']); ?></div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Search & Filter Controls for Selected District -->
+                        <div class="row g-2 mb-4 bg-light p-3 rounded-3 border">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold text-muted mb-1">Search Ward Member / Block:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                                    <input type="text" id="globalZilaSearch" class="form-control border-start-0" placeholder="Search by member name, block, ward no...">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <label class="form-label small fw-bold text-muted mb-1">Gender:</label>
+                                <select id="globalGenderFilter" class="form-select bg-white">
+                                    <option value="">All Genders</option>
+                                    <option value="Female">महिला (Women)</option>
+                                    <option value="Male">पुरूष (Men)</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <label class="form-label small fw-bold text-muted mb-1">Reservation / Category:</label>
+                                <select id="globalCategoryFilter" class="form-select bg-white">
+                                    <option value="">All Categories</option>
+                                    <option value="महिला">Women Reserved</option>
+                                    <option value="पिछड़ा">OBC / EBC (पिछड़ा वर्ग)</option>
+                                    <option value="अनुसूचित जाति">SC (अनुसूचित जाति)</option>
+                                    <option value="अनुसूचित जनजाति">ST (अनुसूचित जनजाति)</option>
+                                    <option value="अनारक्षित">Unreserved (सामान्य)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Table Pagination & Page Size Toolbar -->
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
+                            <div class="d-flex align-items-center gap-2">
+                                <label class="small text-muted fw-bold mb-0">Show</label>
+                                <select id="zilaPageSize" class="form-select form-select-sm" style="width: 85px;">
+                                    <option value="25">25</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                <label class="small text-muted mb-0">per page</label>
+                            </div>
+                            <div class="small text-muted" id="zilaPageInfo">Loading Members...</div>
+                            <div id="zilaTopPagination"></div>
+                        </div>
+
+                        <!-- Responsive Table for Selected District -->
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0 small" id="allZilaTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="py-3 text-center" style="width: 90px;">Ward / क्षे० सं०</th>
+                                        <th class="py-3">Block / प्रखंड</th>
+                                        <th class="py-3">Elected Member</th>
+                                        <th class="py-3">Gender / Category</th>
+                                        <th class="py-3">Reservation Status</th>
+                                        <th class="py-3">Contact / Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="zilaTableBody">
+                                    <?php foreach ($zilaMembers as $m): 
+                                        $zmBlock = (string)($m['block'] ?? '');
+                                        $zmWard = (string)($m['territory_no'] ?? '');
+                                        $zmName = (string)($m['candidate_name'] ?? '');
+                                        $zmFh = (string)($m['father_husband_name'] ?? '');
+                                        $zmGen = (string)($m['gender'] ?? '');
+                                        $zmGenHi = (string)($m['gender_hi'] ?? '');
+                                        $zmAge = $m['age'] ?? null;
+                                        $zmCat = (string)($m['category'] ?? '');
+                                        $zmRes = (string)($m['reservation'] ?? '');
+                                        $zmAddr = (string)($m['address'] ?? '');
+                                        $zmMob = (string)($m['mobile'] ?? '');
+                                    ?>
+                                        <tr class="global-zila-row"
+                                            data-name="<?php echo htmlspecialchars(strtolower($zmName . ' ' . $zmFh)); ?>"
+                                            data-district=""
+                                            data-district-name=""
+                                            data-block="<?php echo htmlspecialchars(strtolower($zmBlock)); ?>"
+                                            data-ward="<?php echo htmlspecialchars($zmWard); ?>"
+                                            data-gender="<?php echo htmlspecialchars($zmGen); ?>"
+                                            data-category="<?php echo htmlspecialchars(strtolower($zmCat . ' ' . $zmRes)); ?>">
+                                            <td class="text-center">
+                                                <span class="badge bg-secondary rounded-pill px-2 py-1">
+                                                    #<?php echo htmlspecialchars($zmWard); ?>
+                                                </span>
+                                            </td>
+                                            <td class="fw-semibold text-dark">
+                                                <?php echo htmlspecialchars($zmBlock); ?>
+                                            </td>
+                                            <td>
+                                                <div class="fw-bold text-primary" style="font-size: 0.95rem;">
+                                                    <?php echo htmlspecialchars($zmName); ?>
+                                                </div>
+                                                <?php if (!empty($zmFh)): ?>
+                                                    <div class="text-muted small">W/o or S/o: <?php echo htmlspecialchars($zmFh); ?></div>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <span class="badge <?php echo $zmGen === 'Female' ? 'bg-danger bg-opacity-10 text-danger' : 'bg-primary bg-opacity-10 text-primary'; ?> fw-semibold">
+                                                        <?php echo htmlspecialchars($zmGenHi ?: $zmGen); ?> <?php echo $zmAge ? "({$zmAge} yrs)" : ''; ?>
+                                                    </span>
+                                                </div>
+                                                <div class="text-muted small mt-1"><?php echo htmlspecialchars($zmCat); ?></div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-dark border">
+                                                    <?php echo htmlspecialchars($zmRes ?: 'General'); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <?php if (!empty($zmMob)): ?>
+                                                    <span class="badge bg-light text-secondary border py-1 px-2 fw-semibold mb-1 d-inline-flex align-items-center gap-1" title="Contact Protected">
+                                                        <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($zmMob)); ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                                <div class="text-muted small text-truncate" style="max-width: 220px;" title="<?php echo htmlspecialchars($zmAddr); ?>">
+                                                    <?php echo htmlspecialchars($zmAddr); ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Bottom Pagination Bar -->
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
+                            <div class="small text-muted" id="zilaBottomInfo"></div>
+                            <div id="zilaPagination"></div>
+                        </div>
+                    </section>
+                <?php endif; ?>
             </div>
 
             <!-- ========================================================= -->
@@ -1394,6 +1700,18 @@ require_once __DIR__ . '/header.php';
         if (zDistrictFilter) zDistrictFilter.addEventListener('change', filterAllZilaRows);
         if (zGenderFilter) zGenderFilter.addEventListener('change', filterAllZilaRows);
         if (zCategoryFilter) zCategoryFilter.addEventListener('change', filterAllZilaRows);
+
+        // 3b. District Summary Filter
+        const zDistSummarySearch = document.getElementById('zilaDistSummarySearch');
+        if (zDistSummarySearch) {
+            zDistSummarySearch.addEventListener('input', function() {
+                const q = this.value.toLowerCase().trim();
+                document.querySelectorAll('.zila-dist-summary-row').forEach(row => {
+                    const searchData = (row.getAttribute('data-search') || row.textContent).toLowerCase();
+                    row.style.display = (!q || searchData.includes(q)) ? '' : 'none';
+                });
+            });
+        }
 
         // 4. 2016 Mukhiya Paginator & Filter
         window['mukhiya2016Table_paginator'] = new TablePaginator({
