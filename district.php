@@ -456,50 +456,66 @@ require_once __DIR__ . '/header.php';
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($zilaMembers as $m): ?>
+                            <?php foreach ($zilaMembers as $m): 
+                                $candName = $m['candidate_name'] ?? '';
+                                $fatherName = $m['father_husband_name'] ?? '';
+                                $blockName = $m['block'] ?? '';
+                                $wardNo = $m['territory_no'] ?? '';
+                                $gender = $m['gender'] ?? '';
+                                $genderHi = !empty($m['gender_hi']) ? $m['gender_hi'] : $gender;
+                                $age = $m['age'] ?? '';
+                                $category = $m['category'] ?? '';
+                                $reservation = !empty($m['reservation']) ? $m['reservation'] : 'General';
+                                $mobile = $m['mobile'] ?? '';
+                                $address = $m['address'] ?? '';
+                            ?>
                                 <tr class="zila-row" 
-                                    data-name="<?php echo htmlspecialchars(strtolower($m['candidate_name'] . ' ' . $m['father_husband_name'])); ?>"
-                                    data-block="<?php echo htmlspecialchars($m['block']); ?>"
-                                    data-ward="<?php echo htmlspecialchars($m['territory_no']); ?>"
-                                    data-gender="<?php echo htmlspecialchars($m['gender']); ?>">
+                                    data-name="<?php echo htmlspecialchars(strtolower(trim($candName . ' ' . $fatherName))); ?>"
+                                    data-block="<?php echo htmlspecialchars($blockName); ?>"
+                                    data-ward="<?php echo htmlspecialchars($wardNo); ?>"
+                                    data-gender="<?php echo htmlspecialchars($gender); ?>">
                                     <td class="fw-bold text-center" style="width: 90px;">
                                         <span class="badge bg-secondary rounded-pill px-2 py-1">
-                                            #<?php echo htmlspecialchars($m['territory_no']); ?>
+                                            #<?php echo htmlspecialchars($wardNo); ?>
                                         </span>
                                     </td>
                                     <td class="fw-semibold text-dark">
-                                        <?php echo htmlspecialchars($m['block']); ?>
+                                        <?php echo htmlspecialchars($blockName); ?>
                                     </td>
                                     <td>
                                         <div class="fw-bold text-primary" style="font-size: 0.95rem;">
-                                            <?php echo htmlspecialchars($m['candidate_name']); ?>
+                                            <?php echo htmlspecialchars($candName); ?>
                                         </div>
-                                        <?php if (!empty($m['father_husband_name'])): ?>
-                                            <div class="text-muted small">W/o or S/o: <?php echo htmlspecialchars($m['father_husband_name']); ?></div>
+                                        <?php if (!empty($fatherName)): ?>
+                                            <div class="text-muted small">W/o or S/o: <?php echo htmlspecialchars($fatherName); ?></div>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <div>
-                                            <span class="badge <?php echo $m['gender'] === 'Female' ? 'bg-danger bg-opacity-10 text-danger' : 'bg-primary bg-opacity-10 text-primary'; ?> fw-semibold">
-                                                <?php echo htmlspecialchars($m['gender_hi'] ?: $m['gender']); ?> <?php echo $m['age'] ? "({$m['age']} yrs)" : ''; ?>
+                                            <span class="badge <?php echo $gender === 'Female' ? 'bg-danger bg-opacity-10 text-danger' : 'bg-primary bg-opacity-10 text-primary'; ?> fw-semibold">
+                                                <?php echo htmlspecialchars($genderHi); ?> <?php echo !empty($age) ? "({$age} yrs)" : ''; ?>
                                             </span>
                                         </div>
-                                        <div class="text-muted small mt-1"><?php echo htmlspecialchars($m['category']); ?></div>
+                                        <?php if (!empty($category)): ?>
+                                            <div class="text-muted small mt-1"><?php echo htmlspecialchars($category); ?></div>
+                                        <?php endif; ?>
                                     </td>
                                     <td>
                                         <span class="badge bg-light text-dark border">
-                                            <?php echo htmlspecialchars($m['reservation'] ?: 'General'); ?>
+                                            <?php echo htmlspecialchars($reservation); ?>
                                         </span>
                                     </td>
                                     <td>
-                                        <?php if (!empty($m['mobile'])): ?>
+                                        <?php if (!empty($mobile)): ?>
                                             <span class="badge bg-light text-secondary border py-1 px-2 fw-semibold mb-1 d-inline-flex align-items-center gap-1" title="Contact Protected">
-                                                <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($m['mobile'])); ?>
+                                                <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($mobile)); ?>
                                             </span>
                                         <?php endif; ?>
-                                        <div class="text-muted small text-truncate" style="max-width: 220px;" title="<?php echo htmlspecialchars($m['address']); ?>">
-                                            <?php echo htmlspecialchars($m['address']); ?>
-                                        </div>
+                                        <?php if (!empty($address)): ?>
+                                            <div class="text-muted small text-truncate" style="max-width: 220px;" title="<?php echo htmlspecialchars($address); ?>">
+                                                <?php echo htmlspecialchars($address); ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
