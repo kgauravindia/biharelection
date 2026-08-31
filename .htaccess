@@ -111,6 +111,8 @@
     RewriteRule ^logout/?$ logout.php [L,QSA]
     RewriteRule ^terms-and-conditions/?$ terms-and-conditions.php [L,QSA]
     RewriteRule ^terms/?$ terms-and-conditions.php [L,QSA]
+    RewriteRule ^privacy-policy/?$ privacy-policy.php [L,QSA]
+    RewriteRule ^privacy/?$ privacy-policy.php [L,QSA]
     RewriteRule ^disclaimer/?$ disclaimer.php [L,QSA]
     RewriteRule ^mission-and-vision/?$ mission-and-vision.php [L,QSA]
     RewriteRule ^about/?$ mission-and-vision.php [L,QSA]
