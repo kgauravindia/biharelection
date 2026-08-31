@@ -12,10 +12,10 @@ require_once __DIR__ . '/admin-header.php';
         <div>
             <div class="d-flex align-items-center gap-2 mb-1">
                 <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-2 py-1">Internal Reference</span>
-                <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">Version 2.5 (2026 Production)</span>
+                <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">Version 2.6 (2026 Production)</span>
             </div>
             <h1 class="h3 fw-bold text-dark mb-1">📘 Bihar Election Admin Documentation & Knowledge Base</h1>
-            <p class="text-muted small mb-0">Complete reference manual for administrators, developers, and data managers.</p>
+            <p class="text-muted small mb-0">Comprehensive architectural manual, routing guidelines, security rules, and data operations.</p>
         </div>
         <div class="d-flex gap-2">
             <a href="sitemap.php" class="btn btn-outline-secondary btn-sm fw-bold">
@@ -31,13 +31,14 @@ require_once __DIR__ . '/admin-header.php';
     <div class="card border-0 shadow-sm p-3 mb-4 rounded-3 bg-light">
         <div class="d-flex flex-wrap gap-2 align-items-center">
             <span class="small fw-bold text-muted text-uppercase me-2"><i class="fas fa-bookmark me-1"></i> Quick Jump:</span>
-            <a href="#section-arch" class="btn btn-sm btn-white border shadow-xs fw-semibold">1. Architecture & Tech Stack</a>
-            <a href="#section-seo" class="btn btn-sm btn-white border shadow-xs fw-semibold">2. SEO & URL Routing</a>
-            <a href="#section-data" class="btn btn-sm btn-white border shadow-xs fw-semibold">3. Data Files & Schema</a>
+            <a href="#section-arch" class="btn btn-sm btn-white border shadow-xs fw-semibold">1. Architecture</a>
+            <a href="#section-seo" class="btn btn-sm btn-white border shadow-xs fw-semibold">2. SEO & Clean URLs</a>
+            <a href="#section-data" class="btn btn-sm btn-white border shadow-xs fw-semibold">3. Data Schema</a>
             <a href="#section-sms" class="btn btn-sm btn-white border shadow-xs fw-semibold">4. SMS Gateway & Auth</a>
-            <a href="#section-admin" class="btn btn-sm btn-white border shadow-xs fw-semibold">5. Admin Management Modules</a>
-            <a href="#section-pagination" class="btn btn-sm btn-white border shadow-xs fw-semibold">6. Table Pagination & Filtering</a>
-            <a href="#section-maintenance" class="btn btn-sm btn-white border shadow-xs fw-semibold">7. CLI & Maintenance</a>
+            <a href="#section-legal" class="btn btn-sm btn-white border shadow-xs fw-semibold">5. Legal & Terms</a>
+            <a href="#section-admin" class="btn btn-sm btn-white border shadow-xs fw-semibold">6. Admin Modules</a>
+            <a href="#section-pagination" class="btn btn-sm btn-white border shadow-xs fw-semibold">7. Table Pagination</a>
+            <a href="#section-maintenance" class="btn btn-sm btn-white border shadow-xs fw-semibold">8. CLI & Maintenance</a>
         </div>
     </div>
 
@@ -60,7 +61,7 @@ require_once __DIR__ . '/admin-header.php';
                             <div class="p-3 bg-light rounded-3 border h-100">
                                 <h3 class="h6 fw-bold text-dark mb-2"><i class="fab fa-php text-primary me-1"></i> Backend Engine</h3>
                                 <ul class="list-unstyled small text-muted mb-0 lh-lg">
-                                    <li>• PHP 8.1+ (Object-Oriented + Helpers)</li>
+                                    <li>• PHP 8.1+ (Object-Oriented + Global Helpers)</li>
                                     <li>• Apache 2.4+ with <code>mod_rewrite</code> & <code>mod_headers</code></li>
                                     <li>• MySQL / MariaDB (Prepared Statements)</li>
                                     <li>• JSON Flat-file caching for 50k+ records</li>
@@ -174,6 +175,12 @@ require_once __DIR__ . '/admin-header.php';
                                     <td><code>candidate.php?slug=dr-cn-gupta</code></td>
                                     <td><code>SITE_URL . '/candidate/' . $slug</code></td>
                                 </tr>
+                                <tr>
+                                    <td><span class="badge bg-secondary">Legal / Terms</span></td>
+                                    <td><code>/terms-and-conditions</code><br><code>/terms</code></td>
+                                    <td><code>terms-and-conditions.php</code></td>
+                                    <td><code>SITE_URL . '/terms-and-conditions'</code></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -259,11 +266,42 @@ require_once __DIR__ . '/admin-header.php';
                 </div>
             </div>
 
-            <!-- SECTION 5: ADMIN MANAGEMENT MODULES -->
+            <!-- SECTION 5: LEGAL & TERMS COMPLIANCE -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4" id="section-legal">
+                <div class="card-header bg-white py-3 border-bottom d-flex align-items-center gap-2">
+                    <span class="fs-5 text-warning">⚖️</span>
+                    <h2 class="h5 fw-bold mb-0 text-dark">5. Legal Policies & Terms of Service</h2>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted">
+                        Public compliance and legal protection are maintained via <a href="../terms-and-conditions.php" target="_blank" class="fw-bold text-primary">terms-and-conditions.php</a>, accessible via <code>https://biharelection.com/terms-and-conditions/</code>:
+                    </p>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 bg-light rounded-3 border h-100">
+                                <h3 class="h6 fw-bold text-danger mb-2">Non-Government Entity Disclaimer</h3>
+                                <p class="small text-muted mb-0">
+                                    Mandatory declaration asserting complete independence from the Election Commission of India (ECI) and the State Election Commission (SEC) Bihar to avoid trademark or electoral confusion.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 bg-light rounded-3 border h-100">
+                                <h3 class="h6 fw-bold text-dark mb-2">Jurisdiction & Grievance Redressal</h3>
+                                <p class="small text-muted mb-0">
+                                    Governed exclusively under the jurisdiction of competent civil courts located in Patna, Bihar, with designated legal contact at <code>contact@biharelection.com</code>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 6: ADMIN MANAGEMENT MODULES -->
             <div class="card border-0 shadow-sm rounded-4 mb-4" id="section-admin">
                 <div class="card-header bg-white py-3 border-bottom d-flex align-items-center gap-2">
                     <span class="fs-5 text-primary">⚙️</span>
-                    <h2 class="h5 fw-bold mb-0 text-dark">5. Admin Portal Management Modules</h2>
+                    <h2 class="h5 fw-bold mb-0 text-dark">6. Admin Portal Management Modules</h2>
                 </div>
                 <div class="card-body p-4">
                     <div class="row g-3">
@@ -283,20 +321,20 @@ require_once __DIR__ . '/admin-header.php';
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="p-3 bg-light rounded-3 border h-100">
-                                <h3 class="h6 fw-bold text-dark mb-1"><i class="fab fa-whatsapp text-success me-1"></i> WhatsApp Subscribers</h3>
-                                <p class="small text-muted mb-2"><code>admin/whatsapp-subscribers.php</code></p>
-                                <p class="small text-muted mb-0">View subscriber registrations by district and export phone lists for localized election update broadcasts.</p>
+                                <h3 class="h6 fw-bold text-dark mb-1"><i class="fas fa-lock text-info me-1"></i> Security & Recovery</h3>
+                                <p class="small text-muted mb-2"><code>admin/forgot-password.php</code></p>
+                                <p class="small text-muted mb-0">Secure admin account recovery mechanism without exposing default credentials on the login screen.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 6: PAGINATION & FILTERING -->
+            <!-- SECTION 7: PAGINATION & FILTERING -->
             <div class="card border-0 shadow-sm rounded-4 mb-4" id="section-pagination">
                 <div class="card-header bg-white py-3 border-bottom d-flex align-items-center gap-2">
                     <span class="fs-5 text-info">📑</span>
-                    <h2 class="h5 fw-bold mb-0 text-dark">6. Modular JavaScript Table Pagination (TablePaginator)</h2>
+                    <h2 class="h5 fw-bold mb-0 text-dark">7. Modular JavaScript Table Pagination (TablePaginator)</h2>
                 </div>
                 <div class="card-body p-4">
                     <p class="text-muted">
@@ -323,11 +361,11 @@ paginator.setFilteredRows(filteredArrayOfTrElements);</code></pre>
                 </div>
             </div>
 
-            <!-- SECTION 7: MAINTENANCE & CLI -->
+            <!-- SECTION 8: MAINTENANCE & CLI -->
             <div class="card border-0 shadow-sm rounded-4" id="section-maintenance">
                 <div class="card-header bg-white py-3 border-bottom d-flex align-items-center gap-2">
                     <span class="fs-5 text-secondary">🛠️</span>
-                    <h2 class="h5 fw-bold mb-0 text-dark">7. Maintenance, CLI & Git Commands</h2>
+                    <h2 class="h5 fw-bold mb-0 text-dark">8. Maintenance, CLI & Git Commands</h2>
                 </div>
                 <div class="card-body p-4">
                     <div class="row g-3">
