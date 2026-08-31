@@ -27,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_sitemap'])) 
         ['url' => '/mp', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/mlc', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/rajya-sabha', 'priority' => '0.8', 'changefreq' => 'monthly'],
-        ['url' => '/census', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/disclaimer', 'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['url' => '/terms-and-conditions', 'priority' => '0.7', 'changefreq' => 'monthly'],
         ['url' => '/advertise', 'priority' => '0.8', 'changefreq' => 'monthly'],
         ['url' => '/whatsapp', 'priority' => '0.8', 'changefreq' => 'weekly'],
     ];
