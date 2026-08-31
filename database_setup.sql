@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `be_constituencies` (
   `ac_no` INT NOT NULL UNIQUE,
   `name` VARCHAR(100) NOT NULL,
   `name_hi` VARCHAR(100) DEFAULT NULL,
-  `slug` VARCHAR(100) NOT NULL UNIQUE,
+  `slug` VARCHAR(100) NOT NULL,
   `district` VARCHAR(100) NOT NULL,
   `district_hi` VARCHAR(100) DEFAULT NULL,
   `lok_sabha` VARCHAR(100) DEFAULT NULL,
@@ -46,7 +46,9 @@ CREATE TABLE IF NOT EXISTS `be_constituencies` (
   `key_issues` JSON DEFAULT NULL,
   `party_history` TEXT DEFAULT NULL,
   `candidates_2026_expected` JSON DEFAULT NULL,
-  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`slug`),
+  INDEX (`district`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 3. Candidates & Leaders Directory
@@ -386,6 +388,88 @@ CREATE TABLE IF NOT EXISTS `be_census_subdistricts` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   INDEX (`district_slug`),
   INDEX (`sub_district`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 20. Lok Sabha Members of Parliament (40 Seats)
+CREATE TABLE IF NOT EXISTS `be_mps_loksabha` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `pc_no` INT NOT NULL UNIQUE,
+  `pc_name` VARCHAR(150) NOT NULL,
+  `slug` VARCHAR(150) NOT NULL,
+  `mp_name` VARCHAR(150) NOT NULL,
+  `party` VARCHAR(100) NOT NULL,
+  `criminal_cases` INT DEFAULT 0,
+  `house` VARCHAR(50) DEFAULT 'Lok Sabha',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`slug`),
+  INDEX (`party`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 21. Rajya Sabha Parliamentarians (16 Seats)
+CREATE TABLE IF NOT EXISTS `be_mps_rajyasabha` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `mp_name` VARCHAR(150) NOT NULL,
+  `party` VARCHAR(100) NOT NULL,
+  `tenure` VARCHAR(100) DEFAULT NULL,
+  `house` VARCHAR(50) DEFAULT 'Rajya Sabha',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 22. Vidhan Parishad Members (75 MLCs)
+CREATE TABLE IF NOT EXISTS `be_mlcs` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `sr_no` INT DEFAULT NULL,
+  `name` VARCHAR(150) NOT NULL,
+  `constituency` VARCHAR(150) NOT NULL,
+  `tenure` VARCHAR(100) DEFAULT NULL,
+  `contact` VARCHAR(50) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 23. Historical MLAs (2015-2020)
+CREATE TABLE IF NOT EXISTS `be_mlas_2015` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `ac_no` INT NOT NULL UNIQUE,
+  `ac_name` VARCHAR(150) NOT NULL,
+  `slug` VARCHAR(150) NOT NULL,
+  `mla_name` VARCHAR(150) NOT NULL,
+  `party` VARCHAR(100) NOT NULL,
+  `mobile` VARCHAR(50) DEFAULT NULL,
+  `tenure` VARCHAR(50) DEFAULT '2015–2020',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 24. Historical Mukhiyas (2016-2021)
+CREATE TABLE IF NOT EXISTS `be_mukhiyas_2016` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `district` VARCHAR(100) NOT NULL,
+  `district_hi` VARCHAR(100) DEFAULT NULL,
+  `district_slug` VARCHAR(100) DEFAULT NULL,
+  `block` VARCHAR(100) NOT NULL,
+  `block_hi` VARCHAR(100) DEFAULT NULL,
+  `panchayat` VARCHAR(150) NOT NULL,
+  `panchayat_hi` VARCHAR(150) DEFAULT NULL,
+  `mukhiya_2016` VARCHAR(150) NOT NULL,
+  `up_mukhiya_2016` VARCHAR(150) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`district_slug`),
+  INDEX (`block`),
+  INDEX (`panchayat`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 25. Historical Panchayat Samiti (2016-2021)
+CREATE TABLE IF NOT EXISTS `be_panchayat_samiti_2016` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `district` VARCHAR(100) NOT NULL,
+  `district_hi` VARCHAR(100) DEFAULT NULL,
+  `district_slug` VARCHAR(100) DEFAULT NULL,
+  `block` VARCHAR(100) NOT NULL,
+  `block_hi` VARCHAR(100) DEFAULT NULL,
+  `pramukh_2016` VARCHAR(150) NOT NULL,
+  `up_pramukh_2016` VARCHAR(150) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`district_slug`),
+  INDEX (`block`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
