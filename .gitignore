@@ -5,6 +5,7 @@
 # Environment and sensitive configs
 .env
 .env.*
+!.env.example
 .env.local
 config.local.php
 config.local.*
