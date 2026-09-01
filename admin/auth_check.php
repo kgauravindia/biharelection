@@ -70,9 +70,10 @@ function initAdminTables($conn) {
     // Check if default admin exists
     $chk = $conn->query("SELECT id FROM `be_admin_users` WHERE `username` = 'admin'");
     if ($chk && $chk->num_rows === 0) {
-        $default_pwd = password_hash('Admin@@2026', PASSWORD_DEFAULT);
+        $init_pass = defined('DEFAULT_ADMIN_PASS') ? DEFAULT_ADMIN_PASS : 'Admin@ChangeMe2026';
+        $default_pwd = password_hash($init_pass, PASSWORD_DEFAULT);
         $conn->query("INSERT INTO `be_admin_users` (`username`, `password`, `name`, `email`, `role`, `status`) 
-                      VALUES ('admin', '$default_pwd', 'Bihar Election Admin', 'admin@biharelection.com', 'admin', 'ACTIVE')");
+                      VALUES ('admin', '$default_pwd', 'Bihar Election Admin', 'admin@biharelection.com', 'superadmin', 'ACTIVE')");
     }
 
     // Contacts / Leads Table

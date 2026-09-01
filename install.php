@@ -383,7 +383,8 @@ echo "<li class='list-group-item text-success'>✓ " . count($csRows) . " Census
 // Ensure Admin Exists
 $adminExists = $pdo->query("SELECT id FROM `be_admin_users` WHERE `username` = 'admin' LIMIT 1")->fetch();
 if (!$adminExists) {
-    $hashedPwd = password_hash('Admin@@2026', PASSWORD_DEFAULT);
+    $initPass = defined('DEFAULT_ADMIN_PASS') ? DEFAULT_ADMIN_PASS : 'Admin@ChangeMe2026';
+    $hashedPwd = password_hash($initPass, PASSWORD_DEFAULT);
     $pdo->prepare("INSERT INTO `be_admin_users` (`username`, `password`, `email`, `role`, `status`) VALUES ('admin', ?, 'admin@biharelection.com', 'superadmin', 'ACTIVE')")->execute([$hashedPwd]);
     echo "<li class='list-group-item text-success'>✓ Super Administrator account initialized.</li>";
 }

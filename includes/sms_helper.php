@@ -8,7 +8,7 @@
  */
 
 if (!defined('SMS_AUTH_KEY')) {
-    define('SMS_AUTH_KEY', 'b0e99bea1fa7d15e27e1c5fd8e3c868');
+    define('SMS_AUTH_KEY', '');
 }
 if (!defined('SMS_SENDER_ID')) {
     define('SMS_SENDER_ID', 'BIHELE');
@@ -34,7 +34,7 @@ if (!defined('SMS_OTP_TEMPLATE')) {
  */
 function bulk_msg($mobile_list, $sms, $count = 1, $smstype = 'english')
 {
-    $auth_key = defined('SMS_AUTH_KEY') ? SMS_AUTH_KEY : 'b0e99bea1fa7d15e27e1c5fd8e3c868';
+    $auth_key = defined('SMS_AUTH_KEY') ? SMS_AUTH_KEY : '';
     $sender_id = defined('SMS_SENDER_ID') ? SMS_SENDER_ID : 'BIHELE';
     $api_url = defined('SMS_API_URL') ? SMS_API_URL : 'http://msg.morg.in/rest/services/sendSMS/sendGroupSms';
 

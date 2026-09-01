@@ -70,28 +70,35 @@ define('YOUTUBE_URL', 'https://youtube.com/@BiharElectionAI');
 define('CONTACT_PHONE', '+91 98765 43210');
 define('CONTACT_EMAIL', 'contact@biharelection.com');
 
-// Google AdSense Configuration (Insert your AdSense Publisher ID & Slot IDs here)
-define('GOOGLE_ADS_ENABLED', true);
-define('GOOGLE_ADSENSE_CLIENT', 'ca-pub-XXXXXXXXXXXXXXXX'); // e.g. ca-pub-1234567890123456
-define('GOOGLE_AD_SLOT_HEADER', '1001001001');
-define('GOOGLE_AD_SLOT_INFEED', '1002002002');
-define('GOOGLE_AD_SLOT_SIDEBAR', '1003003003');
-define('GOOGLE_AD_SLOT_TABLE', '1004004004');
-define('GOOGLE_AD_SLOT_FOOTER', '1005005005');
+// =========================================================================
+// Load Local / Environment Configuration Overrides (if present)
+// =========================================================================
+if (file_exists(__DIR__ . '/config.local.php')) {
+    require_once __DIR__ . '/config.local.php';
+}
+
+// Google AdSense Configuration (Default placeholders)
+if (!defined('GOOGLE_ADS_ENABLED')) define('GOOGLE_ADS_ENABLED', false);
+if (!defined('GOOGLE_ADSENSE_CLIENT')) define('GOOGLE_ADSENSE_CLIENT', getenv('GOOGLE_ADSENSE_CLIENT') ?: 'ca-pub-XXXXXXXXXXXXXXXX');
+if (!defined('GOOGLE_AD_SLOT_HEADER')) define('GOOGLE_AD_SLOT_HEADER', getenv('GOOGLE_AD_SLOT_HEADER') ?: '1001001001');
+if (!defined('GOOGLE_AD_SLOT_INFEED')) define('GOOGLE_AD_SLOT_INFEED', getenv('GOOGLE_AD_SLOT_INFEED') ?: '1002002002');
+if (!defined('GOOGLE_AD_SLOT_SIDEBAR')) define('GOOGLE_AD_SLOT_SIDEBAR', getenv('GOOGLE_AD_SLOT_SIDEBAR') ?: '1003003003');
+if (!defined('GOOGLE_AD_SLOT_TABLE')) define('GOOGLE_AD_SLOT_TABLE', getenv('GOOGLE_AD_SLOT_TABLE') ?: '1004004004');
+if (!defined('GOOGLE_AD_SLOT_FOOTER')) define('GOOGLE_AD_SLOT_FOOTER', getenv('GOOGLE_AD_SLOT_FOOTER') ?: '1005005005');
 
 // SMS Gateway & DLT Template Configuration (OfferPlant Engine)
-define('SMS_AUTH_KEY', 'b0e99bea1fa7d15e27e1c5fd8e3c868');
-define('SMS_SENDER_ID', 'BIHELE');
-define('SMS_TEMPLATE_NAME', 'BIHELE_OTP');
-define('SMS_API_URL', 'http://msg.morg.in/rest/services/sendSMS/sendGroupSms');
-define('SMS_OTP_TEMPLATE', "Dear {#var#},\nYour OTP / EVC / Password is: {#var#}\nVisit https://biharelection.com\n  \nRegards\nBIHELE\nOfferPlant");
+if (!defined('SMS_AUTH_KEY')) define('SMS_AUTH_KEY', getenv('SMS_AUTH_KEY') ?: '');
+if (!defined('SMS_SENDER_ID')) define('SMS_SENDER_ID', getenv('SMS_SENDER_ID') ?: 'BIHELE');
+if (!defined('SMS_TEMPLATE_NAME')) define('SMS_TEMPLATE_NAME', getenv('SMS_TEMPLATE_NAME') ?: 'BIHELE_OTP');
+if (!defined('SMS_API_URL')) define('SMS_API_URL', getenv('SMS_API_URL') ?: 'http://msg.morg.in/rest/services/sendSMS/sendGroupSms');
+if (!defined('SMS_OTP_TEMPLATE')) define('SMS_OTP_TEMPLATE', getenv('SMS_OTP_TEMPLATE') ?: "Dear {#var#},\nYour OTP / EVC / Password is: {#var#}\nVisit https://biharelection.com\n  \nRegards\nBIHELE\nOfferPlant");
 
-// Production & Local Database Credentials
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'u305984835_biharelection');
-define('DB_USER', 'u305984835_biharelection');
-define('DB_PASS', 'Election@@2026');
-define('DB_CHARSET', 'utf8mb4');
+// Database Credentials (Defaults to localhost / generic)
+if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+if (!defined('DB_NAME')) define('DB_NAME', getenv('DB_NAME') ?: 'biharelection_db');
+if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: 'root');
+if (!defined('DB_PASS')) define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
+if (!defined('DB_CHARSET')) define('DB_CHARSET', getenv('DB_CHARSET') ?: 'utf8mb4');
 
 // Load SMS helper
 if (file_exists(__DIR__ . '/includes/sms_helper.php')) {

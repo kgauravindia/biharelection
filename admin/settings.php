@@ -147,7 +147,7 @@ $error = '';
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Gateway Auth Key</label>
-                                <input type="text" class="form-control bg-light font-monospace" value="<?php echo htmlspecialchars(defined('SMS_AUTH_KEY') ? substr(SMS_AUTH_KEY, 0, 8) . '...' . substr(SMS_AUTH_KEY, -6) : 'b0e99bea...3c868'); ?>" readonly>
+                                <input type="text" class="form-control bg-light font-monospace" value="<?php echo htmlspecialchars(defined('SMS_AUTH_KEY') && !empty(SMS_AUTH_KEY) ? substr(SMS_AUTH_KEY, 0, 4) . '...' . substr(SMS_AUTH_KEY, -4) : '••••••••••••••••'); ?>" readonly>
                             </div>
                         </div>
                     </div>

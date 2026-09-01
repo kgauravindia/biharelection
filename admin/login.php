@@ -44,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Resilient Fallback super admin
+        // Resilient Fallback super admin (only if explicitly configured in local config)
         if (!$authenticated) {
-            if ($username === 'admin' && ($password === 'Admin@@2026' || $password === 'admin123' || $password === 'Election@@2026')) {
+            if (defined('DEFAULT_ADMIN_PASS') && !empty(DEFAULT_ADMIN_PASS) && $username === 'admin' && $password === DEFAULT_ADMIN_PASS) {
                 $_SESSION['admin_auth'] = true;
                 $_SESSION['admin_id'] = 1;
                 $_SESSION['admin_user'] = 'admin';

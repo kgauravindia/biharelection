@@ -263,7 +263,7 @@ $pageTitle = 'Admin Documentation & Developer Knowledge Base';
                                         <h3 class="h6 fw-bold text-dark mb-2">SMS Gateway Configuration</h3>
                                         <table class="table table-sm table-borderless small mb-0">
                                             <tr><td class="text-muted" style="width:130px;">Endpoint:</td><td><code>http://msg.morg.in/rest/services/sendSMS/sendGroupSms</code></td></tr>
-                                            <tr><td class="text-muted">Auth Key:</td><td><code>b0e99bea1fa7d15e27e1c5fd8e3c868</code></td></tr>
+                                            <tr><td class="text-muted">Auth Key:</td><td><code>Defined in config.local.php or environment</code></td></tr>
                                             <tr><td class="text-muted">Sender ID:</td><td><code>BIHELE</code></td></tr>
                                             <tr><td class="text-muted">Template ID:</td><td><code>BIHELE_OTP</code></td></tr>
                                             <tr><td class="text-muted">Route:</td><td>Transactional / Service Implicit (Route 4)</td></tr>

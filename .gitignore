@@ -4,9 +4,15 @@
 
 # Environment and sensitive configs
 .env
+.env.*
 .env.local
+config.local.php
+config.local.*
+*.local.php
+config.prod.php
 
 # Temp and logs
 *.log
 scratch/
 tmp/
+

@@ -1,6 +1,5 @@
 -- ==========================================================
--- BiharElection.com - Production Database Schema
--- Target Database: u305984835_biharelection
+-- BiharElection.com - Database Schema & Table Definitions
 -- All Tables use the official `be_` prefix
 -- ==========================================================
 
