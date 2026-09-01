@@ -15,6 +15,16 @@
     RewriteRule ^(?:mla|district|constituency|vidhan-sabha|panchayat|mukhiya|sarpanch|zila-parishad|panchayat-samiti|census|candidate)/advertise(?:\.php)?$ advertise.php [L,QSA]
 
     # -------------------------------------------------------------
+    # 0. Blog Sitemaps & Feeds (Shifted to /blog/ folder)
+    # -------------------------------------------------------------
+    RewriteRule ^post-sitemap([0-9]*)\.xml$ blog/post-sitemap$1.xml [R=301,L]
+    RewriteRule ^page-sitemap([0-9]*)\.xml$ blog/page-sitemap$1.xml [R=301,L]
+    RewriteRule ^category-sitemap([0-9]*)\.xml$ blog/category-sitemap$1.xml [R=301,L]
+    RewriteRule ^author-sitemap([0-9]*)\.xml$ blog/author-sitemap$1.xml [R=301,L]
+    RewriteRule ^sitemap_index\.xml$ blog/sitemap_index.xml [R=301,L]
+
+
+    # -------------------------------------------------------------
     # 1. MLA & Assembly Constituencies (e.g. /mla/118-chapra, /mla/chapra, /constituency/118-chapra)
     # -------------------------------------------------------------
     RewriteRule ^mla/?$ vidhan-sabha.php [L,QSA]
@@ -122,7 +132,11 @@
     RewriteRule ^about-us/?$ mission-and-vision.php [L,QSA]
     RewriteRule ^advertise/?$ advertise.php [L,QSA]
     RewriteRule ^whatsapp/?$ whatsapp.php [L,QSA]
+    RewriteRule ^404/?$ 404.php [L,QSA]
 </IfModule>
+
+# Custom 404 Error Handler
+ErrorDocument 404 /biharelection/404.php
 
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"

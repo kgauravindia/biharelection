@@ -1,11 +1,11 @@
 <?php
 require_once __DIR__ . '/config.php';
 
-$slug = $_GET['slug'] ?? 'saran';
+$slug = $_GET['slug'] ?? 'patna';
 $district = DataProvider::getDistrictBySlug($slug);
 
 if (!$district) {
-    $district = DataProvider::getDistrictBySlug('saran');
+    $district = DataProvider::getDistrictBySlug('patna');
 }
 
 $allDistricts = DataProvider::getDistricts();
@@ -26,7 +26,7 @@ $cUrb = $districtCensus['urban'] ?? [];
 
 $pageTitle = "{$district['name']} District Election Hub 2026: All Assembly Constituencies, MLA List & Panchayat Delimitation";
 $pageDescription = "{$district['name']} District Bihar Election 2026 data hub: Headquarters in {$district['headquarters']}, {$district['total_ac']} Assembly Constituencies, voter demographics, MLA list, and 2026 Panchayat Delimitation updates.";
-$pageKeywords = "{$district['name']} District Election 2026, {$district['name']} Vidhan Sabha Seats, Chhapra MLA, Saran election result, Bihar district election hub";
+$pageKeywords = "{$district['name']} District Election 2026, {$district['name']} Vidhan Sabha Seats, Bihar MLA list, {$district['name']} election result, Bihar district election hub";
 $pageCanonical = getDistrictUrl($district['slug']);
 $activeNav = 'districts';
 

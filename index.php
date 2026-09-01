@@ -2,14 +2,19 @@
 require_once __DIR__ . '/config.php';
 
 $districts = DataProvider::getDistricts();
+// Sort districts alphabetically A-Z
+usort($districts, function($a, $b) {
+    return strcmp($a['name'] ?? '', $b['name'] ?? '');
+});
+
 $constituencies = DataProvider::getConstituencies();
 $candidates = DataProvider::getCandidates();
 $news = DataProvider::getNews();
 $panchayats = DataProvider::getPanchayatData();
 
 $pageTitle = 'Bihar Election 2026: 243 Assembly Data, 38 Districts & Panchayat Delimitation Platform';
-$pageDescription = 'Bihar\'s comprehensive non-government election data platform. Explore 243 Assembly Constituencies (Chapra, Bankipur, Raghopur), 38 District Hubs, 2026 Panchayat Delimitation status, reservation matrix & verified MLA profiles.';
-$pageKeywords = 'Bihar Election 2026, 243 Bihar Assembly Constituencies, Chapra Vidhan Sabha, Saran Election, Bihar Panchayat 2026, Bihar MLA list, Bihar Political Data';
+$pageDescription = 'Bihar\'s comprehensive non-government election data platform. Explore all 243 Assembly Constituencies, 38 District Hubs (Patna, Muzaffarpur, Gaya, Bhagalpur), 2026 Panchayat Delimitation status & verified MLA profiles.';
+$pageKeywords = 'Bihar Election 2026, 243 Bihar Assembly Constituencies, Patna Vidhan Sabha, Bihar Election Results, 38 Districts Bihar, Bihar Panchayat 2026, Bihar MLA list, Bihar Political Data';
 $pageCanonical = SITE_URL . '/index.php';
 $activeNav = 'home';
 
@@ -24,10 +29,10 @@ require_once __DIR__ . '/header.php';
             </div>
             <h1 class="hero-title display-5 fw-extrabold mb-3">
                 Bihar's Premier <br>
-                <span>Election Data & Intelligence Hub</span>
+                <span>Election Data &amp; Intelligence Hub</span>
             </h1>
             <p class="hero-subtitle lead text-white-50 mb-4 mx-auto" style="max-width: 820px;">
-                Covering Panchayat to Parliament: 38 Districts, 243 Assembly Constituencies, 8,000+ Gram Panchayats, and 2026 Delimitation intelligence with verified historical records.
+                Covering Panchayat to Parliament: 38 Districts, 243 Assembly Constituencies, 8,000+ Gram Panchayats, and 2026 Delimitation intelligence with verified historical records across all of Bihar.
             </p>
 
             <!-- Search Hub Widget with Dynamic Suggestions Dropdown -->
@@ -37,7 +42,7 @@ require_once __DIR__ . '/header.php';
                         type="text" 
                         id="globalSearchInput" 
                         class="search-input" 
-                        placeholder="Search AC (e.g. 118 Chapra, Bankipur), District, or MLA..."
+                        placeholder="Search AC (e.g. 182 Bankipur, Patna Sahib), District, or MLA..."
                         autocomplete="off"
                     >
                     <button class="btn-search" onclick="document.getElementById('globalSearchInput').focus()">
@@ -52,11 +57,13 @@ require_once __DIR__ . '/header.php';
             <!-- Quick Pill Links (Touch horizontal scrollable on mobile) -->
             <div class="d-flex flex-nowrap flex-sm-wrap justify-content-start justify-content-sm-center align-items-center gap-2 mt-3 overflow-x-auto pb-2 px-1">
                 <span class="small text-white-50 text-nowrap">Popular:</span>
-                <a href="<?php echo SITE_URL; ?>/mla/118-chapra" class="pill-link">AC 118 — Chapra</a>
+                <a href="<?php echo getDistrictUrl('patna'); ?>" class="pill-link fw-bold text-warning">👑 Patna Hub (Capital)</a>
                 <a href="<?php echo SITE_URL; ?>/mla/182-bankipur" class="pill-link">AC 182 — Bankipur</a>
+                <a href="<?php echo SITE_URL; ?>/mla/184-patna-sahib" class="pill-link">AC 184 — Patna Sahib</a>
                 <a href="<?php echo SITE_URL; ?>/mla/128-raghopur" class="pill-link">AC 128 — Raghopur</a>
-                <a href="<?php echo getDistrictUrl('saran'); ?>" class="pill-link">Saran District Hub</a>
-                <a href="<?php echo getPanchayatUrl(); ?>" class="pill-link">Panchayat Delimitation 2026</a>
+                <a href="<?php echo SITE_URL; ?>/mla/89-muzaffarpur" class="pill-link">AC 89 — Muzaffarpur</a>
+                <a href="<?php echo getZilaParishadUrl(); ?>" class="pill-link">Zila Parishad Directory</a>
+                <a href="<?php echo getPanchayatUrl(); ?>" class="pill-link">Panchayat 2026 Hub</a>
             </div>
         </div>
     </section>
@@ -109,25 +116,32 @@ require_once __DIR__ . '/header.php';
         <!-- Top Leaderboard Ad Slot -->
         <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-5'); ?>
 
-        <!-- 38 District Hubs Section -->
+        <!-- 38 District Hubs Section (Alphabetical A-Z Order with Patna Highlight) -->
         <section class="mb-5">
             <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4 pb-2 border-bottom">
                 <div>
-                    <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">38 Bihar District Election Hubs</h2>
-                    <p class="small text-muted mb-0">Vidhan Sabha seats, headquarters, and demographics for all 38 districts</p>
+                    <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">38 Bihar District Election Hubs (A–Z)</h2>
+                    <p class="small text-muted mb-0">Vidhan Sabha seats, headquarters, and demographics for all 38 districts across Bihar</p>
                 </div>
-                <a href="district.php?slug=saran" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3">
+                <a href="<?php echo getDistrictUrl('patna'); ?>" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3">
                     View All 38 Districts &rarr;
                 </a>
             </div>
 
             <div class="row g-3 g-lg-4">
-                <?php foreach (array_slice($districts, 0, 8) as $dist): ?>
+                <?php foreach (array_slice($districts, 0, 8) as $dist): 
+                    $isPatna = ($dist['slug'] === 'patna');
+                ?>
                 <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="card border-0 shadow-sm rounded-3 p-3 h-100 d-flex flex-column justify-content-between">
+                    <div class="card border-0 shadow-sm rounded-3 p-3 h-100 d-flex flex-column justify-content-between <?php echo $isPatna ? 'border-top border-4 border-warning bg-light' : ''; ?>">
                         <div>
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="h6 fw-bold mb-0" style="color: var(--primary-navy);"><?php echo htmlspecialchars($dist['name']); ?></h3>
+                                <h3 class="h6 fw-bold mb-0" style="color: var(--primary-navy);">
+                                    <?php echo htmlspecialchars($dist['name']); ?>
+                                    <?php if ($isPatna): ?>
+                                        <span class="badge bg-warning text-dark extra-small ms-1">Capital</span>
+                                    <?php endif; ?>
+                                </h3>
                                 <span class="badge bg-light text-dark border"><?php echo $dist['total_ac']; ?> ACs</span>
                             </div>
                             <p class="small text-muted mb-2">
@@ -148,7 +162,7 @@ require_once __DIR__ . '/header.php';
                         </div>
                         <div class="pt-2 border-top">
                             <a href="<?php echo getDistrictUrl($dist['slug']); ?>" class="small fw-bold text-decoration-none" style="color: var(--accent-saffron);">
-                                Open District Hub &rarr;
+                                Open <?php echo htmlspecialchars($dist['name']); ?> Hub &rarr;
                             </a>
                         </div>
                     </div>
@@ -165,15 +179,28 @@ require_once __DIR__ . '/header.php';
             <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4 pb-2 border-bottom">
                 <div>
                     <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">Featured Assembly Seats (243 AC Project)</h2>
-                    <p class="small text-muted mb-0">Historical election results (2020 vs 2015), victory margins, and voter turnout</p>
+                    <p class="small text-muted mb-0">Historical election results (2020 vs 2015), victory margins, and voter turnout across Bihar</p>
                 </div>
-                <a href="<?php echo SITE_URL; ?>/mla/118-chapra" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3">
+                <a href="<?php echo SITE_URL; ?>/vidhan-sabha" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3">
                     Explore 243 Seats &rarr;
                 </a>
             </div>
 
             <div class="row g-3 g-lg-4">
-                <?php foreach (array_slice($constituencies, 0, 3) as $ac): ?>
+                <?php 
+                // Select prominent statewide seats (Patna Bankipur, Patna Sahib, Raghopur, Muzaffarpur, Gaya Town, Chapra)
+                $featuredAcNos = [182, 184, 128, 89, 230, 118];
+                $featuredAcs = [];
+                foreach ($featuredAcNos as $favNo) {
+                    $found = DataProvider::getConstituencyByAcNumber($favNo);
+                    if ($found) $featuredAcs[] = $found;
+                }
+                if (empty($featuredAcs)) {
+                    $featuredAcs = array_slice($constituencies, 0, 6);
+                }
+                foreach ($featuredAcs as $ac): 
+                    $res2020 = $ac['election_2020'] ?? ($ac['election_2025'] ?? []);
+                ?>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card border-0 shadow-sm rounded-3 p-3 p-lg-4 h-100 d-flex flex-column justify-content-between">
                         <div>
@@ -191,8 +218,8 @@ require_once __DIR__ . '/header.php';
 
                             <div class="bg-light p-3 rounded-2 small mb-3">
                                 <div class="fw-bold text-muted text-uppercase mb-1" style="font-size: 0.75rem;">2020 Result Summary</div>
-                                <div>Winner: <strong style="color: var(--primary-navy);"><?php echo htmlspecialchars($ac['election_2020']['winner']); ?></strong> (<?php echo $ac['election_2020']['winner_party']; ?>)</div>
-                                <div class="text-muted">Margin: <strong><?php echo number_format($ac['election_2020']['margin']); ?></strong> votes (Turnout: <?php echo $ac['election_2020']['turnout_percent']; ?>%)</div>
+                                <div>Winner: <strong style="color: var(--primary-navy);"><?php echo htmlspecialchars($res2020['winner'] ?? 'N/A'); ?></strong> (<?php echo $res2020['winner_party'] ?? ''; ?>)</div>
+                                <div class="text-muted">Margin: <strong><?php echo isset($res2020['margin']) ? number_format($res2020['margin']) : 'N/A'; ?></strong> votes (Turnout: <?php echo $res2020['turnout_percent'] ?? 'N/A'; ?>%)</div>
                             </div>
                         </div>
 

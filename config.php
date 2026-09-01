@@ -1060,5 +1060,10 @@ function getAdvertiseUrl($params = []) {
     return $baseUrl;
 }
 
+function getBlogUrl($slug = '') {
+    return $slug ? SITE_URL . "/blog/" . ltrim($slug, '/') : SITE_URL . "/blog/";
+}
+
+
 
 

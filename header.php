@@ -7,7 +7,7 @@ require_once __DIR__ . '/includes/auth_helper.php';
 
 $pageTitle = $pageTitle ?? 'Bihar Election 2026: 243 Assembly Data, 38 Districts & Panchayat Hub';
 $pageDescription = $pageDescription ?? 'Bihar\'s comprehensive non-government election data platform covering 243 Assembly Constituencies, 38 Districts, and 2026 Panchayat Delimitation.';
-$pageKeywords = $pageKeywords ?? 'Bihar Election 2026, 243 Bihar Assembly Constituencies, Chapra Vidhan Sabha, Saran Election, Bihar Panchayat 2026, Bihar MLA list';
+$pageKeywords = $pageKeywords ?? 'Bihar Election 2026, 243 Bihar Assembly Constituencies, Patna Vidhan Sabha, Bihar Election Results, Bihar Panchayat 2026, Bihar MLA list, Bihar Political Hub';
 $pageCanonical = $pageCanonical ?? SITE_URL;
 $activeNav = $activeNav ?? 'home';
 ?>
@@ -97,10 +97,10 @@ $activeNav = $activeNav ?? 'home';
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="districtBlockDropdown">
                             <li><h6 class="dropdown-header text-uppercase small fw-bold">Administrative Units</h6></li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getDistrictUrl('saran'); ?>">
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getDistrictUrl('patna'); ?>">
                                     <span>🏢</span>
                                     <div>
-                                        <div class="fw-bold">All 38 Districts</div>
+                                        <div class="fw-bold">All 38 Districts Hub</div>
                                         <small class="text-muted">District profile, HQ & demographics</small>
                                     </div>
                                 </a>
@@ -255,10 +255,11 @@ $activeNav = $activeNav ?? 'home';
                         <a href="<?php echo SITE_URL; ?>/candidate/dr-cn-gupta" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'candidates' ? 'active text-warning' : ''; ?>">Candidates</a>
                     </li>
 
-                    <!-- Advertise -->
+                    <!-- Blog -->
                     <li class="nav-item">
-                        <a href="<?php echo SITE_URL; ?>/advertise" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'advertise' ? 'active text-warning' : ''; ?>">Advertise</a>
+                        <a href="<?php echo getBlogUrl(); ?>" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'blog' ? 'active text-warning' : ''; ?>">Blog</a>
                     </li>
+
 
                     <?php if (isUserLoggedIn()): 
                         $currUser = getCurrentUser();
@@ -282,15 +283,10 @@ $activeNav = $activeNav ?? 'home';
                         </ul>
                     </li>
                     <?php else: ?>
-                    <!-- Public Login / Sign Up Button -->
+                    <!-- Public Citizen Login Button -->
                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                         <a href="<?php echo SITE_URL; ?>/login" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-2 fw-bold d-inline-flex align-items-center gap-1 shadow-sm w-100 justify-content-center">
                             <i class="bi bi-person-circle"></i> Citizen Login
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-1 mt-2 mt-lg-0">
-                        <a href="<?php echo SITE_URL; ?>/register" class="btn btn-sm btn-warning rounded-pill px-3 py-2 fw-bold d-inline-flex align-items-center gap-1 shadow-sm text-dark w-100 justify-content-center">
-                            <i class="bi bi-person-plus-fill"></i> Register Free
                         </a>
                     </li>
                     <?php endif; ?>

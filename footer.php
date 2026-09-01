@@ -26,28 +26,34 @@ require_once __DIR__ . '/config.php';
                     </div>
                 </div>
 
-                <!-- Col 2: 38 District Hubs -->
+                <!-- Col 2: 9 Commissionaries (Alphabetical A-Z) -->
                 <div class="col-6 col-md-4 col-lg-2">
-                    <h3 class="h6 text-white fw-bold mb-3">38 District Hubs</h3>
+                    <h3 class="h6 text-white fw-bold mb-3">9 Commissionaries</h3>
                     <ul class="list-unstyled footer-links small">
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('saran'); ?>" class="text-white-50 text-decoration-none">Saran (Chhapra)</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('patna'); ?>" class="text-white-50 text-decoration-none">Patna</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('muzaffarpur'); ?>" class="text-white-50 text-decoration-none">Muzaffarpur</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('gaya'); ?>" class="text-white-50 text-decoration-none">Gaya</a></li>
                         <li class="mb-2"><a href="<?php echo getDistrictUrl('bhagalpur'); ?>" class="text-white-50 text-decoration-none">Bhagalpur</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('darbhanga'); ?>" class="text-white-50 text-decoration-none">Darbhanga</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('saharsa'); ?>" class="text-white-50 text-decoration-none">Kosi (Saharsa)</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('gaya'); ?>" class="text-white-50 text-decoration-none">Magadh (Gaya)</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('munger'); ?>" class="text-white-50 text-decoration-none">Munger</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('patna'); ?>" class="text-white-50 text-decoration-none">👑 Patna (Capital)</a></li>
                         <li class="mb-2"><a href="<?php echo getDistrictUrl('purnia'); ?>" class="text-white-50 text-decoration-none">Purnia</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('saran'); ?>" class="text-white-50 text-decoration-none">Saran (Chhapra)</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('muzaffarpur'); ?>" class="text-white-50 text-decoration-none">Tirhut (Muzaffarpur)</a></li>
                         <li class="mb-2"><a href="<?php echo getCensusUrl(); ?>" class="text-warning fw-bold text-decoration-none">📊 Census 2011 Hub &rarr;</a></li>
                     </ul>
                 </div>
 
                 <!-- Col 3: Legal & Policy Documents -->
                 <div class="col-6 col-md-4 col-lg-3">
-                    <h3 class="h6 text-white fw-bold mb-3">Legal &amp; Policy</h3>
+                    <h3 class="h6 text-white fw-bold mb-3">Legal &amp; Portals</h3>
                     <ul class="list-unstyled footer-links small">
+                        <li class="mb-2"><a href="<?php echo getBlogUrl(); ?>" class="text-white-50 text-decoration-none">📰 News &amp; Blog</a></li>
                         <li class="mb-2"><a href="<?php echo SITE_URL; ?>/terms-and-conditions" class="text-white-50 text-decoration-none">📜 Terms &amp; Conditions</a></li>
                         <li class="mb-2"><a href="<?php echo SITE_URL; ?>/disclaimer" class="text-white-50 text-decoration-none">⚠️ Disclaimer Notice</a></li>
                         <li class="mb-2"><a href="<?php echo SITE_URL; ?>/privacy-policy" class="text-white-50 text-decoration-none">🔒 Privacy Policy</a></li>
                         <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mission-and-vision" class="text-white-50 text-decoration-none">🎯 Mission &amp; Vision</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/advertise" class="text-white-50 text-decoration-none">📢 Advertise &amp; Sponsorships</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/register" class="text-warning fw-semibold text-decoration-none"><i class="bi bi-person-plus-fill"></i> Free Citizen Registration</a></li>
                     </ul>
                 </div>
 
@@ -80,11 +86,6 @@ require_once __DIR__ . '/config.php';
                                 <i class="bi bi-youtube"></i> YouTube (@BiharElectionAI)
                             </a>
                         </li>
-                        <li class="mt-3">
-                            <a href="<?php echo SITE_URL; ?>/advertise" class="btn btn-warning btn-sm fw-bold px-3 py-1 text-dark shadow-sm">
-                                <i class="bi bi-megaphone"></i> Advertise
-                            </a>
-                        </li>
                     </ul>
                 </div>
 
@@ -92,7 +93,7 @@ require_once __DIR__ . '/config.php';
 
             <!-- Bottom Copyright & Social Icons Row -->
             <div class="pt-3 mt-3 border-top border-white border-opacity-10 d-flex flex-wrap justify-content-between align-items-center gap-3 small text-white-50">
-                <div>&copy; <?php echo date('Y'); ?> Bihar Election. All Rights Reserved. &bull; <a href="<?php echo SITE_URL; ?>/mission-and-vision" class="text-white-50 text-decoration-none">Mission &amp; Vision</a> &bull; <a href="<?php echo SITE_URL; ?>/disclaimer" class="text-white-50 text-decoration-none">Disclaimer</a> &bull; <a href="<?php echo SITE_URL; ?>/privacy-policy" class="text-white-50 text-decoration-none">Privacy Policy</a> &bull; <a href="<?php echo SITE_URL; ?>/terms-and-conditions" class="text-white-50 text-decoration-none">Terms &amp; Conditions</a> &bull; <a href="<?php echo SITE_URL; ?>/admin/login.php" class="text-white-50 text-decoration-none"><i class="bi bi-shield-lock"></i> Admin Portal</a></div>
+                <div>&copy; <?php echo date('Y'); ?> Bihar Election. All Rights Reserved. &bull; Non-Government Civic Information Platform &bull; <a href="<?php echo SITE_URL; ?>/admin/login.php" class="text-white-50 text-decoration-none"><i class="bi bi-shield-lock"></i> Admin Portal</a></div>
                 <div class="d-flex gap-3 align-items-center">
                     <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-whatsapp"></i></a>
                     <a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-instagram"></i></a>

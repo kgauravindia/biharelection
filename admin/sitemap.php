@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_sitemap'])) 
     // 1. Static Pages
     $static_pages = [
         ['url' => '/', 'priority' => '1.0', 'changefreq' => 'daily'],
+        ['url' => '/blog/', 'priority' => '0.9', 'changefreq' => 'daily'],
         ['url' => '/panchayat', 'priority' => '0.9', 'changefreq' => 'daily'],
         ['url' => '/mukhiya', 'priority' => '0.9', 'changefreq' => 'daily'],
         ['url' => '/sarpanch', 'priority' => '0.9', 'changefreq' => 'daily'],
@@ -188,8 +189,12 @@ $sitemap_mtime = $sitemap_exists ? filemtime($sitemap_path) : 0;
                     <div class="section-card-body">
                         <ul class="list-group list-group-flush small">
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <span><i class="fas fa-check-circle text-success me-2"></i> <code>robots.txt</code> points to sitemap</span>
+                                <span><i class="fas fa-check-circle text-success me-2"></i> <code>robots.txt</code> points to sitemaps</span>
                                 <span class="badge bg-success">Configured</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
+                                <span><i class="fas fa-check-circle text-success me-2"></i> <code>/post-sitemap.xml</code> 301 Redirect to <code>/blog/</code></span>
+                                <span class="badge bg-success">Active</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
                                 <span><i class="fas fa-check-circle text-success me-2"></i> Clean canonical SEO URLs</span>
@@ -229,14 +234,20 @@ $sitemap_mtime = $sitemap_exists ? filemtime($sitemap_path) : 0;
                                 <small class="text-muted text-uppercase fw-bold d-block">File Size</small>
                                 <span class="fw-bold text-dark"><?php echo $sitemap_size ? round($sitemap_size / 1024, 1) . ' KB' : '0 KB'; ?></span>
                             </div>
+                            <div class="col-12">
+                                <small class="text-muted text-uppercase fw-bold d-block">Blog Post Sitemap</small>
+                                <a href="<?php echo SITE_URL; ?>/blog/post-sitemap.xml" target="_blank" class="text-primary text-decoration-none fw-semibold small">
+                                    <i class="fas fa-external-link-alt me-1"></i> /blog/post-sitemap.xml
+                                </a>
+                            </div>
                         </div>
 
                         <div class="border-top pt-3">
                             <h6 class="fw-bold text-dark mb-2">URLs Included in Sitemap:</h6>
                             <div class="d-flex flex-column gap-2 small">
                                 <div class="d-flex justify-content-between p-2 bg-light rounded">
-                                    <span>Main Landing & Static Pages</span>
-                                    <span class="fw-bold">4 Pages</span>
+                                    <span>Main Landing, Blog & Static Pages</span>
+                                    <span class="fw-bold">16 Pages</span>
                                 </div>
                                 <div class="d-flex justify-content-between p-2 bg-light rounded">
                                     <span>Bihar District Overview Pages</span>

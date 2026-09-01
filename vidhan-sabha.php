@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/config.php';
 
-$acParam = $_GET['ac'] ?? $_GET['id'] ?? $_GET['slug'] ?? 118;
+$acParam = $_GET['ac'] ?? $_GET['id'] ?? $_GET['slug'] ?? 182;
 $ac = null;
 
 if (is_numeric($acParam)) {
@@ -11,7 +11,7 @@ if (is_numeric($acParam)) {
 }
 
 if (!$ac) {
-    $ac = DataProvider::getConstituencyByAcNumber(118);
+    $ac = DataProvider::getConstituencyByAcNumber(182);
 }
 
 $allAcs = DataProvider::getConstituencies();

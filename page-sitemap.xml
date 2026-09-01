@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This sitemap was dynamically generated on September 1, 2026 at 9:41 pm by All in One SEO v4.9.10 - the original SEO plugin for WordPress. -->
+
+<?xml-stylesheet type="text/xsl" href="https://biharelection.com/default-sitemap.xsl?sitemap=page"?>
+<urlset
+	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+	xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
+	<url>
+		<loc><![CDATA[https://biharelection.com/whatsapp/]]></loc>
+		<lastmod><![CDATA[2026-04-11T06:53:06+00:00]]></lastmod>
+		<changefreq><![CDATA[daily]]></changefreq>
+		<priority><![CDATA[1]]></priority>
+	</url>
+	<url>
+		<loc><![CDATA[https://biharelection.com/search-pin-code/]]></loc>
+		<lastmod><![CDATA[2026-03-30T17:11:18+00:00]]></lastmod>
+		<changefreq><![CDATA[daily]]></changefreq>
+		<priority><![CDATA[1]]></priority>
+	</url>
+	<url>
+		<loc><![CDATA[https://biharelection.com/mission-and-vision/]]></loc>
+		<lastmod><![CDATA[2025-11-01T16:09:12+00:00]]></lastmod>
+		<changefreq><![CDATA[daily]]></changefreq>
+		<priority><![CDATA[1]]></priority>
+		<image:image>
+			<image:loc>
+				<![CDATA[https://biharelection.com/wp-content/uploads/2025/10/bihar-29-Oct-2025.png]]>			</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc><![CDATA[https://biharelection.com/contact/]]></loc>
+		<lastmod><![CDATA[2025-03-23T10:37:53+00:00]]></lastmod>
+		<changefreq><![CDATA[daily]]></changefreq>
+		<priority><![CDATA[1]]></priority>
+		<image:image>
+			<image:loc>
+				<![CDATA[https://biharelection.com/wp-content/plugins/wpforms-lite/assets/images/submit-spin.svg]]>			</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc><![CDATA[https://biharelection.com/about/]]></loc>
+		<lastmod><![CDATA[2025-02-26T09:32:01+00:00]]></lastmod>
+		<changefreq><![CDATA[daily]]></changefreq>
+		<priority><![CDATA[1]]></priority>
+	</url>
+	<url>
+		<loc><![CDATA[https://biharelection.com/privacy-policy/]]></loc>
+		<lastmod><![CDATA[2025-02-26T08:28:34+00:00]]></lastmod>
+		<changefreq><![CDATA[daily]]></changefreq>
+		<priority><![CDATA[1]]></priority>
+	</url>
+	<url>
+		<loc><![CDATA[https://biharelection.com/disclaimer/]]></loc>
+		<lastmod><![CDATA[2025-02-26T08:23:06+00:00]]></lastmod>
+		<changefreq><![CDATA[daily]]></changefreq>
+		<priority><![CDATA[1]]></priority>
+	</url>
+	<url>
+		<loc><![CDATA[https://biharelection.com/terms-and-conditions/]]></loc>
+		<lastmod><![CDATA[2025-02-26T08:17:06+00:00]]></lastmod>
+		<changefreq><![CDATA[daily]]></changefreq>
+		<priority><![CDATA[1]]></priority>
+	</url>
+</urlset>

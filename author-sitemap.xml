@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This sitemap was dynamically generated on September 1, 2026 at 9:41 pm by All in One SEO v4.9.10 - the original SEO plugin for WordPress. -->
+
+<?xml-stylesheet type="text/xsl" href="https://biharelection.com/default-sitemap.xsl?sitemap=author"?>
+<urlset
+	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+	xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
+	<url>
+		<loc><![CDATA[https://biharelection.com/author/bihar/]]></loc>
+		<lastmod><![CDATA[2026-08-12T09:23:45+00:00]]></lastmod>
+		<changefreq><![CDATA[weekly]]></changefreq>
+		<priority><![CDATA[0.3]]></priority>
+	</url>
+</urlset>
