@@ -1,34 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- This sitemap was dynamically generated on September 1, 2026 at 9:40 pm by All in One SEO v4.9.10 - the original SEO plugin for WordPress. -->
-
-<?xml-stylesheet type="text/xsl" href="https://biharelection.com/default-sitemap.xsl?sitemap=root"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<sitemap>
-		<loc><![CDATA[https://biharelection.com/sitemap.xml]]></loc>
-		<lastmod><![CDATA[2026-09-02T22:00:00+05:30]]></lastmod>
-	</sitemap>
-	<sitemap>
-		<loc><![CDATA[https://biharelection.com/post-sitemap.xml]]></loc>
-		<lastmod><![CDATA[2026-08-12T09:23:45+00:00]]></lastmod>
-	</sitemap>
-	<sitemap>
-		<loc><![CDATA[https://biharelection.com/page-sitemap.xml]]></loc>
-		<lastmod><![CDATA[2026-04-11T06:53:06+00:00]]></lastmod>
-	</sitemap>
-	<sitemap>
-		<loc><![CDATA[https://biharelection.com/category-sitemap.xml]]></loc>
-		<lastmod><![CDATA[2026-08-12T09:23:45+00:00]]></lastmod>
-	</sitemap>
-	<sitemap>
-		<loc><![CDATA[https://biharelection.com/post_tag-sitemap.xml]]></loc>
-		<lastmod><![CDATA[2026-08-12T09:23:45+00:00]]></lastmod>
-	</sitemap>
-	<sitemap>
-		<loc><![CDATA[https://biharelection.com/author-sitemap.xml]]></loc>
-		<lastmod><![CDATA[2026-08-12T09:23:45+00:00]]></lastmod>
-	</sitemap>
-	<sitemap>
-		<loc><![CDATA[https://biharelection.com/date-sitemap.xml]]></loc>
-		<lastmod><![CDATA[2026-08-12T09:23:45+00:00]]></lastmod>
-	</sitemap>
+    <sitemap>
+        <loc>https://biharelection.com/sitemap.xml</loc>
+        <lastmod>2026-09-02T22:30:16+05:30</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>https://biharelection.com/sitemap-panchayats.xml</loc>
+        <lastmod>2026-09-02T22:30:16+05:30</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>https://biharelection.com/sitemap-census.xml</loc>
+        <lastmod>2026-09-02T22:30:16+05:30</lastmod>
+    </sitemap>
 </sitemapindex>

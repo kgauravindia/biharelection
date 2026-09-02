@@ -2,6 +2,11 @@
 /blog
 /blog/
 
+# Ignore sitemap backup / archive directory
+/sitemap/
+/sitemap
+sitemap/
+
 # Environment and sensitive configs
 .env
 .env.*
@@ -16,4 +21,3 @@ config.prod.php
 *.log
 scratch/
 tmp/
-

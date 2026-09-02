@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://biharelection.com/sitemap.xml
 Sitemap: https://biharelection.com/sitemap_index.xml
-Sitemap: https://biharelection.com/post-sitemap.xml
+Sitemap: https://biharelection.com/sitemap.xml
+Sitemap: https://biharelection.com/sitemap-panchayats.xml
+Sitemap: https://biharelection.com/sitemap-census.xml
