@@ -160,14 +160,20 @@ require_once __DIR__ . '/header.php';
                     <div class="d-flex flex-wrap align-items-center gap-2">
                         
                         <?php if (($user['mobile_visibility'] ?? 'PUBLIC') === 'PUBLIC' && !empty($user['mobile'])): ?>
-                            <a href="tel:+91<?php echo htmlspecialchars($user['mobile']); ?>" class="btn btn-primary fw-bold rounded-pill px-3.5 py-2">
-                                <i class="bi bi-telephone-fill me-1.5"></i> Call Now
-                            </a>
-                            
-                            <?php $waNum = !empty($user['whatsapp']) ? $user['whatsapp'] : $user['mobile']; ?>
-                            <a href="https://wa.me/91<?php echo htmlspecialchars($waNum); ?>?text=Hello%20<?php echo urlencode($displayName); ?>%2C%20I%20found%20your%20profile%20on%20BiharElection.com." target="_blank" class="btn btn-success fw-bold rounded-pill px-3.5 py-2">
-                                <i class="bi bi-whatsapp me-1.5"></i> WhatsApp
-                            </a>
+                            <?php if ($isLoggedIn): ?>
+                                <a href="tel:+91<?php echo htmlspecialchars($user['mobile']); ?>" class="btn btn-primary fw-bold rounded-pill px-3.5 py-2">
+                                    <i class="bi bi-telephone-fill me-1.5"></i> Call +91 <?php echo htmlspecialchars($user['mobile']); ?>
+                                </a>
+                                
+                                <?php $waNum = !empty($user['whatsapp']) ? $user['whatsapp'] : $user['mobile']; ?>
+                                <a href="https://wa.me/91<?php echo htmlspecialchars($waNum); ?>?text=Hello%20<?php echo urlencode($displayName); ?>%2C%20I%20found%20your%20profile%20on%20BiharElection.com." target="_blank" class="btn btn-success fw-bold rounded-pill px-3.5 py-2">
+                                    <i class="bi bi-whatsapp me-1.5"></i> WhatsApp
+                                </a>
+                            <?php else: ?>
+                                <a href="<?php echo SITE_URL; ?>/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI'] ?? ''); ?>" class="btn btn-primary fw-bold rounded-pill px-3.5 py-2 shadow-sm">
+                                    <i class="bi bi-lock-fill me-1.5"></i> Login to View Mobile Number
+                                </a>
+                            <?php endif; ?>
                         <?php endif; ?>
 
                         <?php if (($user['email_visibility'] ?? 'PUBLIC') === 'PUBLIC' && !empty($user['email'])): ?>

@@ -952,11 +952,27 @@ function renderGoogleAd($slotType = 'leaderboard', $slotId = '', $customClass = 
 }
 
 /**
- * Masks a mobile number for privacy (e.g. 9876543210 -> 98******10)
+ * Returns full mobile number for registered/logged-in users, or masked number for guests
  */
-function maskMobileNumber($phone) {
+function maskMobileNumber($phone, $forceMask = false) {
     if (empty($phone)) return '';
     $clean = preg_replace('/[^0-9]/', '', (string)$phone);
+    if (empty($clean)) return '';
+
+    // Check if current visitor is a logged-in registered user or admin
+    $isLoggedIn = (function_exists('isUserLoggedIn') && isUserLoggedIn())
+               || !empty($_SESSION['public_user_id'])
+               || !empty($_SESSION['admin_logged_in']);
+
+    if ($isLoggedIn && !$forceMask) {
+        $len = strlen($clean);
+        if ($len >= 10) {
+            return substr($clean, -10);
+        }
+        return $clean;
+    }
+
+    // Otherwise mask for public guests (e.g. 98******10)
     $len = strlen($clean);
     if ($len >= 10) {
         $last10 = substr($clean, -10);
