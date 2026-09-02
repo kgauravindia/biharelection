@@ -879,6 +879,11 @@ function renderGoogleAd($slotType = 'leaderboard', $slotId = '', $customClass = 
     $client = defined('GOOGLE_ADSENSE_CLIENT') ? GOOGLE_ADSENSE_CLIENT : '';
     $isLive = (!empty($client) && $client !== 'ca-pub-XXXXXXXXXXXXXXXX');
 
+    // On live/production environment, never render placeholder boxes if real AdSense client is not set
+    if (!$isLive && (!defined('IS_LOCAL') || !IS_LOCAL)) {
+        return;
+    }
+
     $styles = [
         'leaderboard' => [
             'class' => 'ad-leaderboard-slot',
