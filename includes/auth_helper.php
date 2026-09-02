@@ -12,7 +12,7 @@ require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/sms_helper.php';
 
 /**
- * Initialize public user database tables if they do not exist
+ * Initialize public user database tables and ensure all profile columns exist
  */
 function initUserTables() {
     $pdo = Database::getConnection();
@@ -21,28 +21,105 @@ function initUserTables() {
     try {
         $sql = "CREATE TABLE IF NOT EXISTS `be_users` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `name` VARCHAR(150) NOT NULL,
+            `name` VARCHAR(150) DEFAULT NULL,
+            `full_name` VARCHAR(100) DEFAULT NULL,
             `mobile` VARCHAR(20) NOT NULL UNIQUE,
+            `whatsapp` VARCHAR(20) DEFAULT NULL,
             `email` VARCHAR(100) DEFAULT NULL,
             `password` VARCHAR(255) DEFAULT NULL,
+            `password_hash` VARCHAR(255) DEFAULT NULL,
             `role` VARCHAR(50) DEFAULT 'voter',
+            `type` VARCHAR(50) DEFAULT 'USER',
             `district` VARCHAR(100) DEFAULT NULL,
             `constituency` VARCHAR(100) DEFAULT NULL,
             `panchayat` VARCHAR(150) DEFAULT NULL,
+            `business_name` VARCHAR(150) DEFAULT NULL,
+            `designation` VARCHAR(100) DEFAULT NULL,
+            `profession_category` VARCHAR(100) DEFAULT NULL,
+            `specialization` VARCHAR(255) DEFAULT NULL,
+            `education` VARCHAR(150) DEFAULT NULL,
+            `gender` VARCHAR(20) DEFAULT NULL,
+            `dob` DATE DEFAULT NULL,
+            `languages` VARCHAR(255) DEFAULT NULL,
+            `experience_years` VARCHAR(50) DEFAULT NULL,
+            `office_hours` VARCHAR(150) DEFAULT NULL,
+            `address` TEXT DEFAULT NULL,
+            `pincode` VARCHAR(10) DEFAULT NULL,
+            `bio` TEXT DEFAULT NULL,
+            `about` TEXT DEFAULT NULL,
+            `profile_image` VARCHAR(255) DEFAULT NULL,
+            `profile_photo` VARCHAR(255) DEFAULT NULL,
+            `photo` VARCHAR(255) DEFAULT NULL,
+            `username_handle` VARCHAR(50) DEFAULT NULL,
+            `public_url` VARCHAR(255) DEFAULT NULL,
+            `profile_visibility` VARCHAR(20) DEFAULT 'PUBLIC',
+            `mobile_visibility` VARCHAR(20) DEFAULT 'PUBLIC',
+            `email_visibility` VARCHAR(20) DEFAULT 'PUBLIC',
+            `address_visibility` VARCHAR(20) DEFAULT 'PUBLIC',
+            `linkedin` VARCHAR(255) DEFAULT NULL,
+            `twitter` VARCHAR(255) DEFAULT NULL,
+            `facebook` VARCHAR(255) DEFAULT NULL,
+            `instagram` VARCHAR(255) DEFAULT NULL,
+            `google_maps_link` TEXT DEFAULT NULL,
+            `counter` INT DEFAULT 0,
             `status` VARCHAR(20) DEFAULT 'ACTIVE',
-            `otp_code` VARCHAR(10) DEFAULT NULL,
+            `otp_code` VARCHAR(20) DEFAULT NULL,
             `otp_expiry` DATETIME DEFAULT NULL,
             `is_mobile_verified` TINYINT(1) DEFAULT 0,
-            `profile_photo` VARCHAR(255) DEFAULT NULL,
+            `mobile_status` VARCHAR(20) DEFAULT 'UNVERIFIED',
+            `email_status` VARCHAR(20) DEFAULT 'UNVERIFIED',
             `last_login` TIMESTAMP NULL DEFAULT NULL,
             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             INDEX (`mobile`),
             INDEX (`email`),
+            INDEX (`username_handle`),
             INDEX (`role`),
             INDEX (`district`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
         
         $pdo->exec($sql);
+
+        // Auto-add any missing columns on existing tables
+        $cols = [
+            'full_name' => "VARCHAR(100) DEFAULT NULL",
+            'whatsapp' => "VARCHAR(20) DEFAULT NULL",
+            'username_handle' => "VARCHAR(50) DEFAULT NULL",
+            'business_name' => "VARCHAR(150) DEFAULT NULL",
+            'designation' => "VARCHAR(100) DEFAULT NULL",
+            'profession_category' => "VARCHAR(100) DEFAULT NULL",
+            'specialization' => "VARCHAR(255) DEFAULT NULL",
+            'education' => "VARCHAR(150) DEFAULT NULL",
+            'gender' => "VARCHAR(20) DEFAULT NULL",
+            'dob' => "DATE DEFAULT NULL",
+            'languages' => "VARCHAR(255) DEFAULT NULL",
+            'experience_years' => "VARCHAR(50) DEFAULT NULL",
+            'office_hours' => "VARCHAR(150) DEFAULT NULL",
+            'address' => "TEXT DEFAULT NULL",
+            'pincode' => "VARCHAR(10) DEFAULT NULL",
+            'bio' => "TEXT DEFAULT NULL",
+            'about' => "TEXT DEFAULT NULL",
+            'profile_image' => "VARCHAR(255) DEFAULT NULL",
+            'photo' => "VARCHAR(255) DEFAULT NULL",
+            'public_url' => "VARCHAR(255) DEFAULT NULL",
+            'profile_visibility' => "VARCHAR(20) DEFAULT 'PUBLIC'",
+            'mobile_visibility' => "VARCHAR(20) DEFAULT 'PUBLIC'",
+            'email_visibility' => "VARCHAR(20) DEFAULT 'PUBLIC'",
+            'address_visibility' => "VARCHAR(20) DEFAULT 'PUBLIC'",
+            'linkedin' => "VARCHAR(255) DEFAULT NULL",
+            'twitter' => "VARCHAR(255) DEFAULT NULL",
+            'facebook' => "VARCHAR(255) DEFAULT NULL",
+            'instagram' => "VARCHAR(255) DEFAULT NULL",
+            'google_maps_link' => "TEXT DEFAULT NULL",
+            'counter' => "INT DEFAULT 0",
+            'mobile_status' => "VARCHAR(20) DEFAULT 'UNVERIFIED'",
+            'email_status' => "VARCHAR(20) DEFAULT 'UNVERIFIED'"
+        ];
+        foreach ($cols as $col => $type) {
+            try {
+                $pdo->exec("ALTER TABLE `be_users` ADD COLUMN IF NOT EXISTS `$col` $type");
+            } catch (Throwable $e) {}
+        }
     } catch (Throwable $e) {
         error_log("Failed to initialize be_users table: " . $e->getMessage());
     }
@@ -271,3 +348,171 @@ function logoutUser() {
         $_SESSION['pending_otp']
     );
 }
+
+/**
+ * Alias for getCurrentUser()
+ */
+function getLoggedInUser() {
+    return getCurrentUser();
+}
+
+/**
+ * Fetch a user by public handle, username, ID, or slug
+ */
+function getUserByHandle($handle) {
+    if (empty($handle)) return null;
+    $clean = trim($handle);
+    $clean = ltrim($clean, '@');
+
+    $pdo = Database::getConnection();
+    if (!$pdo) return null;
+
+    try {
+        // 1. By username_handle
+        $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE LOWER(`username_handle`) = LOWER(?) OR LOWER(`username_handle`) = LOWER(?) LIMIT 1");
+        $stmt->execute([$clean, '@' . $clean]);
+        $user = $stmt->fetch();
+        if ($user) return $user;
+
+        // 2. By public_url
+        $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE LOWER(`public_url`) = LOWER(?) LIMIT 1");
+        $stmt->execute([$clean]);
+        $user = $stmt->fetch();
+        if ($user) return $user;
+
+        // 3. By numeric ID
+        if (is_numeric($clean)) {
+            $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE `id` = ? LIMIT 1");
+            $stmt->execute([(int)$clean]);
+            $user = $stmt->fetch();
+            if ($user) return $user;
+        }
+
+        // 4. By exact name or slug
+        $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE LOWER(REPLACE(`name`, ' ', '-')) = LOWER(?) OR LOWER(REPLACE(`full_name`, ' ', '-')) = LOWER(?) LIMIT 1");
+        $stmt->execute([$clean, $clean]);
+        $user = $stmt->fetch();
+        if ($user) return $user;
+
+    } catch (Throwable $e) {
+        error_log("getUserByHandle error: " . $e->getMessage());
+    }
+
+    return null;
+}
+
+/**
+ * Increment profile view counter
+ */
+function incrementUserProfileViews($userId) {
+    $pdo = Database::getConnection();
+    if ($pdo && (int)$userId > 0) {
+        try {
+            $stmt = $pdo->prepare("UPDATE `be_users` SET `counter` = COALESCE(`counter`, 0) + 1 WHERE `id` = ?");
+            $stmt->execute([(int)$userId]);
+        } catch (Throwable $e) {}
+    }
+}
+
+/**
+ * Update comprehensive user profile
+ */
+function updateUserProfile($userId, array $data) {
+    $pdo = Database::getConnection();
+    if (!$pdo || (int)$userId <= 0) return false;
+
+    // Allowed updatable columns
+    $allowed = [
+        'name', 'full_name', 'username_handle', 'email', 'whatsapp', 'district',
+        'constituency', 'panchayat', 'business_name', 'designation', 'profession_category',
+        'specialization', 'education', 'gender', 'dob', 'languages', 'experience_years',
+        'office_hours', 'address', 'pincode', 'bio', 'about', 'profile_image',
+        'profile_photo', 'photo', 'public_url', 'profile_visibility', 'mobile_visibility',
+        'email_visibility', 'address_visibility', 'linkedin', 'twitter', 'facebook',
+        'instagram', 'google_maps_link'
+    ];
+
+    $updates = [];
+    $params = [];
+
+    foreach ($allowed as $field) {
+        if (array_key_exists($field, $data)) {
+            $val = $data[$field];
+            if ($field === 'username_handle' && !empty($val)) {
+                $val = '@' . ltrim(trim($val), '@');
+            }
+            $updates[] = "`$field` = ?";
+            $params[] = ($val === '' ? null : $val);
+        }
+    }
+
+    if (empty($updates)) return false;
+
+    $params[] = (int)$userId;
+    $sql = "UPDATE `be_users` SET " . implode(', ', $updates) . " WHERE `id` = ?";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        return $stmt->execute($params);
+    } catch (Throwable $e) {
+        error_log("updateUserProfile error: " . $e->getMessage());
+        return false;
+    }
+}
+
+/**
+ * Upload User Profile Avatar
+ */
+function uploadUserProfilePhoto($file, $userId) {
+    if (empty($file) || empty($file['tmp_name']) || $file['error'] !== UPLOAD_ERR_OK) {
+        return null;
+    }
+
+    $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime = finfo_file($fileInfo, $file['tmp_name']);
+    finfo_close($fileInfo);
+
+    if (!in_array($mime, $allowedMimes)) {
+        return null;
+    }
+
+    $ext = match($mime) {
+        'image/jpeg' => 'jpg',
+        'image/png'  => 'png',
+        'image/webp' => 'webp',
+        'image/gif'  => 'gif',
+        default      => 'jpg'
+    };
+
+    $uploadDir = __DIR__ . '/../uploads/profiles/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    $fileName = 'user_' . (int)$userId . '_' . time() . '.' . $ext;
+    $targetPath = $uploadDir . $fileName;
+
+    if (move_uploaded_file($file['tmp_name'], $targetPath)) {
+        return 'uploads/profiles/' . $fileName;
+    }
+
+    return null;
+}
+
+/**
+ * Calculate user profile completion score
+ */
+function getProfileCompletionPercent($user) {
+    if (empty($user)) return 0;
+    $fields = [
+        'name', 'mobile', 'email', 'district', 'constituency', 'panchayat',
+        'designation', 'bio', 'education', 'profile_image', 'whatsapp'
+    ];
+    $completed = 0;
+    foreach ($fields as $f) {
+        if (!empty($user[$f])) $completed++;
+    }
+    return (int)round(($completed / count($fields)) * 100);
+}
+

@@ -62,9 +62,14 @@ require_once __DIR__ . '/header.php';
     <div class="container">
         
         <!-- Welcome Hero Banner -->
+        <?php 
+        $handle = !empty($user['username_handle']) ? $user['username_handle'] : (string)$user['id'];
+        $publicProfileUrl = SITE_URL . '/user/' . urlencode(ltrim($handle, '@'));
+        $comp = getProfileCompletionPercent($user);
+        ?>
         <div class="card border-0 rounded-4 shadow-sm p-4 p-md-5 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%);">
             <div class="row align-items-center">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="d-inline-flex align-items-center gap-2 mb-2">
                         <span class="badge bg-warning text-dark fw-bold px-3 py-1 text-uppercase">
                             <?php echo htmlspecialchars(strtoupper($user['role'] ?? 'VOTER')); ?>
@@ -72,20 +77,32 @@ require_once __DIR__ . '/header.php';
                         <span class="badge bg-success bg-opacity-25 text-success border border-success fw-bold px-3 py-1">
                             <i class="bi bi-shield-check"></i> Mobile Verified
                         </span>
+                        <span class="badge bg-info bg-opacity-25 text-info border border-info fw-bold px-3 py-1">
+                            <i class="bi bi-eye-fill"></i> <?php echo number_format($user['counter'] ?? 0); ?> Profile Views
+                        </span>
                     </div>
                     <h1 class="display-6 fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">
-                        Welcome, <?php echo htmlspecialchars($user['name'] ?? 'Citizen'); ?>!
+                        Welcome, <?php echo htmlspecialchars($user['full_name'] ?: ($user['name'] ?? 'Citizen')); ?>!
                     </h1>
                     <p class="text-white-50 mb-0">
                         📱 +91 <?php echo htmlspecialchars(maskMobileNumber($user['mobile'] ?? '')); ?>
                         <?php if (!empty($user['district'])): ?>
                             &bull; <i class="bi bi-geo-alt-fill text-warning"></i> <?php echo htmlspecialchars($user['district']); ?>
                         <?php endif; ?>
+                        <?php if (!empty($user['username_handle'])): ?>
+                            &bull; <span class="text-warning fw-semibold"><?php echo htmlspecialchars($user['username_handle']); ?></span>
+                        <?php endif; ?>
                     </p>
                 </div>
-                <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                    <a href="logout.php" class="btn btn-outline-light rounded-pill px-4 fw-bold">
-                        <i class="bi bi-box-arrow-right me-1"></i> Sign Out
+                <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end gap-2">
+                    <a href="<?php echo $publicProfileUrl; ?>" class="btn btn-outline-light rounded-pill px-3 py-2 fw-semibold">
+                        <i class="bi bi-person-circle me-1"></i> Public Profile
+                    </a>
+                    <a href="edit-profile.php" class="btn btn-warning text-dark rounded-pill px-3 py-2 fw-bold">
+                        <i class="bi bi-pencil-square me-1"></i> Edit Profile
+                    </a>
+                    <a href="logout.php" class="btn btn-outline-light rounded-pill px-3 py-2 fw-bold">
+                        <i class="bi bi-box-arrow-right"></i>
                     </a>
                 </div>
             </div>

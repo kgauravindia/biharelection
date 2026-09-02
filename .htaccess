@@ -24,7 +24,7 @@ AddDefaultCharset UTF-8
 # -----------------------------------------------------------------------------
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
+    # RewriteBase is omitted so Apache auto-resolves relative to current directory (works on both domain root and subfolders)
 
     # Optional: Force HTTPS (uncomment if SSL is active and not handled by Cloudflare/Load Balancer)
     # RewriteCond %{HTTPS} off
@@ -142,6 +142,10 @@ AddDefaultCharset UTF-8
     RewriteRule ^forgot-password/?$ forgot-password.php [L,QSA]
     RewriteRule ^verify-otp/?$ verify-otp.php [L,QSA]
     RewriteRule ^dashboard/?$ dashboard.php [L,QSA]
+    RewriteRule ^edit-profile/?$ edit-profile.php [L,QSA]
+    RewriteRule ^user/([a-zA-Z0-9_@.-]+)/?$ user_profile.php?handle=$1 [L,QSA]
+    RewriteRule ^profile/([a-zA-Z0-9_@.-]+)/?$ user_profile.php?handle=$1 [L,QSA]
+    RewriteRule ^profile/?$ dashboard.php [L,QSA]
     RewriteRule ^logout/?$ logout.php [L,QSA]
     RewriteRule ^terms-and-conditions/?$ terms-and-conditions.php [L,QSA]
     RewriteRule ^terms/?$ terms-and-conditions.php [L,QSA]
