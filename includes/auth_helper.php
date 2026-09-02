@@ -80,7 +80,17 @@ function initUserTables() {
         
         $pdo->exec($sql);
 
-        // Auto-add any missing columns on existing tables
+        // Auto-add any missing columns on existing tables (100% compatible with all MySQL/MariaDB versions)
+        $existingCols = [];
+        try {
+            $stmt = $pdo->query("SHOW COLUMNS FROM `be_users`");
+            if ($stmt) {
+                while ($row = $stmt->fetch()) {
+                    $existingCols[strtolower($row['Field'])] = true;
+                }
+            }
+        } catch (Throwable $e) {}
+
         $cols = [
             'full_name' => "VARCHAR(100) DEFAULT NULL",
             'whatsapp' => "VARCHAR(20) DEFAULT NULL",
@@ -100,6 +110,7 @@ function initUserTables() {
             'bio' => "TEXT DEFAULT NULL",
             'about' => "TEXT DEFAULT NULL",
             'profile_image' => "VARCHAR(255) DEFAULT NULL",
+            'profile_photo' => "VARCHAR(255) DEFAULT NULL",
             'photo' => "VARCHAR(255) DEFAULT NULL",
             'public_url' => "VARCHAR(255) DEFAULT NULL",
             'profile_visibility' => "VARCHAR(20) DEFAULT 'PUBLIC'",
@@ -115,10 +126,15 @@ function initUserTables() {
             'mobile_status' => "VARCHAR(20) DEFAULT 'UNVERIFIED'",
             'email_status' => "VARCHAR(20) DEFAULT 'UNVERIFIED'"
         ];
+
         foreach ($cols as $col => $type) {
-            try {
-                $pdo->exec("ALTER TABLE `be_users` ADD COLUMN IF NOT EXISTS `$col` $type");
-            } catch (Throwable $e) {}
+            if (!isset($existingCols[strtolower($col)])) {
+                try {
+                    $pdo->exec("ALTER TABLE `be_users` ADD `$col` $type");
+                } catch (Throwable $e) {
+                    error_log("Failed to add column $col: " . $e->getMessage());
+                }
+            }
         }
     } catch (Throwable $e) {
         error_log("Failed to initialize be_users table: " . $e->getMessage());
@@ -160,14 +176,47 @@ function getCurrentUser() {
 
     // Fallback to session cache
     return [
-        'id'           => $_SESSION['public_user_id'] ?? 0,
-        'name'         => $_SESSION['public_user_name'] ?? 'Citizen',
-        'mobile'       => $_SESSION['public_user_mobile'] ?? '',
-        'email'        => $_SESSION['public_user_email'] ?? '',
-        'role'         => $_SESSION['public_user_role'] ?? 'voter',
-        'district'     => $_SESSION['public_user_district'] ?? '',
-        'constituency' => $_SESSION['public_user_constituency'] ?? '',
-        'panchayat'    => $_SESSION['public_user_panchayat'] ?? '',
+        'id'                  => $_SESSION['public_user_id'] ?? 0,
+        'name'                => $_SESSION['public_user_name'] ?? 'Citizen',
+        'full_name'           => $_SESSION['public_user_name'] ?? 'Citizen',
+        'username_handle'     => $_SESSION['public_user_handle'] ?? '',
+        'mobile'              => $_SESSION['public_user_mobile'] ?? '',
+        'whatsapp'            => $_SESSION['public_user_whatsapp'] ?? '',
+        'email'               => $_SESSION['public_user_email'] ?? '',
+        'role'                => $_SESSION['public_user_role'] ?? 'voter',
+        'district'            => $_SESSION['public_user_district'] ?? '',
+        'constituency'        => $_SESSION['public_user_constituency'] ?? '',
+        'panchayat'           => $_SESSION['public_user_panchayat'] ?? '',
+        'business_name'       => '',
+        'designation'         => '',
+        'profession_category' => '',
+        'specialization'      => '',
+        'education'           => '',
+        'gender'              => '',
+        'dob'                 => null,
+        'languages'           => '',
+        'experience_years'    => '',
+        'office_hours'        => '',
+        'address'             => '',
+        'pincode'             => '',
+        'bio'                 => '',
+        'about'               => '',
+        'profile_image'       => null,
+        'profile_photo'       => null,
+        'photo'               => null,
+        'public_url'          => '',
+        'profile_visibility'  => 'PUBLIC',
+        'mobile_visibility'   => 'PUBLIC',
+        'email_visibility'    => 'PUBLIC',
+        'address_visibility'  => 'PUBLIC',
+        'linkedin'            => '',
+        'twitter'             => '',
+        'facebook'            => '',
+        'instagram'           => '',
+        'google_maps_link'    => '',
+        'counter'             => 0,
+        'is_mobile_verified'  => 1,
+        'mobile_status'       => 'VERIFIED'
     ];
 }
 
@@ -423,7 +472,7 @@ function updateUserProfile($userId, array $data) {
 
     // Allowed updatable columns
     $allowed = [
-        'name', 'full_name', 'username_handle', 'email', 'whatsapp', 'district',
+        'name', 'full_name', 'username_handle', 'email', 'whatsapp', 'role', 'district',
         'constituency', 'panchayat', 'business_name', 'designation', 'profession_category',
         'specialization', 'education', 'gender', 'dob', 'languages', 'experience_years',
         'office_hours', 'address', 'pincode', 'bio', 'about', 'profile_image',
@@ -432,11 +481,27 @@ function updateUserProfile($userId, array $data) {
         'instagram', 'google_maps_link'
     ];
 
+    // Get actual table columns from database to ensure no query failures
+    $existingCols = [];
+    try {
+        $colStmt = $pdo->query("SHOW COLUMNS FROM `be_users`");
+        if ($colStmt) {
+            while ($cRow = $colStmt->fetch()) {
+                $existingCols[strtolower($cRow['Field'])] = true;
+            }
+        }
+    } catch (Throwable $e) {}
+
     $updates = [];
     $params = [];
 
     foreach ($allowed as $field) {
         if (array_key_exists($field, $data)) {
+            // Only update if column exists in the table
+            if (!empty($existingCols) && !isset($existingCols[strtolower($field)])) {
+                continue;
+            }
+
             $val = $data[$field];
             if ($field === 'username_handle' && !empty($val)) {
                 $val = '@' . ltrim(trim($val), '@');

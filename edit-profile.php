@@ -394,7 +394,7 @@ require_once __DIR__ . '/header.php';
                 <div class="card border-0 shadow-sm rounded-4 p-4 text-center mb-4">
                     <div class="mb-3">
                         <?php 
-                        $photoPath = $user['profile_image'] ?: ($user['profile_photo'] ?: $user['photo']);
+                        $photoPath = !empty($user['profile_image']) ? $user['profile_image'] : (!empty($user['profile_photo']) ? $user['profile_photo'] : ($user['photo'] ?? ''));
                         if (!empty($photoPath) && file_exists(__DIR__ . '/' . $photoPath)): ?>
                             <img src="<?php echo SITE_URL . '/' . htmlspecialchars($photoPath); ?>" alt="Avatar" class="rounded-circle img-thumbnail shadow-sm mx-auto" style="width: 90px; height: 90px; object-fit: cover;">
                         <?php else: ?>
