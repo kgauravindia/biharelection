@@ -153,7 +153,7 @@ require_once __DIR__ . '/header.php';
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label fw-bold small text-secondary">Full Name / पूरा नाम <span class="text-danger">*</span></label>
-                            <input type="text" name="full_name" class="form-control form-control-lg rounded-3 fs-6" value="<?php echo htmlspecialchars($user['full_name'] ?: ($user['name'] ?? '')); ?>" placeholder="e.g. Rahul Kumar" required>
+                            <input type="text" name="full_name" class="form-control form-control-lg rounded-3 fs-6" value="<?php echo htmlspecialchars(($user['full_name'] ?? '') ?: ($user['name'] ?? '')); ?>" placeholder="e.g. Rahul Kumar" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold small text-secondary">Public Username Handle</label>
@@ -399,11 +399,12 @@ require_once __DIR__ . '/header.php';
                             <img src="<?php echo SITE_URL . '/' . htmlspecialchars($photoPath); ?>" alt="Avatar" class="rounded-circle img-thumbnail shadow-sm mx-auto" style="width: 90px; height: 90px; object-fit: cover;">
                         <?php else: ?>
                             <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold fs-2 shadow-sm mx-auto" style="width: 90px; height: 90px;">
-                                <?php echo strtoupper(substr($user['full_name'] ?: ($user['name'] ?: 'U'), 0, 1)); ?>
+                                <?php $dispName = ($user['full_name'] ?? '') ?: ($user['name'] ?? 'Citizen'); ?>
+                                <?php echo strtoupper(substr($dispName, 0, 1)); ?>
                             </div>
                         <?php endif; ?>
                     </div>
-                    <h6 class="fw-bold text-dark mb-1"><?php echo htmlspecialchars($user['full_name'] ?: ($user['name'] ?? 'Citizen')); ?></h6>
+                    <h6 class="fw-bold text-dark mb-1"><?php echo htmlspecialchars($dispName); ?></h6>
                     <p class="small text-muted mb-2">📱 +91 <?php echo htmlspecialchars($user['mobile']); ?></p>
                     <div class="badge bg-success bg-opacity-25 text-success border border-success fw-bold px-3 py-1 mb-3">
                         <i class="bi bi-shield-check me-1"></i> DLT Verified Citizen

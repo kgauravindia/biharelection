@@ -63,7 +63,8 @@ require_once __DIR__ . '/header.php';
         
         <!-- Welcome Hero Banner -->
         <?php 
-        $handle = !empty($user['username_handle']) ? $user['username_handle'] : (string)$user['id'];
+        $handle = !empty($user['username_handle']) ? $user['username_handle'] : (string)($user['id'] ?? '1');
+        $displayName = !empty($user['full_name']) ? $user['full_name'] : (!empty($user['name']) ? $user['name'] : 'Citizen');
         $publicProfileUrl = SITE_URL . '/user/' . urlencode(ltrim($handle, '@'));
         $comp = getProfileCompletionPercent($user);
         ?>
@@ -82,7 +83,7 @@ require_once __DIR__ . '/header.php';
                         </span>
                     </div>
                     <h1 class="display-6 fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">
-                        Welcome, <?php echo htmlspecialchars($user['full_name'] ?: ($user['name'] ?? 'Citizen')); ?>!
+                        Welcome, <?php echo htmlspecialchars($displayName); ?>!
                     </h1>
                     <p class="text-white-50 mb-0">
                         📱 +91 <?php echo htmlspecialchars(maskMobileNumber($user['mobile'] ?? '')); ?>

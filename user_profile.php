@@ -32,12 +32,13 @@ $isOwner = $isLoggedIn && ((int)($loggedInUser['id'] ?? 0) === (int)$user['id'])
 $isPrivate = ($user['profile_visibility'] ?? 'PUBLIC') === 'PRIVATE';
 
 if ($isPrivate && !$isOwner) {
-    $pageTitle = htmlspecialchars($user['name'] ?: $user['full_name'] ?: 'User') . " — Private Profile | Bihar Election";
+    $privateName = !empty($user['full_name']) ? $user['full_name'] : (!empty($user['name']) ? $user['name'] : 'Citizen');
+    $pageTitle = htmlspecialchars($privateName) . " — Private Profile | Bihar Election";
     require_once __DIR__ . '/header.php';
     echo '<div class="container py-5 text-center">
             <div class="card border-0 shadow-sm p-5 rounded-4 mx-auto my-5" style="max-width: 540px;">
                 <div class="mb-3"><i class="bi bi-lock-fill display-4 text-warning"></i></div>
-                <h3 class="fw-bold text-dark">' . htmlspecialchars($user['name'] ?: $user['full_name'] ?: 'Citizen') . '</h3>
+                <h3 class="fw-bold text-dark">' . htmlspecialchars($privateName) . '</h3>
                 <p class="text-muted">This profile has been set to private by the owner.</p>
                 <div><a href="' . SITE_URL . '" class="btn btn-primary rounded-pill px-4 fw-bold"><i class="bi bi-arrow-left me-1"></i> Back to BiharElection.com</a></div>
             </div>
