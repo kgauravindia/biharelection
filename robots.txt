@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://biharelection.com/sitemap.xml
-Sitemap: https://biharelection.com/blog/post-sitemap.xml
-
+Sitemap: https://biharelection.com/sitemap_index.xml
+Sitemap: https://biharelection.com/post-sitemap.xml

@@ -4,8 +4,8 @@
 <?xml-stylesheet type="text/xsl" href="https://biharelection.com/default-sitemap.xsl?sitemap=root"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<sitemap>
-		<loc><![CDATA[https://biharelection.com/addl-sitemap.xml]]></loc>
-		<lastmod><![CDATA[2026-08-12T09:23:45+00:00]]></lastmod>
+		<loc><![CDATA[https://biharelection.com/sitemap.xml]]></loc>
+		<lastmod><![CDATA[2026-09-02T22:00:00+05:30]]></lastmod>
 	</sitemap>
 	<sitemap>
 		<loc><![CDATA[https://biharelection.com/post-sitemap.xml]]></loc>
