@@ -152,10 +152,27 @@ class DataProvider {
     private static $constituencies = null;
     private static $candidates = null;
     private static $panchayats = null;
+    private static $mukhiya = null;
+    private static $sarpanch = null;
+    private static $panchayatSummary = null;
+    private static $zilaMembers = null;
+    private static $zilaOfficials = null;
+    private static $zilaSummary = null;
+    private static $zila2016 = null;
+    private static $panchayatSamiti2016 = null;
+    private static $mukhiyas2016 = null;
+    private static $mpsLokSabha = null;
+    private static $mpsRajyaSabha = null;
+    private static $mlcs = null;
+    private static $mlas2015 = null;
     private static $news = null;
+    private static $censusBihar = null;
+    private static $censusDistricts = null;
+    private static $censusSubDistricts = null;
 
     public static function getDistricts() {
         if (self::$districts === null) {
+            self::$districts = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
@@ -169,16 +186,12 @@ class DataProvider {
                                 }
                             }
                             self::$districts = $rows;
-                            return self::$districts;
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
+                    error_log("Error fetching districts: " . $e->getMessage());
                 }
             }
-
-            $json = file_get_contents(__DIR__ . '/assets/data/districts.json');
-            self::$districts = json_decode($json, true) ?: [];
         }
         return self::$districts;
     }
@@ -207,6 +220,7 @@ class DataProvider {
 
     public static function getConstituencies() {
         if (self::$constituencies === null) {
+            self::$constituencies = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
@@ -222,17 +236,12 @@ class DataProvider {
                                 if (isset($r['candidates_2026_expected']) && is_string($r['candidates_2026_expected'])) $r['candidates_2026_expected'] = json_decode($r['candidates_2026_expected'], true);
                             }
                             self::$constituencies = $rows;
-                            return self::$constituencies;
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
+                    error_log("Error fetching constituencies: " . $e->getMessage());
                 }
             }
-
-            $jsonPath = __DIR__ . '/assets/data/constituencies.json';
-            $json = file_get_contents($jsonPath);
-            self::$constituencies = json_decode($json, true) ?: [];
         }
         return self::$constituencies;
     }
@@ -290,6 +299,7 @@ class DataProvider {
 
     public static function getCandidates() {
         if (self::$candidates === null) {
+            self::$candidates = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
@@ -302,101 +312,77 @@ class DataProvider {
                                 if (isset($r['election_record']) && is_string($r['election_record'])) $r['election_record'] = json_decode($r['election_record'], true);
                             }
                             self::$candidates = $rows;
-                            return self::$candidates;
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
+                    error_log("Error fetching candidates: " . $e->getMessage());
                 }
             }
-
-            $jsonPath = __DIR__ . '/assets/data/candidates.json';
-            self::$candidates = file_exists($jsonPath) ? (json_decode(file_get_contents($jsonPath), true) ?: []) : [];
         }
         return self::$candidates;
     }
 
     public static function getCandidateBySlug($slug) {
+        if (empty($slug)) return null;
+        $slugClean = strtolower(trim((string)$slug));
         $candidates = self::getCandidates();
         foreach ($candidates as $c) {
-            if (strtolower($c['slug']) === strtolower($slug)) {
+            if (strtolower($c['slug'] ?? '') === $slugClean) {
                 return $c;
             }
         }
         return null;
     }
 
-    private static $mukhiya = null;
-    private static $sarpanch = null;
-    private static $panchayatSummary = null;
-
-    public static function getPanchayatData($districtSlugOrName = null, $blockName = null) {
+    public static function getPanchayats($districtSlug = null) {
         if (self::$panchayats === null) {
+            self::$panchayats = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM be_panchayats ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
-                        // Only use DB rows if it has the updated full master dataset
-                        if (!empty($rows) && count($rows) > 100 && isset($rows[0]['district_slug'])) {
+                        if (!empty($rows)) {
                             self::$panchayats = $rows;
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
+                    error_log("Error fetching panchayats: " . $e->getMessage());
                 }
             }
-
-            if (self::$panchayats === null) {
-                $json = file_get_contents(__DIR__ . '/assets/data/panchayats.json');
-                self::$panchayats = json_decode($json, true) ?: [];
-            }
         }
 
-        $results = self::$panchayats;
-        if ($districtSlugOrName !== null) {
-            $needle = strtolower(trim($districtSlugOrName));
-            $results = array_values(array_filter($results, function($p) use ($needle) {
-                return strtolower($p['district_slug'] ?? '') === $needle
-                    || strtolower($p['district'] ?? '') === $needle
-                    || strtolower($p['district_hi'] ?? '') === $needle;
-            }));
+        if ($districtSlug === null) {
+            return self::$panchayats;
         }
 
-        if ($blockName !== null) {
-            $bNeedle = strtolower(trim($blockName));
-            $results = array_values(array_filter($results, function($p) use ($bNeedle) {
-                return strtolower($p['block'] ?? '') === $bNeedle;
-            }));
-        }
-
-        return $results;
+        $needle = strtolower(trim($districtSlug));
+        return array_values(array_filter(self::$panchayats, function($p) use ($needle) {
+            return strtolower($p['district_slug'] ?? '') === $needle
+                || strtolower($p['district'] ?? '') === $needle;
+        }));
     }
 
     public static function getMukhiyaData($districtSlugOrName = null) {
         if (self::$mukhiya === null) {
+            self::$mukhiya = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM be_mukhiyas ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
-                        if (!empty($rows) && count($rows) > 100) {
+                        if (!empty($rows)) {
                             self::$mukhiya = $rows;
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
-                }
-            }
-
-            if (self::$mukhiya === null) {
-                $jsonPath = __DIR__ . '/assets/data/mukhiya_directory.json';
-                if (file_exists($jsonPath)) {
-                    self::$mukhiya = json_decode(file_get_contents($jsonPath), true) ?: [];
-                } else {
-                    self::$mukhiya = [];
+                    // Try alternative table name be_mukhiya
+                    try {
+                        $stmt = $pdo->query("SELECT * FROM be_mukhiya ORDER BY id ASC");
+                        if ($stmt) self::$mukhiya = $stmt->fetchAll() ?: [];
+                    } catch (Throwable $e2) {}
                 }
             }
         }
@@ -415,27 +401,23 @@ class DataProvider {
 
     public static function getSarpanchData($districtSlugOrName = null) {
         if (self::$sarpanch === null) {
+            self::$sarpanch = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM be_sarpanchs ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
-                        if (!empty($rows) && count($rows) > 100) {
+                        if (!empty($rows)) {
                             self::$sarpanch = $rows;
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
-                }
-            }
-
-            if (self::$sarpanch === null) {
-                $jsonPath = __DIR__ . '/assets/data/sarpanch_directory.json';
-                if (file_exists($jsonPath)) {
-                    self::$sarpanch = json_decode(file_get_contents($jsonPath), true) ?: [];
-                } else {
-                    self::$sarpanch = [];
+                    // Try alternative table name be_sarpanch
+                    try {
+                        $stmt = $pdo->query("SELECT * FROM be_sarpanch ORDER BY id ASC");
+                        if ($stmt) self::$sarpanch = $stmt->fetchAll() ?: [];
+                    } catch (Throwable $e2) {}
                 }
             }
         }
@@ -454,11 +436,18 @@ class DataProvider {
 
     public static function getPanchayatSummary($districtSlug = null) {
         if (self::$panchayatSummary === null) {
-            $jsonPath = __DIR__ . '/assets/data/panchayat_summary.json';
-            if (file_exists($jsonPath)) {
-                self::$panchayatSummary = json_decode(file_get_contents($jsonPath), true) ?: [];
-            } else {
-                self::$panchayatSummary = [];
+            self::$panchayatSummary = [];
+            $pdo = Database::getConnection();
+            if ($pdo) {
+                try {
+                    $stmt = $pdo->query("SELECT * FROM be_panchayat_summary");
+                    if ($stmt) {
+                        while ($r = $stmt->fetch()) {
+                            $slugKey = strtolower($r['district_slug'] ?? $r['slug'] ?? '');
+                            if ($slugKey) self::$panchayatSummary[$slugKey] = $r;
+                        }
+                    }
+                } catch (Throwable $e) {}
             }
         }
 
@@ -470,12 +459,9 @@ class DataProvider {
         return self::$panchayatSummary[$slug] ?? null;
     }
 
-    private static $zilaMembers = null;
-    private static $zilaOfficials = null;
-    private static $zilaSummary = null;
-
     public static function getZilaParishadMembers($districtSlugOrName = null) {
         if (self::$zilaMembers === null) {
+            self::$zilaMembers = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
@@ -487,15 +473,7 @@ class DataProvider {
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
-                }
-            }
-            if (self::$zilaMembers === null) {
-                $jsonPath = __DIR__ . '/assets/data/zila_parishad_members.json';
-                if (file_exists($jsonPath)) {
-                    self::$zilaMembers = json_decode(file_get_contents($jsonPath), true) ?: [];
-                } else {
-                    self::$zilaMembers = [];
+                    error_log("Error fetching ZP members: " . $e->getMessage());
                 }
             }
         }
@@ -514,6 +492,7 @@ class DataProvider {
 
     public static function getZilaParishadOfficials($districtSlugOrName = null) {
         if (self::$zilaOfficials === null) {
+            self::$zilaOfficials = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
@@ -525,15 +504,7 @@ class DataProvider {
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
-                }
-            }
-            if (self::$zilaOfficials === null) {
-                $jsonPath = __DIR__ . '/assets/data/zila_parishad_officials.json';
-                if (file_exists($jsonPath)) {
-                    self::$zilaOfficials = json_decode(file_get_contents($jsonPath), true) ?: [];
-                } else {
-                    self::$zilaOfficials = [];
+                    error_log("Error fetching ZP officials: " . $e->getMessage());
                 }
             }
         }
@@ -552,11 +523,18 @@ class DataProvider {
 
     public static function getZilaParishadSummary($districtSlug = null) {
         if (self::$zilaSummary === null) {
-            $jsonPath = __DIR__ . '/assets/data/zila_parishad_summary.json';
-            if (file_exists($jsonPath)) {
-                self::$zilaSummary = json_decode(file_get_contents($jsonPath), true) ?: [];
-            } else {
-                self::$zilaSummary = [];
+            self::$zilaSummary = [];
+            $pdo = Database::getConnection();
+            if ($pdo) {
+                try {
+                    $stmt = $pdo->query("SELECT * FROM be_zila_parishad_summary");
+                    if ($stmt) {
+                        while ($r = $stmt->fetch()) {
+                            $slugKey = strtolower($r['district_slug'] ?? $r['slug'] ?? '');
+                            if ($slugKey) self::$zilaSummary[$slugKey] = $r;
+                        }
+                    }
+                } catch (Throwable $e) {}
             }
         }
 
@@ -568,11 +546,9 @@ class DataProvider {
         return self::$zilaSummary[$slug] ?? null;
     }
 
-    private static $zila2016 = null;
-    private static $panchayatSamiti2016 = null;
-
     public static function getZilaParishad2016($districtSlugOrName = null) {
         if (self::$zila2016 === null) {
+            self::$zila2016 = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
@@ -584,15 +560,7 @@ class DataProvider {
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
-                }
-            }
-            if (self::$zila2016 === null) {
-                $jsonPath = __DIR__ . '/assets/data/zila_parishad_2016.json';
-                if (file_exists($jsonPath)) {
-                    self::$zila2016 = json_decode(file_get_contents($jsonPath), true) ?: [];
-                } else {
-                    self::$zila2016 = [];
+                    error_log("Error fetching ZP 2016: " . $e->getMessage());
                 }
             }
         }
@@ -611,6 +579,7 @@ class DataProvider {
 
     public static function getPanchayatSamiti2016($districtSlugOrName = null) {
         if (self::$panchayatSamiti2016 === null) {
+            self::$panchayatSamiti2016 = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
@@ -622,15 +591,7 @@ class DataProvider {
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
-                }
-            }
-            if (self::$panchayatSamiti2016 === null) {
-                $jsonPath = __DIR__ . '/assets/data/panchayat_samiti_2016.json';
-                if (file_exists($jsonPath)) {
-                    self::$panchayatSamiti2016 = json_decode(file_get_contents($jsonPath), true) ?: [];
-                } else {
-                    self::$panchayatSamiti2016 = [];
+                    error_log("Error fetching Samiti 2016: " . $e->getMessage());
                 }
             }
         }
@@ -647,30 +608,21 @@ class DataProvider {
         }));
     }
 
-    private static $mukhiyas2016 = null;
-
     public static function getMukhiyas2016($districtSlugOrName = null, $block = null) {
         if (self::$mukhiyas2016 === null) {
+            self::$mukhiyas2016 = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM be_mukhiyas_2016 ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
-                        if (!empty($rows) && count($rows) > 100) {
+                        if (!empty($rows)) {
                             self::$mukhiyas2016 = $rows;
                         }
                     }
                 } catch (Throwable $e) {
-                    // Fallback to JSON
-                }
-            }
-            if (self::$mukhiyas2016 === null) {
-                $jsonPath = __DIR__ . '/assets/data/mukhiyas_2016.json';
-                if (file_exists($jsonPath)) {
-                    self::$mukhiyas2016 = json_decode(file_get_contents($jsonPath), true) ?: [];
-                } else {
-                    self::$mukhiyas2016 = [];
+                    error_log("Error fetching Mukhiyas 2016: " . $e->getMessage());
                 }
             }
         }
@@ -699,73 +651,57 @@ class DataProvider {
         }));
     }
 
-    private static $mpsLokSabha = null;
     public static function getLokSabhaMps() {
         if (self::$mpsLokSabha === null) {
+            self::$mpsLokSabha = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM be_mps_loksabha ORDER BY pc_no ASC");
-                    if ($stmt) self::$mpsLokSabha = $stmt->fetchAll();
+                    if ($stmt) self::$mpsLokSabha = $stmt->fetchAll() ?: [];
                 } catch (Throwable $e) {}
-            }
-            if (self::$mpsLokSabha === null) {
-                $json = file_get_contents(__DIR__ . '/assets/data/mps_loksabha.json');
-                self::$mpsLokSabha = json_decode($json, true) ?: [];
             }
         }
         return self::$mpsLokSabha;
     }
 
-    private static $mpsRajyaSabha = null;
     public static function getRajyaSabhaMps() {
         if (self::$mpsRajyaSabha === null) {
+            self::$mpsRajyaSabha = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM be_mps_rajyasabha ORDER BY sno ASC");
-                    if ($stmt) self::$mpsRajyaSabha = $stmt->fetchAll();
+                    if ($stmt) self::$mpsRajyaSabha = $stmt->fetchAll() ?: [];
                 } catch (Throwable $e) {}
-            }
-            if (self::$mpsRajyaSabha === null) {
-                $json = file_get_contents(__DIR__ . '/assets/data/mps_rajyasabha.json');
-                self::$mpsRajyaSabha = json_decode($json, true) ?: [];
             }
         }
         return self::$mpsRajyaSabha;
     }
 
-    private static $mlcs = null;
     public static function getMlcs() {
         if (self::$mlcs === null) {
+            self::$mlcs = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM be_mlcs ORDER BY id ASC");
-                    if ($stmt) self::$mlcs = $stmt->fetchAll();
+                    if ($stmt) self::$mlcs = $stmt->fetchAll() ?: [];
                 } catch (Throwable $e) {}
-            }
-            if (self::$mlcs === null) {
-                $json = file_get_contents(__DIR__ . '/assets/data/mlcs.json');
-                self::$mlcs = json_decode($json, true) ?: [];
             }
         }
         return self::$mlcs;
     }
 
-    private static $mlas2015 = null;
     public static function getMlas2015($acNoOrSlug = null) {
         if (self::$mlas2015 === null) {
+            self::$mlas2015 = [];
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM be_mlas_2015 ORDER BY ac_no ASC");
-                    if ($stmt) self::$mlas2015 = $stmt->fetchAll();
+                    if ($stmt) self::$mlas2015 = $stmt->fetchAll() ?: [];
                 } catch (Throwable $e) {}
-            }
-            if (self::$mlas2015 === null) {
-                $json = file_get_contents(__DIR__ . '/assets/data/mlas_2015.json');
-                self::$mlas2015 = json_decode($json, true) ?: [];
             }
         }
 
@@ -784,28 +720,47 @@ class DataProvider {
 
     public static function getNews() {
         if (self::$news === null) {
-            $json = file_get_contents(__DIR__ . '/assets/data/news.json');
-            self::$news = json_decode($json, true) ?: [];
+            self::$news = [];
+            $pdo = Database::getConnection();
+            if ($pdo) {
+                try {
+                    $stmt = $pdo->query("SELECT * FROM be_news ORDER BY published_date DESC LIMIT 50");
+                    if ($stmt) self::$news = $stmt->fetchAll() ?: [];
+                } catch (Throwable $e) {}
+            }
         }
         return self::$news;
     }
 
-    private static $censusBihar = null;
-    private static $censusDistricts = null;
-    private static $censusSubDistricts = null;
-
     public static function getCensusBiharSummary() {
         if (self::$censusBihar === null) {
-            $jsonPath = __DIR__ . '/assets/data/census_bihar.json';
-            self::$censusBihar = file_exists($jsonPath) ? (json_decode(file_get_contents($jsonPath), true) ?: []) : [];
+            self::$censusBihar = [];
+            $pdo = Database::getConnection();
+            if ($pdo) {
+                try {
+                    $stmt = $pdo->query("SELECT * FROM be_census_districts WHERE district_slug = 'bihar' OR slug = 'bihar' LIMIT 1");
+                    if ($stmt) self::$censusBihar = $stmt->fetch() ?: [];
+                } catch (Throwable $e) {}
+            }
         }
         return self::$censusBihar;
     }
 
     public static function getCensusDistricts() {
         if (self::$censusDistricts === null) {
-            $jsonPath = __DIR__ . '/assets/data/census_districts.json';
-            self::$censusDistricts = file_exists($jsonPath) ? (json_decode(file_get_contents($jsonPath), true) ?: []) : [];
+            self::$censusDistricts = [];
+            $pdo = Database::getConnection();
+            if ($pdo) {
+                try {
+                    $stmt = $pdo->query("SELECT * FROM be_census_districts");
+                    if ($stmt) {
+                        while ($r = $stmt->fetch()) {
+                            $k = strtolower($r['district_slug'] ?? $r['slug'] ?? '');
+                            if ($k) self::$censusDistricts[$k] = $r;
+                        }
+                    }
+                } catch (Throwable $e) {}
+            }
         }
         return self::$censusDistricts;
     }
@@ -814,7 +769,7 @@ class DataProvider {
         $districts = self::getCensusDistricts();
         $needle = strtolower(trim((string)$districtSlugOrName));
         foreach ($districts as $slug => $data) {
-            if ($slug === $needle || strtolower($data['name'] ?? '') === $needle) {
+            if ($slug === $needle || strtolower($data['name'] ?? $data['district_name'] ?? '') === $needle) {
                 return $data;
             }
         }
@@ -823,8 +778,21 @@ class DataProvider {
 
     public static function getCensusSubDistricts($districtSlugOrName = null) {
         if (self::$censusSubDistricts === null) {
-            $jsonPath = __DIR__ . '/assets/data/census_subdistricts.json';
-            self::$censusSubDistricts = file_exists($jsonPath) ? (json_decode(file_get_contents($jsonPath), true) ?: []) : [];
+            self::$censusSubDistricts = [];
+            $pdo = Database::getConnection();
+            if ($pdo) {
+                try {
+                    $stmt = $pdo->query("SELECT * FROM be_census_subdistricts ORDER BY sub_district ASC");
+                    if ($stmt) {
+                        while ($r = $stmt->fetch()) {
+                            $dSlug = strtolower($r['district_slug'] ?? '');
+                            if ($dSlug) {
+                                self::$censusSubDistricts[$dSlug][] = $r;
+                            }
+                        }
+                    }
+                } catch (Throwable $e) {}
+            }
         }
         if ($districtSlugOrName === null) {
             return self::$censusSubDistricts;
