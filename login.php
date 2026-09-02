@@ -18,7 +18,7 @@ $activeNav = 'login';
 
 $error = '';
 $success = '';
-$activeTab = isset($_GET['tab']) && $_GET['tab'] === 'password' ? 'password' : 'otp';
+$activeTab = isset($_GET['tab']) && $_GET['tab'] === 'otp' ? 'otp' : 'password';
 
 // Handle OTP Request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'request_otp') {
@@ -130,55 +130,29 @@ require_once __DIR__ . '/header.php';
                         <!-- Tabs for Login Type -->
                         <ul class="nav nav-pills nav-fill bg-light p-1 rounded-3 mb-4" id="loginTabs" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link rounded-3 fw-bold small py-2 <?php echo $activeTab === 'otp' ? 'active shadow-sm' : 'text-muted'; ?>" id="otp-tab" data-bs-toggle="tab" data-bs-target="#otp-pane" type="button" role="tab" style="<?php echo $activeTab === 'otp' ? 'background: #0b192c; color: #fff;' : ''; ?>">
-                                    <i class="bi bi-phone me-1 text-warning"></i> OTP Fast Login
+                                <button class="nav-link rounded-3 fw-bold small py-2 <?php echo $activeTab === 'password' ? 'active shadow-sm' : 'text-muted'; ?>" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-pane" type="button" role="tab" style="<?php echo $activeTab === 'password' ? 'background: #0b192c; color: #fff;' : ''; ?>">
+                                    <i class="bi bi-shield-lock me-1 text-warning"></i> Password Login
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link rounded-3 fw-bold small py-2 <?php echo $activeTab === 'password' ? 'active shadow-sm' : 'text-muted'; ?>" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-pane" type="button" role="tab" style="<?php echo $activeTab === 'password' ? 'background: #0b192c; color: #fff;' : ''; ?>">
-                                    <i class="bi bi-shield-lock me-1"></i> Password Login
+                                <button class="nav-link rounded-3 fw-bold small py-2 <?php echo $activeTab === 'otp' ? 'active shadow-sm' : 'text-muted'; ?>" id="otp-tab" data-bs-toggle="tab" data-bs-target="#otp-pane" type="button" role="tab" style="<?php echo $activeTab === 'otp' ? 'background: #0b192c; color: #fff;' : ''; ?>">
+                                    <i class="bi bi-phone me-1 text-success"></i> OTP Fast Login
                                 </button>
                             </li>
                         </ul>
 
                         <div class="tab-content" id="loginTabsContent">
                             
-                            <!-- 1. OTP Login Pane -->
-                            <div class="tab-pane fade <?php echo $activeTab === 'otp' ? 'show active' : ''; ?>" id="otp-pane" role="tabpanel">
-                                <form method="POST" action="login.php" class="needs-validation" novalidate>
-                                    <input type="hidden" name="action" value="request_otp">
-                                    
-                                    <div class="mb-3">
-                                        <label class="form-label small fw-bold text-muted text-uppercase">Mobile Number</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-light border-end-0 fw-semibold text-muted">
-                                                🇮🇳 +91
-                                            </span>
-                                            <input type="tel" name="mobile" class="form-control form-control-lg border-start-0 ps-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required autofocus>
-                                        </div>
-                                        <div class="form-text small text-muted">
-                                            <i class="bi bi-shield-check text-success me-1"></i> We'll send a 6-digit OTP via official SMS (Sender: <strong>BIHELE</strong>)
-                                        </div>
-                                    </div>
-
-                                    <div class="d-grid mt-4">
-                                        <button type="submit" class="btn btn-warning btn-lg fw-bold text-dark shadow-sm py-2" style="background: linear-gradient(135deg, #ff9933 0%, #f59e0b 100%); border: none;">
-                                            <i class="bi bi-send-fill me-1"></i> Send OTP via SMS
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <!-- 2. Password Login Pane -->
+                            <!-- 1. Password Login Pane (Main) -->
                             <div class="tab-pane fade <?php echo $activeTab === 'password' ? 'show active' : ''; ?>" id="password-pane" role="tabpanel">
                                 <form method="POST" action="login.php" class="needs-validation" novalidate>
                                     <input type="hidden" name="action" value="password_login">
 
                                     <div class="mb-3">
-                                        <label class="form-label small fw-bold text-muted text-uppercase">Mobile or Email</label>
+                                        <label class="form-label small fw-bold text-muted text-uppercase">Mobile Number or Email</label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light"><i class="bi bi-person text-muted"></i></span>
-                                            <input type="text" name="identifier" class="form-control form-control-lg" placeholder="Enter Mobile Number or Email" required>
+                                            <input type="text" name="identifier" class="form-control form-control-lg" placeholder="e.g. 9876543210 or user@example.com" required autofocus>
                                         </div>
                                     </div>
 
@@ -199,6 +173,32 @@ require_once __DIR__ . '/header.php';
                                     <div class="d-grid mt-4">
                                         <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm py-2" style="background: #0b192c; border-color: #0b192c;">
                                             <i class="bi bi-box-arrow-in-right me-1"></i> Sign In to Account
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- 2. OTP Login Pane -->
+                            <div class="tab-pane fade <?php echo $activeTab === 'otp' ? 'show active' : ''; ?>" id="otp-pane" role="tabpanel">
+                                <form method="POST" action="login.php" class="needs-validation" novalidate>
+                                    <input type="hidden" name="action" value="request_otp">
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold text-muted text-uppercase">Mobile Number</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-end-0 fw-semibold text-muted">
+                                                🇮🇳 +91
+                                            </span>
+                                            <input type="tel" name="mobile" class="form-control form-control-lg border-start-0 ps-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required>
+                                        </div>
+                                        <div class="form-text small text-muted">
+                                            <i class="bi bi-shield-check text-success me-1"></i> We'll send a 6-digit OTP via official SMS (Sender: <strong>BIHELE</strong>)
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mt-4">
+                                        <button type="submit" class="btn btn-warning btn-lg fw-bold text-dark shadow-sm py-2" style="background: linear-gradient(135deg, #ff9933 0%, #f59e0b 100%); border: none;">
+                                            <i class="bi bi-send-fill me-1"></i> Send OTP via SMS
                                         </button>
                                     </div>
                                 </form>
