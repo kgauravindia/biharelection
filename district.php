@@ -7,6 +7,19 @@ $district = DataProvider::getDistrictBySlug($slug);
 if (!$district) {
     $district = DataProvider::getDistrictBySlug('patna');
 }
+if (!$district) {
+    $district = [
+        'id' => 1,
+        'name' => ucfirst($slug),
+        'name_hi' => '',
+        'slug' => $slug,
+        'headquarters' => ucfirst($slug),
+        'division' => 'Bihar',
+        'total_ac' => 0,
+        'total_electors' => 0,
+        'ac_list' => []
+    ];
+}
 
 $allDistricts = DataProvider::getDistricts();
 $districtAcs = DataProvider::getConstituenciesByDistrict($district['name']);

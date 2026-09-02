@@ -13,6 +13,25 @@ if (is_numeric($acParam)) {
 if (!$ac) {
     $ac = DataProvider::getConstituencyByAcNumber(182);
 }
+if (!$ac) {
+    $ac = [
+        'id' => 182,
+        'ac_no' => 182,
+        'name' => 'Bankipur',
+        'name_hi' => 'बांकीपुर',
+        'slug' => 'bankipur',
+        'district' => 'Patna',
+        'district_hi' => 'पटना',
+        'lok_sabha' => 'Patna Sahib',
+        'reservation' => 'GEN',
+        'current_mla' => 'Nitin Nabin',
+        'current_party' => 'BJP',
+        'total_electors' => 0,
+        'male_electors' => 0,
+        'female_electors' => 0,
+        'polling_stations' => 0
+    ];
+}
 
 $allAcs = DataProvider::getConstituencies();
 $districtAcs = DataProvider::getConstituenciesByDistrict($ac['district']);

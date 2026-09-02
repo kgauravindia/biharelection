@@ -87,18 +87,26 @@ if (!defined('GOOGLE_AD_SLOT_TABLE')) define('GOOGLE_AD_SLOT_TABLE', getenv('GOO
 if (!defined('GOOGLE_AD_SLOT_FOOTER')) define('GOOGLE_AD_SLOT_FOOTER', getenv('GOOGLE_AD_SLOT_FOOTER') ?: '1005005005');
 
 // SMS Gateway & DLT Template Configuration (OfferPlant Engine)
-if (!defined('SMS_AUTH_KEY')) define('SMS_AUTH_KEY', getenv('SMS_AUTH_KEY') ?: '');
+if (!defined('SMS_AUTH_KEY')) define('SMS_AUTH_KEY', getenv('SMS_AUTH_KEY') ?: 'b0e99bea1fa7d15e27e1c5fd8e3c868');
 if (!defined('SMS_SENDER_ID')) define('SMS_SENDER_ID', getenv('SMS_SENDER_ID') ?: 'BIHELE');
 if (!defined('SMS_TEMPLATE_NAME')) define('SMS_TEMPLATE_NAME', getenv('SMS_TEMPLATE_NAME') ?: 'BIHELE_OTP');
 if (!defined('SMS_API_URL')) define('SMS_API_URL', getenv('SMS_API_URL') ?: 'http://msg.morg.in/rest/services/sendSMS/sendGroupSms');
 if (!defined('SMS_OTP_TEMPLATE')) define('SMS_OTP_TEMPLATE', getenv('SMS_OTP_TEMPLATE') ?: "Dear {#var#},\nYour OTP / EVC / Password is: {#var#}\nVisit https://biharelection.com\n  \nRegards\nBIHELE\nOfferPlant");
 
-// Database Credentials (Defaults to localhost / generic)
-if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-if (!defined('DB_NAME')) define('DB_NAME', getenv('DB_NAME') ?: 'biharelection_db');
-if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: 'root');
-if (!defined('DB_PASS')) define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
-if (!defined('DB_CHARSET')) define('DB_CHARSET', getenv('DB_CHARSET') ?: 'utf8mb4');
+// Database Credentials
+if (!defined('IS_LOCAL') || !IS_LOCAL) {
+    if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+    if (!defined('DB_NAME')) define('DB_NAME', getenv('DB_NAME') ?: 'u216129624_biharelection');
+    if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: 'u216129624_biharelection');
+    if (!defined('DB_PASS')) define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : 'Election@@2026');
+    if (!defined('DB_CHARSET')) define('DB_CHARSET', getenv('DB_CHARSET') ?: 'utf8mb4');
+} else {
+    if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+    if (!defined('DB_NAME')) define('DB_NAME', getenv('DB_NAME') ?: 'biharelection_db');
+    if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: 'root');
+    if (!defined('DB_PASS')) define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
+    if (!defined('DB_CHARSET')) define('DB_CHARSET', getenv('DB_CHARSET') ?: 'utf8mb4');
+}
 
 // Load SMS helper
 if (file_exists(__DIR__ . '/includes/sms_helper.php')) {
@@ -121,28 +129,39 @@ class Database {
         self::$connectionAttempted = true;
 
         try {
-            $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+            $host = defined('DB_HOST') ? DB_HOST : 'localhost';
+            $dbname = defined('DB_NAME') ? DB_NAME : '';
+            $user = defined('DB_USER') ? DB_USER : 'root';
+            $pass = defined('DB_PASS') ? DB_PASS : '';
+            $charset = defined('DB_CHARSET') ? DB_CHARSET : 'utf8mb4';
+
+            if (empty($dbname)) {
+                return null;
+            }
+
+            $dsn = "mysql:host=" . $host . ";dbname=" . $dbname . ";charset=" . $charset;
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES   => false,
             ];
-            self::$pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+            self::$pdo = new PDO($dsn, $user, $pass, $options);
             return self::$pdo;
         } catch (Throwable $e) {
-            // Local fallback attempt
-            try {
-                $dsn = "mysql:host=localhost;dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
-                self::$pdo = new PDO($dsn, 'root', '', [
-                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES   => false,
-                ]);
-                return self::$pdo;
-            } catch (Throwable $e2) {
-                error_log('Database connection unavailable: ' . $e->getMessage());
-                return null;
+            // Local fallback attempt if on local machine
+            if (defined('IS_LOCAL') && IS_LOCAL) {
+                try {
+                    $dsn = "mysql:host=localhost;dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+                    self::$pdo = new PDO($dsn, 'root', '', [
+                        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                        PDO::ATTR_EMULATE_PREPARES   => false,
+                    ]);
+                    return self::$pdo;
+                } catch (Throwable $e2) {}
             }
+            error_log('Database connection error: ' . $e->getMessage());
+            return null;
         }
     }
 }
@@ -362,6 +381,17 @@ class DataProvider {
             return strtolower($p['district_slug'] ?? '') === $needle
                 || strtolower($p['district'] ?? '') === $needle;
         }));
+    }
+
+    public static function getPanchayatData($districtSlugOrName = null, $blockName = null) {
+        $results = self::getPanchayats($districtSlugOrName);
+        if ($blockName !== null) {
+            $bNeedle = strtolower(trim($blockName));
+            $results = array_values(array_filter($results, function($p) use ($bNeedle) {
+                return strtolower($p['block'] ?? '') === $bNeedle;
+            }));
+        }
+        return $results;
     }
 
     public static function getMukhiyaData($districtSlugOrName = null) {
