@@ -45,15 +45,17 @@ require_once __DIR__ . '/config.php';
 
                 <!-- Col 3: Legal & Policy Documents -->
                 <div class="col-6 col-md-4 col-lg-3">
-                    <h3 class="h6 text-white fw-bold mb-3">Legal &amp; Portals</h3>
+                    <h3 class="h6 text-white fw-bold mb-3">Company &amp; Portals</h3>
                     <ul class="list-unstyled footer-links small">
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/about" class="text-white-50 text-decoration-none">🏢 About Us</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/contact" class="text-white-50 text-decoration-none">📞 Contact Us</a></li>
                         <li class="mb-2"><a href="<?php echo getBlogUrl(); ?>" class="text-white-50 text-decoration-none">📰 News &amp; Blog</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/terms-and-conditions" class="text-white-50 text-decoration-none">📜 Terms &amp; Conditions</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/disclaimer" class="text-white-50 text-decoration-none">⚠️ Disclaimer Notice</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/privacy-policy" class="text-white-50 text-decoration-none">🔒 Privacy Policy</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/search-pin-code" class="text-white-50 text-decoration-none">📮 Search PIN Code</a></li>
                         <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mission-and-vision" class="text-white-50 text-decoration-none">🎯 Mission &amp; Vision</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/privacy-policy" class="text-white-50 text-decoration-none">🔒 Privacy Policy</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/disclaimer" class="text-white-50 text-decoration-none">⚠️ Disclaimer Notice</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/terms-and-conditions" class="text-white-50 text-decoration-none">📜 Terms &amp; Conditions</a></li>
                         <li class="mb-2"><a href="<?php echo SITE_URL; ?>/advertise" class="text-white-50 text-decoration-none">📢 Advertise &amp; Sponsorships</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/register" class="text-warning fw-semibold text-decoration-none"><i class="bi bi-person-plus-fill"></i> Free Citizen Registration</a></li>
                     </ul>
                 </div>
 
