@@ -71,6 +71,10 @@ if ($db_menu) {
                 <span class="badge rounded-pill bg-light text-dark border"><?php echo $total_posts_count; ?></span>
             <?php endif; ?>
         </a>
+        <a href="categories.php" class="nav-link-custom <?php echo ($current_page == 'categories.php') ? 'active' : ''; ?>" title="Topic Categories">
+            <i class="fas fa-folder-tree text-warning"></i> 
+            <span>Categories</span>
+        </a>
 
         <div class="nav-section-title">Monetization & Leads</div>
         <a href="manage-ads.php" class="nav-link-custom <?php echo in_array($current_page, ['manage-ads.php', 'edit-ad.php']) ? 'active' : ''; ?>" title="Ad Banners & Campaigns">

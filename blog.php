@@ -71,19 +71,12 @@ if ($is_single && $pdo) {
     $posts = [];
     $total_posts = 0;
     $categories = [];
+    $active_cat_obj = null;
 
     if ($pdo) {
-        // Categories list
-        $catStmt = $pdo->query("SELECT DISTINCT categories FROM `posts` WHERE `status` = 'published' AND categories IS NOT NULL AND categories != ''");
-        while ($cr = $catStmt->fetch(PDO::FETCH_ASSOC)) {
-            $split = array_map('trim', explode(',', $cr['categories']));
-            foreach ($split as $sc) {
-                if (!empty($sc) && !in_array($sc, $categories)) {
-                    $categories[] = $sc;
-                }
-            }
-        }
-        sort($categories);
+        // Load all categories from categories table
+        $catStmt = $pdo->query("SELECT * FROM `categories` ORDER BY `posts_count` DESC, `name` ASC");
+        $categories = $catStmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Query posts
         $whereSql = "`status` = 'published'";
@@ -94,8 +87,19 @@ if ($is_single && $pdo) {
             $params[':search'] = '%' . $search . '%';
         }
         if (!empty($category_filter)) {
+            $decoded_cat = urldecode($category_filter);
+            
+            // Check if filter is a slug or name
+            foreach ($categories as $c) {
+                if ($c['slug'] === $category_filter || $c['slug'] === $decoded_cat || strcasecmp($c['name'], $decoded_cat) === 0) {
+                    $active_cat_obj = $c;
+                    break;
+                }
+            }
+
+            $cat_match = $active_cat_obj ? $active_cat_obj['name'] : $decoded_cat;
             $whereSql .= " AND `categories` LIKE :cat";
-            $params[':cat'] = '%' . $category_filter . '%';
+            $params[':cat'] = '%' . $cat_match . '%';
         }
 
         $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `posts` WHERE $whereSql");
@@ -113,9 +117,16 @@ if ($is_single && $pdo) {
     }
 
     $total_pages = ceil($total_posts / $limit);
-    $pageTitle = 'Bihar Election News, Analysis & Blog Articles 2026';
-    $pageDescription = 'Read the latest Bihar election news, constituency insights, Panchayat delimitation reports, candidate lists, and political analysis.';
-    $pageCanonical = SITE_URL . '/blog/';
+    
+    if ($active_cat_obj) {
+        $pageTitle = htmlspecialchars($active_cat_obj['name']) . ' — Bihar Election Articles & News';
+        $pageDescription = !empty($active_cat_obj['description']) ? htmlspecialchars(substr(strip_tags($active_cat_obj['description']), 0, 160)) : 'Browse Bihar Election ' . htmlspecialchars($active_cat_obj['name']) . ' news and analysis.';
+        $pageCanonical = SITE_URL . '/category/' . urlencode($active_cat_obj['slug']);
+    } else {
+        $pageTitle = 'Bihar Election News, Analysis & Blog Articles 2026';
+        $pageDescription = 'Read the latest Bihar election news, constituency insights, Panchayat delimitation reports, candidate lists, and political analysis.';
+        $pageCanonical = SITE_URL . '/blog/';
+    }
     $activeNav = 'blog';
 }
 
@@ -280,9 +291,21 @@ include __DIR__ . '/header.php';
         <?php else: ?>
             <!-- ================= BLOG ARCHIVE & LISTING VIEW ================= -->
             <div class="text-center mb-5">
-                <span class="badge bg-danger-subtle text-danger fw-bold text-uppercase px-3 py-2 rounded-pill mb-2">Editorial Desk</span>
-                <h1 class="h2 fw-bold text-dark mb-2" style="font-family: 'Outfit', sans-serif;">Bihar Election News & Political Intelligence</h1>
-                <p class="text-muted mx-auto" style="max-width: 650px;">Complete coverage of 243 Vidhan Sabha constituencies, Bihar Panchayat 2026 delimitation, candidate profiles, and official election results.</p>
+                <?php if ($active_cat_obj): ?>
+                    <span class="badge bg-danger-subtle text-danger fw-bold text-uppercase px-3 py-2 rounded-pill mb-2">Category Archive</span>
+                    <h1 class="h2 fw-bold text-dark mb-2" style="font-family: 'Outfit', sans-serif;"><?php echo htmlspecialchars($active_cat_obj['name']); ?></h1>
+                    <?php if (!empty($active_cat_obj['description'])): ?>
+                        <div class="text-muted mx-auto text-start bg-white p-3 rounded-3 border mb-3" style="max-width: 800px; font-size: 0.95rem; line-height: 1.6;">
+                            <?php echo nl2br(htmlspecialchars($active_cat_obj['description'])); ?>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-muted mx-auto" style="max-width: 650px;">Articles, insights, and electoral reports filed under <?php echo htmlspecialchars($active_cat_obj['name']); ?>.</p>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <span class="badge bg-danger-subtle text-danger fw-bold text-uppercase px-3 py-2 rounded-pill mb-2">Editorial Desk</span>
+                    <h1 class="h2 fw-bold text-dark mb-2" style="font-family: 'Outfit', sans-serif;">Bihar Election News & Political Intelligence</h1>
+                    <p class="text-muted mx-auto" style="max-width: 650px;">Complete coverage of 243 Vidhan Sabha constituencies, Bihar Panchayat 2026 delimitation, candidate profiles, and official election results.</p>
+                <?php endif; ?>
             </div>
 
             <!-- Filters & Search Toolbar -->
@@ -295,11 +318,11 @@ include __DIR__ . '/header.php';
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <select name="category" class="form-select">
+                        <select name="category" class="form-select" onchange="this.form.submit()">
                             <option value="">All Categories</option>
-                            <?php foreach ($categories as $cat): ?>
-                                <option value="<?php echo htmlspecialchars($cat); ?>" <?php echo $category_filter === $cat ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($cat); ?>
+                            <?php foreach ($categories as $c): ?>
+                                <option value="<?php echo htmlspecialchars($c['slug']); ?>" <?php echo (($active_cat_obj && $active_cat_obj['id'] == $c['id']) || $category_filter === $c['slug'] || $category_filter === $c['name']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($c['name']); ?> (<?php echo $c['posts_count']; ?>)
                                 </option>
                             <?php endforeach; ?>
                         </select>

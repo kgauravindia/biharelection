@@ -40,6 +40,17 @@ if ($is_edit && $conn) {
     }
 }
 
+// Load available categories
+$categories_list = [];
+if ($conn) {
+    $c_res = $conn->query("SELECT name FROM `categories` ORDER BY `posts_count` DESC, `name` ASC");
+    if ($c_res) {
+        while ($cr = $c_res->fetch_assoc()) {
+            $categories_list[] = $cr['name'];
+        }
+    }
+}
+
 // Handle Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_post'])) {
     $title = trim($_POST['title'] ?? '');
@@ -318,9 +329,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_post'])) {
 
                             <!-- Categories -->
                             <div class="mb-3">
-                                <label class="form-label fw-bold small">Categories</label>
-                                <input type="text" class="form-control" name="categories" value="<?php echo htmlspecialchars($post['categories']); ?>" placeholder="Vidhan Sabha, Election Results, Panchayat">
-                                <small class="text-muted">Separate multiple categories with commas.</small>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <label class="form-label fw-bold small mb-0">Categories</label>
+                                    <a href="categories.php" target="_blank" class="small text-decoration-none text-primary"><i class="fas fa-cog me-1"></i> Manage</a>
+                                </div>
+                                <input type="text" class="form-control" id="categoriesInput" name="categories" value="<?php echo htmlspecialchars($post['categories']); ?>" placeholder="Vidhan Sabha, Election Results, Panchayat">
+                                <?php if (!empty($categories_list)): ?>
+                                    <div class="mt-2 d-flex flex-wrap gap-1">
+                                        <?php foreach ($categories_list as $catName): ?>
+                                            <button type="button" class="btn btn-sm btn-light border py-0 px-2 small text-muted" onclick="toggleCategory('<?php echo htmlspecialchars(addslashes($catName)); ?>')">
+                                                + <?php echo htmlspecialchars($catName); ?>
+                                            </button>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <small class="text-muted d-block mt-1">Click a tag above to add, or type separated by commas.</small>
                             </div>
 
                             <!-- Tags -->
@@ -395,6 +418,15 @@ function updateImagePreview(url) {
         img.classList.add('d-none');
         img.style.display = 'none';
         if (txt) txt.style.display = 'inline';
+    }
+}
+
+function toggleCategory(name) {
+    const input = document.getElementById('categoriesInput');
+    let current = input.value.split(',').map(s => s.trim()).filter(Boolean);
+    if (!current.includes(name)) {
+        current.push(name);
+        input.value = current.join(', ');
     }
 }
 </script>
