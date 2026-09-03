@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="628" viewBox="0 0 1200 628" role="img" aria-labelledby="title desc">
+  <title id="title">Bihar Zila Parishad - District List</title>
+  <desc id="desc">List of all districts of Bihar for a WordPress post</desc>
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff7e6"/>
+      <stop offset="1" stop-color="#eaf6ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#bgGrad)" />
+
+  <g font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" fill="#07324a">
+    <text x="600" y="70" text-anchor="middle" font-size="36" font-weight="700">Bihar Zila Parishad — District List</text>
+    <text x="600" y="100" text-anchor="middle" font-size="16" fill="#274e62">बिहार जिला परिषद — जिलों की सूची</text>
+  </g>
+
+  <g font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="20" fill="#0b3a50" filter="url(#shadow)">
+    <text x="80" y="160">
+      <tspan x="80" dy="0">• Araria</tspan>
+      <tspan x="80" dy="30">• Arwal</tspan>
+      <tspan x="80" dy="30">• Aurangabad</tspan>
+      <tspan x="80" dy="30">• Banka</tspan>
+      <tspan x="80" dy="30">• Begusarai</tspan>
+      <tspan x="80" dy="30">• Bhagalpur</tspan>
+      <tspan x="80" dy="30">• Bhojpur</tspan>
+      <tspan x="80" dy="30">• Buxar</tspan>
+      <tspan x="80" dy="30">• Darbhanga</tspan>
+      <tspan x="80" dy="30">• East Champaran</tspan>
+      <tspan x="80" dy="30">• Gaya</tspan>
+      <tspan x="80" dy="30">• Gopalganj</tspan>
+      <tspan x="80" dy="30">• Jamui</tspan>
+    </text>
+
+    <text x="420" y="160">
+      <tspan x="420" dy="0">• Jehanabad</tspan>
+      <tspan x="420" dy="30">• Kaimur</tspan>
+      <tspan x="420" dy="30">• Katihar</tspan>
+      <tspan x="420" dy="30">• Khagaria</tspan>
+      <tspan x="420" dy="30">• Kishanganj</tspan>
+      <tspan x="420" dy="30">• Lakhisarai</tspan>
+      <tspan x="420" dy="30">• Madhepura</tspan>
+      <tspan x="420" dy="30">• Madhubani</tspan>
+      <tspan x="420" dy="30">• Munger</tspan>
+      <tspan x="420" dy="30">• Muzaffarpur</tspan>
+      <tspan x="420" dy="30">• Nalanda</tspan>
+      <tspan x="420" dy="30">• Nawada</tspan>
+      <tspan x="420" dy="30">• Patna</tspan>
+    </text>
+
+    <text x="760" y="160">
+      <tspan x="760" dy="0">• Purnia</tspan>
+      <tspan x="760" dy="30">• Rohtas</tspan>
+      <tspan x="760" dy="30">• Saharsa</tspan>
+      <tspan x="760" dy="30">• Samastipur</tspan>
+      <tspan x="760" dy="30">• Saran</tspan>
+      <tspan x="760" dy="30">• Sheikhpura</tspan>
+      <tspan x="760" dy="30">• Sheohar</tspan>
+      <tspan x="760" dy="30">• Sitamarhi</tspan>
+      <tspan x="760" dy="30">• Siwan</tspan>
+      <tspan x="760" dy="30">• Supaul</tspan>
+      <tspan x="760" dy="30">• Vaishali</tspan>
+      <tspan x="760" dy="30">• West Champaran</tspan>
+    </text>
+  </g>
+
+  <g font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#607b86">
+   <a href="https://biharelection.com">  <text x="600" y="590" text-anchor="middle">Visit BiharElection.Com</text> </a>
+  </g>
+</svg>
