@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         if ($pdo) {
             try {
-                $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE (`mobile` = ? OR `email` = ?) AND `status` = 'ACTIVE' LIMIT 1");
+                $stmt = $pdo->prepare("SELECT * FROM `users` WHERE (`mobile` = ? OR `email` = ?) AND `status` = 'ACTIVE' LIMIT 1");
                 $stmt->execute([$identifier, $identifier]);
                 $user = $stmt->fetch();
 
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     // Upgrade legacy MD5 hash to Bcrypt if necessary
                     if (!password_verify($password, $user['password']) && strpos($user['password'], '$2y$') !== 0) {
                         $newHash = password_hash($password, PASSWORD_DEFAULT);
-                        $pdo->prepare("UPDATE `be_users` SET `password` = ? WHERE `id` = ?")->execute([$newHash, $user['id']]);
+                        $pdo->prepare("UPDATE `users` SET `password` = ? WHERE `id` = ?")->execute([$newHash, $user['id']]);
                     }
 
                     $redirect = $_SESSION['auth_redirect'] ?? 'dashboard.php';

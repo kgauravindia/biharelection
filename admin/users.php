@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user']) && $conn)
         $error = "Username, Name and Password are required.";
     } else {
         $hashed = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("INSERT INTO `be_admin_users` (`username`, `name`, `email`, `password`, `role`, `status`) VALUES (?, ?, ?, ?, ?, 'ACTIVE')");
+        $stmt = $conn->prepare("INSERT INTO `admin_users` (`username`, `name`, `email`, `password`, `role`, `status`) VALUES (?, ?, ?, ?, ?, 'ACTIVE')");
         if ($stmt) {
             $stmt->bind_param("sssss", $username, $name, $email, $hashed, $role);
             if ($stmt->execute()) {
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user']) && $conn)
 if (isset($_GET['delete_id']) && $conn) {
     $del_id = (int)$_GET['delete_id'];
     if ($del_id > 1) {
-        $conn->query("DELETE FROM `be_admin_users` WHERE `id` = $del_id");
+        $conn->query("DELETE FROM `admin_users` WHERE `id` = $del_id");
         $message = "User deleted successfully.";
     } else {
         $error = "Cannot delete the primary root administrator account.";
@@ -43,7 +43,7 @@ if (isset($_GET['delete_id']) && $conn) {
 
 $users = [];
 if ($conn) {
-    $res = $conn->query("SELECT * FROM `be_admin_users` ORDER BY `id` ASC");
+    $res = $conn->query("SELECT * FROM `admin_users` ORDER BY `id` ASC");
     if ($res) {
         while ($row = $res->fetch_assoc()) $users[] = $row;
     }

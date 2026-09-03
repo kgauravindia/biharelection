@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $pdo = Database::getConnection();
         if ($pdo) {
             try {
-                $stmt = $pdo->prepare("UPDATE `be_users` SET `name` = ?, `email` = ?, `role` = ?, `district` = ?, `constituency` = ?, `panchayat` = ? WHERE `id` = ?");
+                $stmt = $pdo->prepare("UPDATE `users` SET `name` = ?, `email` = ?, `role` = ?, `district` = ?, `constituency` = ?, `panchayat` = ? WHERE `id` = ?");
                 $stmt->execute([$name, $email, $role, $district, $constituency, $panchayat, $user['id']]);
             } catch (Throwable $e) {
                 error_log("Update profile error: " . $e->getMessage());

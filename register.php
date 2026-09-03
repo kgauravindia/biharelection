@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         if ($pdo) {
             try {
-                $stmt = $pdo->prepare("SELECT id FROM `be_users` WHERE `mobile` = ? LIMIT 1");
+                $stmt = $pdo->prepare("SELECT id FROM `users` WHERE `mobile` = ? LIMIT 1");
                 $stmt->execute([$mobile]);
                 if ($stmt->fetch()) {
                     $isUnique = false;
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
             if ($pdo) {
                 try {
-                    $insertStmt = $pdo->prepare("INSERT INTO `be_users` (`name`, `mobile`, `email`, `password`, `role`, `district`, `constituency`, `otp_code`, `otp_expiry`, `is_mobile_verified`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
+                    $insertStmt = $pdo->prepare("INSERT INTO `users` (`name`, `mobile`, `email`, `password`, `role`, `district`, `constituency`, `otp_code`, `otp_expiry`, `is_mobile_verified`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
                     $insertStmt->execute([$name, $mobile, $email, $hashedPassword, $role, $district, $constituency, $otp, $expiry]);
                 } catch (Throwable $e) {
                     error_log("Registration insert error: " . $e->getMessage());

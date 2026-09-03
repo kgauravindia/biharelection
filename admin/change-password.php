@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (strlen($new_pwd) < 6) {
         $error = "New password must be at least 6 characters long.";
     } elseif ($conn) {
-        $stmt = $conn->prepare("SELECT * FROM `be_admin_users` WHERE `username` = ? LIMIT 1");
+        $stmt = $conn->prepare("SELECT * FROM `admin_users` WHERE `username` = ? LIMIT 1");
         if ($stmt) {
             $stmt->bind_param("s", $username);
             $stmt->execute();
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $u = $res->fetch_assoc();
                 if (password_verify($current_pwd, $u['password']) || $current_pwd === $u['password']) {
                     $new_hash = password_hash($new_pwd, PASSWORD_DEFAULT);
-                    $upd = $conn->prepare("UPDATE `be_admin_users` SET `password` = ? WHERE `username` = ?");
+                    $upd = $conn->prepare("UPDATE `admin_users` SET `password` = ? WHERE `username` = ?");
                     if ($upd) {
                         $upd->bind_param("ss", $new_hash, $username);
                         if ($upd->execute()) {

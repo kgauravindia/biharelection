@@ -10,7 +10,7 @@ $error = '';
 if (isset($_GET['delete_id']) && $conn) {
     $del_id = (int)$_GET['delete_id'];
     if ($del_id > 0) {
-        $stmt = $conn->prepare("DELETE FROM `be_advertisements` WHERE `id` = ?");
+        $stmt = $conn->prepare("DELETE FROM `advertisements` WHERE `id` = ?");
         if ($stmt) {
             $stmt->bind_param("i", $del_id);
             if ($stmt->execute()) {
@@ -26,7 +26,7 @@ if (isset($_GET['delete_id']) && $conn) {
 if (isset($_GET['set_status']) && isset($_GET['id']) && $conn) {
     $set_id = (int)$_GET['id'];
     $set_status = sanitize($_GET['set_status']);
-    $conn->query("UPDATE `be_advertisements` SET `status` = '$set_status' WHERE `id` = $set_id");
+    $conn->query("UPDATE `advertisements` SET `status` = '$set_status' WHERE `id` = $set_id");
     header("Location: manage-ads.php?msg=status_updated");
     exit();
 }
@@ -35,7 +35,7 @@ $ads = [];
 $total_revenue = 0;
 
 if ($conn) {
-    $r = $conn->query("SELECT * FROM `be_advertisements` ORDER BY `id` DESC");
+    $r = $conn->query("SELECT * FROM `advertisements` ORDER BY `id` DESC");
     if ($r) {
         while ($row = $r->fetch_assoc()) {
             $ads[] = $row;

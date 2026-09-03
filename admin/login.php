@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $authenticated = false;
 
         if ($conn) {
-            $stmt = $conn->prepare("SELECT * FROM `be_admin_users` WHERE (`username` = ? OR `email` = ?) AND `status` = 'ACTIVE' LIMIT 1");
+            $stmt = $conn->prepare("SELECT * FROM `admin_users` WHERE (`username` = ? OR `email` = ?) AND `status` = 'ACTIVE' LIMIT 1");
             if ($stmt) {
                 $stmt->bind_param("ss", $username, $username);
                 $stmt->execute();
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['admin_role'] = $user['role'] ?? 'admin';
 
                         // Update last login
-                        $conn->query("UPDATE `be_admin_users` SET `last_login` = NOW() WHERE `id` = " . (int)$user['id']);
+                        $conn->query("UPDATE `admin_users` SET `last_login` = NOW() WHERE `id` = " . (int)$user['id']);
                         header("Location: index.php");
                         exit();
                     }

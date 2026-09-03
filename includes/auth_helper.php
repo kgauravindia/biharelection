@@ -19,7 +19,7 @@ function initUserTables() {
     if (!$pdo) return;
 
     try {
-        $sql = "CREATE TABLE IF NOT EXISTS `be_users` (
+        $sql = "CREATE TABLE IF NOT EXISTS `users` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
             `name` VARCHAR(150) DEFAULT NULL,
             `full_name` VARCHAR(100) DEFAULT NULL,
@@ -83,7 +83,7 @@ function initUserTables() {
         // Auto-add any missing columns on existing tables (100% compatible with all MySQL/MariaDB versions)
         $existingCols = [];
         try {
-            $stmt = $pdo->query("SHOW COLUMNS FROM `be_users`");
+            $stmt = $pdo->query("SHOW COLUMNS FROM `users`");
             if ($stmt) {
                 while ($row = $stmt->fetch()) {
                     $existingCols[strtolower($row['Field'])] = true;
@@ -130,14 +130,14 @@ function initUserTables() {
         foreach ($cols as $col => $type) {
             if (!isset($existingCols[strtolower($col)])) {
                 try {
-                    $pdo->exec("ALTER TABLE `be_users` ADD `$col` $type");
+                    $pdo->exec("ALTER TABLE `users` ADD `$col` $type");
                 } catch (Throwable $e) {
                     error_log("Failed to add column $col: " . $e->getMessage());
                 }
             }
         }
     } catch (Throwable $e) {
-        error_log("Failed to initialize be_users table: " . $e->getMessage());
+        error_log("Failed to initialize users table: " . $e->getMessage());
     }
 }
 
@@ -163,7 +163,7 @@ function getCurrentUser() {
     $pdo = Database::getConnection();
     if ($pdo) {
         try {
-            $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE `id` = ? LIMIT 1");
+            $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ? LIMIT 1");
             $stmt->execute([$userId]);
             $user = $stmt->fetch();
             if ($user) {
@@ -251,7 +251,7 @@ function setUserSession($user) {
     $pdo = Database::getConnection();
     if ($pdo) {
         try {
-            $stmt = $pdo->prepare("UPDATE `be_users` SET `last_login` = NOW() WHERE `id` = ?");
+            $stmt = $pdo->prepare("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?");
             $stmt->execute([$user['id']]);
         } catch (Throwable $e) {}
     }
@@ -290,17 +290,17 @@ function sendUserOTP($mobile, $name = 'Citizen', $purpose = 'login') {
     if ($pdo) {
         try {
             // Check if user already exists
-            $stmt = $pdo->prepare("SELECT id, name FROM `be_users` WHERE `mobile` = ? LIMIT 1");
+            $stmt = $pdo->prepare("SELECT id, name FROM `users` WHERE `mobile` = ? LIMIT 1");
             $stmt->execute([$mobile]);
             $existing = $stmt->fetch();
 
             if ($existing) {
                 $name = $existing['name'] ?: $name;
-                $updateStmt = $pdo->prepare("UPDATE `be_users` SET `otp_code` = ?, `otp_expiry` = ? WHERE `id` = ?");
+                $updateStmt = $pdo->prepare("UPDATE `users` SET `otp_code` = ?, `otp_expiry` = ? WHERE `id` = ?");
                 $updateStmt->execute([$otp, $expiry, $existing['id']]);
             } elseif ($purpose === 'login') {
                 // Auto-create basic user account for passwordless OTP login
-                $insertStmt = $pdo->prepare("INSERT INTO `be_users` (`name`, `mobile`, `otp_code`, `otp_expiry`, `is_mobile_verified`) VALUES (?, ?, ?, ?, 1)");
+                $insertStmt = $pdo->prepare("INSERT INTO `users` (`name`, `mobile`, `otp_code`, `otp_expiry`, `is_mobile_verified`) VALUES (?, ?, ?, ?, 1)");
                 $insertStmt->execute([$name ?: 'Voter', $mobile, $otp, $expiry]);
             }
         } catch (Throwable $e) {
@@ -338,11 +338,11 @@ function verifyUserOTP($mobile, $enteredOtp) {
             // Fetch or create user
             $pdo = Database::getConnection();
             if ($pdo) {
-                $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE `mobile` = ? LIMIT 1");
+                $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `mobile` = ? LIMIT 1");
                 $stmt->execute([$mobile]);
                 $user = $stmt->fetch();
                 if ($user) {
-                    $pdo->prepare("UPDATE `be_users` SET `is_mobile_verified` = 1, `otp_code` = NULL WHERE `id` = ?")->execute([$user['id']]);
+                    $pdo->prepare("UPDATE `users` SET `is_mobile_verified` = 1, `otp_code` = NULL WHERE `id` = ?")->execute([$user['id']]);
                     return ['status' => 'success', 'user' => $user];
                 }
             }
@@ -364,13 +364,13 @@ function verifyUserOTP($mobile, $enteredOtp) {
     $pdo = Database::getConnection();
     if ($pdo) {
         try {
-            $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE `mobile` = ? AND `otp_code` = ? AND `otp_expiry` >= NOW() LIMIT 1");
+            $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `mobile` = ? AND `otp_code` = ? AND `otp_expiry` >= NOW() LIMIT 1");
             $stmt->execute([$mobile, $enteredOtp]);
             $user = $stmt->fetch();
 
             if ($user) {
                 // Clear used OTP
-                $pdo->prepare("UPDATE `be_users` SET `is_mobile_verified` = 1, `otp_code` = NULL WHERE `id` = ?")->execute([$user['id']]);
+                $pdo->prepare("UPDATE `users` SET `is_mobile_verified` = 1, `otp_code` = NULL WHERE `id` = ?")->execute([$user['id']]);
                 return ['status' => 'success', 'user' => $user];
             }
         } catch (Throwable $e) {
@@ -418,27 +418,27 @@ function getUserByHandle($handle) {
 
     try {
         // 1. By username_handle
-        $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE LOWER(`username_handle`) = LOWER(?) OR LOWER(`username_handle`) = LOWER(?) LIMIT 1");
+        $stmt = $pdo->prepare("SELECT * FROM `users` WHERE LOWER(`username_handle`) = LOWER(?) OR LOWER(`username_handle`) = LOWER(?) LIMIT 1");
         $stmt->execute([$clean, '@' . $clean]);
         $user = $stmt->fetch();
         if ($user) return $user;
 
         // 2. By public_url
-        $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE LOWER(`public_url`) = LOWER(?) LIMIT 1");
+        $stmt = $pdo->prepare("SELECT * FROM `users` WHERE LOWER(`public_url`) = LOWER(?) LIMIT 1");
         $stmt->execute([$clean]);
         $user = $stmt->fetch();
         if ($user) return $user;
 
         // 3. By numeric ID
         if (is_numeric($clean)) {
-            $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE `id` = ? LIMIT 1");
+            $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ? LIMIT 1");
             $stmt->execute([(int)$clean]);
             $user = $stmt->fetch();
             if ($user) return $user;
         }
 
         // 4. By exact name or slug
-        $stmt = $pdo->prepare("SELECT * FROM `be_users` WHERE LOWER(REPLACE(`name`, ' ', '-')) = LOWER(?) OR LOWER(REPLACE(`full_name`, ' ', '-')) = LOWER(?) LIMIT 1");
+        $stmt = $pdo->prepare("SELECT * FROM `users` WHERE LOWER(REPLACE(`name`, ' ', '-')) = LOWER(?) OR LOWER(REPLACE(`full_name`, ' ', '-')) = LOWER(?) LIMIT 1");
         $stmt->execute([$clean, $clean]);
         $user = $stmt->fetch();
         if ($user) return $user;
@@ -457,7 +457,7 @@ function incrementUserProfileViews($userId) {
     $pdo = Database::getConnection();
     if ($pdo && (int)$userId > 0) {
         try {
-            $stmt = $pdo->prepare("UPDATE `be_users` SET `counter` = COALESCE(`counter`, 0) + 1 WHERE `id` = ?");
+            $stmt = $pdo->prepare("UPDATE `users` SET `counter` = COALESCE(`counter`, 0) + 1 WHERE `id` = ?");
             $stmt->execute([(int)$userId]);
         } catch (Throwable $e) {}
     }
@@ -484,7 +484,7 @@ function updateUserProfile($userId, array $data) {
     // Get actual table columns from database to ensure no query failures
     $existingCols = [];
     try {
-        $colStmt = $pdo->query("SHOW COLUMNS FROM `be_users`");
+        $colStmt = $pdo->query("SHOW COLUMNS FROM `users`");
         if ($colStmt) {
             while ($cRow = $colStmt->fetch()) {
                 $existingCols[strtolower($cRow['Field'])] = true;
@@ -514,7 +514,7 @@ function updateUserProfile($userId, array $data) {
     if (empty($updates)) return false;
 
     $params[] = (int)$userId;
-    $sql = "UPDATE `be_users` SET " . implode(', ', $updates) . " WHERE `id` = ?";
+    $sql = "UPDATE `users` SET " . implode(', ', $updates) . " WHERE `id` = ?";
 
     try {
         $stmt = $pdo->prepare($sql);

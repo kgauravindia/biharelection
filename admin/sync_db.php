@@ -29,10 +29,10 @@ echo "========================================================\n\n";
 // 1. Run Schema Setup
 echo "[1/15] Initializing Database Tables...\n";
 $tablesToReset = [
-    'be_districts', 'be_constituencies', 'be_mukhiyas', 'be_sarpanchs', 
-    'be_zila_parishad_members', 'be_zila_parishad_officials', 'be_mps_loksabha', 
-    'be_mps_rajyasabha', 'be_mlcs', 'be_mlas_2015', 'be_mukhiyas_2016', 
-    'be_panchayat_samiti_2016', 'be_census_districts', 'be_census_subdistricts'
+    'districts', 'constituencies', 'mukhiyas', 'sarpanchs', 
+    'zila_parishad_members', 'zila_parishad_officials', 'mps_loksabha', 
+    'mps_rajyasabha', 'mlcs', 'mlas_2015', 'mukhiyas_2016', 
+    'panchayat_samiti_2016', 'census_districts', 'census_subdistricts'
 ];
 foreach ($tablesToReset as $t) {
     $pdo->exec("DROP TABLE IF EXISTS `$t`");
@@ -76,7 +76,7 @@ function executeBatchInsert(PDO $pdo, string $table, array $columns, array $rows
 // 2. Sync Districts (38)
 echo "[2/15] Syncing Districts (assets/data/districts.json)...\n";
 $districts = json_decode(file_get_contents(__DIR__ . '/../assets/data/districts.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_districts`");
+$pdo->exec("TRUNCATE TABLE `districts`");
 $dRows = [];
 foreach ($districts as $d) {
     $dRows[] = [
@@ -92,13 +92,13 @@ foreach ($districts as $d) {
         'description' => $d['description'] ?? ''
     ];
 }
-executeBatchInsert($pdo, 'be_districts', ['id', 'name', 'name_hi', 'slug', 'headquarters', 'division', 'total_ac', 'total_electors', 'ac_list', 'description'], $dRows);
+executeBatchInsert($pdo, 'districts', ['id', 'name', 'name_hi', 'slug', 'headquarters', 'division', 'total_ac', 'total_electors', 'ac_list', 'description'], $dRows);
 echo "  ✓ " . count($dRows) . " Districts synced.\n\n";
 
 // 3. Sync Constituencies (243)
 echo "[3/15] Syncing Assembly Constituencies (assets/data/constituencies.json)...\n";
 $constituencies = json_decode(file_get_contents(__DIR__ . '/../assets/data/constituencies.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_constituencies`");
+$pdo->exec("TRUNCATE TABLE `constituencies`");
 $cRows = [];
 foreach ($constituencies as $c) {
     $cRows[] = [
@@ -125,13 +125,13 @@ foreach ($constituencies as $c) {
         'candidates_2026_expected' => json_encode($c['candidates_2026_expected'] ?? [])
     ];
 }
-executeBatchInsert($pdo, 'be_constituencies', ['ac_no', 'name', 'name_hi', 'slug', 'district', 'district_hi', 'lok_sabha', 'reservation', 'total_electors', 'male_electors', 'female_electors', 'polling_stations', 'blocks', 'total_panchayats', 'current_mla', 'current_party', 'election_2020', 'election_2015', 'key_issues', 'party_history', 'candidates_2026_expected'], $cRows);
+executeBatchInsert($pdo, 'constituencies', ['ac_no', 'name', 'name_hi', 'slug', 'district', 'district_hi', 'lok_sabha', 'reservation', 'total_electors', 'male_electors', 'female_electors', 'polling_stations', 'blocks', 'total_panchayats', 'current_mla', 'current_party', 'election_2020', 'election_2015', 'key_issues', 'party_history', 'candidates_2026_expected'], $cRows);
 echo "  ✓ " . count($cRows) . " Assembly Constituencies synced.\n\n";
 
 // 4. Sync Mukhiyas (7,346)
 echo "[4/15] Syncing Mukhiya Directory (assets/data/mukhiya_directory.json)...\n";
 $mukhiyas = json_decode(file_get_contents(__DIR__ . '/../assets/data/mukhiya_directory.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_mukhiyas`");
+$pdo->exec("TRUNCATE TABLE `mukhiyas`");
 $mRows = [];
 foreach ($mukhiyas as $m) {
     $mRows[] = [
@@ -149,13 +149,13 @@ foreach ($mukhiyas as $m) {
         'tenure' => '2021-2026'
     ];
 }
-executeBatchInsert($pdo, 'be_mukhiyas', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'block', 'panchayat', 'gender', 'category', 'mobile', 'address', 'tenure'], $mRows, 400);
+executeBatchInsert($pdo, 'mukhiyas', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'block', 'panchayat', 'gender', 'category', 'mobile', 'address', 'tenure'], $mRows, 400);
 echo "  ✓ " . count($mRows) . " Elected Mukhiyas synced.\n\n";
 
 // 5. Sync Sarpanchs (6,617)
 echo "[5/15] Syncing Sarpanch Directory (assets/data/sarpanch_directory.json)...\n";
 $sarpanchs = json_decode(file_get_contents(__DIR__ . '/../assets/data/sarpanch_directory.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_sarpanchs`");
+$pdo->exec("TRUNCATE TABLE `sarpanchs`");
 $sRows = [];
 foreach ($sarpanchs as $s) {
     $sRows[] = [
@@ -173,13 +173,13 @@ foreach ($sarpanchs as $s) {
         'tenure' => '2021-2026'
     ];
 }
-executeBatchInsert($pdo, 'be_sarpanchs', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'block', 'panchayat', 'gender', 'category', 'mobile', 'address', 'tenure'], $sRows, 400);
+executeBatchInsert($pdo, 'sarpanchs', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'block', 'panchayat', 'gender', 'category', 'mobile', 'address', 'tenure'], $sRows, 400);
 echo "  ✓ " . count($sRows) . " Elected Sarpanchs synced.\n\n";
 
 // 6. Sync Zila Parishad Members (1,099+)
 echo "[6/15] Syncing Zila Parishad Territorial Members (assets/data/zila_parishad_members.json)...\n";
 $zpMembers = json_decode(file_get_contents(__DIR__ . '/../assets/data/zila_parishad_members.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_zila_parishad_members`");
+$pdo->exec("TRUNCATE TABLE `zila_parishad_members`");
 $zpRows = [];
 foreach ($zpMembers as $zp) {
     $zpRows[] = [
@@ -196,13 +196,13 @@ foreach ($zpMembers as $zp) {
         'tenure' => '2021-2026'
     ];
 }
-executeBatchInsert($pdo, 'be_zila_parishad_members', ['id', 'candidate_name', 'district', 'district_slug', 'block', 'territory_no', 'gender', 'category', 'mobile', 'address', 'tenure'], $zpRows, 400);
+executeBatchInsert($pdo, 'zila_parishad_members', ['id', 'candidate_name', 'district', 'district_slug', 'block', 'territory_no', 'gender', 'category', 'mobile', 'address', 'tenure'], $zpRows, 400);
 echo "  ✓ " . count($zpRows) . " Zila Parishad Territorial Members synced.\n\n";
 
 // 7. Sync Zila Parishad Officials (38 Presidents / Vice-Presidents)
 echo "[7/15] Syncing Zila Parishad Chairpersons (assets/data/zila_parishad_officials.json)...\n";
 $zpOfficials = json_decode(file_get_contents(__DIR__ . '/../assets/data/zila_parishad_officials.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_zila_parishad_officials`");
+$pdo->exec("TRUNCATE TABLE `zila_parishad_officials`");
 $zpoRows = [];
 foreach ($zpOfficials as $zpo) {
     $zpoRows[] = [
@@ -217,13 +217,13 @@ foreach ($zpOfficials as $zpo) {
         'tenure' => '2021-2026'
     ];
 }
-executeBatchInsert($pdo, 'be_zila_parishad_officials', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'gender', 'category', 'address', 'tenure'], $zpoRows);
+executeBatchInsert($pdo, 'zila_parishad_officials', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'gender', 'category', 'address', 'tenure'], $zpoRows);
 echo "  ✓ " . count($zpoRows) . " Zila Parishad Chairpersons & Vice-Chairpersons synced.\n\n";
 
 // 8. Sync Lok Sabha MPs (40)
 echo "[8/15] Syncing Lok Sabha MPs (assets/data/mps_loksabha.json)...\n";
 $mpsLs = json_decode(file_get_contents(__DIR__ . '/../assets/data/mps_loksabha.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_mps_loksabha`");
+$pdo->exec("TRUNCATE TABLE `mps_loksabha`");
 $lsRows = [];
 foreach ($mpsLs as $mp) {
     $lsRows[] = [
@@ -236,13 +236,13 @@ foreach ($mpsLs as $mp) {
         'house' => 'Lok Sabha'
     ];
 }
-executeBatchInsert($pdo, 'be_mps_loksabha', ['pc_no', 'pc_name', 'slug', 'mp_name', 'party', 'criminal_cases', 'house'], $lsRows);
+executeBatchInsert($pdo, 'mps_loksabha', ['pc_no', 'pc_name', 'slug', 'mp_name', 'party', 'criminal_cases', 'house'], $lsRows);
 echo "  ✓ " . count($lsRows) . " Lok Sabha MPs synced.\n\n";
 
 // 9. Sync Rajya Sabha MPs (15)
 echo "[9/15] Syncing Rajya Sabha MPs (assets/data/mps_rajyasabha.json)...\n";
 $mpsRs = json_decode(file_get_contents(__DIR__ . '/../assets/data/mps_rajyasabha.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_mps_rajyasabha`");
+$pdo->exec("TRUNCATE TABLE `mps_rajyasabha`");
 $rsRows = [];
 foreach ($mpsRs as $mp) {
     $rsRows[] = [
@@ -252,13 +252,13 @@ foreach ($mpsRs as $mp) {
         'house' => 'Rajya Sabha'
     ];
 }
-executeBatchInsert($pdo, 'be_mps_rajyasabha', ['mp_name', 'party', 'tenure', 'house'], $rsRows);
+executeBatchInsert($pdo, 'mps_rajyasabha', ['mp_name', 'party', 'tenure', 'house'], $rsRows);
 echo "  ✓ " . count($rsRows) . " Rajya Sabha Parliamentarians synced.\n\n";
 
 // 10. Sync MLCs (75)
 echo "[10/15] Syncing Vidhan Parishad MLCs (assets/data/mlcs.json)...\n";
 $mlcs = json_decode(file_get_contents(__DIR__ . '/../assets/data/mlcs.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_mlcs`");
+$pdo->exec("TRUNCATE TABLE `mlcs`");
 $mlcRows = [];
 foreach ($mlcs as $m) {
     $mlcRows[] = [
@@ -269,13 +269,13 @@ foreach ($mlcs as $m) {
         'contact' => $m['contact'] ?? ''
     ];
 }
-executeBatchInsert($pdo, 'be_mlcs', ['sr_no', 'name', 'constituency', 'tenure', 'contact'], $mlcRows);
+executeBatchInsert($pdo, 'mlcs', ['sr_no', 'name', 'constituency', 'tenure', 'contact'], $mlcRows);
 echo "  ✓ " . count($mlcRows) . " Vidhan Parishad MLCs synced.\n\n";
 
 // 11. Sync 2015 MLAs (243)
 echo "[11/15] Syncing 2015 Historical MLAs (assets/data/mlas_2015.json)...\n";
 $mlas15 = json_decode(file_get_contents(__DIR__ . '/../assets/data/mlas_2015.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_mlas_2015`");
+$pdo->exec("TRUNCATE TABLE `mlas_2015`");
 $m15Rows = [];
 foreach ($mlas15 as $m) {
     $m15Rows[] = [
@@ -288,13 +288,13 @@ foreach ($mlas15 as $m) {
         'tenure' => '2015–2020'
     ];
 }
-executeBatchInsert($pdo, 'be_mlas_2015', ['ac_no', 'ac_name', 'slug', 'mla_name', 'party', 'mobile', 'tenure'], $m15Rows);
+executeBatchInsert($pdo, 'mlas_2015', ['ac_no', 'ac_name', 'slug', 'mla_name', 'party', 'mobile', 'tenure'], $m15Rows);
 echo "  ✓ " . count($m15Rows) . " Historical MLAs (2015) synced.\n\n";
 
 // 12. Sync 2016 Mukhiyas (8,045)
 echo "[12/15] Syncing 2016 Historical Mukhiyas (assets/data/mukhiyas_2016.json)...\n";
 $m16 = json_decode(file_get_contents(__DIR__ . '/../assets/data/mukhiyas_2016.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_mukhiyas_2016`");
+$pdo->exec("TRUNCATE TABLE `mukhiyas_2016`");
 $m16Rows = [];
 foreach ($m16 as $m) {
     $m16Rows[] = [
@@ -309,13 +309,13 @@ foreach ($m16 as $m) {
         'up_mukhiya_2016' => $m['up_mukhiya_2016'] ?? ''
     ];
 }
-executeBatchInsert($pdo, 'be_mukhiyas_2016', ['district', 'district_hi', 'district_slug', 'block', 'block_hi', 'panchayat', 'panchayat_hi', 'mukhiya_2016', 'up_mukhiya_2016'], $m16Rows, 500);
+executeBatchInsert($pdo, 'mukhiyas_2016', ['district', 'district_hi', 'district_slug', 'block', 'block_hi', 'panchayat', 'panchayat_hi', 'mukhiya_2016', 'up_mukhiya_2016'], $m16Rows, 500);
 echo "  ✓ " . count($m16Rows) . " Historical Mukhiyas (2016) synced.\n\n";
 
 // 13. Sync 2016 Block Samiti (534)
 echo "[13/15] Syncing 2016 Panchayat Samiti (assets/data/panchayat_samiti_2016.json)...\n";
 $samiti16 = json_decode(file_get_contents(__DIR__ . '/../assets/data/panchayat_samiti_2016.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_panchayat_samiti_2016`");
+$pdo->exec("TRUNCATE TABLE `panchayat_samiti_2016`");
 $s16Rows = [];
 foreach ($samiti16 as $s) {
     $s16Rows[] = [
@@ -328,13 +328,13 @@ foreach ($samiti16 as $s) {
         'up_pramukh_2016' => $s['up_pramukh_2016'] ?? ''
     ];
 }
-executeBatchInsert($pdo, 'be_panchayat_samiti_2016', ['district', 'district_hi', 'district_slug', 'block', 'block_hi', 'pramukh_2016', 'up_pramukh_2016'], $s16Rows);
+executeBatchInsert($pdo, 'panchayat_samiti_2016', ['district', 'district_hi', 'district_slug', 'block', 'block_hi', 'pramukh_2016', 'up_pramukh_2016'], $s16Rows);
 echo "  ✓ " . count($s16Rows) . " Panchayat Samiti Pramukhs (2016) synced.\n\n";
 
 // 14. Sync Census 2011 Districts Demographics (38)
 echo "[14/15] Syncing Census 2011 Districts (assets/data/census_districts.json)...\n";
 $censusD = json_decode(file_get_contents(__DIR__ . '/../assets/data/census_districts.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_census_districts`");
+$pdo->exec("TRUNCATE TABLE `census_districts`");
 $cdRows = [];
 foreach ($censusD as $slug => $cd) {
     $tot = $cd['total'] ?? [];
@@ -364,13 +364,13 @@ foreach ($censusD as $slug => $cd) {
         'non_workers' => $tot['non_workers'] ?? 0
     ];
 }
-executeBatchInsert($pdo, 'be_census_districts', ['district_code', 'name', 'slug', 'households', 'population', 'male', 'female', 'sex_ratio', 'pop_0_6', 'sc_population', 'sc_percentage', 'st_population', 'st_percentage', 'literates', 'literacy_rate', 'rural_population', 'urban_population', 'total_workers', 'main_workers', 'cultivators', 'agricultural_labourers', 'marginal_workers', 'non_workers'], $cdRows);
+executeBatchInsert($pdo, 'census_districts', ['district_code', 'name', 'slug', 'households', 'population', 'male', 'female', 'sex_ratio', 'pop_0_6', 'sc_population', 'sc_percentage', 'st_population', 'st_percentage', 'literates', 'literacy_rate', 'rural_population', 'urban_population', 'total_workers', 'main_workers', 'cultivators', 'agricultural_labourers', 'marginal_workers', 'non_workers'], $cdRows);
 echo "  ✓ " . count($cdRows) . " Census 2011 Districts synced.\n\n";
 
 // 15. Sync Census 2011 Sub-Districts (534 Blocks)
 echo "[15/15] Syncing Census 2011 Sub-Districts (assets/data/census_subdistricts.json)...\n";
 $censusSub = json_decode(file_get_contents(__DIR__ . '/../assets/data/census_subdistricts.json'), true) ?? [];
-$pdo->exec("TRUNCATE TABLE `be_census_subdistricts`");
+$pdo->exec("TRUNCATE TABLE `census_subdistricts`");
 $csRows = [];
 foreach ($censusSub as $distSlug => $subList) {
     if (is_array($subList)) {
@@ -396,15 +396,15 @@ foreach ($censusSub as $distSlug => $subList) {
         }
     }
 }
-executeBatchInsert($pdo, 'be_census_subdistricts', ['district_name', 'district_slug', 'sub_dist_code', 'sub_district', 'households', 'population', 'male', 'female', 'sex_ratio', 'sc_population', 'st_population', 'literates', 'literacy_rate', 'total_workers', 'cultivators', 'agricultural_labourers'], $csRows, 400);
+executeBatchInsert($pdo, 'census_subdistricts', ['district_name', 'district_slug', 'sub_dist_code', 'sub_district', 'households', 'population', 'male', 'female', 'sex_ratio', 'sc_population', 'st_population', 'literates', 'literacy_rate', 'total_workers', 'cultivators', 'agricultural_labourers'], $csRows, 400);
 echo "  ✓ " . count($csRows) . " Census 2011 Sub-Districts (Blocks) synced.\n\n";
 
 // Ensure Super Admin exists
-$adminExists = $pdo->query("SELECT id FROM `be_admin_users` WHERE `username` = 'admin' LIMIT 1")->fetch();
+$adminExists = $pdo->query("SELECT id FROM `admin_users` WHERE `username` = 'admin' LIMIT 1")->fetch();
 if (!$adminExists) {
     $initPass = defined('DEFAULT_ADMIN_PASS') ? DEFAULT_ADMIN_PASS : 'Admin@ChangeMe2026';
     $hashedPwd = password_hash($initPass, PASSWORD_DEFAULT);
-    $pdo->prepare("INSERT INTO `be_admin_users` (`username`, `password`, `email`, `role`, `status`) VALUES ('admin', ?, 'admin@biharelection.com', 'superadmin', 'ACTIVE')")->execute([$hashedPwd]);
+    $pdo->prepare("INSERT INTO `admin_users` (`username`, `password`, `email`, `role`, `status`) VALUES ('admin', ?, 'admin@biharelection.com', 'superadmin', 'ACTIVE')")->execute([$hashedPwd]);
     echo "  ✓ Super Admin user initialized.\n";
 }
 

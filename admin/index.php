@@ -21,27 +21,27 @@ $stats = [
 
 if ($conn) {
     // Candidates
-    $r = $conn->query("SELECT COUNT(*) as c FROM `be_candidates`");
+    $r = $conn->query("SELECT COUNT(*) as c FROM `candidates`");
     if ($r) $stats['candidates'] = $r->fetch_assoc()['c'];
 
     // Mukhiyas
-    $r = $conn->query("SELECT COUNT(*) as c FROM `be_mukhiyas`");
+    $r = $conn->query("SELECT COUNT(*) as c FROM `mukhiyas`");
     if ($r) $stats['mukhiyas'] = $r->fetch_assoc()['c'];
 
     // Sarpanchs
-    $r = $conn->query("SELECT COUNT(*) as c FROM `be_sarpanchs`");
+    $r = $conn->query("SELECT COUNT(*) as c FROM `sarpanchs`");
     if ($r) $stats['sarpanchs'] = $r->fetch_assoc()['c'];
 
     // Zila Parishad
-    $r = $conn->query("SELECT COUNT(*) as c FROM `be_zila_parishad_members`");
+    $r = $conn->query("SELECT COUNT(*) as c FROM `zila_parishad_members`");
     if ($r) $stats['zila_parishad'] = $r->fetch_assoc()['c'];
 
     // WhatsApp Subscribers
-    $r = $conn->query("SELECT COUNT(*) as c FROM `be_whatsapp_subscribers`");
+    $r = $conn->query("SELECT COUNT(*) as c FROM `whatsapp_subscribers`");
     if ($r) $stats['whatsapp_subscribers'] = $r->fetch_assoc()['c'];
 
     // Ads
-    $r = $conn->query("SELECT COUNT(*) as c, SUM(amount) as s FROM `be_advertisements`");
+    $r = $conn->query("SELECT COUNT(*) as c, SUM(amount) as s FROM `advertisements`");
     if ($r) {
         $row = $r->fetch_assoc();
         $stats['ads_count'] = $row['c'] ?? 0;
@@ -49,7 +49,7 @@ if ($conn) {
     }
 
     // Contacts
-    $r = $conn->query("SELECT COUNT(*) as c, SUM(CASE WHEN `status` = 'NEW' THEN 1 ELSE 0 END) as nw FROM `be_contacts`");
+    $r = $conn->query("SELECT COUNT(*) as c, SUM(CASE WHEN `status` = 'NEW' THEN 1 ELSE 0 END) as nw FROM `contacts`");
     if ($r) {
         $row = $r->fetch_assoc();
         $stats['contacts_count'] = $row['c'] ?? 0;
@@ -81,7 +81,7 @@ $party_counts = [
 ];
 
 if ($conn) {
-    $pr = $conn->query("SELECT `current_party`, COUNT(*) as c FROM `be_constituencies` WHERE `current_party` IS NOT NULL AND `current_party` != '' GROUP BY `current_party` ORDER BY c DESC LIMIT 8");
+    $pr = $conn->query("SELECT `current_party`, COUNT(*) as c FROM `constituencies` WHERE `current_party` IS NOT NULL AND `current_party` != '' GROUP BY `current_party` ORDER BY c DESC LIMIT 8");
     if ($pr && $pr->num_rows > 0) {
         $party_counts = [];
         while ($prow = $pr->fetch_assoc()) {
@@ -93,7 +93,7 @@ if ($conn) {
 // Recent Contacts
 $recent_contacts = [];
 if ($conn) {
-    $cr = $conn->query("SELECT * FROM `be_contacts` ORDER BY `created_at` DESC LIMIT 5");
+    $cr = $conn->query("SELECT * FROM `contacts` ORDER BY `created_at` DESC LIMIT 5");
     if ($cr) {
         while ($crow = $cr->fetch_assoc()) {
             $recent_contacts[] = $crow;
@@ -104,7 +104,7 @@ if ($conn) {
 // Recent Candidates
 $recent_candidates = [];
 if ($conn) {
-    $cand_r = $conn->query("SELECT * FROM `be_candidates` ORDER BY `id` DESC LIMIT 5");
+    $cand_r = $conn->query("SELECT * FROM `candidates` ORDER BY `id` DESC LIMIT 5");
     if ($cand_r && $cand_r->num_rows > 0) {
         while ($cand_row = $cand_r->fetch_assoc()) {
             $recent_candidates[] = $cand_row;

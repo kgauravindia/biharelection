@@ -55,7 +55,7 @@ function initAdminTables($conn) {
     if (!$conn) return;
 
     // Admin Users Table
-    $conn->query("CREATE TABLE IF NOT EXISTS `be_admin_users` (
+    $conn->query("CREATE TABLE IF NOT EXISTS `admin_users` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `username` VARCHAR(100) NOT NULL UNIQUE,
         `password` VARCHAR(255) NOT NULL,
@@ -68,16 +68,16 @@ function initAdminTables($conn) {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
     // Check if default admin exists
-    $chk = $conn->query("SELECT id FROM `be_admin_users` WHERE `username` = 'admin'");
+    $chk = $conn->query("SELECT id FROM `admin_users` WHERE `username` = 'admin'");
     if ($chk && $chk->num_rows === 0) {
         $init_pass = defined('DEFAULT_ADMIN_PASS') ? DEFAULT_ADMIN_PASS : 'Admin@ChangeMe2026';
         $default_pwd = password_hash($init_pass, PASSWORD_DEFAULT);
-        $conn->query("INSERT INTO `be_admin_users` (`username`, `password`, `name`, `email`, `role`, `status`) 
+        $conn->query("INSERT INTO `admin_users` (`username`, `password`, `name`, `email`, `role`, `status`) 
                       VALUES ('admin', '$default_pwd', 'Bihar Election Admin', 'admin@biharelection.com', 'superadmin', 'ACTIVE')");
     }
 
     // Contacts / Leads Table
-    $conn->query("CREATE TABLE IF NOT EXISTS `be_contacts` (
+    $conn->query("CREATE TABLE IF NOT EXISTS `contacts` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `name` VARCHAR(150) NOT NULL,
         `mobile` VARCHAR(50) NOT NULL,
@@ -92,7 +92,7 @@ function initAdminTables($conn) {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
     // Advertisements Table
-    $conn->query("CREATE TABLE IF NOT EXISTS `be_advertisements` (
+    $conn->query("CREATE TABLE IF NOT EXISTS `advertisements` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `product_type` VARCHAR(100) NOT NULL,
         `client_name` VARCHAR(150) NOT NULL,
@@ -108,7 +108,7 @@ function initAdminTables($conn) {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
     // WhatsApp Subscribers Table
-    $conn->query("CREATE TABLE IF NOT EXISTS `be_whatsapp_subscribers` (
+    $conn->query("CREATE TABLE IF NOT EXISTS `whatsapp_subscribers` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `phone_number` VARCHAR(50) NOT NULL UNIQUE,
         `district` VARCHAR(100) DEFAULT NULL,

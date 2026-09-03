@@ -7,10 +7,10 @@ $unread_contacts = 0;
 $pending_ads = 0;
 $total_posts_count = 0;
 if ($db_menu) {
-    $c_res = $db_menu->query("SELECT COUNT(*) as c FROM `be_contacts` WHERE `status` = 'NEW'");
+    $c_res = $db_menu->query("SELECT COUNT(*) as c FROM `contacts` WHERE `status` = 'NEW'");
     if ($c_res) $unread_contacts = $c_res->fetch_assoc()['c'] ?? 0;
     
-    $a_res = $db_menu->query("SELECT COUNT(*) as c FROM `be_advertisements` WHERE `status` = 'PENDING'");
+    $a_res = $db_menu->query("SELECT COUNT(*) as c FROM `advertisements` WHERE `status` = 'PENDING'");
     if ($a_res) $pending_ads = $a_res->fetch_assoc()['c'] ?? 0;
 
     $p_res = $db_menu->query("SELECT COUNT(*) as c FROM `posts` WHERE `status` = 'published'");

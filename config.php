@@ -195,7 +195,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_districts ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM districts ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -243,7 +243,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_constituencies ORDER BY ac_no ASC");
+                    $stmt = $pdo->query("SELECT * FROM constituencies ORDER BY ac_no ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -322,7 +322,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_candidates ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM candidates ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -359,7 +359,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_panchayats ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM panchayats ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -400,7 +400,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_mukhiyas ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM mukhiyas ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -435,7 +435,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_sarpanchs ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM sarpanchs ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -495,7 +495,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_zila_parishad_members ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM zila_parishad_members ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -526,7 +526,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_zila_parishad_officials ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM zila_parishad_officials ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -582,7 +582,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_zila_parishad_2016 ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM zila_parishad_2016 ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -613,7 +613,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_panchayat_samiti_2016 ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM panchayat_samiti_2016 ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -644,7 +644,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_mukhiyas_2016 ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM mukhiyas_2016 ORDER BY id ASC");
                     if ($stmt) {
                         $rows = $stmt->fetchAll();
                         if (!empty($rows)) {
@@ -687,7 +687,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_mps_loksabha ORDER BY pc_no ASC");
+                    $stmt = $pdo->query("SELECT * FROM mps_loksabha ORDER BY pc_no ASC");
                     if ($stmt) self::$mpsLokSabha = $stmt->fetchAll() ?: [];
                 } catch (Throwable $e) {}
             }
@@ -701,7 +701,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_mps_rajyasabha ORDER BY sno ASC");
+                    $stmt = $pdo->query("SELECT * FROM mps_rajyasabha ORDER BY sno ASC");
                     if ($stmt) self::$mpsRajyaSabha = $stmt->fetchAll() ?: [];
                 } catch (Throwable $e) {}
             }
@@ -715,7 +715,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_mlcs ORDER BY id ASC");
+                    $stmt = $pdo->query("SELECT * FROM mlcs ORDER BY id ASC");
                     if ($stmt) self::$mlcs = $stmt->fetchAll() ?: [];
                 } catch (Throwable $e) {}
             }
@@ -729,7 +729,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_mlas_2015 ORDER BY ac_no ASC");
+                    $stmt = $pdo->query("SELECT * FROM mlas_2015 ORDER BY ac_no ASC");
                     if ($stmt) self::$mlas2015 = $stmt->fetchAll() ?: [];
                 } catch (Throwable $e) {}
             }
@@ -768,7 +768,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_census_districts WHERE district_slug = 'bihar' OR slug = 'bihar' LIMIT 1");
+                    $stmt = $pdo->query("SELECT * FROM census_districts WHERE district_slug = 'bihar' OR slug = 'bihar' LIMIT 1");
                     if ($stmt) self::$censusBihar = $stmt->fetch() ?: [];
                 } catch (Throwable $e) {}
             }
@@ -782,7 +782,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_census_districts");
+                    $stmt = $pdo->query("SELECT * FROM census_districts");
                     if ($stmt) {
                         while ($r = $stmt->fetch()) {
                             $k = strtolower($r['district_slug'] ?? $r['slug'] ?? '');
@@ -812,7 +812,7 @@ class DataProvider {
             $pdo = Database::getConnection();
             if ($pdo) {
                 try {
-                    $stmt = $pdo->query("SELECT * FROM be_census_subdistricts ORDER BY sub_district ASC");
+                    $stmt = $pdo->query("SELECT * FROM census_subdistricts ORDER BY sub_district ASC");
                     if ($stmt) {
                         while ($r = $stmt->fetch()) {
                             $dSlug = strtolower($r['district_slug'] ?? '');

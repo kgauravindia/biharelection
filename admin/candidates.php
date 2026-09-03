@@ -10,7 +10,7 @@ $error = '';
 if (isset($_GET['delete_id'])) {
     $del_id = (int)$_GET['delete_id'];
     if ($conn && $del_id > 0) {
-        $stmt = $conn->prepare("DELETE FROM `be_candidates` WHERE `id` = ?");
+        $stmt = $conn->prepare("DELETE FROM `candidates` WHERE `id` = ?");
         if ($stmt) {
             $stmt->bind_param("i", $del_id);
             if ($stmt->execute()) {
@@ -26,7 +26,7 @@ if (isset($_GET['delete_id'])) {
 if (isset($_GET['toggle_verify'])) {
     $t_id = (int)$_GET['toggle_verify'];
     if ($conn && $t_id > 0) {
-        $conn->query("UPDATE `be_candidates` SET `verified` = IF(`verified` = 1, 0, 1) WHERE `id` = $t_id");
+        $conn->query("UPDATE `candidates` SET `verified` = IF(`verified` = 1, 0, 1) WHERE `id` = $t_id");
         header("Location: candidates.php?msg=updated");
         exit();
     }
@@ -60,10 +60,10 @@ if ($conn) {
         $where .= " AND `promoted_tier` = '$filter_tier'";
     }
 
-    $c_res = $conn->query("SELECT COUNT(*) as c FROM `be_candidates` WHERE $where");
+    $c_res = $conn->query("SELECT COUNT(*) as c FROM `candidates` WHERE $where");
     if ($c_res) $total_rows = $c_res->fetch_assoc()['c'];
 
-    $q_res = $conn->query("SELECT * FROM `be_candidates` WHERE $where ORDER BY `id` DESC LIMIT $offset, $limit");
+    $q_res = $conn->query("SELECT * FROM `candidates` WHERE $where ORDER BY `id` DESC LIMIT $offset, $limit");
     if ($q_res) {
         while ($r = $q_res->fetch_assoc()) {
             $candidates[] = $r;

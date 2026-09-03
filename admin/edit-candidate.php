@@ -33,7 +33,7 @@ $candidate = [
 
 // Fetch Candidate if editing
 if ($id > 0 && $conn) {
-    $stmt = $conn->prepare("SELECT * FROM `be_candidates` WHERE `id` = ?");
+    $stmt = $conn->prepare("SELECT * FROM `candidates` WHERE `id` = ?");
     if ($stmt) {
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Candidate name and constituency are required.";
     } elseif ($conn) {
         if ($id > 0) {
-            $stmt = $conn->prepare("UPDATE `be_candidates` SET `name`=?, `name_hi`=?, `slug`=?, `party`=?, `party_short`=?, `constituency`=?, `district`=?, `age`=?, `education`=?, `profession`=?, `assets_declared`=?, `liabilities`=?, `criminal_cases`=?, `verified`=?, `promoted_tier`=?, `photo`=?, `bio`=?, `social_links`=? WHERE `id`=?");
+            $stmt = $conn->prepare("UPDATE `candidates` SET `name`=?, `name_hi`=?, `slug`=?, `party`=?, `party_short`=?, `constituency`=?, `district`=?, `age`=?, `education`=?, `profession`=?, `assets_declared`=?, `liabilities`=?, `criminal_cases`=?, `verified`=?, `promoted_tier`=?, `photo`=?, `bio`=?, `social_links`=? WHERE `id`=?");
             if ($stmt) {
                 $stmt->bind_param("ssssssisssssisssssi", $name, $name_hi, $post_slug, $party, $party_short, $constituency, $district, $age, $education, $profession, $assets, $liabilities, $criminal_cases, $verified, $tier, $photo, $bio, $social_json, $id);
                 if ($stmt->execute()) {
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         } else {
-            $stmt = $conn->prepare("INSERT INTO `be_candidates` (`name`, `name_hi`, `slug`, `party`, `party_short`, `constituency`, `district`, `age`, `education`, `profession`, `assets_declared`, `liabilities`, `criminal_cases`, `verified`, `promoted_tier`, `photo`, `bio`, `social_links`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            $stmt = $conn->prepare("INSERT INTO `candidates` (`name`, `name_hi`, `slug`, `party`, `party_short`, `constituency`, `district`, `age`, `education`, `profession`, `assets_declared`, `liabilities`, `criminal_cases`, `verified`, `promoted_tier`, `photo`, `bio`, `social_links`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             if ($stmt) {
                 $stmt->bind_param("ssssssisssssisssss", $name, $name_hi, $post_slug, $party, $party_short, $constituency, $district, $age, $education, $profession, $assets, $liabilities, $criminal_cases, $verified, $tier, $photo, $bio, $social_json);
                 if ($stmt->execute()) {

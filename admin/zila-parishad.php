@@ -27,10 +27,10 @@ if ($conn) {
         $m_where .= " AND (`district` = '$filter_district' OR `district_slug` = '$filter_district')";
     }
 
-    $c_res = $conn->query("SELECT COUNT(*) as c FROM `be_zila_parishad_members` WHERE $m_where");
+    $c_res = $conn->query("SELECT COUNT(*) as c FROM `zila_parishad_members` WHERE $m_where");
     if ($c_res) $total_members = $c_res->fetch_assoc()['c'];
 
-    $m_res = $conn->query("SELECT * FROM `be_zila_parishad_members` WHERE $m_where ORDER BY `district` ASC, `territory_no` ASC LIMIT 50");
+    $m_res = $conn->query("SELECT * FROM `zila_parishad_members` WHERE $m_where ORDER BY `district` ASC, `territory_no` ASC LIMIT 50");
     if ($m_res) {
         while ($r = $m_res->fetch_assoc()) $members[] = $r;
     }
@@ -43,7 +43,7 @@ if ($conn) {
     if (!empty($filter_district)) {
         $o_where .= " AND (`district` = '$filter_district' OR `district_slug` = '$filter_district')";
     }
-    $o_res = $conn->query("SELECT * FROM `be_zila_parishad_officials` WHERE $o_where ORDER BY `district` ASC, `post` ASC");
+    $o_res = $conn->query("SELECT * FROM `zila_parishad_officials` WHERE $o_where ORDER BY `district` ASC, `post` ASC");
     if ($o_res) {
         while ($r = $o_res->fetch_assoc()) $officials[] = $r;
         $total_officials = count($officials);

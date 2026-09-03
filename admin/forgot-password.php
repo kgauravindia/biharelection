@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $conn = getAdminDB();
             $userFound = null;
             if ($conn) {
-                $stmt = $conn->prepare("SELECT * FROM `be_admin_users` WHERE (`username` = ? OR `email` = ?) AND `status` = 'ACTIVE' LIMIT 1");
+                $stmt = $conn->prepare("SELECT * FROM `admin_users` WHERE (`username` = ? OR `email` = ?) AND `status` = 'ACTIVE' LIMIT 1");
                 if ($stmt) {
                     $stmt->bind_param("ss", $identifier, $identifier);
                     $stmt->execute();

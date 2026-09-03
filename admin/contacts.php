@@ -10,7 +10,7 @@ $error = '';
 if (isset($_GET['status_id']) && isset($_GET['set_status']) && $conn) {
     $sid = (int)$_GET['status_id'];
     $st = sanitize($_GET['set_status']);
-    $conn->query("UPDATE `be_contacts` SET `status` = '$st' WHERE `id` = $sid");
+    $conn->query("UPDATE `contacts` SET `status` = '$st' WHERE `id` = $sid");
     header("Location: contacts.php?msg=updated");
     exit();
 }
@@ -18,7 +18,7 @@ if (isset($_GET['status_id']) && isset($_GET['set_status']) && $conn) {
 // Handle Delete
 if (isset($_GET['delete_id']) && $conn) {
     $did = (int)$_GET['delete_id'];
-    $conn->query("DELETE FROM `be_contacts` WHERE `id` = $did");
+    $conn->query("DELETE FROM `contacts` WHERE `id` = $did");
     $message = "Lead inquiry deleted.";
 }
 
@@ -42,10 +42,10 @@ if ($conn) {
         $where .= " AND `inquiry_type` = '$filter_type'";
     }
 
-    $c_res = $conn->query("SELECT COUNT(*) as c FROM `be_contacts` WHERE $where");
+    $c_res = $conn->query("SELECT COUNT(*) as c FROM `contacts` WHERE $where");
     if ($c_res) $total_rows = $c_res->fetch_assoc()['c'];
 
-    $res = $conn->query("SELECT * FROM `be_contacts` WHERE $where ORDER BY `id` DESC LIMIT 50");
+    $res = $conn->query("SELECT * FROM `contacts` WHERE $where ORDER BY `id` DESC LIMIT 50");
     if ($res) {
         while ($row = $res->fetch_assoc()) $contacts[] = $row;
     }

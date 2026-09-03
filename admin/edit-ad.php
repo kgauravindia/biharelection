@@ -22,7 +22,7 @@ $ad = [
 ];
 
 if ($id > 0 && $conn) {
-    $stmt = $conn->prepare("SELECT * FROM `be_advertisements` WHERE `id` = ?");
+    $stmt = $conn->prepare("SELECT * FROM `advertisements` WHERE `id` = ?");
     if ($stmt) {
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Client Name and Contact Phone are required.";
     } elseif ($conn) {
         if ($id > 0) {
-            $stmt = $conn->prepare("UPDATE `be_advertisements` SET `product_type`=?, `client_name`=?, `contact_phone`=?, `contact_email`=?, `target_entity`=?, `amount`=?, `banner_url`=?, `status`=?, `start_date`=?, `end_date`=? WHERE `id`=?");
+            $stmt = $conn->prepare("UPDATE `advertisements` SET `product_type`=?, `client_name`=?, `contact_phone`=?, `contact_email`=?, `target_entity`=?, `amount`=?, `banner_url`=?, `status`=?, `start_date`=?, `end_date`=? WHERE `id`=?");
             if ($stmt) {
                 $stmt->bind_param("sssssdssssi", $product_type, $client_name, $contact_phone, $contact_email, $target_entity, $amount, $banner_url, $status, $start_date, $end_date, $id);
                 if ($stmt->execute()) {
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         } else {
-            $stmt = $conn->prepare("INSERT INTO `be_advertisements` (`product_type`, `client_name`, `contact_phone`, `contact_email`, `target_entity`, `amount`, `banner_url`, `status`, `start_date`, `end_date`) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            $stmt = $conn->prepare("INSERT INTO `advertisements` (`product_type`, `client_name`, `contact_phone`, `contact_email`, `target_entity`, `amount`, `banner_url`, `status`, `start_date`, `end_date`) VALUES (?,?,?,?,?,?,?,?,?,?)");
             if ($stmt) {
                 $stmt->bind_param("sssssdssss", $product_type, $client_name, $contact_phone, $contact_email, $target_entity, $amount, $banner_url, $status, $start_date, $end_date);
                 if ($stmt->execute()) {

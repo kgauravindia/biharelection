@@ -10,7 +10,7 @@ $error = '';
 if (isset($_GET['delete_id']) && $conn) {
     $del_id = (int)$_GET['delete_id'];
     if ($del_id > 0) {
-        $stmt = $conn->prepare("DELETE FROM `be_sarpanchs` WHERE `id` = ?");
+        $stmt = $conn->prepare("DELETE FROM `sarpanchs` WHERE `id` = ?");
         if ($stmt) {
             $stmt->bind_param("i", $del_id);
             if ($stmt->execute()) {
@@ -46,10 +46,10 @@ if ($conn) {
         $where .= " AND `block` = '$filter_block'";
     }
 
-    $c_res = $conn->query("SELECT COUNT(*) as c FROM `be_sarpanchs` WHERE $where");
+    $c_res = $conn->query("SELECT COUNT(*) as c FROM `sarpanchs` WHERE $where");
     if ($c_res) $total_rows = $c_res->fetch_assoc()['c'];
 
-    $q_res = $conn->query("SELECT * FROM `be_sarpanchs` WHERE $where ORDER BY `district` ASC, `block` ASC, `panchayat` ASC LIMIT $offset, $limit");
+    $q_res = $conn->query("SELECT * FROM `sarpanchs` WHERE $where ORDER BY `district` ASC, `block` ASC, `panchayat` ASC LIMIT $offset, $limit");
     if ($q_res) {
         while ($r = $q_res->fetch_assoc()) {
             $sarpanchs[] = $r;

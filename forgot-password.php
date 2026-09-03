@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         if ($pdo) {
             try {
-                $stmt = $pdo->prepare("SELECT id, name FROM `be_users` WHERE `mobile` = ? LIMIT 1");
+                $stmt = $pdo->prepare("SELECT id, name FROM `users` WHERE `mobile` = ? LIMIT 1");
                 $stmt->execute([$mobile]);
                 $user = $stmt->fetch();
                 if (!$user) {
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $pdo = Database::getConnection();
         if ($pdo) {
             try {
-                $stmt = $pdo->prepare("UPDATE `be_users` SET `password` = ? WHERE `mobile` = ?");
+                $stmt = $pdo->prepare("UPDATE `users` SET `password` = ? WHERE `mobile` = ?");
                 $stmt->execute([$hashed, $resetMobile]);
             } catch (Throwable $e) {}
         }

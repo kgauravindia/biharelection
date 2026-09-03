@@ -40,10 +40,10 @@ echo "<ul class='list-group list-group-flush mb-4 small'>";
 // 1. Run Schema Setup
 try {
     $tablesToReset = [
-        'be_districts', 'be_constituencies', 'be_mukhiyas', 'be_sarpanchs', 
-        'be_zila_parishad_members', 'be_zila_parishad_officials', 'be_mps_loksabha', 
-        'be_mps_rajyasabha', 'be_mlcs', 'be_mlas_2015', 'be_mukhiyas_2016', 
-        'be_panchayat_samiti_2016', 'be_census_districts', 'be_census_subdistricts'
+        'districts', 'constituencies', 'mukhiyas', 'sarpanchs', 
+        'zila_parishad_members', 'zila_parishad_officials', 'mps_loksabha', 
+        'mps_rajyasabha', 'mlcs', 'mlas_2015', 'mukhiyas_2016', 
+        'panchayat_samiti_2016', 'census_districts', 'census_subdistricts'
     ];
     foreach ($tablesToReset as $t) {
         $pdo->exec("DROP TABLE IF EXISTS `$t`");
@@ -99,7 +99,7 @@ foreach ($districts as $d) {
         'description' => $d['description'] ?? ''
     ];
 }
-executeWebBatchInsert($pdo, 'be_districts', ['id', 'name', 'name_hi', 'slug', 'headquarters', 'division', 'total_ac', 'total_electors', 'ac_list', 'description'], $dRows);
+executeWebBatchInsert($pdo, 'districts', ['id', 'name', 'name_hi', 'slug', 'headquarters', 'division', 'total_ac', 'total_electors', 'ac_list', 'description'], $dRows);
 echo "<li class='list-group-item text-success'>✓ " . count($dRows) . " Districts synced.</li>";
 
 // 3. Constituencies (243)
@@ -130,7 +130,7 @@ foreach ($constituencies as $c) {
         'candidates_2026_expected' => json_encode($c['candidates_2026_expected'] ?? [])
     ];
 }
-executeWebBatchInsert($pdo, 'be_constituencies', ['ac_no', 'name', 'name_hi', 'slug', 'district', 'district_hi', 'lok_sabha', 'reservation', 'total_electors', 'male_electors', 'female_electors', 'polling_stations', 'blocks', 'total_panchayats', 'current_mla', 'current_party', 'election_2020', 'election_2015', 'key_issues', 'party_history', 'candidates_2026_expected'], $cRows);
+executeWebBatchInsert($pdo, 'constituencies', ['ac_no', 'name', 'name_hi', 'slug', 'district', 'district_hi', 'lok_sabha', 'reservation', 'total_electors', 'male_electors', 'female_electors', 'polling_stations', 'blocks', 'total_panchayats', 'current_mla', 'current_party', 'election_2020', 'election_2015', 'key_issues', 'party_history', 'candidates_2026_expected'], $cRows);
 echo "<li class='list-group-item text-success'>✓ " . count($cRows) . " Assembly Constituencies synced.</li>";
 
 // 4. Mukhiyas (7,346)
@@ -152,7 +152,7 @@ foreach ($mukhiyas as $m) {
         'tenure' => '2021-2026'
     ];
 }
-executeWebBatchInsert($pdo, 'be_mukhiyas', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'block', 'panchayat', 'gender', 'category', 'mobile', 'address', 'tenure'], $mRows, 400);
+executeWebBatchInsert($pdo, 'mukhiyas', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'block', 'panchayat', 'gender', 'category', 'mobile', 'address', 'tenure'], $mRows, 400);
 echo "<li class='list-group-item text-success'>✓ " . count($mRows) . " Elected Mukhiyas synced.</li>";
 
 // 5. Sarpanchs (6,617)
@@ -174,7 +174,7 @@ foreach ($sarpanchs as $s) {
         'tenure' => '2021-2026'
     ];
 }
-executeWebBatchInsert($pdo, 'be_sarpanchs', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'block', 'panchayat', 'gender', 'category', 'mobile', 'address', 'tenure'], $sRows, 400);
+executeWebBatchInsert($pdo, 'sarpanchs', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'block', 'panchayat', 'gender', 'category', 'mobile', 'address', 'tenure'], $sRows, 400);
 echo "<li class='list-group-item text-success'>✓ " . count($sRows) . " Elected Sarpanchs synced.</li>";
 
 // 6. Zila Parishad Members (1,099+)
@@ -195,7 +195,7 @@ foreach ($zpMembers as $zp) {
         'tenure' => '2021-2026'
     ];
 }
-executeWebBatchInsert($pdo, 'be_zila_parishad_members', ['id', 'candidate_name', 'district', 'district_slug', 'block', 'territory_no', 'gender', 'category', 'mobile', 'address', 'tenure'], $zpRows, 400);
+executeWebBatchInsert($pdo, 'zila_parishad_members', ['id', 'candidate_name', 'district', 'district_slug', 'block', 'territory_no', 'gender', 'category', 'mobile', 'address', 'tenure'], $zpRows, 400);
 echo "<li class='list-group-item text-success'>✓ " . count($zpRows) . " Zila Parishad Territorial Members synced.</li>";
 
 // 7. Zila Parishad Officials (38 Presidents / Vice-Presidents)
@@ -214,7 +214,7 @@ foreach ($zpOfficials as $zpo) {
         'tenure' => '2021-2026'
     ];
 }
-executeWebBatchInsert($pdo, 'be_zila_parishad_officials', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'gender', 'category', 'address', 'tenure'], $zpoRows);
+executeWebBatchInsert($pdo, 'zila_parishad_officials', ['id', 'candidate_name', 'post', 'district', 'district_slug', 'gender', 'category', 'address', 'tenure'], $zpoRows);
 echo "<li class='list-group-item text-success'>✓ " . count($zpoRows) . " Zila Parishad Chairpersons & Vice-Chairpersons synced.</li>";
 
 // 8. Lok Sabha MPs (40)
@@ -231,7 +231,7 @@ foreach ($mpsLs as $mp) {
         'house' => 'Lok Sabha'
     ];
 }
-executeWebBatchInsert($pdo, 'be_mps_loksabha', ['pc_no', 'pc_name', 'slug', 'mp_name', 'party', 'criminal_cases', 'house'], $lsRows);
+executeWebBatchInsert($pdo, 'mps_loksabha', ['pc_no', 'pc_name', 'slug', 'mp_name', 'party', 'criminal_cases', 'house'], $lsRows);
 echo "<li class='list-group-item text-success'>✓ " . count($lsRows) . " Lok Sabha MPs synced.</li>";
 
 // 9. Rajya Sabha MPs (15)
@@ -245,7 +245,7 @@ foreach ($mpsRs as $mp) {
         'house' => 'Rajya Sabha'
     ];
 }
-executeWebBatchInsert($pdo, 'be_mps_rajyasabha', ['mp_name', 'party', 'tenure', 'house'], $rsRows);
+executeWebBatchInsert($pdo, 'mps_rajyasabha', ['mp_name', 'party', 'tenure', 'house'], $rsRows);
 echo "<li class='list-group-item text-success'>✓ " . count($rsRows) . " Rajya Sabha Parliamentarians synced.</li>";
 
 // 10. MLCs (75)
@@ -260,7 +260,7 @@ foreach ($mlcs as $m) {
         'contact' => $m['contact'] ?? ''
     ];
 }
-executeWebBatchInsert($pdo, 'be_mlcs', ['sr_no', 'name', 'constituency', 'tenure', 'contact'], $mlcRows);
+executeWebBatchInsert($pdo, 'mlcs', ['sr_no', 'name', 'constituency', 'tenure', 'contact'], $mlcRows);
 echo "<li class='list-group-item text-success'>✓ " . count($mlcRows) . " Vidhan Parishad MLCs synced.</li>";
 
 // 11. 2015 MLAs (243)
@@ -277,7 +277,7 @@ foreach ($mlas15 as $m) {
         'tenure' => '2015–2020'
     ];
 }
-executeWebBatchInsert($pdo, 'be_mlas_2015', ['ac_no', 'ac_name', 'slug', 'mla_name', 'party', 'mobile', 'tenure'], $m15Rows);
+executeWebBatchInsert($pdo, 'mlas_2015', ['ac_no', 'ac_name', 'slug', 'mla_name', 'party', 'mobile', 'tenure'], $m15Rows);
 echo "<li class='list-group-item text-success'>✓ " . count($m15Rows) . " Historical MLAs (2015) synced.</li>";
 
 // 12. 2016 Mukhiyas (8,045)
@@ -296,7 +296,7 @@ foreach ($m16 as $m) {
         'up_mukhiya_2016' => $m['up_mukhiya_2016'] ?? ''
     ];
 }
-executeWebBatchInsert($pdo, 'be_mukhiyas_2016', ['district', 'district_hi', 'district_slug', 'block', 'block_hi', 'panchayat', 'panchayat_hi', 'mukhiya_2016', 'up_mukhiya_2016'], $m16Rows, 500);
+executeWebBatchInsert($pdo, 'mukhiyas_2016', ['district', 'district_hi', 'district_slug', 'block', 'block_hi', 'panchayat', 'panchayat_hi', 'mukhiya_2016', 'up_mukhiya_2016'], $m16Rows, 500);
 echo "<li class='list-group-item text-success'>✓ " . count($m16Rows) . " Historical Mukhiyas (2016) synced.</li>";
 
 // 13. 2016 Block Samiti (534)
@@ -313,7 +313,7 @@ foreach ($samiti16 as $s) {
         'up_pramukh_2016' => $s['up_pramukh_2016'] ?? ''
     ];
 }
-executeWebBatchInsert($pdo, 'be_panchayat_samiti_2016', ['district', 'district_hi', 'district_slug', 'block', 'block_hi', 'pramukh_2016', 'up_pramukh_2016'], $s16Rows);
+executeWebBatchInsert($pdo, 'panchayat_samiti_2016', ['district', 'district_hi', 'district_slug', 'block', 'block_hi', 'pramukh_2016', 'up_pramukh_2016'], $s16Rows);
 echo "<li class='list-group-item text-success'>✓ " . count($s16Rows) . " Panchayat Samiti Pramukhs (2016) synced.</li>";
 
 // 14. Census 2011 Districts (38)
@@ -347,7 +347,7 @@ foreach ($censusD as $slug => $cd) {
         'non_workers' => $tot['non_workers'] ?? 0
     ];
 }
-executeWebBatchInsert($pdo, 'be_census_districts', ['district_code', 'name', 'slug', 'households', 'population', 'male', 'female', 'sex_ratio', 'pop_0_6', 'sc_population', 'sc_percentage', 'st_population', 'st_percentage', 'literates', 'literacy_rate', 'rural_population', 'urban_population', 'total_workers', 'main_workers', 'cultivators', 'agricultural_labourers', 'marginal_workers', 'non_workers'], $cdRows);
+executeWebBatchInsert($pdo, 'census_districts', ['district_code', 'name', 'slug', 'households', 'population', 'male', 'female', 'sex_ratio', 'pop_0_6', 'sc_population', 'sc_percentage', 'st_population', 'st_percentage', 'literates', 'literacy_rate', 'rural_population', 'urban_population', 'total_workers', 'main_workers', 'cultivators', 'agricultural_labourers', 'marginal_workers', 'non_workers'], $cdRows);
 echo "<li class='list-group-item text-success'>✓ " . count($cdRows) . " Census 2011 Districts synced.</li>";
 
 // 15. Census 2011 Sub-Districts (534)
@@ -377,15 +377,15 @@ foreach ($censusSub as $distSlug => $subList) {
         }
     }
 }
-executeWebBatchInsert($pdo, 'be_census_subdistricts', ['district_name', 'district_slug', 'sub_dist_code', 'sub_district', 'households', 'population', 'male', 'female', 'sex_ratio', 'sc_population', 'st_population', 'literates', 'literacy_rate', 'total_workers', 'cultivators', 'agricultural_labourers'], $csRows, 400);
+executeWebBatchInsert($pdo, 'census_subdistricts', ['district_name', 'district_slug', 'sub_dist_code', 'sub_district', 'households', 'population', 'male', 'female', 'sex_ratio', 'sc_population', 'st_population', 'literates', 'literacy_rate', 'total_workers', 'cultivators', 'agricultural_labourers'], $csRows, 400);
 echo "<li class='list-group-item text-success'>✓ " . count($csRows) . " Census 2011 Sub-Districts (Blocks) synced.</li>";
 
 // Ensure Admin Exists
-$adminExists = $pdo->query("SELECT id FROM `be_admin_users` WHERE `username` = 'admin' LIMIT 1")->fetch();
+$adminExists = $pdo->query("SELECT id FROM `admin_users` WHERE `username` = 'admin' LIMIT 1")->fetch();
 if (!$adminExists) {
     $initPass = defined('DEFAULT_ADMIN_PASS') ? DEFAULT_ADMIN_PASS : 'Admin@ChangeMe2026';
     $hashedPwd = password_hash($initPass, PASSWORD_DEFAULT);
-    $pdo->prepare("INSERT INTO `be_admin_users` (`username`, `password`, `email`, `role`, `status`) VALUES ('admin', ?, 'admin@biharelection.com', 'superadmin', 'ACTIVE')")->execute([$hashedPwd]);
+    $pdo->prepare("INSERT INTO `admin_users` (`username`, `password`, `email`, `role`, `status`) VALUES ('admin', ?, 'admin@biharelection.com', 'superadmin', 'ACTIVE')")->execute([$hashedPwd]);
     echo "<li class='list-group-item text-success'>✓ Super Administrator account initialized.</li>";
 }
 ?>

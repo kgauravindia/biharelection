@@ -22,10 +22,10 @@ if ($conn) {
         $where .= " AND (`district` = '$filter_district' OR `district_slug` = '$filter_district')";
     }
 
-    $c_res = $conn->query("SELECT COUNT(*) as c FROM `be_panchayats` WHERE $where");
+    $c_res = $conn->query("SELECT COUNT(*) as c FROM `panchayats` WHERE $where");
     if ($c_res) $total_rows = $c_res->fetch_assoc()['c'];
 
-    $q_res = $conn->query("SELECT * FROM `be_panchayats` WHERE $where ORDER BY `district` ASC, `block` ASC, `panchayat_name` ASC LIMIT $offset, $limit");
+    $q_res = $conn->query("SELECT * FROM `panchayats` WHERE $where ORDER BY `district` ASC, `block` ASC, `panchayat_name` ASC LIMIT $offset, $limit");
     if ($q_res) {
         while ($r = $q_res->fetch_assoc()) $panchayats[] = $r;
     }

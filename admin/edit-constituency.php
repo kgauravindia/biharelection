@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $issues_json = json_encode(array_values($issues_arr));
 
     if ($conn) {
-        $stmt = $conn->prepare("UPDATE `be_constituencies` SET `name`=?, `name_hi`=?, `current_mla`=?, `current_party`=?, `reservation`=?, `total_electors`=?, `male_electors`=?, `female_electors`=?, `polling_stations`=?, `lok_sabha`=?, `key_issues`=? WHERE `ac_no`=?");
+        $stmt = $conn->prepare("UPDATE `constituencies` SET `name`=?, `name_hi`=?, `current_mla`=?, `current_party`=?, `reservation`=?, `total_electors`=?, `male_electors`=?, `female_electors`=?, `polling_stations`=?, `lok_sabha`=?, `key_issues`=? WHERE `ac_no`=?");
         if ($stmt) {
             $stmt->bind_param("sssssiiiissi", $name, $name_hi, $current_mla, $current_party, $reservation, $total_electors, $male_electors, $female_electors, $polling_stations, $lok_sabha, $issues_json, $ac['ac_no']);
             if ($stmt->execute()) {

@@ -13,7 +13,7 @@ if (isset($_GET['export_csv']) && $conn) {
     $output = fopen('php://output', 'w');
     fputcsv($output, ['ID', 'Phone Number', 'District', 'Is Active', 'Subscribed At']);
 
-    $res = $conn->query("SELECT * FROM `be_whatsapp_subscribers` ORDER BY `id` DESC");
+    $res = $conn->query("SELECT * FROM `whatsapp_subscribers` ORDER BY `id` DESC");
     if ($res) {
         while ($row = $res->fetch_assoc()) {
             fputcsv($output, [$row['id'], $row['phone_number'], $row['district'], $row['is_active'], $row['created_at']]);
@@ -26,7 +26,7 @@ if (isset($_GET['export_csv']) && $conn) {
 // Handle Delete
 if (isset($_GET['delete_id']) && $conn) {
     $del_id = (int)$_GET['delete_id'];
-    $conn->query("DELETE FROM `be_whatsapp_subscribers` WHERE `id` = $del_id");
+    $conn->query("DELETE FROM `whatsapp_subscribers` WHERE `id` = $del_id");
     $message = "Subscriber removed.";
 }
 
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_subscriber']) && 
     $phone = sanitize($_POST['phone_number'] ?? '');
     $district = sanitize($_POST['district'] ?? '');
     if (!empty($phone)) {
-        $stmt = $conn->prepare("INSERT INTO `be_whatsapp_subscribers` (`phone_number`, `district`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `district` = VALUES(`district`), `is_active` = 1");
+        $stmt = $conn->prepare("INSERT INTO `whatsapp_subscribers` (`phone_number`, `district`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `district` = VALUES(`district`), `is_active` = 1");
         if ($stmt) {
             $stmt->bind_param("ss", $phone, $district);
             $stmt->execute();
@@ -47,11 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_subscriber']) && 
 $subscribers = [];
 $total_subscribers = 0;
 if ($conn) {
-    $r = $conn->query("SELECT * FROM `be_whatsapp_subscribers` ORDER BY `id` DESC LIMIT 100");
+    $r = $conn->query("SELECT * FROM `whatsapp_subscribers` ORDER BY `id` DESC LIMIT 100");
     if ($r) {
         while ($row = $r->fetch_assoc()) $subscribers[] = $row;
     }
-    $c = $conn->query("SELECT COUNT(*) as c FROM `be_whatsapp_subscribers`");
+    $c = $conn->query("SELECT COUNT(*) as c FROM `whatsapp_subscribers`");
     if ($c) $total_subscribers = $c->fetch_assoc()['c'];
 }
 

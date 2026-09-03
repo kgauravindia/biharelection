@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = sanitize($_POST['description'] ?? '');
 
     if ($conn) {
-        $stmt = $conn->prepare("UPDATE `be_districts` SET `name`=?, `name_hi`=?, `headquarters`=?, `division`=?, `total_ac`=?, `total_electors`=?, `description`=? WHERE `slug`=?");
+        $stmt = $conn->prepare("UPDATE `districts` SET `name`=?, `name_hi`=?, `headquarters`=?, `division`=?, `total_ac`=?, `total_electors`=?, `description`=? WHERE `slug`=?");
         if ($stmt) {
             $stmt->bind_param("ssssiiss", $name, $name_hi, $headquarters, $division, $total_ac, $total_electors, $description, $slug);
             if ($stmt->execute()) {

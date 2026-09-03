@@ -7,7 +7,7 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- 1. Districts Hub
-CREATE TABLE IF NOT EXISTS `be_districts` (
+CREATE TABLE IF NOT EXISTS `districts` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   `name_hi` VARCHAR(100) DEFAULT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `be_districts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 2. Assembly Constituencies (243 Seats)
-CREATE TABLE IF NOT EXISTS `be_constituencies` (
+CREATE TABLE IF NOT EXISTS `constituencies` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `ac_no` INT NOT NULL UNIQUE,
   `name` VARCHAR(100) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `be_constituencies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 3. Candidates & Leaders Directory
-CREATE TABLE IF NOT EXISTS `be_candidates` (
+CREATE TABLE IF NOT EXISTS `candidates` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(150) NOT NULL,
   `name_hi` VARCHAR(150) DEFAULT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `be_candidates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 4. Panchayats Master (8,053+ Gram Panchayats)
-CREATE TABLE IF NOT EXISTS `be_panchayats` (
+CREATE TABLE IF NOT EXISTS `panchayats` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `district` VARCHAR(100) NOT NULL,
   `district_hi` VARCHAR(100) DEFAULT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `be_panchayats` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 5. Elected Mukhiyas Roster
-CREATE TABLE IF NOT EXISTS `be_mukhiyas` (
+CREATE TABLE IF NOT EXISTS `mukhiyas` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `candidate_name` VARCHAR(150) NOT NULL,
   `post` VARCHAR(50) DEFAULT 'मुखिया',
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `be_mukhiyas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 6. Elected Sarpanchs Roster
-CREATE TABLE IF NOT EXISTS `be_sarpanchs` (
+CREATE TABLE IF NOT EXISTS `sarpanchs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `candidate_name` VARCHAR(150) NOT NULL,
   `post` VARCHAR(50) DEFAULT 'सरपंच',
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `be_sarpanchs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 7. Zila Parishad Territorial Members
-CREATE TABLE IF NOT EXISTS `be_zila_parishad_members` (
+CREATE TABLE IF NOT EXISTS `zila_parishad_members` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `candidate_name` VARCHAR(150) NOT NULL,
   `district` VARCHAR(100) NOT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `be_zila_parishad_members` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 8. Zila Parishad Officials (Chairpersons/Vice-Chairpersons)
-CREATE TABLE IF NOT EXISTS `be_zila_parishad_officials` (
+CREATE TABLE IF NOT EXISTS `zila_parishad_officials` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `candidate_name` VARCHAR(150) NOT NULL,
   `post` VARCHAR(100) NOT NULL,
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `be_zila_parishad_officials` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 9. Vidhan Sabha 2025: Successful Candidates
-CREATE TABLE IF NOT EXISTS `be_election_2025_successful_candidates` (
+CREATE TABLE IF NOT EXISTS `election_2025_successful_candidates` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `ac_no` INT NOT NULL UNIQUE,
   `constituency` VARCHAR(150) NOT NULL,
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `be_election_2025_successful_candidates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 10. Vidhan Sabha 2025: Detailed Results
-CREATE TABLE IF NOT EXISTS `be_election_2025_detailed_results` (
+CREATE TABLE IF NOT EXISTS `election_2025_detailed_results` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `ac_no` INT NOT NULL,
   `ac_name` VARCHAR(150) NOT NULL,
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `be_election_2025_detailed_results` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 11. Vidhan Sabha 2025: AC Electors
-CREATE TABLE IF NOT EXISTS `be_election_2025_ac_electors` (
+CREATE TABLE IF NOT EXISTS `election_2025_ac_electors` (
   `ac_no` INT PRIMARY KEY,
   `ac_name` VARCHAR(150) NOT NULL,
   `general_male` INT DEFAULT 0,
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `be_election_2025_ac_electors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 12. Vidhan Sabha 2025: AC Voters & Turnout
-CREATE TABLE IF NOT EXISTS `be_election_2025_ac_voters` (
+CREATE TABLE IF NOT EXISTS `election_2025_ac_voters` (
   `ac_no` INT PRIMARY KEY,
   `ac_name` VARCHAR(150) NOT NULL,
   `total_electors` INT DEFAULT 0,
@@ -259,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `be_election_2025_ac_voters` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 13. Vidhan Sabha 2025: Party Performance
-CREATE TABLE IF NOT EXISTS `be_election_2025_party_performance` (
+CREATE TABLE IF NOT EXISTS `election_2025_party_performance` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `party_type` VARCHAR(100) NOT NULL,
   `abbreviation` VARCHAR(50) NOT NULL,
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `be_election_2025_party_performance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 14. Public Registered Users & Professional Profiles (Citizens, Voters, Candidates, Mukhiyas, Representatives)
-CREATE TABLE IF NOT EXISTS `be_users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(150) DEFAULT NULL,
   `full_name` VARCHAR(100) DEFAULT NULL,
@@ -344,7 +344,7 @@ CREATE TABLE IF NOT EXISTS `be_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 15. Admin Users
-CREATE TABLE IF NOT EXISTS `be_admin_users` (
+CREATE TABLE IF NOT EXISTS `admin_users` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `username` VARCHAR(50) NOT NULL UNIQUE,
   `password` VARCHAR(255) NOT NULL,
@@ -356,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `be_admin_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 15. Contact Inquiries & Leads
-CREATE TABLE IF NOT EXISTS `be_contacts` (
+CREATE TABLE IF NOT EXISTS `contacts` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(150) NOT NULL,
   `mobile` VARCHAR(20) NOT NULL,
@@ -368,7 +368,7 @@ CREATE TABLE IF NOT EXISTS `be_contacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 16. Advertisements & Commercial Sponsors
-CREATE TABLE IF NOT EXISTS `be_advertisements` (
+CREATE TABLE IF NOT EXISTS `advertisements` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `product_type` VARCHAR(50) NOT NULL,
   `client_name` VARCHAR(150) NOT NULL,
@@ -384,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `be_advertisements` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 18. Census 2011 Districts Demographics
-CREATE TABLE IF NOT EXISTS `be_census_districts` (
+CREATE TABLE IF NOT EXISTS `census_districts` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `district_code` VARCHAR(20) NOT NULL,
   `name` VARCHAR(100) NOT NULL,
@@ -413,7 +413,7 @@ CREATE TABLE IF NOT EXISTS `be_census_districts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 19. Census 2011 Sub-Districts (534 Blocks/Tehsils)
-CREATE TABLE IF NOT EXISTS `be_census_subdistricts` (
+CREATE TABLE IF NOT EXISTS `census_subdistricts` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `district_name` VARCHAR(100) NOT NULL,
   `district_slug` VARCHAR(100) NOT NULL,
@@ -437,7 +437,7 @@ CREATE TABLE IF NOT EXISTS `be_census_subdistricts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 20. Lok Sabha Members of Parliament (40 Seats)
-CREATE TABLE IF NOT EXISTS `be_mps_loksabha` (
+CREATE TABLE IF NOT EXISTS `mps_loksabha` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `pc_no` INT NOT NULL UNIQUE,
   `pc_name` VARCHAR(150) NOT NULL,
@@ -452,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `be_mps_loksabha` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 21. Rajya Sabha Parliamentarians (16 Seats)
-CREATE TABLE IF NOT EXISTS `be_mps_rajyasabha` (
+CREATE TABLE IF NOT EXISTS `mps_rajyasabha` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `mp_name` VARCHAR(150) NOT NULL,
   `party` VARCHAR(100) NOT NULL,
@@ -462,7 +462,7 @@ CREATE TABLE IF NOT EXISTS `be_mps_rajyasabha` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 22. Vidhan Parishad Members (75 MLCs)
-CREATE TABLE IF NOT EXISTS `be_mlcs` (
+CREATE TABLE IF NOT EXISTS `mlcs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `sr_no` INT DEFAULT NULL,
   `name` VARCHAR(150) NOT NULL,
@@ -473,7 +473,7 @@ CREATE TABLE IF NOT EXISTS `be_mlcs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 23. Historical MLAs (2015-2020)
-CREATE TABLE IF NOT EXISTS `be_mlas_2015` (
+CREATE TABLE IF NOT EXISTS `mlas_2015` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `ac_no` INT NOT NULL UNIQUE,
   `ac_name` VARCHAR(150) NOT NULL,
@@ -486,7 +486,7 @@ CREATE TABLE IF NOT EXISTS `be_mlas_2015` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 24. Historical Mukhiyas (2016-2021)
-CREATE TABLE IF NOT EXISTS `be_mukhiyas_2016` (
+CREATE TABLE IF NOT EXISTS `mukhiyas_2016` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `district` VARCHAR(100) NOT NULL,
   `district_hi` VARCHAR(100) DEFAULT NULL,
@@ -504,7 +504,7 @@ CREATE TABLE IF NOT EXISTS `be_mukhiyas_2016` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 25. Historical Panchayat Samiti (2016-2021)
-CREATE TABLE IF NOT EXISTS `be_panchayat_samiti_2016` (
+CREATE TABLE IF NOT EXISTS `panchayat_samiti_2016` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `district` VARCHAR(100) NOT NULL,
   `district_hi` VARCHAR(100) DEFAULT NULL,
