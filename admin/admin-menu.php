@@ -5,12 +5,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
 $db_menu = getAdminDB();
 $unread_contacts = 0;
 $pending_ads = 0;
+$total_posts_count = 0;
 if ($db_menu) {
     $c_res = $db_menu->query("SELECT COUNT(*) as c FROM `be_contacts` WHERE `status` = 'NEW'");
     if ($c_res) $unread_contacts = $c_res->fetch_assoc()['c'] ?? 0;
     
     $a_res = $db_menu->query("SELECT COUNT(*) as c FROM `be_advertisements` WHERE `status` = 'PENDING'");
     if ($a_res) $pending_ads = $a_res->fetch_assoc()['c'] ?? 0;
+
+    $p_res = $db_menu->query("SELECT COUNT(*) as c FROM `be_posts` WHERE `status` = 'published'");
+    if ($p_res) $total_posts_count = $p_res->fetch_assoc()['c'] ?? 0;
 }
 ?>
 <aside class="sidebar" id="adminSidebar">
@@ -57,6 +61,15 @@ if ($db_menu) {
         </a>
         <a href="panchayats.php" class="nav-link-custom <?php echo ($current_page == 'panchayats.php') ? 'active' : ''; ?>" title="Panchayat Directory Overview">
             <i class="fas fa-tree-city text-success"></i> <span>Panchayats</span>
+        </a>
+
+        <div class="nav-section-title">Editorial & Content</div>
+        <a href="posts.php" class="nav-link-custom <?php echo in_array($current_page, ['posts.php', 'edit-post.php']) ? 'active' : ''; ?>" title="Blog & News Articles">
+            <i class="fas fa-newspaper text-danger"></i> 
+            <span>Blog & Articles</span>
+            <?php if ($total_posts_count > 0): ?>
+                <span class="badge rounded-pill bg-light text-dark border"><?php echo $total_posts_count; ?></span>
+            <?php endif; ?>
         </a>
 
         <div class="nav-section-title">Monetization & Leads</div>

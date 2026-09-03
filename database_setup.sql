@@ -518,4 +518,27 @@ CREATE TABLE IF NOT EXISTS `be_panchayat_samiti_2016` (
   INDEX (`block`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 26. Blog & Editorial Articles (Migrated from WordPress / Content Platform)
+CREATE TABLE IF NOT EXISTS `be_posts` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `wp_id` INT NULL UNIQUE,
+  `title` VARCHAR(500) NOT NULL,
+  `slug` VARCHAR(300) NOT NULL,
+  `excerpt` TEXT NULL,
+  `content` LONGTEXT NULL,
+  `featured_image` VARCHAR(500) NULL,
+  `categories` VARCHAR(255) NULL,
+  `tags` TEXT NULL,
+  `author_name` VARCHAR(100) DEFAULT 'Bihar Election Editorial Team',
+  `status` VARCHAR(20) DEFAULT 'published',
+  `views_count` INT DEFAULT 0,
+  `published_at` DATETIME NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX `idx_slug` (`slug`),
+  INDEX `idx_published_at` (`published_at`),
+  INDEX `idx_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;
+

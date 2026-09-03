@@ -235,10 +235,19 @@ $sitemap_mtime = $sitemap_exists ? filemtime($sitemap_path) : 0;
                                 <span class="fw-bold text-dark"><?php echo $sitemap_size ? round($sitemap_size / 1024, 1) . ' KB' : '0 KB'; ?></span>
                             </div>
                             <div class="col-12">
-                                <small class="text-muted text-uppercase fw-bold d-block">Blog Post Sitemap</small>
-                                <a href="<?php echo SITE_URL; ?>/blog/post-sitemap.xml" target="_blank" class="text-primary text-decoration-none fw-semibold small">
-                                    <i class="fas fa-external-link-alt me-1"></i> /blog/post-sitemap.xml
-                                </a>
+                                <small class="text-muted text-uppercase fw-bold d-block mb-1">Active Sitemaps</small>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <a href="<?php echo SITE_URL; ?>/sitemap_index.xml" target="_blank" class="badge bg-primary text-decoration-none p-2"><i class="fas fa-sitemap me-1"></i> sitemap_index.xml</a>
+                                    <a href="<?php echo SITE_URL; ?>/sitemap.xml" target="_blank" class="badge bg-secondary text-decoration-none p-2"><i class="fas fa-file-code me-1"></i> sitemap.xml</a>
+                                    <a href="<?php echo SITE_URL; ?>/post-sitemap.xml" target="_blank" class="badge bg-info text-dark text-decoration-none p-2"><i class="fas fa-blog me-1"></i> post-sitemap.xml</a>
+                                    <a href="<?php echo SITE_URL; ?>/page-sitemap.xml" target="_blank" class="badge bg-info text-dark text-decoration-none p-2"><i class="fas fa-file-alt me-1"></i> page-sitemap.xml</a>
+                                    <a href="<?php echo SITE_URL; ?>/category-sitemap.xml" target="_blank" class="badge bg-info text-dark text-decoration-none p-2"><i class="fas fa-folder me-1"></i> category-sitemap.xml</a>
+                                    <a href="<?php echo SITE_URL; ?>/post_tag-sitemap.xml" target="_blank" class="badge bg-info text-dark text-decoration-none p-2"><i class="fas fa-tags me-1"></i> post_tag-sitemap.xml</a>
+                                    <a href="<?php echo SITE_URL; ?>/author-sitemap.xml" target="_blank" class="badge bg-info text-dark text-decoration-none p-2"><i class="fas fa-user me-1"></i> author-sitemap.xml</a>
+                                    <a href="<?php echo SITE_URL; ?>/date-sitemap.xml" target="_blank" class="badge bg-info text-dark text-decoration-none p-2"><i class="fas fa-calendar me-1"></i> date-sitemap.xml</a>
+                                    <a href="<?php echo SITE_URL; ?>/sitemap-panchayats.xml" target="_blank" class="badge bg-success text-decoration-none p-2"><i class="fas fa-users me-1"></i> sitemap-panchayats.xml</a>
+                                    <a href="<?php echo SITE_URL; ?>/sitemap-census.xml" target="_blank" class="badge bg-success text-decoration-none p-2"><i class="fas fa-chart-pie me-1"></i> sitemap-census.xml</a>
+                                </div>
                             </div>
                         </div>
 

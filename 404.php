@@ -1,11 +1,60 @@
 <?php
 /**
- * Bihar Election - 404 Error Page (Page Not Found)
- * Premium civic intelligence navigation hub for lost or relocated routes.
+ * Bihar Election - 404 Error Page & Intelligent 301 SEO Redirection Engine
+ * Automatically intercepts legacy URLs (e.g. /nalanda-lok-sabha-constituency/) and 301 redirects to /blog/[slug]
  */
-http_response_code(404);
-
 require_once __DIR__ . '/config.php';
+
+// Check if requested URL belongs to a migrated blog article
+$raw_req = $_GET['request_uri'] ?? $_SERVER['REDIRECT_URL'] ?? $_SERVER['REQUEST_URI'] ?? '';
+$req_path = parse_url($raw_req, PHP_URL_PATH);
+
+// Remove subfolder if in localhost environment
+if (defined('IS_LOCAL') && IS_LOCAL) {
+    $req_path = preg_replace('#^/biharelection#i', '', $req_path);
+}
+
+$req_slug = trim($req_path, '/');
+
+if (!empty($req_slug) && !in_array($req_slug, ['404', '404.php', 'index.php', 'blog', 'blog.php'])) {
+    $pdo = Database::getConnection();
+    if ($pdo) {
+        $decoded_slug = urldecode($req_slug);
+        $clean_slug = preg_replace('/^blog\//i', '', $decoded_slug);
+
+        // 1. Direct slug match
+        $stmt = $pdo->prepare("SELECT `slug` FROM `be_posts` WHERE (`slug` = :s1 OR `slug` = :s2 OR `slug` = :s3) AND `status` = 'published' LIMIT 1");
+        $stmt->execute([
+            ':s1' => $req_slug,
+            ':s2' => $decoded_slug,
+            ':s3' => $clean_slug
+        ]);
+        $found = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($found && !empty($found['slug'])) {
+            header("HTTP/1.1 301 Moved Permanently");
+            header("Location: " . SITE_URL . "/blog/" . urlencode($found['slug']), true, 301);
+            exit();
+        }
+
+        // 2. Fuzzy slug match
+        $stmt2 = $pdo->prepare("SELECT `slug` FROM `be_posts` WHERE (`slug` LIKE :f1 OR `slug` LIKE :f2) AND `status` = 'published' LIMIT 1");
+        $stmt2->execute([
+            ':f1' => '%' . $clean_slug . '%',
+            ':f2' => '%' . str_replace('-', '%', $clean_slug) . '%'
+        ]);
+        $found_fuzzy = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+        if ($found_fuzzy && !empty($found_fuzzy['slug'])) {
+            header("HTTP/1.1 301 Moved Permanently");
+            header("Location: " . SITE_URL . "/blog/" . urlencode($found_fuzzy['slug']), true, 301);
+            exit();
+        }
+    }
+}
+
+// If no matching post was found, return standard 404 response
+http_response_code(404);
 
 $pageTitle = '404 — Page Not Found | Bihar Election Intelligence Portal';
 $pageDescription = 'The requested page or electoral record could not be found. Search across 243 Bihar Assembly Constituencies, 38 Districts, 8,000+ Gram Panchayats, and Census data.';

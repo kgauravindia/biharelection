@@ -55,6 +55,10 @@ if ($conn) {
         $stats['contacts_count'] = $row['c'] ?? 0;
         $stats['new_contacts'] = $row['nw'] ?? 0;
     }
+
+    // Blog Posts
+    $r = $conn->query("SELECT COUNT(*) as c FROM `be_posts` WHERE `status` = 'published'");
+    if ($r) $stats['posts_count'] = $r->fetch_assoc()['c'] ?? 0;
 }
 
 // Fallback counts from JSON if DB was empty for candidates/mukhiyas
@@ -228,32 +232,39 @@ if (empty($recent_candidates)) {
 
         <!-- Quick Access Navigation Cards -->
         <div class="row g-3 mb-4">
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-lg">
+                <a href="posts.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
+                    <div class="mb-2"><i class="fas fa-newspaper fa-2x text-danger"></i></div>
+                    <h6 class="fw-bold mb-1">Blog Articles</h6>
+                    <small class="text-muted"><?php echo number_format($stats['posts_count'] ?? 167); ?> Published</small>
+                </a>
+            </div>
+            <div class="col-6 col-lg">
                 <a href="candidates.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
-                    <div class="mb-2"><i class="fas fa-id-card fa-2x text-danger"></i></div>
+                    <div class="mb-2"><i class="fas fa-id-card fa-2x text-primary"></i></div>
                     <h6 class="fw-bold mb-1">Candidates</h6>
-                    <small class="text-muted">Edit & Verify Profiles</small>
+                    <small class="text-muted">Edit & Verify</small>
                 </a>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-lg">
                 <a href="constituencies.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
-                    <div class="mb-2"><i class="fas fa-landmark-dome fa-2x text-primary"></i></div>
-                    <h6 class="fw-bold mb-1">243 Constituencies</h6>
-                    <small class="text-muted">MLA & History Data</small>
+                    <div class="mb-2"><i class="fas fa-landmark-dome fa-2x text-info"></i></div>
+                    <h6 class="fw-bold mb-1">Constituencies</h6>
+                    <small class="text-muted">243 Vidhan Sabha</small>
                 </a>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-lg">
                 <a href="mukhiyas.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
                     <div class="mb-2"><i class="fas fa-address-book fa-2x text-success"></i></div>
-                    <h6 class="fw-bold mb-1">Panchayat Mukhiyas</h6>
-                    <small class="text-muted">Bihar Local Governance</small>
+                    <h6 class="fw-bold mb-1">Panchayats</h6>
+                    <small class="text-muted">Local Bodies</small>
                 </a>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-lg">
                 <a href="manage-ads.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
                     <div class="mb-2"><i class="fas fa-bullhorn fa-2x text-warning"></i></div>
                     <h6 class="fw-bold mb-1">Ad Campaigns</h6>
-                    <small class="text-muted">Banners & Promotions</small>
+                    <small class="text-muted">Monetization</small>
                 </a>
             </div>
         </div>
