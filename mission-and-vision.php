@@ -135,7 +135,7 @@ include __DIR__ . '/header.php';
             <div class="col-lg-6">
                 <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 h-100 bg-white">
                     <h4 class="fw-bold text-dark mb-3" style="font-family: 'Outfit', sans-serif;">
-                        <i class="bi bi-globe text-primary me-2"></i> सोशल मीडिया कम्युनिटी (@iBiharElection)
+                        <i class="bi bi-globe text-primary me-2"></i> सोशल मीडिया कम्युनिटी (@BiharElectionAI)
                     </h4>
                     <p class="text-muted small mb-3">दैनिक समाचार बुलेटिन और त्वरित विश्लेषण के लिए हमसे जुड़ें:</p>
 
@@ -150,27 +150,23 @@ include __DIR__ . '/header.php';
                             <tbody>
                                 <tr>
                                     <td><i class="bi bi-whatsapp text-success me-2"></i> WhatsApp Channel</td>
-                                    <td><a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="fw-bold text-success text-decoration-none">BiharElection Official &rarr;</a></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="bi bi-telegram text-info me-2"></i> Telegram</td>
-                                    <td><a href="https://t.me/iBiharElection" target="_blank" class="text-decoration-none">t.me/iBiharElection</a></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="bi bi-facebook text-primary me-2"></i> Facebook</td>
-                                    <td><a href="https://www.facebook.com/iBiharElection" target="_blank" class="text-decoration-none">facebook.com/iBiharElection</a></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="bi bi-twitter-x text-dark me-2"></i> X / Twitter</td>
-                                    <td><a href="https://twitter.com/iBiharElection" target="_blank" class="text-decoration-none">@iBiharElection</a></td>
+                                    <td><a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="fw-bold text-success text-decoration-none">Bihar Election Official &rarr;</a></td>
                                 </tr>
                                 <tr>
                                     <td><i class="bi bi-instagram text-danger me-2"></i> Instagram</td>
-                                    <td><a href="https://www.instagram.com/iBiharElection" target="_blank" class="text-decoration-none">instagram.com/iBiharElection</a></td>
+                                    <td><a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="text-decoration-none">instagram.com/BiharElectionAI</a></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-facebook text-primary me-2"></i> Facebook</td>
+                                    <td><a href="<?php echo FACEBOOK_URL; ?>" target="_blank" class="text-decoration-none">facebook.com/BiharElectionAI</a></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-twitter-x text-dark me-2"></i> X / Twitter</td>
+                                    <td><a href="<?php echo TWITTER_URL; ?>" target="_blank" class="text-decoration-none">x.com/BiharElectionAI</a></td>
                                 </tr>
                                 <tr>
                                     <td><i class="bi bi-youtube text-danger me-2"></i> YouTube</td>
-                                    <td><a href="https://www.youtube.com/@iBiharElection" target="_blank" class="text-decoration-none">youtube.com/@iBiharElection</a></td>
+                                    <td><a href="<?php echo YOUTUBE_URL; ?>" target="_blank" class="text-decoration-none">youtube.com/@BiharElectionAI</a></td>
                                 </tr>
                             </tbody>
                         </table>

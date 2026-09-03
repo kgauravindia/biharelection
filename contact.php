@@ -198,34 +198,34 @@ include __DIR__ . '/header.php';
                     <!-- Social Network Channels -->
                     <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
                         <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom" style="font-family: 'Outfit', sans-serif;">
-                            <i class="bi bi-share me-2 text-primary"></i> Follow @iBiharElection
+                            <i class="bi bi-share me-2 text-primary"></i> Follow Official Channels
                         </h5>
                         <p class="text-muted small mb-3">Join over 100,000+ voters and citizens receiving authentic daily electoral intelligence.</p>
 
                         <div class="row g-2">
                             <div class="col-6">
-                                <a href="https://www.facebook.com/iBiharElection" target="_blank" class="btn btn-outline-primary w-100 btn-sm text-start py-2 rounded-3 text-truncate">
+                                <a href="<?php echo FACEBOOK_URL; ?>" target="_blank" class="btn btn-outline-primary w-100 btn-sm text-start py-2 rounded-3 text-truncate">
                                     <i class="bi bi-facebook me-1"></i> Facebook
                                 </a>
                             </div>
                             <div class="col-6">
-                                <a href="https://twitter.com/iBiharElection" target="_blank" class="btn btn-outline-dark w-100 btn-sm text-start py-2 rounded-3 text-truncate">
-                                    <i class="bi bi-twitter-x me-1"></i> X (Twitter)
+                                <a href="<?php echo TWITTER_URL; ?>" target="_blank" class="btn btn-outline-dark w-100 btn-sm text-start py-2 rounded-3 text-truncate">
+                                    <i class="bi bi-twitter-x me-1"></i> X / Twitter
                                 </a>
                             </div>
                             <div class="col-6">
-                                <a href="https://www.instagram.com/iBiharElection" target="_blank" class="btn btn-outline-danger w-100 btn-sm text-start py-2 rounded-3 text-truncate">
+                                <a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="btn btn-outline-danger w-100 btn-sm text-start py-2 rounded-3 text-truncate">
                                     <i class="bi bi-instagram me-1"></i> Instagram
                                 </a>
                             </div>
                             <div class="col-6">
-                                <a href="https://www.youtube.com/@iBiharElection" target="_blank" class="btn btn-outline-danger w-100 btn-sm text-start py-2 rounded-3 text-truncate">
+                                <a href="<?php echo YOUTUBE_URL; ?>" target="_blank" class="btn btn-outline-danger w-100 btn-sm text-start py-2 rounded-3 text-truncate">
                                     <i class="bi bi-youtube me-1"></i> YouTube
                                 </a>
                             </div>
                             <div class="col-12">
-                                <a href="https://t.me/iBiharElection" target="_blank" class="btn btn-outline-info w-100 btn-sm text-start py-2 rounded-3 text-truncate">
-                                    <i class="bi bi-telegram me-1"></i> Telegram Channel (@iBiharElection)
+                                <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="btn btn-outline-success w-100 btn-sm text-start py-2 rounded-3 text-truncate">
+                                    <i class="bi bi-whatsapp me-1"></i> WhatsApp Channel
                                 </a>
                             </div>
                         </div>

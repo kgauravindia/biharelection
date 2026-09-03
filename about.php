@@ -135,22 +135,22 @@ include __DIR__ . '/header.php';
             <div class="max-w-700 mx-auto" style="max-width: 700px;">
                 <span class="badge bg-warning text-dark fw-bold text-uppercase px-3 py-2 rounded-pill mb-3">Community Hub</span>
                 <h3 class="fw-bold mb-3" style="font-family: 'Outfit', sans-serif;">Join Bihar's Largest Civic Awareness Network</h3>
-                <p class="opacity-90 mb-4">Connect with <strong>@iBiharElection</strong> across social platforms to get daily news bulletins, candidate debates, and live election result updates.</p>
+                <p class="opacity-90 mb-4">Connect with <strong>@BiharElectionAI</strong> across social platforms to get daily news bulletins, candidate debates, and live election result updates.</p>
                 
                 <div class="d-flex flex-wrap justify-content-center gap-2">
                     <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="btn btn-success fw-bold rounded-pill px-4 py-2">
                         <i class="bi bi-whatsapp me-1"></i> WhatsApp Channel
                     </a>
-                    <a href="https://t.me/iBiharElection" target="_blank" class="btn btn-info text-white fw-bold rounded-pill px-4 py-2">
-                        <i class="bi bi-telegram me-1"></i> Telegram
-                    </a>
-                    <a href="https://www.facebook.com/iBiharElection" target="_blank" class="btn btn-primary fw-bold rounded-pill px-4 py-2">
+                    <a href="<?php echo FACEBOOK_URL; ?>" target="_blank" class="btn btn-primary fw-bold rounded-pill px-4 py-2">
                         <i class="bi bi-facebook me-1"></i> Facebook
                     </a>
-                    <a href="https://twitter.com/iBiharElection" target="_blank" class="btn btn-dark fw-bold rounded-pill px-4 py-2 border">
+                    <a href="<?php echo TWITTER_URL; ?>" target="_blank" class="btn btn-dark fw-bold rounded-pill px-4 py-2 border">
                         <i class="bi bi-twitter-x me-1"></i> X / Twitter
                     </a>
-                    <a href="https://www.youtube.com/@iBiharElection" target="_blank" class="btn btn-danger fw-bold rounded-pill px-4 py-2">
+                    <a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="btn btn-danger fw-bold rounded-pill px-4 py-2">
+                        <i class="bi bi-instagram me-1"></i> Instagram
+                    </a>
+                    <a href="<?php echo YOUTUBE_URL; ?>" target="_blank" class="btn btn-danger fw-bold rounded-pill px-4 py-2">
                         <i class="bi bi-youtube me-1"></i> YouTube
                     </a>
                 </div>
