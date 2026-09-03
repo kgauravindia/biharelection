@@ -168,6 +168,10 @@ include __DIR__ . '/header.php';
                                     <td><i class="bi bi-youtube text-danger me-2"></i> YouTube</td>
                                     <td><a href="<?php echo YOUTUBE_URL; ?>" target="_blank" class="text-decoration-none">youtube.com/@BiharElectionAI</a></td>
                                 </tr>
+                                <tr>
+                                    <td><i class="bi bi-telegram text-info me-2"></i> Telegram</td>
+                                    <td><a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="text-decoration-none">t.me/BiharElectionAI</a></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

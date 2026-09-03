@@ -88,6 +88,11 @@ require_once __DIR__ . '/config.php';
                                 <i class="bi bi-youtube"></i> YouTube (@BiharElectionAI)
                             </a>
                         </li>
+                        <li class="mb-2">
+                            <a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="text-info text-decoration-none d-flex align-items-center gap-2">
+                                <i class="bi bi-telegram"></i> Telegram (@BiharElectionAI)
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -98,6 +103,7 @@ require_once __DIR__ . '/config.php';
                 <div>&copy; <?php echo date('Y'); ?> Bihar Election. All Rights Reserved. &bull; Non-Government Civic Information Platform &bull; <a href="<?php echo SITE_URL; ?>/admin/login.php" class="text-white-50 text-decoration-none"><i class="bi bi-shield-lock"></i> Admin Portal</a></div>
                 <div class="d-flex gap-3 align-items-center">
                     <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-whatsapp"></i></a>
+                    <a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-telegram"></i></a>
                     <a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-instagram"></i></a>
                     <a href="<?php echo FACEBOOK_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-facebook"></i></a>
                     <a href="<?php echo TWITTER_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-twitter-x"></i></a>

@@ -66,6 +66,7 @@ define('INSTAGRAM_URL', 'https://instagram.com/BiharElectionAI');
 define('FACEBOOK_URL', 'https://facebook.com/BiharElectionAI');
 define('TWITTER_URL', 'https://x.com/BiharElectionAI');
 define('YOUTUBE_URL', 'https://youtube.com/@BiharElectionAI');
+define('TELEGRAM_URL', 'https://t.me/BiharElectionAI');
 
 define('CONTACT_PHONE', '+91 98765 43210');
 define('CONTACT_EMAIL', 'contact@biharelection.com');

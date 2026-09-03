@@ -139,7 +139,10 @@ include __DIR__ . '/header.php';
                 
                 <div class="d-flex flex-wrap justify-content-center gap-2">
                     <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="btn btn-success fw-bold rounded-pill px-4 py-2">
-                        <i class="bi bi-whatsapp me-1"></i> WhatsApp Channel
+                        <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                    </a>
+                    <a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="btn btn-info text-white fw-bold rounded-pill px-4 py-2">
+                        <i class="bi bi-telegram me-1"></i> Telegram
                     </a>
                     <a href="<?php echo FACEBOOK_URL; ?>" target="_blank" class="btn btn-primary fw-bold rounded-pill px-4 py-2">
                         <i class="bi bi-facebook me-1"></i> Facebook

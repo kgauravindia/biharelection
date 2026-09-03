@@ -223,9 +223,14 @@ include __DIR__ . '/header.php';
                                     <i class="bi bi-youtube me-1"></i> YouTube
                                 </a>
                             </div>
-                            <div class="col-12">
+                            <div class="col-6">
                                 <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="btn btn-outline-success w-100 btn-sm text-start py-2 rounded-3 text-truncate">
-                                    <i class="bi bi-whatsapp me-1"></i> WhatsApp Channel
+                                    <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="btn btn-outline-info w-100 btn-sm text-start py-2 rounded-3 text-truncate">
+                                    <i class="bi bi-telegram me-1"></i> Telegram
                                 </a>
                             </div>
                         </div>
