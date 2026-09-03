@@ -17,6 +17,14 @@ if (defined('IS_LOCAL') && IS_LOCAL) {
 $req_slug = trim($req_path, '/');
 
 if (!empty($req_slug) && !in_array($req_slug, ['404', '404.php', 'index.php', 'blog', 'blog.php'])) {
+    // 0. Check if request is a tag URL
+    if (preg_match('#^tags?/(.+)$#i', $req_slug, $m)) {
+        $tag_term = trim($m[1], '/');
+        header("HTTP/1.1 301 Moved Permanently");
+        header("Location: " . SITE_URL . "/tag/" . urlencode($tag_term), true, 301);
+        exit();
+    }
+
     $pdo = Database::getConnection();
     if ($pdo) {
         $decoded_slug = urldecode($req_slug);

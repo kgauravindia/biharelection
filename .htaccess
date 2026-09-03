@@ -42,12 +42,16 @@ AddDefaultCharset UTF-8
 
     # Catch any relative advertise.php or asset requests from sub-routes
     # -------------------------------------------------------------
-    # Blog & Category Archives (e.g. /blog, /blog/bankipur-182-assembly, /category/lok-sabha)
+    # Blog, Category & Tag Archives (e.g. /blog, /category/lok-sabha, /tag/saran)
     # -------------------------------------------------------------
     RewriteRule ^blog/?$ blog.php [L,QSA]
     RewriteRule ^blog/(.+)/?$ blog.php?slug=$1 [L,QSA]
     RewriteRule ^category/?$ blog.php [L,QSA]
     RewriteRule ^category/(.+)/?$ blog.php?category=$1 [L,QSA]
+    RewriteRule ^tag/?$ blog.php [L,QSA]
+    RewriteRule ^tag/(.+)/?$ blog.php?tag=$1 [L,QSA]
+    RewriteRule ^tags/?$ blog.php [L,QSA]
+    RewriteRule ^tags/(.+)/?$ blog.php?tag=$1 [L,QSA]
 
     # -------------------------------------------------------------
     # 1. MLA & Assembly Constituencies (e.g. /mla/118-chapra, /mla/chapra, /constituency/118-chapra)

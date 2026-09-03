@@ -67,11 +67,15 @@ if ($is_single && $pdo) {
 
     $search = isset($_GET['q']) ? trim($_GET['q']) : '';
     $category_filter = isset($_GET['category']) ? trim($_GET['category']) : '';
+    $tag_filter = isset($_GET['tag']) ? trim($_GET['tag']) : '';
 
     $posts = [];
     $total_posts = 0;
     $categories = [];
     $active_cat_obj = null;
+    $matching_district = null;
+    $matching_ac = null;
+    $tag_display = '';
 
     if ($pdo) {
         // Load all categories from categories table
@@ -101,6 +105,29 @@ if ($is_single && $pdo) {
             $whereSql .= " AND `categories` LIKE :cat";
             $params[':cat'] = '%' . $cat_match . '%';
         }
+        if (!empty($tag_filter)) {
+            $decoded_tag = urldecode($tag_filter);
+            $tag_space = str_replace('-', ' ', $decoded_tag);
+            $tag_display = ucwords($tag_space);
+
+            $whereSql .= " AND (`tags` LIKE :t1 OR `tags` LIKE :t2 OR `title` LIKE :t3 OR `content` LIKE :t4)";
+            $params[':t1'] = '%' . $decoded_tag . '%';
+            $params[':t2'] = '%' . $tag_space . '%';
+            $params[':t3'] = '%' . $tag_space . '%';
+            $params[':t4'] = '%' . $tag_space . '%';
+
+            // Check if tag corresponds to a District Hub
+            $dStmt = $pdo->prepare("SELECT name, slug, total_ac FROM `districts` WHERE slug = :s OR name LIKE :n LIMIT 1");
+            $dStmt->execute([':s' => $tag_filter, ':n' => '%' . $tag_space . '%']);
+            $matching_district = $dStmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$matching_district) {
+                // Check if tag corresponds to a Constituency
+                $acStmt = $pdo->prepare("SELECT ac_no, name, slug, district FROM `constituencies` WHERE slug = :s OR name LIKE :n LIMIT 1");
+                $acStmt->execute([':s' => $tag_filter, ':n' => '%' . $tag_space . '%']);
+                $matching_ac = $acStmt->fetch(PDO::FETCH_ASSOC);
+            }
+        }
 
         $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `posts` WHERE $whereSql");
         $countStmt->execute($params);
@@ -118,7 +145,11 @@ if ($is_single && $pdo) {
 
     $total_pages = ceil($total_posts / $limit);
     
-    if ($active_cat_obj) {
+    if (!empty($tag_filter)) {
+        $pageTitle = '#' . htmlspecialchars($tag_display) . ' — Bihar Election Updates & News';
+        $pageDescription = 'Read all articles, constituency analyses, and candidate news tagged with #' . htmlspecialchars($tag_display) . '.';
+        $pageCanonical = SITE_URL . '/tag/' . urlencode($tag_filter) . '/';
+    } elseif ($active_cat_obj) {
         $pageTitle = htmlspecialchars($active_cat_obj['name']) . ' — Bihar Election Articles & News';
         $pageDescription = !empty($active_cat_obj['description']) ? htmlspecialchars(substr(strip_tags($active_cat_obj['description']), 0, 160)) : 'Browse Bihar Election ' . htmlspecialchars($active_cat_obj['name']) . ' news and analysis.';
         $pageCanonical = SITE_URL . '/category/' . urlencode($active_cat_obj['slug']);
@@ -205,9 +236,14 @@ include __DIR__ . '/header.php';
                                 <h6 class="fw-bold small text-muted text-uppercase mb-2"><i class="bi bi-tags me-1"></i> Tags:</h6>
                                 <div class="d-flex flex-wrap gap-1">
                                     <?php foreach (explode(',', $article['tags']) as $tag): ?>
-                                        <?php if (!empty(trim($tag))): ?>
-                                            <a href="<?php echo SITE_URL; ?>/blog?q=<?php echo urlencode(trim($tag)); ?>" class="badge bg-light text-dark border text-decoration-none px-2 py-1">
-                                                #<?php echo htmlspecialchars(trim($tag)); ?>
+                                        <?php 
+                                            $clean_tag_name = trim($tag);
+                                            $tag_slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $clean_tag_name), '-'));
+                                            if (empty($tag_slug)) $tag_slug = urlencode($clean_tag_name);
+                                        ?>
+                                        <?php if (!empty($clean_tag_name)): ?>
+                                            <a href="<?php echo SITE_URL; ?>/tag/<?php echo $tag_slug; ?>" class="badge bg-light text-dark border text-decoration-none px-2 py-1">
+                                                #<?php echo htmlspecialchars($clean_tag_name); ?>
                                             </a>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
@@ -291,7 +327,24 @@ include __DIR__ . '/header.php';
         <?php else: ?>
             <!-- ================= BLOG ARCHIVE & LISTING VIEW ================= -->
             <div class="text-center mb-5">
-                <?php if ($active_cat_obj): ?>
+                <?php if (!empty($tag_filter)): ?>
+                    <span class="badge bg-primary-subtle text-primary fw-bold text-uppercase px-3 py-2 rounded-pill mb-2">Topic Tag Archive</span>
+                    <h1 class="h2 fw-bold text-dark mb-2" style="font-family: 'Outfit', sans-serif;">#<?php echo htmlspecialchars($tag_display); ?></h1>
+                    <p class="text-muted mx-auto mb-3" style="max-width: 650px;">Articles, insights, and electoral reports tagged with <strong>#<?php echo htmlspecialchars($tag_display); ?></strong>.</p>
+                    <?php if ($matching_district): ?>
+                        <div class="mb-2">
+                            <a href="<?php echo SITE_URL; ?>/district/<?php echo urlencode($matching_district['slug']); ?>" class="btn btn-outline-danger btn-sm rounded-pill px-4 shadow-sm fw-bold">
+                                <i class="bi bi-geo-alt-fill me-1"></i> Explore <?php echo htmlspecialchars($matching_district['name']); ?> District Hub (<?php echo $matching_district['total_ac']; ?> Assembly Seats) &rarr;
+                            </a>
+                        </div>
+                    <?php elseif ($matching_ac): ?>
+                        <div class="mb-2">
+                            <a href="<?php echo SITE_URL; ?>/mla/<?php echo $matching_ac['ac_no']; ?>-<?php echo urlencode($matching_ac['slug']); ?>" class="btn btn-outline-danger btn-sm rounded-pill px-4 shadow-sm fw-bold">
+                                <i class="bi bi-card-heading me-1"></i> View AC #<?php echo $matching_ac['ac_no']; ?> <?php echo htmlspecialchars($matching_ac['name']); ?> Constituency Hub &rarr;
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                <?php elseif ($active_cat_obj): ?>
                     <span class="badge bg-danger-subtle text-danger fw-bold text-uppercase px-3 py-2 rounded-pill mb-2">Category Archive</span>
                     <h1 class="h2 fw-bold text-dark mb-2" style="font-family: 'Outfit', sans-serif;"><?php echo htmlspecialchars($active_cat_obj['name']); ?></h1>
                     <?php if (!empty($active_cat_obj['description'])): ?>
