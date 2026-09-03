@@ -519,7 +519,7 @@ CREATE TABLE IF NOT EXISTS `be_panchayat_samiti_2016` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 26. Blog & Editorial Articles (Migrated from WordPress / Content Platform)
-CREATE TABLE IF NOT EXISTS `be_posts` (
+CREATE TABLE IF NOT EXISTS `posts` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `wp_id` INT NULL UNIQUE,
   `title` VARCHAR(500) NOT NULL,

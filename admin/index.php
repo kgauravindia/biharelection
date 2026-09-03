@@ -57,7 +57,7 @@ if ($conn) {
     }
 
     // Blog Posts
-    $r = $conn->query("SELECT COUNT(*) as c FROM `be_posts` WHERE `status` = 'published'");
+    $r = $conn->query("SELECT COUNT(*) as c FROM `posts` WHERE `status` = 'published'");
     if ($r) $stats['posts_count'] = $r->fetch_assoc()['c'] ?? 0;
 }
 

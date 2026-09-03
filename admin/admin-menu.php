@@ -13,7 +13,7 @@ if ($db_menu) {
     $a_res = $db_menu->query("SELECT COUNT(*) as c FROM `be_advertisements` WHERE `status` = 'PENDING'");
     if ($a_res) $pending_ads = $a_res->fetch_assoc()['c'] ?? 0;
 
-    $p_res = $db_menu->query("SELECT COUNT(*) as c FROM `be_posts` WHERE `status` = 'published'");
+    $p_res = $db_menu->query("SELECT COUNT(*) as c FROM `posts` WHERE `status` = 'published'");
     if ($p_res) $total_posts_count = $p_res->fetch_assoc()['c'] ?? 0;
 }
 ?>

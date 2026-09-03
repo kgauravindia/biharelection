@@ -23,7 +23,7 @@ if (!empty($req_slug) && !in_array($req_slug, ['404', '404.php', 'index.php', 'b
         $clean_slug = preg_replace('/^blog\//i', '', $decoded_slug);
 
         // 1. Direct slug match
-        $stmt = $pdo->prepare("SELECT `slug` FROM `be_posts` WHERE (`slug` = :s1 OR `slug` = :s2 OR `slug` = :s3) AND `status` = 'published' LIMIT 1");
+        $stmt = $pdo->prepare("SELECT `slug` FROM `posts` WHERE (`slug` = :s1 OR `slug` = :s2 OR `slug` = :s3) AND `status` = 'published' LIMIT 1");
         $stmt->execute([
             ':s1' => $req_slug,
             ':s2' => $decoded_slug,
@@ -38,7 +38,7 @@ if (!empty($req_slug) && !in_array($req_slug, ['404', '404.php', 'index.php', 'b
         }
 
         // 2. Fuzzy slug match
-        $stmt2 = $pdo->prepare("SELECT `slug` FROM `be_posts` WHERE (`slug` LIKE :f1 OR `slug` LIKE :f2) AND `status` = 'published' LIMIT 1");
+        $stmt2 = $pdo->prepare("SELECT `slug` FROM `posts` WHERE (`slug` LIKE :f1 OR `slug` LIKE :f2) AND `status` = 'published' LIMIT 1");
         $stmt2->execute([
             ':f1' => '%' . $clean_slug . '%',
             ':f2' => '%' . str_replace('-', '%', $clean_slug) . '%'

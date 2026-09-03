@@ -14,7 +14,7 @@ if (isset($_GET['msg']) && $_GET['msg'] === 'saved') {
 if (isset($_GET['delete_id'])) {
     $del_id = (int)$_GET['delete_id'];
     if ($conn && $del_id > 0) {
-        $stmt = $conn->prepare("DELETE FROM `be_posts` WHERE `id` = ?");
+        $stmt = $conn->prepare("DELETE FROM `posts` WHERE `id` = ?");
         if ($stmt) {
             $stmt->bind_param("i", $del_id);
             if ($stmt->execute()) {
@@ -30,7 +30,7 @@ if (isset($_GET['delete_id'])) {
 if (isset($_GET['toggle_status'])) {
     $t_id = (int)$_GET['toggle_status'];
     if ($conn && $t_id > 0) {
-        $stmt = $conn->prepare("UPDATE `be_posts` SET `status` = IF(`status` = 'published', 'draft', 'published') WHERE `id` = ?");
+        $stmt = $conn->prepare("UPDATE `posts` SET `status` = IF(`status` = 'published', 'draft', 'published') WHERE `id` = ?");
         if ($stmt) {
             $stmt->bind_param("i", $t_id);
             $stmt->execute();
@@ -57,14 +57,14 @@ $categories_list = [];
 
 if ($conn) {
     // Stats
-    $stat_pub = $conn->query("SELECT COUNT(*) as c FROM `be_posts` WHERE `status` = 'published'");
+    $stat_pub = $conn->query("SELECT COUNT(*) as c FROM `posts` WHERE `status` = 'published'");
     if ($stat_pub) $total_published = (int)$stat_pub->fetch_assoc()['c'];
 
-    $stat_drf = $conn->query("SELECT COUNT(*) as c FROM `be_posts` WHERE `status` = 'draft'");
+    $stat_drf = $conn->query("SELECT COUNT(*) as c FROM `posts` WHERE `status` = 'draft'");
     if ($stat_drf) $total_drafts = (int)$stat_drf->fetch_assoc()['c'];
 
     // Categories for filter
-    $cat_res = $conn->query("SELECT DISTINCT categories FROM `be_posts` WHERE categories IS NOT NULL AND categories != ''");
+    $cat_res = $conn->query("SELECT DISTINCT categories FROM `posts` WHERE categories IS NOT NULL AND categories != ''");
     if ($cat_res) {
         while ($cr = $cat_res->fetch_assoc()) {
             $split_cats = array_map('trim', explode(',', $cr['categories']));
@@ -92,10 +92,10 @@ if ($conn) {
         $where .= " AND `status` = '$safe_status'";
     }
 
-    $c_res = $conn->query("SELECT COUNT(*) as c FROM `be_posts` WHERE $where");
+    $c_res = $conn->query("SELECT COUNT(*) as c FROM `posts` WHERE $where");
     if ($c_res) $total_rows = (int)$c_res->fetch_assoc()['c'];
 
-    $q_res = $conn->query("SELECT id, wp_id, title, slug, featured_image, categories, tags, author_name, status, views_count, published_at FROM `be_posts` WHERE $where ORDER BY `published_at` DESC, `id` DESC LIMIT $offset, $limit");
+    $q_res = $conn->query("SELECT id, wp_id, title, slug, featured_image, categories, tags, author_name, status, views_count, published_at FROM `posts` WHERE $where ORDER BY `published_at` DESC, `id` DESC LIMIT $offset, $limit");
     if ($q_res) {
         while ($r = $q_res->fetch_assoc()) {
             $posts[] = $r;

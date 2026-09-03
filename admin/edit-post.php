@@ -26,7 +26,7 @@ $post = [
 
 // Load existing post if edit mode
 if ($is_edit && $conn) {
-    $stmt = $conn->prepare("SELECT * FROM `be_posts` WHERE `id` = ?");
+    $stmt = $conn->prepare("SELECT * FROM `posts` WHERE `id` = ?");
     if ($stmt) {
         $stmt->bind_param("i", $post_id);
         $stmt->execute();
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_post'])) {
         if ($conn) {
             if ($is_edit) {
                 $update_stmt = $conn->prepare("
-                    UPDATE `be_posts` SET 
+                    UPDATE `posts` SET 
                     `title` = ?, 
                     `slug` = ?, 
                     `excerpt` = ?, 
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_post'])) {
                 }
             } else {
                 $insert_stmt = $conn->prepare("
-                    INSERT INTO `be_posts` 
+                    INSERT INTO `posts` 
                     (`title`, `slug`, `excerpt`, `content`, `featured_image`, `categories`, `tags`, `author_name`, `status`, `published_at`)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ");

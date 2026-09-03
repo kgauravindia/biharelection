@@ -19,7 +19,7 @@ if ($is_single && $pdo) {
     $encoded_slug = urlencode($decoded_slug);
 
     // 1. Fetch single article by exact or decoded slug
-    $stmt = $pdo->prepare("SELECT * FROM `be_posts` WHERE (`slug` = :s1 OR `slug` = :s2 OR `slug` = :s3) AND `status` = 'published' LIMIT 1");
+    $stmt = $pdo->prepare("SELECT * FROM `posts` WHERE (`slug` = :s1 OR `slug` = :s2 OR `slug` = :s3) AND `status` = 'published' LIMIT 1");
     $stmt->execute([
         ':s1' => $slug,
         ':s2' => $decoded_slug,
@@ -29,7 +29,7 @@ if ($is_single && $pdo) {
 
     // 2. Fallback search with LIKE
     if (!$article) {
-        $stmt = $pdo->prepare("SELECT * FROM `be_posts` WHERE (`slug` LIKE :f1 OR `slug` LIKE :f2) AND `status` = 'published' LIMIT 1");
+        $stmt = $pdo->prepare("SELECT * FROM `posts` WHERE (`slug` LIKE :f1 OR `slug` LIKE :f2) AND `status` = 'published' LIMIT 1");
         $stmt->execute([
             ':f1' => '%' . $decoded_slug . '%',
             ':f2' => '%' . str_replace('-', '%', $decoded_slug) . '%'
@@ -39,11 +39,11 @@ if ($is_single && $pdo) {
 
     if ($article) {
         // Increment views count
-        $updateViews = $pdo->prepare("UPDATE `be_posts` SET `views_count` = `views_count` + 1 WHERE `id` = :id");
+        $updateViews = $pdo->prepare("UPDATE `posts` SET `views_count` = `views_count` + 1 WHERE `id` = :id");
         $updateViews->execute([':id' => $article['id']]);
 
         // Fetch related articles
-        $relStmt = $pdo->prepare("SELECT id, title, slug, featured_image, categories, published_at FROM `be_posts` WHERE `id` != :id AND `status` = 'published' ORDER BY `published_at` DESC LIMIT 4");
+        $relStmt = $pdo->prepare("SELECT id, title, slug, featured_image, categories, published_at FROM `posts` WHERE `id` != :id AND `status` = 'published' ORDER BY `published_at` DESC LIMIT 4");
         $relStmt->execute([':id' => $article['id']]);
         $related_posts = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -74,7 +74,7 @@ if ($is_single && $pdo) {
 
     if ($pdo) {
         // Categories list
-        $catStmt = $pdo->query("SELECT DISTINCT categories FROM `be_posts` WHERE `status` = 'published' AND categories IS NOT NULL AND categories != ''");
+        $catStmt = $pdo->query("SELECT DISTINCT categories FROM `posts` WHERE `status` = 'published' AND categories IS NOT NULL AND categories != ''");
         while ($cr = $catStmt->fetch(PDO::FETCH_ASSOC)) {
             $split = array_map('trim', explode(',', $cr['categories']));
             foreach ($split as $sc) {
@@ -98,11 +98,11 @@ if ($is_single && $pdo) {
             $params[':cat'] = '%' . $category_filter . '%';
         }
 
-        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `be_posts` WHERE $whereSql");
+        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `posts` WHERE $whereSql");
         $countStmt->execute($params);
         $total_posts = (int)$countStmt->fetchColumn();
 
-        $fetchStmt = $pdo->prepare("SELECT id, title, slug, excerpt, content, featured_image, categories, tags, author_name, published_at FROM `be_posts` WHERE $whereSql ORDER BY `published_at` DESC LIMIT :offset, :limit");
+        $fetchStmt = $pdo->prepare("SELECT id, title, slug, excerpt, content, featured_image, categories, tags, author_name, published_at FROM `posts` WHERE $whereSql ORDER BY `published_at` DESC LIMIT :offset, :limit");
         foreach ($params as $k => $v) {
             $fetchStmt->bindValue($k, $v);
         }
