@@ -50,6 +50,10 @@ $activeNav = $activeNav ?? 'home';
       "description": "Bihar's Premier Non-Government Election Data & Political Intelligence Platform covering Panchayat to Parliament."
     }
     </script>
+    <!-- Global JS Site URL Definition -->
+    <script>
+      window.SITE_URL = "<?php echo SITE_URL; ?>";
+    </script>
 </head>
 <body>
 
@@ -61,7 +65,7 @@ $activeNav = $activeNav ?? 'home';
                 <span class="text-truncate small"><strong>Bihar Election Update:</strong> 2026 Panchayat Delimitation & 243 AC Profiling</span>
             </div>
             <div>
-                <a href="whatsapp.php" class="small text-decoration-none">
+                <a href="<?php echo SITE_URL; ?>/whatsapp" class="small text-decoration-none">
                     <span>📲 Daily WhatsApp Digest &rarr;</span>
                 </a>
             </div>
@@ -91,17 +95,26 @@ $activeNav = $activeNav ?? 'home';
 
                     <!-- District & Block Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['districts', 'blocks']) ? 'active text-warning' : ''; ?>" href="#" id="districtBlockDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            District & Block
+                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['districts', 'district', 'blocks', 'block', 'census']) ? 'active text-warning' : ''; ?>" href="#" id="districtBlockDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            District &amp; Block
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="districtBlockDropdown">
                             <li><h6 class="dropdown-header text-uppercase small fw-bold">Administrative Units</h6></li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getDistrictUrl('patna'); ?>">
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/district">
                                     <span>🏢</span>
                                     <div>
                                         <div class="fw-bold">All 38 Districts Hub</div>
-                                        <small class="text-muted">District profile, HQ & demographics</small>
+                                        <small class="text-muted">District profile, HQ &amp; demographics</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getBlockUrl(); ?>">
+                                    <span>📍</span>
+                                    <div>
+                                        <div class="fw-bold text-primary">534 CD Blocks Directory</div>
+                                        <small class="text-muted">Sub-districts, Samitis &amp; Panchayats</small>
                                     </div>
                                 </a>
                             </li>
@@ -109,8 +122,8 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatSamitiUrl(); ?>">
                                     <span>🌾</span>
                                     <div>
-                                        <div class="fw-bold">Block Samiti & Pramukh</div>
-                                        <small class="text-muted">389 Blocks & Samiti leadership</small>
+                                        <div class="fw-bold">Block Samiti &amp; Pramukh</div>
+                                        <small class="text-muted">389 Blocks &amp; Samiti leadership</small>
                                     </div>
                                 </a>
                             </li>
@@ -119,18 +132,18 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getCensusUrl(); ?>">
                                     <span>📊</span>
                                     <div>
-                                        <div class="fw-bold text-primary">Census 2011 & Demographics</div>
-                                        <small class="text-muted">38 Districts & 534 Blocks Census Hub</small>
+                                        <div class="fw-bold text-primary">Census 2011 &amp; Demographics</div>
+                                        <small class="text-muted">38 Districts &amp; 534 Blocks Census Hub</small>
                                     </div>
                                 </a>
                             </li>
                             <li><hr class="dropdown-divider my-1"></li>
                             <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getZilaParishadUrl(); ?>">
-                                    <span>👑</span>
+                                    <span>🏛️</span>
                                     <div>
-                                        <div class="fw-bold">Zila Parishad Board</div>
-                                        <small class="text-muted">38 District Chairpersons (अध्यक्ष)</small>
+                                        <div class="fw-bold">Zila Parishad Boards</div>
+                                        <small class="text-muted">38 District Boards &amp; Ward Members</small>
                                     </div>
                                 </a>
                             </li>
@@ -145,11 +158,11 @@ $activeNav = $activeNav ?? 'home';
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="mlaDropdown">
                             <li><h6 class="dropdown-header text-uppercase small fw-bold">Vidhan Sabha (विधान सभा)</h6></li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/mla/118-chapra">
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/mla">
                                     <span>🗳️</span>
                                     <div>
                                         <div class="fw-bold">243 Assembly Constituencies</div>
-                                        <small class="text-muted">Current MLAs, polling data & results</small>
+                                        <small class="text-muted">Current MLAs, polling data &amp; results</small>
                                     </div>
                                 </a>
                             </li>
@@ -158,7 +171,7 @@ $activeNav = $activeNav ?? 'home';
                                     <span>📜</span>
                                     <div>
                                         <div class="fw-bold">Historical 2015–2020 MLAs</div>
-                                        <small class="text-muted">All 243 Ex-MLAs & contact roster</small>
+                                        <small class="text-muted">All 243 Ex-MLAs &amp; contact roster</small>
                                     </div>
                                 </a>
                             </li>
@@ -168,10 +181,10 @@ $activeNav = $activeNav ?? 'home';
                     <!-- MP & MLC (Parliament & Council) Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['representatives', 'mp', 'mlc']) ? 'active text-warning' : ''; ?>" href="#" id="repDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            MP & MLC
+                            MP &amp; MLC
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="repDropdown">
-                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Parliament & State Council</h6></li>
+                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Parliament &amp; State Council</h6></li>
                             <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getMpUrl(); ?>">
                                     <span>🏛️</span>
@@ -205,26 +218,26 @@ $activeNav = $activeNav ?? 'home';
 
                     <!-- Panchayat Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'panchayat' ? 'active text-warning' : ''; ?>" href="#" id="panchayatDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['panchayat', 'mukhiya', 'sarpanch', 'zila-parishad', 'samiti', 'panchayat-samiti']) ? 'active text-warning' : ''; ?>" href="#" id="panchayatDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Panchayat
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="panchayatDropdown">
-                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Panchayati Raj</h6></li>
+                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Panchayati Raj Directory</h6></li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getMukhiyaUrl(); ?>">
-                                    <span>🌾</span>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatUrl(); ?>">
+                                    <span>🏡</span>
                                     <div>
-                                        <div class="fw-bold">Mukhiya Directory</div>
-                                        <small class="text-muted">7,346 Gram Panchayat Heads</small>
+                                        <div class="fw-bold text-primary">Gram Panchayat Directory</div>
+                                        <small class="text-muted">8,400+ Gram Panchayats (Mukhiya &amp; Sarpanch)</small>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getSarpanchUrl(); ?>">
-                                    <span>⚖️</span>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/blocks">
+                                    <span>🏢</span>
                                     <div>
-                                        <div class="fw-bold">Sarpanch Directory</div>
-                                        <small class="text-muted">6,617 Gram Katchahry Heads</small>
+                                        <div class="fw-bold">534 CD Blocks Directory</div>
+                                        <small class="text-muted">All Bihar Blocks &amp; Sub-districts</small>
                                     </div>
                                 </a>
                             </li>
@@ -233,7 +246,7 @@ $activeNav = $activeNav ?? 'home';
                                     <span>🏛️</span>
                                     <div>
                                         <div class="fw-bold">Zila Parishad Ward Members</div>
-                                        <small class="text-muted">1,099 Territorial Ward Members</small>
+                                        <small class="text-muted">38 District Boards &amp; 1,099+ Wards</small>
                                     </div>
                                 </a>
                             </li>
@@ -242,17 +255,17 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatSamitiUrl(); ?>">
                                     <span>⏳</span>
                                     <div>
-                                        <div class="fw-bold">2016 Panchayat Archive</div>
-                                        <small class="text-muted">8,045 Mukhiyas & 389 Pramukhs</small>
+                                        <div class="fw-bold">Block Samiti &amp; Pramukh</div>
+                                        <small class="text-muted">389 Block Pramukhs &amp; Up-Pramukhs</small>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
-                    <!-- Candidates -->
+                    <!-- Representatives / Candidates -->
                     <li class="nav-item">
-                        <a href="<?php echo SITE_URL; ?>/candidate/dr-cn-gupta" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'candidates' ? 'active text-warning' : ''; ?>">Candidates</a>
+                        <a href="<?php echo SITE_URL; ?>/representatives" class="nav-link px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['representatives', 'candidates']) ? 'active text-warning' : ''; ?>">Representatives</a>
                     </li>
 
                     <!-- Blog -->

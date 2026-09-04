@@ -42,7 +42,7 @@ require_once __DIR__ . '/header.php';
                         type="text" 
                         id="globalSearchInput" 
                         class="search-input" 
-                        placeholder="Search AC (e.g. 182 Bankipur, Patna Sahib), District, or MLA..."
+                        placeholder="Search MLA, MP, Mukhiya, Sarpanch, District, or AC..."
                         autocomplete="off"
                     >
                     <button class="btn-search" onclick="document.getElementById('globalSearchInput').focus()">
@@ -57,13 +57,12 @@ require_once __DIR__ . '/header.php';
             <!-- Quick Pill Links (Touch horizontal scrollable on mobile) -->
             <div class="d-flex flex-nowrap flex-sm-wrap justify-content-start justify-content-sm-center align-items-center gap-2 mt-3 overflow-x-auto pb-2 px-1">
                 <span class="small text-white-50 text-nowrap">Popular:</span>
-                <a href="<?php echo getDistrictUrl('patna'); ?>" class="pill-link fw-bold text-warning">👑 Patna Hub (Capital)</a>
-                <a href="<?php echo SITE_URL; ?>/mla/182-bankipur" class="pill-link">AC 182 — Bankipur</a>
-                <a href="<?php echo SITE_URL; ?>/mla/184-patna-sahib" class="pill-link">AC 184 — Patna Sahib</a>
-                <a href="<?php echo SITE_URL; ?>/mla/128-raghopur" class="pill-link">AC 128 — Raghopur</a>
-                <a href="<?php echo SITE_URL; ?>/mla/89-muzaffarpur" class="pill-link">AC 89 — Muzaffarpur</a>
-                <a href="<?php echo getZilaParishadUrl(); ?>" class="pill-link">Zila Parishad Directory</a>
-                <a href="<?php echo getPanchayatUrl(); ?>" class="pill-link">Panchayat 2026 Hub</a>
+                <a href="<?php echo getDistrictUrl('patna'); ?>" class="pill-link fw-bold text-warning">👑 Patna Hub</a>
+                <a href="<?php echo SITE_URL; ?>/mla" class="pill-link">🗳️ 243 MLAs</a>
+                <a href="<?php echo SITE_URL; ?>/mp" class="pill-link">🏛️ 40 MPs</a>
+                <a href="<?php echo SITE_URL; ?>/mukhiya" class="pill-link">👑 Mukhiya Directory</a>
+                <a href="<?php echo SITE_URL; ?>/sarpanch" class="pill-link">⚖️ Sarpanch Directory</a>
+                <a href="<?php echo getZilaParishadUrl(); ?>" class="pill-link">Zila Parishad</a>
             </div>
         </div>
     </section>
@@ -230,119 +229,9 @@ require_once __DIR__ . '/header.php';
             </div>
         </section>
 
-        <!-- Bihar Panchayat Election 2026 Delimitation Tracker -->
-        <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-5 bg-white">
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3 pb-2 border-bottom">
-                <div>
-                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1 mb-1">🌾 Upcoming Election 2026</span>
-                    <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">Bihar Panchayat Election 2026: Delimitation & Reservation Tracker</h2>
-                    <p class="small text-muted mb-0">Mukhiya reservation rosters, Sarpanch categories, and Zila Parishad territories</p>
-                </div>
-                <a href="<?php echo getPanchayatUrl(); ?>" class="btn btn-success btn-sm fw-bold rounded-pill px-3">
-                    Explore Panchayat Hub &rarr;
-                </a>
-            </div>
-
-            <!-- Responsive Table -->
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0 small">
-                    <thead class="table-light">
-                        <tr>
-                            <th class="py-3">District</th>
-                            <th class="py-3">Block</th>
-                            <th class="py-3">Gram Panchayat</th>
-                            <th class="py-3">Incumbent Mukhiya</th>
-                            <th class="py-3">2026 Reservation</th>
-                            <th class="py-3">Delimitation Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach (array_slice($panchayats, 0, 8) as $p): ?>
-                        <tr>
-                            <td class="fw-bold" style="color: var(--primary-navy);"><?php echo htmlspecialchars($p['district'] ?? ''); ?></td>
-                            <td><?php echo htmlspecialchars($p['block'] ?? ''); ?></td>
-                            <td class="fw-bold" style="color: var(--secondary-navy);"><?php echo htmlspecialchars($p['panchayat_name'] ?? ''); ?></td>
-                            <td><?php echo htmlspecialchars(!empty($p['current_mukhiya']) ? $p['current_mukhiya'] : 'Vacant / Not Declared'); ?></td>
-                            <td><span class="badge bg-warning bg-opacity-25 text-dark fw-bold"><?php echo htmlspecialchars($p['reservation_2026_mukhiya'] ?? (!empty($p['mukhiya_reservation']) ? $p['mukhiya_reservation'] : 'General / Open')); ?></span></td>
-                            <td><span class="text-success fw-bold">✓ <?php echo htmlspecialchars($p['delimitation_status'] ?? 'Delimitation Finalized'); ?></span></td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
 
 
-        </section>
 
-        <!-- Candidate & Political Leaders Directory -->
-        <section class="mb-5">
-            <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4 pb-2 border-bottom">
-                <div>
-                    <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">Candidate & Political Leaders Directory</h2>
-                    <p class="small text-muted mb-0">Verified biographies, declared assets, criminal record disclosures, and election histories</p>
-                </div>
-                <a href="<?php echo getAdvertiseUrl(['category' => 'candidate']); ?>" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3">
-                    Submit Candidate Profile &rarr;
-                </a>
-            </div>
-
-            <?php if (!empty($candidates)): ?>
-            <div class="row g-3 g-lg-4">
-                <?php foreach ($candidates as $cand): ?>
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100 d-flex flex-column justify-content-between text-center">
-                        <div>
-                            <div class="candidate-card-header"></div>
-                            <div class="px-3 pb-3">
-                                <?php $candLetter = mb_strtoupper(mb_substr(trim($cand['name'] ?? 'C'), 0, 1, 'UTF-8'), 'UTF-8'); ?>
-                                <div class="candidate-card-avatar rounded-circle d-flex align-items-center justify-content-center fw-bold text-white fs-3 mx-auto shadow-sm" style="background: linear-gradient(135deg, var(--secondary-navy, #1e3e62), var(--accent-saffron, #ff9933));">
-                                    <?php echo htmlspecialchars($candLetter); ?>
-                                </div>
-                                <h3 class="h6 fw-bold mb-0 text-navy d-flex align-items-center justify-content-center gap-1">
-                                    <?php echo htmlspecialchars($cand['name']); ?>
-                                    <?php if (!empty($cand['verified'])): ?>
-                                        <i class="bi bi-check-circle-fill text-primary" title="ECI Verified"></i>
-                                    <?php endif; ?>
-                                </h3>
-                                <p class="small text-muted mb-2"><?php echo htmlspecialchars($cand['designation'] ?? ''); ?></p>
-
-                                <div class="bg-light p-2 rounded-2 small text-start mb-3">
-                                    <div class="d-flex justify-content-between mb-1">
-                                        <span class="text-muted">Party:</span> <strong><?php echo htmlspecialchars($cand['party_short'] ?? ''); ?></strong>
-                                    </div>
-                                    <div class="d-flex justify-content-between mb-1">
-                                        <span class="text-muted">Assets:</span> <strong class="text-success"><?php echo htmlspecialchars($cand['assets_declared'] ?? 'Disclosed'); ?></strong>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <span class="text-muted">Cases:</span> <strong><?php echo htmlspecialchars($cand['criminal_cases'] ?? '0'); ?></strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-3 pt-0">
-                            <a href="candidate.php?slug=<?php echo $cand['slug']; ?>" class="btn btn-outline-secondary btn-sm w-100 fw-bold">
-                                View Profile & Affidavit &rarr;
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-            <?php else: ?>
-            <div class="card border-0 shadow-sm rounded-4 p-4 text-center bg-white">
-                <div class="my-3">
-                    <span class="fs-1">🗳️</span>
-                    <h3 class="h5 fw-bold mt-2" style="color: var(--primary-navy);">Candidate Directory: Bihar 2026 Nominations</h3>
-                    <p class="small text-muted mx-auto mb-3" style="max-width: 600px;">
-                        Candidate profiles, affidavits, and asset disclosures are published in real-time as nominations and verified party lists are finalized.
-                    </p>
-                    <a href="<?php echo getAdvertiseUrl(['category' => 'candidate']); ?>" class="btn btn-primary btn-sm fw-bold px-4 py-2" style="background: var(--secondary-navy); border: none;">
-                        <i class="bi bi-patch-check me-1"></i> Register Verified Candidate Profile
-                    </a>
-                </div>
-            </div>
-            <?php endif; ?>
-        </section>
 
 
 

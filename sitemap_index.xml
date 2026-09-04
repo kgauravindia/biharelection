@@ -3,15 +3,15 @@
     <!-- BiharElection.com Custom Platform Sitemaps -->
     <sitemap>
         <loc>https://biharelection.com/sitemap.xml</loc>
-        <lastmod>2026-09-02T22:30:16+05:30</lastmod>
+        <lastmod>2026-09-04T14:29:54+00:00</lastmod>
     </sitemap>
     <sitemap>
         <loc>https://biharelection.com/sitemap-panchayats.xml</loc>
-        <lastmod>2026-09-02T22:30:16+05:30</lastmod>
+        <lastmod>2026-09-04T14:29:54+00:00</lastmod>
     </sitemap>
     <sitemap>
         <loc>https://biharelection.com/sitemap-census.xml</loc>
-        <lastmod>2026-09-02T22:30:16+05:30</lastmod>
+        <lastmod>2026-09-04T14:29:54+00:00</lastmod>
     </sitemap>
 
     <!-- Original WordPress Sitemaps (Preserving All Original URLs) -->

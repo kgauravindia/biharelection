@@ -1069,27 +1069,13 @@ function renderGoogleAd($slotType = 'leaderboard', $slotId = '', $customClass = 
 }
 
 /**
- * Returns full mobile number for registered/logged-in users, or masked number for guests
+ * Unconditionally masks all mobile numbers everywhere across the platform (e.g. 98******10)
  */
-function maskMobileNumber($phone, $forceMask = false) {
+function maskMobileNumber($phone, $forceMask = true) {
     if (empty($phone)) return '';
     $clean = preg_replace('/[^0-9]/', '', (string)$phone);
     if (empty($clean)) return '';
 
-    // Check if current visitor is a logged-in registered user or admin
-    $isLoggedIn = (function_exists('isUserLoggedIn') && isUserLoggedIn())
-               || !empty($_SESSION['public_user_id'])
-               || !empty($_SESSION['admin_logged_in']);
-
-    if ($isLoggedIn && !$forceMask) {
-        $len = strlen($clean);
-        if ($len >= 10) {
-            return substr($clean, -10);
-        }
-        return $clean;
-    }
-
-    // Otherwise mask for public guests (e.g. 98******10)
     $len = strlen($clean);
     if ($len >= 10) {
         $last10 = substr($clean, -10);
@@ -1100,6 +1086,106 @@ function maskMobileNumber($phone, $forceMask = false) {
         return substr($clean, 0, 1) . str_repeat('*', max(1, $len - 1));
     }
     return '';
+}
+
+/**
+ * Renders interactive phone reveal badge:
+ * - When guest clicks: Prompts Citizen Login Modal
+ * - When logged-in citizen clicks: Instantly reveals full contact number & enables 1-click calling
+ */
+function renderMaskedPhoneButton($phone, $targetName = '') {
+    if (empty($phone)) return '';
+    $clean = preg_replace('/[^0-9]/', '', (string)$phone);
+    if (empty($clean)) return '';
+    
+    $masked = maskMobileNumber($clean);
+    $isLoggedIn = (function_exists('isUserLoggedIn') && isUserLoggedIn())
+               || !empty($_SESSION['public_user_id'])
+               || !empty($_SESSION['admin_logged_in']);
+
+    $loginUrl = SITE_URL . "/login?redirect=" . urlencode($_SERVER['REQUEST_URI'] ?? '');
+    
+    if ($isLoggedIn) {
+        $fullNumber = strlen($clean) >= 10 ? substr($clean, -10) : $clean;
+        return '
+        <div class="contact-reveal-container d-inline-block">
+            <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-2.5 py-0.5 small d-inline-flex align-items-center gap-1 reveal-phone-btn shadow-none" 
+                    data-phone="' . htmlspecialchars($fullNumber, ENT_QUOTES) . '" 
+                    data-name="' . htmlspecialchars($targetName, ENT_QUOTES) . '"
+                    onclick="revealPhoneNumber(this)" 
+                    title="Click to reveal full phone number">
+                <i class="bi bi-telephone-fill"></i>
+                <span class="phone-text font-monospace">' . htmlspecialchars($masked) . '</span>
+                <i class="bi bi-eye-fill ms-1 opacity-75"></i>
+            </button>
+        </div>';
+    } else {
+        return '
+        <div class="contact-reveal-container d-inline-block">
+            <a href="' . htmlspecialchars($loginUrl, ENT_QUOTES) . '" 
+               class="btn btn-sm btn-light border rounded-pill px-2.5 py-0.5 small text-secondary d-inline-flex align-items-center gap-1 text-decoration-none guest-phone-btn" 
+               data-bs-toggle="modal" 
+               data-bs-target="#citizenLoginPhoneModal"
+               data-target-name="' . htmlspecialchars($targetName, ENT_QUOTES) . '"
+               title="Login to view full contact number">
+                <i class="bi bi-lock-fill text-warning"></i>
+                <span class="phone-text font-monospace text-muted">' . htmlspecialchars($masked) . '</span>
+                <span class="badge bg-warning bg-opacity-25 text-dark" style="font-size: 0.65rem;">Login</span>
+            </a>
+        </div>';
+    }
+}
+
+/**
+ * Fetch contacts seen/revealed by a citizen user
+ */
+function getUserPhoneReveals($userId, $limit = 100, $onlyToday = false) {
+    $pdo = Database::getConnection();
+    if (!$pdo || empty($userId)) return [];
+    try {
+        if ($onlyToday) {
+            $stmt = $pdo->prepare("SELECT * FROM phone_reveals WHERE user_id = :uid AND revealed_date = CURDATE() ORDER BY id DESC LIMIT :lim");
+        } else {
+            $stmt = $pdo->prepare("SELECT * FROM phone_reveals WHERE user_id = :uid ORDER BY id DESC LIMIT :lim");
+        }
+        $stmt->bindValue(':uid', (int)$userId, PDO::PARAM_INT);
+        $stmt->bindValue(':lim', (int)$limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Throwable $e) {
+        error_log("Error fetching user phone reveals: " . $e->getMessage());
+        return [];
+    }
+}
+
+/**
+ * Count distinct phone numbers revealed today by a user
+ */
+function getUserTodayRevealCount($userId) {
+    $pdo = Database::getConnection();
+    if (!$pdo || empty($userId)) return 0;
+    try {
+        $stmt = $pdo->prepare("SELECT COUNT(DISTINCT phone_number) FROM phone_reveals WHERE user_id = :uid AND revealed_date = CURDATE()");
+        $stmt->execute([':uid' => (int)$userId]);
+        return intval($stmt->fetchColumn() ?: 0);
+    } catch (Throwable $e) {
+        return 0;
+    }
+}
+
+/**
+ * Count total distinct phone numbers revealed by a user across all time
+ */
+function getUserTotalRevealCount($userId) {
+    $pdo = Database::getConnection();
+    if (!$pdo || empty($userId)) return 0;
+    try {
+        $stmt = $pdo->prepare("SELECT COUNT(DISTINCT phone_number) FROM phone_reveals WHERE user_id = :uid");
+        $stmt->execute([':uid' => (int)$userId]);
+        return intval($stmt->fetchColumn() ?: 0);
+    } catch (Throwable $e) {
+        return 0;
+    }
 }
 
 /**
@@ -1129,6 +1215,65 @@ function getMpUrl($slug = '') {
     return $slug ? SITE_URL . "/mp/{$slug}" : SITE_URL . "/mp";
 }
 
+/**
+ * Helper function to slugify text including Hindi/Devanagari scripts
+ */
+function slugify($text) {
+    if (empty($text)) return '';
+
+    // If string is already plain ASCII / alphanumeric with spaces/hyphens
+    if (preg_match('/^[a-zA-Z0-9\s_-]+$/', (string)$text)) {
+        return strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', (string)$text), '-'));
+    }
+
+    static $vowels = [
+        'अ' => 'a', 'आ' => 'aa', 'इ' => 'i', 'ई' => 'ee', 'उ' => 'u', 'ऊ' => 'oo',
+        'ऋ' => 'ri', 'ए' => 'e', 'ऐ' => 'ai', 'ओ' => 'o', 'औ' => 'au',
+        'अं' => 'an', 'अः' => 'ah', 'ऑ' => 'o', 'ऍ' => 'e'
+    ];
+    static $matras = [
+        'ा' => 'a', 'ि' => 'i', 'ी' => 'i', 'ु' => 'u', 'ू' => 'u', 'ृ' => 'ri',
+        'े' => 'e', 'ै' => 'ai', 'ो' => 'o', 'ौ' => 'au', 'ं' => 'n', 'ँ' => 'n',
+        'ः' => 'h', '्' => '', 'ॉ' => 'o', 'ॅ' => 'e', '़' => ''
+    ];
+    static $consonants = [
+        'क' => 'k', 'ख' => 'kh', 'ग' => 'g', 'घ' => 'gh', 'ङ' => 'ng',
+        'च' => 'ch', 'छ' => 'chh', 'ज' => 'j', 'झ' => 'jh', 'ञ' => 'ny',
+        'ट' => 't', 'ठ' => 'th', 'ड' => 'd', 'ढ' => 'dh', 'ण' => 'n',
+        'त' => 't', 'थ' => 'th', 'द' => 'd', 'ध' => 'dh', 'न' => 'n',
+        'प' => 'p', 'फ' => 'ph', 'ब' => 'b', 'भ' => 'bh', 'म' => 'm',
+        'य' => 'y', 'र' => 'r', 'ल' => 'l', 'व' => 'v', 'श' => 'sh',
+        'ष' => 'sh', 'स' => 's', 'ह' => 'h', 'क्ष' => 'ksh', 'त्र' => 'tr', 'ज्ञ' => 'gy',
+        'ड़' => 'r', 'ढ़' => 'rh', 'फ़' => 'f', 'फ़' => 'f', 'ज़' => 'z', 'ज़' => 'z', 
+        'क़' => 'q', 'ख़' => 'kh', 'ग़' => 'gh', 'ड़' => 'r', 'ढ़' => 'rh'
+    ];
+
+    $chars = preg_split('//u', (string)$text, -1, PREG_SPLIT_NO_EMPTY);
+    $out = '';
+    $len = count($chars);
+
+    for ($i = 0; $i < $len; $i++) {
+        $c = $chars[$i];
+        if (isset($vowels[$c])) {
+            $out .= $vowels[$c];
+        } elseif (isset($consonants[$c])) {
+            $next = $chars[$i + 1] ?? '';
+            $out .= $consonants[$c];
+            if (!isset($matras[$next]) && $next !== '्' && $i + 1 < $len && $next !== ' ' && $next !== '-' && $next !== '_' && $next !== '(' && $next !== ')' && $next !== '.' && $next !== '/') {
+                $out .= 'a';
+            }
+        } elseif (isset($matras[$c])) {
+            $out .= $matras[$c];
+        } elseif (preg_match('/[a-zA-Z0-9]/', $c)) {
+            $out .= strtolower($c);
+        } elseif ($c === ' ' || $c === '-' || $c === '_' || $c === '/' || $c === ',' || $c === '.') {
+            $out .= '-';
+        }
+    }
+
+    return strtolower(trim(preg_replace('/-+/', '-', $out), '-'));
+}
+
 function getMlcUrl($slug = '') {
     return $slug ? SITE_URL . "/mlc/{$slug}" : SITE_URL . "/mlc";
 }
@@ -1142,44 +1287,65 @@ function getDistrictUrl($slug, $subpath = '') {
     return SITE_URL . "/district/{$slugClean}";
 }
 
-function getPanchayatUrl($districtSlug = '', $panchayatSlug = '') {
-    if ($districtSlug && $panchayatSlug) {
-        return SITE_URL . "/panchayat/{$districtSlug}/{$panchayatSlug}";
-    } elseif ($districtSlug) {
-        return SITE_URL . "/panchayat/{$districtSlug}";
+function getPanchayatUrl($districtSlug = '', $blockSlugOrPanchayat = '', $panchayatSlug = '') {
+    $d = slugify($districtSlug);
+    if ($panchayatSlug) {
+        $b = slugify($blockSlugOrPanchayat);
+        $p = slugify($panchayatSlug);
+        if ($d && $b && $p) {
+            return SITE_URL . "/{$d}/{$b}/{$p}";
+        }
+    }
+    $p = slugify($blockSlugOrPanchayat);
+    if ($d && $p) {
+        return SITE_URL . "/panchayat/{$d}/{$p}";
+    } elseif ($d) {
+        return SITE_URL . "/panchayat/{$d}";
     }
     return SITE_URL . "/panchayat";
 }
 
 function getMukhiyaUrl($districtSlug = '', $panchayatSlug = '') {
-    if ($districtSlug && $panchayatSlug) {
-        return SITE_URL . "/mukhiya/{$districtSlug}/{$panchayatSlug}";
-    } elseif ($districtSlug) {
-        return SITE_URL . "/mukhiya/{$districtSlug}";
-    }
-    return SITE_URL . "/mukhiya";
+    return getPanchayatUrl($districtSlug, $panchayatSlug);
 }
 
 function getSarpanchUrl($districtSlug = '', $panchayatSlug = '') {
-    if ($districtSlug && $panchayatSlug) {
-        return SITE_URL . "/sarpanch/{$districtSlug}/{$panchayatSlug}";
-    } elseif ($districtSlug) {
-        return SITE_URL . "/sarpanch/{$districtSlug}";
-    }
-    return SITE_URL . "/sarpanch";
+    return getPanchayatUrl($districtSlug, $panchayatSlug);
 }
 
-function getZilaParishadUrl($districtSlug = '') {
-    return $districtSlug ? SITE_URL . "/zila-parishad/{$districtSlug}" : SITE_URL . "/zila-parishad";
+function getZilaParishadUrl($districtSlug = '', $wardNo = '') {
+    $d = slugify($districtSlug);
+    $w = trim((string)$wardNo);
+    if ($d && $w !== '') {
+        return SITE_URL . "/zila-parishad/{$d}/{$w}";
+    } elseif ($d) {
+        return SITE_URL . "/zila-parishad/{$d}";
+    }
+    return SITE_URL . "/zila-parishad";
 }
 
 function getPanchayatSamitiUrl($districtSlug = '', $blockSlug = '') {
-    if ($districtSlug && $blockSlug) {
-        return SITE_URL . "/panchayat-samiti/{$districtSlug}/{$blockSlug}";
-    } elseif ($districtSlug) {
-        return SITE_URL . "/panchayat-samiti/{$districtSlug}";
+    $d = slugify($districtSlug);
+    $b = slugify($blockSlug);
+    if ($d && $b) {
+        return SITE_URL . "/panchayat-samiti/{$d}/{$b}";
+    } elseif ($d) {
+        return SITE_URL . "/panchayat-samiti/{$d}";
     }
     return SITE_URL . "/panchayat-samiti";
+}
+
+function getBlockUrl($districtSlug = '', $blockSlug = '') {
+    $d = slugify($districtSlug);
+    $b = slugify($blockSlug);
+    if ($d && $b) {
+        return SITE_URL . "/block/{$d}/{$b}";
+    } elseif ($b) {
+        return SITE_URL . "/block/{$b}";
+    } elseif ($d) {
+        return SITE_URL . "/blocks?district={$d}";
+    }
+    return SITE_URL . "/blocks";
 }
 
 function getCensusUrl($districtSlug = '', $subdistrictSlug = '') {
@@ -1205,6 +1371,84 @@ function getAdvertiseUrl($params = []) {
 
 function getBlogUrl($slug = '') {
     return $slug ? SITE_URL . "/blog/" . ltrim($slug, '/') : SITE_URL . "/blog/";
+}
+
+/**
+ * Fuzzy and phonetic block/subdistrict matching across Hindi/English transliterations
+ */
+if (!function_exists('isBlockMatch')) {
+    function isBlockMatch($b1, $b2) {
+        if (empty($b1) || empty($b2)) return false;
+
+        static $aliases = [
+            'fatwah' => 'phatuha', 'daniawan' => 'daniyova', 'phulwari' => 'phulavari',
+            'dinapur' => 'danapur', 'arrah' => 'ara', 'biharsharif' => 'bihar',
+            'sasaram' => 'sahasaram', 'deori' => 'devari', 'marhaura' => 'madhaura',
+            'rohtas' => 'rohatas', 'bagaha' => 'bagaha', 'narkatiaganj' => 'narakatiyaganj'
+        ];
+
+        $s1 = str_replace(['ph', 'aa', 'ee', 'oo', 'w', 'v', 'chh', 'dh', 'rh', 'sh'], ['f', 'a', 'i', 'u', 'v', 'v', 'ch', 'd', 'r', 's'], slugify($b1));
+        $s2 = str_replace(['ph', 'aa', 'ee', 'oo', 'w', 'v', 'chh', 'dh', 'rh', 'sh'], ['f', 'a', 'i', 'u', 'v', 'v', 'ch', 'd', 'r', 's'], slugify($b2));
+        
+        if ($s1 === $s2) return true;
+        if (strcasecmp($b1, $b2) === 0) return true;
+
+        // Check aliases
+        $a1 = $aliases[slugify($b1)] ?? $aliases[$s1] ?? null;
+        $a2 = $aliases[slugify($b2)] ?? $aliases[$s2] ?? null;
+        if (($a1 && ($a1 === $s2 || strpos($s2, $a1) !== false || strpos($a1, $s2) !== false)) ||
+            ($a2 && ($a2 === $s1 || strpos($s1, $a2) !== false || strpos($a2, $s1) !== false))) {
+            return true;
+        }
+        
+        // Substring match
+        if (strlen($s1) >= 4 && strlen($s2) >= 4 && (strpos($s1, $s2) !== false || strpos($s2, $s1) !== false)) return true;
+        
+        // Consonant skeletal exact match (also normalize w/v and silent h/y)
+        $c1 = preg_replace('/[aeiouwyh\-_]+/', '', $s1);
+        $c2 = preg_replace('/[aeiouwyh\-_]+/', '', $s2);
+        if ($c1 === $c2 && strlen($c1) >= 2) return true;
+        
+        // Hyphenated parts (e.g. Dinapur in Dinapur-Cum-Khagaul)
+        $parts1 = explode('-', $s1);
+        $parts2 = explode('-', $s2);
+        foreach ($parts1 as $p1) {
+            foreach ($parts2 as $p2) {
+                if (strlen($p1) >= 4 && strlen($p2) >= 4) {
+                    if ($p1 === $p2 || strpos($p1, $p2) !== false || strpos($p2, $p1) !== false) return true;
+                    $cp1 = preg_replace('/[aeiouwyh\-_]+/', '', $p1);
+                    $cp2 = preg_replace('/[aeiouwyh\-_]+/', '', $p2);
+                    if ($cp1 === $cp2 && strlen($cp1) >= 2) return true;
+                }
+            }
+        }
+
+        if (strlen($s1) >= 5 && strlen($s2) >= 5 && levenshtein($s1, $s2) <= 1) return true;
+        return false;
+    }
+}
+
+/**
+ * Fuzzy and phonetic panchayat name matching across Hindi/English transliterations
+ */
+if (!function_exists('isPanchayatMatch')) {
+    function isPanchayatMatch($p1, $p2) {
+        if (empty($p1) || empty($p2)) return false;
+        $s1 = str_replace(['ph', 'aa', 'ee', 'oo', 'w', 'v', 'chh', 'dh', 'rh', 'sh'], ['f', 'a', 'i', 'u', 'v', 'v', 'ch', 'd', 'r', 's'], slugify($p1));
+        $s2 = str_replace(['ph', 'aa', 'ee', 'oo', 'w', 'v', 'chh', 'dh', 'rh', 'sh'], ['f', 'a', 'i', 'u', 'v', 'v', 'ch', 'd', 'r', 's'], slugify($p2));
+        if ($s1 === $s2) return true;
+        if (strcasecmp($p1, $p2) === 0) return true;
+        if (strpos($s1, $s2) !== false || strpos($s2, $s1) !== false) return true;
+        
+        $c1 = preg_replace('/[aeiou\-_]+/', '', $s1);
+        $c2 = preg_replace('/[aeiou\-_]+/', '', $s2);
+        if ($c1 === $c2 && strlen($c1) >= 2) return true;
+        if (strlen($c1) >= 3 && strlen($c2) >= 3 && (strpos($c1, $c2) !== false || strpos($c2, $c1) !== false)) return true;
+        
+        if (levenshtein($s1, $s2) <= 2) return true;
+        if (strlen($c1) >= 3 && strlen($c2) >= 3 && levenshtein($c1, $c2) <= 1) return true;
+        return false;
+    }
 }
 
 

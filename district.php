@@ -520,9 +520,9 @@ require_once __DIR__ . '/header.php';
                                     </td>
                                     <td>
                                         <?php if (!empty($mobile)): ?>
-                                            <span class="badge bg-light text-secondary border py-1 px-2 fw-semibold mb-1 d-inline-flex align-items-center gap-1" title="Contact Protected">
-                                                <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($mobile)); ?>
-                                            </span>
+                                            <div class="mb-1">
+                                                <?php echo renderMaskedPhoneButton($mobile, $candName); ?>
+                                            </div>
                                         <?php endif; ?>
                                         <?php if (!empty($address)): ?>
                                             <div class="text-muted small text-truncate" style="max-width: 220px;" title="<?php echo htmlspecialchars($address); ?>">

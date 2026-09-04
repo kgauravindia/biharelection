@@ -2,1777 +2,1693 @@
 require_once __DIR__ . '/config.php';
 
 $districts = DataProvider::getDistricts();
+$pdo = Database::getConnection();
 
+// Input parameters
 $districtInput = $_GET['district'] ?? '';
-$districtObj = !empty($districtInput) ? DataProvider::getDistrictBySlug($districtInput) : null;
-$selectedDistrict = $districtObj['slug'] ?? $districtInput;
-$selectedPanchayat = $_GET['panchayat'] ?? '';
-$selectedBlock = $_GET['block'] ?? '';
+$blockInput = $_GET['block'] ?? '';
+$panchayatInput = $_GET['panchayat'] ?? '';
+$slugInput = $_GET['slug'] ?? '';
 
-$rawTab = strtolower($_GET['tab'] ?? 'mukhiya');
-if (in_array($rawTab, ['zila', 'jila', 'zila-parishad', 'jila-parishad', 'jila-parisad', 'members'])) {
-    $selectedTab = 'zila';
-} elseif (in_array($rawTab, ['samiti', 'panchayat-samiti', 'archive', 'archive2016'])) {
-    $selectedTab = 'archive2016';
-} elseif (in_array($rawTab, ['officials', 'chairperson', 'chairpersons'])) {
-    $selectedTab = 'officials';
-} elseif ($rawTab === 'sarpanch') {
-    $selectedTab = 'sarpanch';
-} else {
-    $selectedTab = 'mukhiya';
-}
-
-$mukhiyas = DataProvider::getMukhiyaData($selectedDistrict ?: null);
-$sarpanchs = DataProvider::getSarpanchData($selectedDistrict ?: null);
-$allZilaMembers = DataProvider::getZilaParishadMembers();
-$zilaMembers = $selectedDistrict ? DataProvider::getZilaParishadMembers($selectedDistrict) : $allZilaMembers;
-$zilaOfficials = DataProvider::getZilaParishadOfficials();
-$zilaSummary = DataProvider::getZilaParishadSummary();
-$panchayatSummary = DataProvider::getPanchayatSummary();
-$samiti2016 = DataProvider::getPanchayatSamiti2016($selectedDistrict ?: null);
-$zila2016 = DataProvider::getZilaParishad2016($selectedDistrict ?: null);
-$mukhiyas2016 = DataProvider::getMukhiyas2016($selectedDistrict ?: null);
-
-$zilaDistrictCounts = [];
-foreach ($allZilaMembers as $zm) {
-    $ds = strtolower($zm['district_slug'] ?? slugify($zm['district'] ?? ''));
-    if (!empty($ds)) {
-        $zilaDistrictCounts[$ds] = ($zilaDistrictCounts[$ds] ?? 0) + 1;
+// If single slug passed, check if it is a district slug
+if (empty($districtInput) && !empty($slugInput)) {
+    $matchedDist = DataProvider::getDistrictBySlug($slugInput);
+    if ($matchedDist) {
+        $districtInput = $slugInput;
+        $slugInput = '';
     }
 }
 
-$distLabel = $districtObj ? "({$districtObj['name']} District)" : "Across 38 Districts";
+$districtObj = !empty($districtInput) ? DataProvider::getDistrictBySlug($districtInput) : null;
+$selectedDistrictSlug = $districtObj['slug'] ?? ($districtInput ? strtolower(trim($districtInput)) : '');
 
-if ($selectedTab === 'sarpanch') {
-    $pageTitle = "Bihar Sarpanch Directory {$distLabel}: 6,617 Gram Katchahry Heads";
-    $pageDescription = "Official directory of elected Gram Katchahry Sarpanchs in Bihar {$distLabel}. Complete roster of 6,617 Sarpanchs with category, block, and contact details.";
-    $pageCanonical = getSarpanchUrl($selectedDistrict, $selectedPanchayat);
-} elseif ($selectedTab === 'zila') {
-    $pageTitle = "Bihar Zila Parishad Directory {$distLabel}: 38 District Boards & 1,100+ Ward Members";
-    $pageDescription = "Official directory of Bihar Zila Parishad Board Chairpersons, Vice-Chairpersons, and 1,099+ Territorial Ward Members {$distLabel}.";
-    $pageCanonical = getZilaParishadUrl($selectedDistrict);
-} elseif ($selectedTab === 'archive2016') {
-    $pageTitle = "Bihar Panchayat Samiti & 2016 Archive {$distLabel}: 389 Block Pramukhs & Mukhiyas";
-    $pageDescription = "Historical 2016 Bihar Panchayat Election archive including 389 Block Pramukhs, Up-Pramukhs, and 8,045 Mukhiyas {$distLabel}.";
-    $pageCanonical = getPanchayatSamitiUrl($selectedDistrict, $selectedBlock);
+// State / District Variables
+$singlePanchayat = null;
+$singleBlockObj = null;
+$panchayatsInBlock = [];
+$panchayatsInSameBlock = [];
+$blockSamiti = null;
+$zilaParishadMembers = [];
+$isSpecificZilaTerritory = false;
+$allDistrictPanchayats = [];
+$blockPanchayatsMap = [];
+$districtBlocks = [];
+
+if ($districtObj && $pdo) {
+    $targetPanchayatQuery = $panchayatInput ?: $slugInput;
+
+    // 1. Fetch all census blocks in this district
+    try {
+        $stmtB = $pdo->prepare("SELECT * FROM census_subdistricts WHERE LOWER(district_slug) = :dslug ORDER BY sub_district ASC");
+        $stmtB->execute([':dslug' => $selectedDistrictSlug]);
+        $districtBlocks = $stmtB->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Throwable $e) {}
+    
+    // 2. Fetch all panchayats in this district
+    try {
+        $stmtP = $pdo->prepare("SELECT * FROM panchayats WHERE LOWER(district_slug) = :dslug ORDER BY id ASC");
+        $stmtP->execute([':dslug' => $selectedDistrictSlug]);
+        $allDistrictPanchayats = $stmtP->fetchAll(PDO::FETCH_ASSOC);
+
+        // Group panchayats by block
+        foreach ($districtBlocks as $blk) {
+            $bSlug = slugify($blk['sub_district']);
+            $blockPanchayatsMap[$bSlug] = [];
+            foreach ($allDistrictPanchayats as $p) {
+                if (isBlockMatch($p['block'], $blk['sub_district'])) {
+                    $blockPanchayatsMap[$bSlug][] = $p;
+                }
+            }
+        }
+    } catch (Throwable $e) {
+        $allDistrictPanchayats = [];
+    }
+
+    if (!empty($targetPanchayatQuery)) {
+        // A. Check if user requested a specific Panchayat with block specified
+        if (!empty($blockInput)) {
+            foreach ($allDistrictPanchayats as $p) {
+                if (isBlockMatch($p['block'], $blockInput) && isPanchayatMatch($p['panchayat_name'], $targetPanchayatQuery)) {
+                    $singlePanchayat = $p;
+                    break;
+                }
+            }
+        }
+
+        // B. Fallback: match panchayat name anywhere in the district
+        if (!$singlePanchayat) {
+            foreach ($allDistrictPanchayats as $p) {
+                if (isPanchayatMatch($p['panchayat_name'], $targetPanchayatQuery)) {
+                    $singlePanchayat = $p;
+                    break;
+                }
+            }
+        }
+
+        // C. Fallback: check if target query was actually a Block name (e.g. /panchayat/saran/amnour)
+        if (!$singlePanchayat) {
+            $checkBlockQuery = !empty($blockInput) ? $blockInput : $targetPanchayatQuery;
+            foreach ($districtBlocks as $blk) {
+                if (isBlockMatch($blk['sub_district'], $checkBlockQuery) || slugify($blk['sub_district']) === slugify($checkBlockQuery)) {
+                    $singleBlockObj = $blk;
+                    $bSlug = slugify($blk['sub_district']);
+                    $panchayatsInBlock = $blockPanchayatsMap[$bSlug] ?? [];
+                    break;
+                }
+            }
+        }
+    } elseif (!empty($blockInput)) {
+        // Block was requested without specific panchayat
+        foreach ($districtBlocks as $blk) {
+            if (isBlockMatch($blk['sub_district'], $blockInput) || slugify($blk['sub_district']) === slugify($blockInput)) {
+                $singleBlockObj = $blk;
+                $bSlug = slugify($blk['sub_district']);
+                $panchayatsInBlock = $blockPanchayatsMap[$bSlug] ?? [];
+                break;
+            }
+        }
+    }
+
+    // If single panchayat matched, gather all related Tier-1, Tier-2, and Tier-3 governance data
+    if ($singlePanchayat) {
+        $currentBlockName = $singlePanchayat['block'];
+
+        // Gather sibling panchayats in the same block
+        foreach ($allDistrictPanchayats as $p) {
+            if (isBlockMatch($p['block'], $currentBlockName) && $p['id'] !== $singlePanchayat['id']) {
+                $panchayatsInSameBlock[] = $p;
+            }
+        }
+
+        // Tier-2 Panchayat Samiti (Pramukh / Up-Pramukh) for this block
+        try {
+            $stmtSamiti = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE LOWER(district_slug) = :dslug");
+            $stmtSamiti->execute([':dslug' => $selectedDistrictSlug]);
+            $samitiRows = $stmtSamiti->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($samitiRows as $sr) {
+                if (isBlockMatch($sr['block'], $currentBlockName) || (!empty($blockInput) && isBlockMatch($sr['block'], $blockInput))) {
+                    $blockSamiti = $sr;
+                    break;
+                }
+            }
+        } catch (Throwable $e) {}
+
+        // Tier-3 Zila Parishad representation
+        // User rule: "If jila parisad not specified show all zila parisad of block"
+        $terrNo = trim($singlePanchayat['zila_parishad_territory_no'] ?? '');
+        if (!empty($terrNo)) {
+            try {
+                $stmtZp = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE LOWER(district_slug) = :dslug AND (territory_no = :terr OR ward_no = :terr)");
+                $stmtZp->execute([':dslug' => $selectedDistrictSlug, ':terr' => $terrNo]);
+                $matchedZp = $stmtZp->fetchAll(PDO::FETCH_ASSOC);
+                if (!empty($matchedZp)) {
+                    $zilaParishadMembers = $matchedZp;
+                    $isSpecificZilaTerritory = true;
+                }
+            } catch (Throwable $e) {}
+        }
+
+        // If not specified or no territory matched, fetch ALL Zila Parishad members representing this block
+        if (empty($zilaParishadMembers)) {
+            try {
+                $stmtZpAll = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE LOWER(district_slug) = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
+                $stmtZpAll->execute([':dslug' => $selectedDistrictSlug]);
+                $allZpDist = $stmtZpAll->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($allZpDist as $zm) {
+                    if (isBlockMatch($zm['block'] ?? '', $currentBlockName) || (!empty($blockInput) && isBlockMatch($zm['block'] ?? '', $blockInput))) {
+                        $zilaParishadMembers[] = $zm;
+                    }
+                }
+            } catch (Throwable $e) {}
+        }
+    }
+
+    // If single block matched, gather block samiti & ZP representation
+    if ($singleBlockObj && !$singlePanchayat) {
+        $bName = $singleBlockObj['sub_district'];
+        try {
+            $stmtSamiti = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE LOWER(district_slug) = :dslug");
+            $stmtSamiti->execute([':dslug' => $selectedDistrictSlug]);
+            $samitiRows = $stmtSamiti->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($samitiRows as $sr) {
+                if (isBlockMatch($sr['block'], $bName)) {
+                    $blockSamiti = $sr;
+                    break;
+                }
+            }
+        } catch (Throwable $e) {}
+
+        try {
+            $stmtZpAll = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE LOWER(district_slug) = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
+            $stmtZpAll->execute([':dslug' => $selectedDistrictSlug]);
+            $allZpDist = $stmtZpAll->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($allZpDist as $zm) {
+                if (isBlockMatch($zm['block'] ?? '', $bName)) {
+                    $zilaParishadMembers[] = $zm;
+                }
+            }
+        } catch (Throwable $e) {}
+    }
+}
+
+// Pre-fetch district-level aggregated statistics if browsing district or state
+$districtCensusStats = [];
+$districtPanchayatCounts = [];
+
+if ($pdo) {
+    try {
+        $stmt = $pdo->query("SELECT district_slug, COUNT(*) as total_blocks, SUM(population) as total_pop, AVG(literacy_rate) as avg_literacy, SUM(households) as total_households FROM census_subdistricts GROUP BY district_slug");
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $districtCensusStats[strtolower($row['district_slug'])] = $row;
+        }
+
+        $stmt2 = $pdo->query("SELECT district_slug, COUNT(*) as total_panchayats FROM panchayats GROUP BY district_slug");
+        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+            $districtPanchayatCounts[strtolower($row2['district_slug'])] = intval($row2['total_panchayats']);
+        }
+    } catch (Throwable $e) {}
+}
+
+// State Totals
+$totalStateBlocks = 534;
+$totalStatePanchayats = array_sum($districtPanchayatCounts) ?: 8406;
+$totalStatePopulation = 104099452;
+
+// Page Meta & SEO
+if ($singlePanchayat && $districtObj) {
+    $pName = $singlePanchayat['panchayat_name'];
+    $bName = $singlePanchayat['block'];
+    $dName = $districtObj['name'];
+    $mName = $singlePanchayat['current_mukhiya'] ?: 'Elected Mukhiya';
+    $sName = $singlePanchayat['current_sarpanch'] ?: 'Elected Sarpanch';
+
+    $pageTitle = "{$pName} Gram Panchayat Profile, {$bName} Block ({$dName}) - Bihar Panchayati Raj";
+    $pageDescription = "Official profile of {$pName} Gram Panchayat in {$bName} Block, {$dName} District. Explore elected Mukhiya ({$mName}), Sarpanch ({$sName}), Panchayat Samiti Pramukh, and Zila Parishad representation.";
+    $pageCanonical = getPanchayatUrl($districtObj['slug'], slugify($bName), slugify($pName));
+} elseif ($singleBlockObj && $districtObj) {
+    $bName = $singleBlockObj['sub_district'];
+    $dName = $districtObj['name'];
+    $pCount = count($panchayatsInBlock);
+
+    $pageTitle = "{$bName} Block Gram Panchayats Directory ({$pCount} Panchayats, {$dName}) - Bihar Panchayati Raj";
+    $pageDescription = "Explore all {$pCount} Gram Panchayats in {$bName} Block, {$dName} District. View elected Mukhiyas, Sarpanchs, demographics, and Panchayat Samiti representatives.";
+    $pageCanonical = getBlockUrl($districtObj['slug'], slugify($bName));
+} elseif ($districtObj) {
+    $pageTitle = "{$districtObj['name']} District CD Blocks & Panchayati Raj Directory (534 Blocks)";
+    $pageDescription = "Explore {$districtObj['name']} District Community Development (CD) Blocks, Gram Panchayats distribution, census demographics, literacy rates, and administrative directory.";
+    $pageCanonical = getPanchayatUrl($districtObj['slug']);
 } else {
-    $pageTitle = "Bihar Mukhiya Directory {$distLabel}: 7,346 Elected Gram Panchayat Heads";
-    $pageDescription = "Official Bihar Mukhiya directory with separate tables for 7,346 elected Gram Panchayat Mukhiyas across 38 districts with block, age, and reservation details.";
-    $pageCanonical = getMukhiyaUrl($selectedDistrict, $selectedPanchayat);
+    $pageTitle = "Bihar Panchayati Raj & CD Blocks Directory: 38 Districts & 534 Blocks";
+    $pageDescription = "Complete administrative directory of Bihar Panchayati Raj: 38 Districts, 534 Community Development (CD) Blocks, and 8,400+ Gram Panchayats with demographics and local governance rosters.";
+    $pageCanonical = getPanchayatUrl();
+}
+
+// Build Division counts for filter badges
+$divisionsList = ['Patna', 'Tirhut', 'Saran', 'Magadh', 'Darbhanga', 'Kosi', 'Purnia', 'Bhagalpur', 'Munger'];
+$divisionCounts = [];
+foreach ($districts as $d) {
+    $dDiv = trim(preg_replace('/\s+division$/i', '', $d['division'] ?? ''));
+    if ($dDiv) {
+        $divisionCounts[$dDiv] = ($divisionCounts[$dDiv] ?? 0) + 1;
+    }
 }
 
 $activeNav = 'panchayat';
-
 require_once __DIR__ . '/header.php';
 ?>
 
-    <!-- Hero Banner -->
-    <section class="hero-section py-4 py-lg-5">
-        <div class="container text-start">
-            <div class="d-flex flex-wrap gap-2 mb-3">
-                <span class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2">
-                    🌾 Bihar Panchayati Raj Representative Directory
-                </span>
-                <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2">7,346 Mukhiyas</span>
-                <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2">6,617 Sarpanchs</span>
-                <span class="badge bg-warning bg-opacity-25 text-warning fw-bold px-3 py-2">38 Zila Parishads</span>
-            </div>
+<style>
+/* Division Pill Buttons */
+.division-pill-btn {
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid #dee2e6;
+    background-color: #fff;
+    color: #495057;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.division-pill-btn:hover {
+    background-color: #f8f9fa;
+    border-color: var(--accent-saffron, #ff9933);
+    color: var(--navy-dark, #0b1a30);
+    transform: translateY(-1px);
+}
+.division-pill-btn.active {
+    background: linear-gradient(135deg, #0b1a30 0%, #17345f 100%);
+    border-color: #0b1a30;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(11, 26, 48, 0.2);
+}
+.division-pill-btn.active .division-badge-count {
+    background-color: var(--accent-saffron, #ff9933);
+    color: #000;
+}
+.division-badge-count {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 50px;
+    background-color: #e9ecef;
+    color: #495057;
+    font-weight: 700;
+}
 
-            <h1 class="display-6 fw-extrabold text-white mb-2">
-                Bihar Panchayati Raj Directory: <br>
-                <span style="color: var(--accent-saffron);">Separate Mukhiya & Sarpanch Roster Tables</span>
-            </h1>
-            <p class="lead text-white-50 mb-4" style="font-size: 1.05rem; max-width: 850px;">
-                Complete database of elected village heads: <strong>7,346 Mukhiyas (ग्राम पंचायत)</strong>, <strong>6,617 Sarpanchs (ग्राम कचहरी)</strong>, <strong>38 District Board Presidents</strong>, and <strong>1,100+ Zila Parishad Ward Members</strong>.
-            </p>
+/* Administrative & Profile Cards */
+.admin-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+.admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(11, 26, 48, 0.08);
+    border-color: #cbd5e1;
+}
+.admin-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0b1a30 0%, var(--accent-saffron, #ff9933) 100%);
+    opacity: 0.85;
+}
+.admin-card-block::before {
+    background: linear-gradient(90deg, var(--accent-saffron, #ff9933) 0%, #198754 100%);
+}
+.metric-mini-box {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 0.75rem 0.65rem;
+    border: 1px solid #f1f5f9;
+    text-align: center;
+}
 
-            <div class="d-flex flex-wrap gap-2">
-                <a href="#mukhiya-pane" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
-                    <i class="bi bi-person-badge"></i> Explore Mukhiya Table (7,346)
-                </a>
-                <a href="#sarpanch-pane" class="btn btn-info fw-bold px-3 py-2 text-dark shadow-sm">
-                    <i class="bi bi-hammer"></i> Explore Sarpanch Table (6,617)
-                </a>
-                <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="btn btn-success fw-bold px-3 py-2 d-inline-flex align-items-center gap-2 shadow-sm">
-                    <i class="bi bi-whatsapp"></i> Get WhatsApp Alerts
-                </a>
-            </div>
-        </div>
-    </section>
+/* Tier Profile Cards */
+.tier-card {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.tier-card-mukhiya { border-top: 5px solid #ff9933; }
+.tier-card-sarpanch { border-top: 5px solid #0d6efd; }
+.tier-card-samiti { border-top: 5px solid #198754; }
+.tier-card-zila { border-top: 5px solid #6f42c1; }
 
-    <!-- Main Content -->
-    <main class="container my-4 my-lg-5">
+.tier-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.tier-avatar-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+.profile-prop-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.45rem 0;
+    border-bottom: 1px dashed #e2e8f0;
+    font-size: 0.88rem;
+}
+.profile-prop-row:last-child {
+    border-bottom: none;
+}
+.sibling-panchayat-pill {
+    display: inline-block;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 0.45rem 0.9rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.sibling-panchayat-pill:hover {
+    background: #0b1a30;
+    color: #fff;
+    border-color: #0b1a30;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(11, 26, 48, 0.15);
+}
+</style>
 
-        <!-- Top Leaderboard Ad Slot -->
-        <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-4'); ?>
-
-        <!-- 3 Feature Highlight Cards -->
-        <div class="row g-3 g-lg-4 mb-4">
-            <div class="col-12 col-md-4">
-                <div class="card border-0 shadow-sm rounded-3 p-3 p-lg-4 h-100 border-start border-4 border-success bg-white">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h3 class="h6 fw-bold mb-0" style="color: var(--primary-navy);">1. Mukhiya Directory</h3>
-                        <span class="fs-4">🌾</span>
-                    </div>
-                    <p class="small text-muted mb-0">
-                        <strong>7,346 Elected Mukhiyas</strong> leading village development, road connectivity, water supply, and rural welfare administration.
-                    </p>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="card border-0 shadow-sm rounded-3 p-3 p-lg-4 h-100 border-start border-4 border-info bg-white">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h3 class="h6 fw-bold mb-0" style="color: var(--primary-navy);">2. Sarpanch Directory</h3>
-                        <span class="fs-4">⚖️</span>
-                    </div>
-                    <p class="small text-muted mb-0">
-                        <strong>6,617 Elected Sarpanchs</strong> presiding over Gram Katchahry judicial dispute resolution courts across Bihar.
-                    </p>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="card border-0 shadow-sm rounded-3 p-3 p-lg-4 h-100 border-start border-4 border-primary bg-white">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h3 class="h6 fw-bold mb-0" style="color: var(--primary-navy);">3. Zila Parishad Tier</h3>
-                        <span class="fs-4">🏛️</span>
-                    </div>
-                    <p class="small text-muted mb-0">
-                        <strong>38 District Boards</strong> with 1,100+ Territorial Ward Members and District Chairpersons/Vice-Chairpersons.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation Tabs: Separate Mukhiya Table & Sarpanch Table -->
-        <ul class="nav nav-pills nav-fill mb-4 p-1 bg-light rounded-3 border" id="panchayatTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link <?php echo $selectedTab === 'mukhiya' ? 'active' : ''; ?> fw-bold py-2" id="mukhiya-nav-tab" data-bs-toggle="pill" data-bs-target="#mukhiya-pane" type="button" role="tab">
-                    🌾 Table 1: Mukhiya Directory (मुखिया - 7,346 Seats)
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link <?php echo $selectedTab === 'sarpanch' ? 'active' : ''; ?> fw-bold py-2" id="sarpanch-nav-tab" data-bs-toggle="pill" data-bs-target="#sarpanch-pane" type="button" role="tab">
-                    ⚖️ Table 2: Sarpanch Directory (सरपंच - 6,617 Seats)
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link <?php echo $selectedTab === 'zila' ? 'active' : ''; ?> fw-bold py-2" id="zila-nav-tab" data-bs-toggle="pill" data-bs-target="#zila-pane" type="button" role="tab">
-                    🏛️ Table 3: Zila Parishad Members (1,099 Seats)
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link <?php echo $selectedTab === 'officials' ? 'active' : ''; ?> fw-bold py-2" id="officials-nav-tab" data-bs-toggle="pill" data-bs-target="#officials-pane" type="button" role="tab">
-                    👑 Table 4: Zila Parishad Chairpersons (38 Districts)
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link <?php echo $selectedTab === 'archive2016' ? 'active' : ''; ?> fw-bold py-2" id="archive2016-nav-tab" data-bs-toggle="pill" data-bs-target="#archive2016-pane" type="button" role="tab">
-                    ⏳ Table 5: 2016 Block Pramukh Archive (389 Blocks)
-                </button>
-            </li>
-        </ul>
-
-        <div class="tab-content" id="panchayatTabContent">
-
-            <!-- ========================================================= -->
-            <!-- TAB 1: SEPARATE MUKHIYA DIRECTORY TABLE                   -->
-            <!-- ========================================================= -->
-            <div class="tab-pane fade <?php echo $selectedTab === 'mukhiya' ? 'show active' : ''; ?>" id="mukhiya-pane" role="tabpanel">
-                <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                        <div>
-                            <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">Gram Panchayat Executive Head</span>
-                                <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-2 py-1">Tenure: 2021–2026</span>
-                            </div>
-                            <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">
-                                🌾 Bihar Mukhiya Directory Table (ग्राम पंचायत मुखिया सूची)
-                            </h2>
-                            <p class="small text-muted mb-0">Separate dedicated roster of all 7,346 elected Mukhiyas across 38 districts and 534 blocks</p>
-                        </div>
-                        <div>
-                            <span class="badge bg-success rounded-pill px-3 py-2" id="totalMukhiyaBadge">
-                                <?php echo count($mukhiyas); ?> Mukhiyas Loaded
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Search & Filter Controls -->
-                    <div class="row g-2 mb-4 bg-light p-3 rounded-3 border">
-                        <div class="col-12 col-lg-4">
-                            <label class="form-label small fw-bold text-muted mb-1">Search Mukhiya / Panchayat / Block:</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                                <input type="text" id="mukhiyaSearch" class="form-control border-start-0" placeholder="Search by name, panchayat, block...">
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-3">
-                            <label class="form-label small fw-bold text-muted mb-1">Filter District:</label>
-                            <select id="mukhiyaDistrictFilter" class="form-select bg-white" onchange="if(this.value){ window.location.href='<?php echo SITE_URL; ?>/mukhiya/'+this.value; } else { window.location.href='<?php echo SITE_URL; ?>/mukhiya'; }">
-                                <option value="">All 38 Districts</option>
-                                <?php foreach ($districts as $d): ?>
-                                    <option value="<?php echo htmlspecialchars((string)($d['slug'] ?? '')); ?>" <?php echo $selectedDistrict === ($d['slug'] ?? '') ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars((string)($d['name'] ?? '')); ?> (<?php echo htmlspecialchars((string)($d['name_hi'] ?? '')); ?>)
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="col-6 col-lg-2">
-                            <label class="form-label small fw-bold text-muted mb-1">Gender:</label>
-                            <select id="mukhiyaGenderFilter" class="form-select bg-white">
-                                <option value="">All Genders</option>
-                                <option value="Female">महिला (Women)</option>
-                                <option value="Male">पुरूष (Men)</option>
-                            </select>
-                        </div>
-                        <div class="col-12 col-lg-3">
-                            <label class="form-label small fw-bold text-muted mb-1">Category / Quota:</label>
-                            <select id="mukhiyaCategoryFilter" class="form-select bg-white">
-                                <option value="">All Categories</option>
-                                <option value="महिला">Women Reserved (महिला)</option>
-                                <option value="पिछड़ा">OBC / EBC (पिछड़ा वर्ग)</option>
-                                <option value="अनुसूचित जाति">SC (अनुसूचित जाति)</option>
-                                <option value="अनुसूचित जनजाति">ST (अनुसूचित जनजाति)</option>
-                                <option value="अनारक्षित">Unreserved (सामान्य)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Table Pagination & Page Size Toolbar -->
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                        <div class="d-flex align-items-center gap-2">
-                            <label class="small text-muted fw-bold mb-0">Show</label>
-                            <select id="mukhiyaPageSize" class="form-select form-select-sm" style="width: 85px;">
-                                <option value="25">25</option>
-                                <option value="50" selected>50</option>
-                                <option value="100">100</option>
-                                <option value="250">250</option>
-                            </select>
-                            <label class="small text-muted mb-0">per page</label>
-                        </div>
-                        <div class="small text-muted" id="mukhiyaPageInfo">
-                            Loading Mukhiyas...
-                        </div>
-                        <div id="mukhiyaTopPagination"></div>
-                    </div>
-
-                    <!-- Mukhiya Table -->
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0 small" id="mukhiyaTable">
-                            <thead class="table-light">
-                                <tr>
-                                    <th class="py-3">District</th>
-                                    <th class="py-3">Block / प्रखंड</th>
-                                    <th class="py-3">Gram Panchayat</th>
-                                    <th class="py-3">Elected Mukhiya (मुखिया का नाम)</th>
-                                    <th class="py-3">Gender & Age</th>
-                                    <th class="py-3">Reservation & Category</th>
-                                    <th class="py-3">Contact & Address</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                foreach ($mukhiyas as $m): 
-                                    $mDistSlug = (string)($m['district_slug'] ?? '');
-                                    $mDist = (string)($m['district'] ?? '');
-                                    $mBlock = (string)($m['block'] ?? '');
-                                    $mPanchayat = (string)($m['panchayat'] ?? '');
-                                    $mName = (string)($m['candidate_name'] ?? '');
-                                    $mFh = (string)($m['father_husband_name'] ?? '');
-                                    $mGen = (string)($m['gender'] ?? '');
-                                    $mGenHi = (string)($m['gender_hi'] ?? '');
-                                    $mAge = $m['age'] ?? null;
-                                    $mCat = (string)($m['category'] ?? '');
-                                    $mRes = (string)($m['reservation'] ?? '');
-                                    $mAddr = (string)($m['address'] ?? '');
-                                    $mMob = (string)($m['mobile'] ?? '');
-                                ?>
-                                    <tr class="mukhiya-row"
-                                        data-district="<?php echo htmlspecialchars($mDistSlug); ?>"
-                                        data-district-name="<?php echo htmlspecialchars(strtolower($mDist)); ?>"
-                                        data-block="<?php echo htmlspecialchars(strtolower($mBlock)); ?>"
-                                        data-panchayat="<?php echo htmlspecialchars(strtolower($mPanchayat)); ?>"
-                                        data-name="<?php echo htmlspecialchars(strtolower($mName . ' ' . $mFh)); ?>"
-                                        data-gender="<?php echo htmlspecialchars($mGen); ?>"
-                                        data-category="<?php echo htmlspecialchars(strtolower($mCat . ' ' . $mRes)); ?>">
-                                        
-                                        <!-- District -->
-                                        <td class="fw-bold" style="min-width: 120px;">
-                                            <a href="district.php?slug=<?php echo htmlspecialchars($mDistSlug); ?>" class="text-decoration-none" style="color: var(--primary-navy);">
-                                                <?php echo htmlspecialchars($mDist); ?>
-                                            </a>
-                                        </td>
-
-                                        <!-- Block -->
-                                        <td class="fw-semibold text-dark" style="min-width: 120px;">
-                                            <?php echo htmlspecialchars($mBlock); ?>
-                                        </td>
-
-                                        <!-- Panchayat -->
-                                        <td style="min-width: 160px;">
-                                            <span class="fw-bold text-dark" style="font-size: 0.95rem;">
-                                                🌾 <?php echo htmlspecialchars($mPanchayat); ?>
-                                            </span>
-                                        </td>
-
-                                        <!-- Mukhiya Candidate Name -->
-                                        <td style="min-width: 200px;">
-                                            <div class="fw-bold text-success" style="font-size: 0.95rem;">
-                                                <?php echo htmlspecialchars($mName); ?>
-                                            </div>
-                                            <?php if (!empty($mFh)): ?>
-                                                <div class="text-muted small">W/o or S/o: <?php echo htmlspecialchars($mFh); ?></div>
-                                            <?php endif; ?>
-                                        </td>
-
-                                        <!-- Gender & Age -->
-                                        <td style="min-width: 120px;">
-                                            <span class="badge <?php echo $mGen === 'Female' ? 'bg-danger bg-opacity-10 text-danger' : 'bg-primary bg-opacity-10 text-primary'; ?> fw-semibold">
-                                                <?php echo htmlspecialchars($mGenHi ?: $mGen); ?> <?php echo $mAge ? "({$mAge} yrs)" : ''; ?>
-                                            </span>
-                                        </td>
-
-                                        <!-- Reservation & Category -->
-                                        <td style="min-width: 160px;">
-                                            <?php if (!empty($mRes)): ?>
-                                                <div><span class="badge bg-light text-dark border extra-small"><?php echo htmlspecialchars($mRes); ?></span></div>
-                                            <?php endif; ?>
-                                            <?php if (!empty($mCat)): ?>
-                                                <div class="text-muted small mt-1"><?php echo htmlspecialchars($mCat); ?></div>
-                                            <?php endif; ?>
-                                        </td>
-
-                                        <!-- Contact & Address -->
-                                        <td style="min-width: 180px;">
-                                            <?php if (!empty($mMob)): ?>
-                                                <span class="badge bg-light text-secondary border py-1 px-2 extra-small d-inline-flex align-items-center gap-1 mb-1" title="Contact Protected">
-                                                    <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($mMob)); ?>
-                                                </span>
-                                            <?php endif; ?>
-                                            <?php if (!empty($mAddr)): ?>
-                                                <div class="text-muted small text-truncate" style="max-width: 180px;" title="<?php echo htmlspecialchars($mAddr); ?>">
-                                                    <?php echo htmlspecialchars($mAddr); ?>
-                                                </div>
-                                            <?php endif; ?>
-                                        </td>
-
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Bottom Pagination Bar -->
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
-                        <div class="small text-muted" id="mukhiyaBottomInfo"></div>
-                        <div id="mukhiyaPagination"></div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- ========================================================= -->
-            <!-- TAB 2: SEPARATE SARPANCH DIRECTORY TABLE                  -->
-            <!-- ========================================================= -->
-            <div class="tab-pane fade <?php echo $selectedTab === 'sarpanch' ? 'show active' : ''; ?>" id="sarpanch-pane" role="tabpanel">
-                <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                        <div>
-                            <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="badge bg-info bg-opacity-10 text-info fw-bold px-2 py-1">Gram Katchahry Judicial Head</span>
-                                <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-2 py-1">Tenure: 2021–2026</span>
-                            </div>
-                            <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">
-                                ⚖️ Bihar Sarpanch Directory Table (ग्राम कचहरी सरपंच सूची)
-                            </h2>
-                            <p class="small text-muted mb-0">Separate dedicated roster of all 6,617 elected Sarpanchs across 38 districts and 534 blocks</p>
-                        </div>
-                        <div>
-                            <span class="badge bg-info rounded-pill px-3 py-2 text-dark" id="totalSarpanchBadge">
-                                <?php echo count($sarpanchs); ?> Sarpanchs Loaded
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Search & Filter Controls -->
-                    <div class="row g-2 mb-4 bg-light p-3 rounded-3 border">
-                        <div class="col-12 col-lg-4">
-                            <label class="form-label small fw-bold text-muted mb-1">Search Sarpanch / Panchayat / Block:</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                                <input type="text" id="sarpanchSearch" class="form-control border-start-0" placeholder="Search by name, panchayat, block...">
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-3">
-                            <label class="form-label small fw-bold text-muted mb-1">Filter District:</label>
-                            <select id="sarpanchDistrictFilter" class="form-select bg-white" onchange="if(this.value){ window.location.href='<?php echo SITE_URL; ?>/sarpanch/'+this.value; } else { window.location.href='<?php echo SITE_URL; ?>/sarpanch'; }">
-                                <option value="">All 38 Districts</option>
-                                <?php foreach ($districts as $d): ?>
-                                    <option value="<?php echo htmlspecialchars((string)($d['slug'] ?? '')); ?>" <?php echo $selectedDistrict === ($d['slug'] ?? '') ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars((string)($d['name'] ?? '')); ?> (<?php echo htmlspecialchars((string)($d['name_hi'] ?? '')); ?>)
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="col-6 col-lg-2">
-                            <label class="form-label small fw-bold text-muted mb-1">Gender:</label>
-                            <select id="sarpanchGenderFilter" class="form-select bg-white">
-                                <option value="">All Genders</option>
-                                <option value="Female">महिला (Women)</option>
-                                <option value="Male">पुरूष (Men)</option>
-                            </select>
-                        </div>
-                        <div class="col-12 col-lg-3">
-                            <label class="form-label small fw-bold text-muted mb-1">Category / Quota:</label>
-                            <select id="sarpanchCategoryFilter" class="form-select bg-white">
-                                <option value="">All Categories</option>
-                                <option value="महिला">Women Reserved (महिला)</option>
-                                <option value="पिछड़ा">OBC / EBC (पिछड़ा वर्ग)</option>
-                                <option value="अनुसूचित जाति">SC (अनुसूचित जाति)</option>
-                                <option value="अनुसूचित जनजाति">ST (अनुसूचित जनजाति)</option>
-                                <option value="अनारक्षित">Unreserved (सामान्य)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Table Pagination & Page Size Toolbar -->
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                        <div class="d-flex align-items-center gap-2">
-                            <label class="small text-muted fw-bold mb-0">Show</label>
-                            <select id="sarpanchPageSize" class="form-select form-select-sm" style="width: 85px;">
-                                <option value="25">25</option>
-                                <option value="50" selected>50</option>
-                                <option value="100">100</option>
-                                <option value="250">250</option>
-                            </select>
-                            <label class="small text-muted mb-0">per page</label>
-                        </div>
-                        <div class="small text-muted" id="sarpanchPageInfo">
-                            Loading Sarpanchs...
-                        </div>
-                        <div id="sarpanchTopPagination"></div>
-                    </div>
-
-                    <!-- Sarpanch Table -->
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0 small" id="sarpanchTable">
-                            <thead class="table-light">
-                                <tr>
-                                    <th class="py-3">District</th>
-                                    <th class="py-3">Block / प्रखंड</th>
-                                    <th class="py-3">Gram Panchayat</th>
-                                    <th class="py-3">Elected Sarpanch (सरपंच का नाम)</th>
-                                    <th class="py-3">Gender & Age</th>
-                                    <th class="py-3">Reservation & Category</th>
-                                    <th class="py-3">Contact & Address</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                foreach ($sarpanchs as $s): 
-                                    $sDistSlug = (string)($s['district_slug'] ?? '');
-                                    $sDist = (string)($s['district'] ?? '');
-                                    $sBlock = (string)($s['block'] ?? '');
-                                    $sPanchayat = (string)($s['panchayat'] ?? '');
-                                    $sName = (string)($s['candidate_name'] ?? '');
-                                    $sFh = (string)($s['father_husband_name'] ?? '');
-                                    $sGen = (string)($s['gender'] ?? '');
-                                    $sGenHi = (string)($s['gender_hi'] ?? '');
-                                    $sAge = $s['age'] ?? null;
-                                    $sCat = (string)($s['category'] ?? '');
-                                    $sRes = (string)($s['reservation'] ?? '');
-                                    $sAddr = (string)($s['address'] ?? '');
-                                    $sMob = (string)($s['mobile'] ?? '');
-                                ?>
-                                    <tr class="sarpanch-row"
-                                        data-district="<?php echo htmlspecialchars($sDistSlug); ?>"
-                                        data-district-name="<?php echo htmlspecialchars(strtolower($sDist)); ?>"
-                                        data-block="<?php echo htmlspecialchars(strtolower($sBlock)); ?>"
-                                        data-panchayat="<?php echo htmlspecialchars(strtolower($sPanchayat)); ?>"
-                                        data-name="<?php echo htmlspecialchars(strtolower($sName . ' ' . $sFh)); ?>"
-                                        data-gender="<?php echo htmlspecialchars($sGen); ?>"
-                                        data-category="<?php echo htmlspecialchars(strtolower($sCat . ' ' . $sRes)); ?>">
-                                        
-                                        <!-- District -->
-                                        <td class="fw-bold" style="min-width: 120px;">
-                                            <a href="district.php?slug=<?php echo htmlspecialchars($sDistSlug); ?>" class="text-decoration-none" style="color: var(--primary-navy);">
-                                                <?php echo htmlspecialchars($sDist); ?>
-                                            </a>
-                                        </td>
-
-                                        <!-- Block -->
-                                        <td class="fw-semibold text-dark" style="min-width: 120px;">
-                                            <?php echo htmlspecialchars($sBlock); ?>
-                                        </td>
-
-                                        <!-- Panchayat -->
-                                        <td style="min-width: 160px;">
-                                            <span class="fw-bold text-dark" style="font-size: 0.95rem;">
-                                                ⚖️ <?php echo htmlspecialchars($sPanchayat); ?>
-                                            </span>
-                                        </td>
-
-                                        <!-- Sarpanch Candidate Name -->
-                                        <td style="min-width: 200px;">
-                                            <div class="fw-bold text-primary" style="font-size: 0.95rem;">
-                                                <?php echo htmlspecialchars($sName); ?>
-                                            </div>
-                                            <?php if (!empty($sFh)): ?>
-                                                <div class="text-muted small">W/o or S/o: <?php echo htmlspecialchars($sFh); ?></div>
-                                            <?php endif; ?>
-                                        </td>
-
-                                        <!-- Gender & Age -->
-                                        <td style="min-width: 120px;">
-                                            <span class="badge <?php echo $sGen === 'Female' ? 'bg-danger bg-opacity-10 text-danger' : 'bg-primary bg-opacity-10 text-primary'; ?> fw-semibold">
-                                                <?php echo htmlspecialchars($sGenHi ?: $sGen); ?> <?php echo $sAge ? "({$sAge} yrs)" : ''; ?>
-                                            </span>
-                                        </td>
-
-                                        <!-- Reservation & Category -->
-                                        <td style="min-width: 160px;">
-                                            <?php if (!empty($sRes)): ?>
-                                                <div><span class="badge bg-light text-dark border extra-small"><?php echo htmlspecialchars($sRes); ?></span></div>
-                                            <?php endif; ?>
-                                            <?php if (!empty($sCat)): ?>
-                                                <div class="text-muted small mt-1"><?php echo htmlspecialchars($sCat); ?></div>
-                                            <?php endif; ?>
-                                        </td>
-
-                                        <!-- Contact & Address -->
-                                        <td style="min-width: 180px;">
-                                            <?php if (!empty($sMob)): ?>
-                                                <span class="badge bg-light text-secondary border py-1 px-2 extra-small d-inline-flex align-items-center gap-1 mb-1" title="Contact Protected">
-                                                    <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($sMob)); ?>
-                                                </span>
-                                            <?php endif; ?>
-                                            <?php if (!empty($sAddr)): ?>
-                                                <div class="text-muted small text-truncate" style="max-width: 180px;" title="<?php echo htmlspecialchars($sAddr); ?>">
-                                                    <?php echo htmlspecialchars($sAddr); ?>
-                                                </div>
-                                            <?php endif; ?>
-                                        </td>
-
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Bottom Pagination Bar -->
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
-                        <div class="small text-muted" id="sarpanchBottomInfo"></div>
-                        <div id="sarpanchPagination"></div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- ========================================================= -->
-            <!-- TAB 3: ZILA PARISHAD MEMBERS DIRECTORY                    -->
-            <!-- ========================================================= -->
-            <div class="tab-pane fade <?php echo $selectedTab === 'zila' ? 'show active' : ''; ?>" id="zila-pane" role="tabpanel">
-                
-                <?php if (empty($selectedDistrict)): ?>
-                    <!-- ========================================================= -->
-                    <!-- 1. ALL 38 DISTRICTS & WARD COUNTS SUMMARY TABLE           -->
-                    <!-- ========================================================= -->
-                    <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white" id="zila-district-summary">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                            <div>
-                                <div class="d-flex align-items-center gap-2 mb-1">
-                                    <span class="badge bg-warning bg-opacity-10 text-warning-emphasis fw-bold px-2 py-1">Apex Tier Directory</span>
-                                    <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-2 py-1">38 District Boards</span>
-                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">1,099 Total Elected Wards</span>
-                                </div>
-                                <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">
-                                    🏛️ Bihar Zila Parishad — 38 District Summary &amp; Ward Counts
-                                </h2>
-                                <p class="small text-muted mb-0">Showing all 38 districts with total ward counts, Chairperson (अध्यक्ष) &amp; Vice-Chairperson (उपाध्यक्ष). Click any district to view its elected ward members.</p>
-                            </div>
-                        </div>
-
-                        <!-- District Summary Quick Filter -->
-                        <div class="row g-2 mb-3">
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
-                                    <input type="text" id="zilaDistSummarySearch" class="form-control border-start-0 bg-light" placeholder="Filter district name (e.g. Patna, Saran, Gaya)...">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- District Summary Table -->
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0 small" id="zilaDistrictSummaryTable">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="py-3 text-center" style="width: 50px;">#</th>
-                                        <th class="py-3">District / जिला</th>
-                                        <th class="py-3">Division / प्रमंडल</th>
-                                        <th class="py-3 text-center">Total Wards / सदस्य</th>
-                                        <th class="py-3">Chairperson (अध्यक्ष)</th>
-                                        <th class="py-3">Vice-Chairperson (उपाध्यक्ष)</th>
-                                        <th class="py-3 text-center" style="width: 170px;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                    $dIdx = 1;
-                                    foreach ($districts as $d): 
-                                        $dSlug = $d['slug'] ?? '';
-                                        $dName = $d['name'] ?? '';
-                                        $dNameHi = $d['name_hi'] ?? '';
-                                        $dDiv = $d['division'] ?? '';
-                                        $wCount = $zilaDistrictCounts[$dSlug] ?? ($zilaSummary[$dSlug]['total_wards'] ?? 0);
-                                        $sum = $zilaSummary[$dSlug] ?? null;
-                                        $ch = $sum['chairman'] ?? null;
-                                        $vch = $sum['vice_chairman'] ?? null;
-                                    ?>
-                                        <tr class="zila-dist-summary-row" data-search="<?php echo htmlspecialchars(strtolower($dName . ' ' . $dNameHi . ' ' . $dDiv)); ?>">
-                                            <td class="text-muted fw-bold text-center"><?php echo $dIdx++; ?></td>
-                                            <td>
-                                                <div class="fw-bold fs-6" style="color: var(--primary-navy);">
-                                                    <?php echo htmlspecialchars($dName); ?>
-                                                </div>
-                                                <div class="text-muted small"><?php echo htmlspecialchars($dNameHi); ?></div>
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-light text-dark border"><?php echo htmlspecialchars($dDiv); ?></span>
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="badge bg-primary rounded-pill px-3 py-2 fs-6 fw-bold">
-                                                    <?php echo $wCount; ?> Wards
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <?php if (!empty($ch['candidate_name'])): ?>
-                                                    <div class="fw-bold text-dark">
-                                                        <i class="bi bi-award-fill text-warning me-1"></i><?php echo htmlspecialchars($ch['candidate_name']); ?>
-                                                    </div>
-                                                    <div class="text-muted extra-small">
-                                                        <?php echo htmlspecialchars($ch['category'] ?? ''); ?> <?php echo !empty($ch['gender_hi']) ? "({$ch['gender_hi']})" : ''; ?>
-                                                    </div>
-                                                <?php else: ?>
-                                                    <span class="text-muted fst-italic">Not Disclosed</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <?php if (!empty($vch['candidate_name'])): ?>
-                                                    <div class="fw-semibold text-dark">
-                                                        <i class="bi bi-shield-check text-info me-1"></i><?php echo htmlspecialchars($vch['candidate_name']); ?>
-                                                    </div>
-                                                    <div class="text-muted extra-small">
-                                                        <?php echo htmlspecialchars($vch['category'] ?? ''); ?>
-                                                    </div>
-                                                <?php else: ?>
-                                                    <span class="text-muted fst-italic">Not Disclosed</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="panchayat.php?tab=zila&district=<?php echo urlencode($dSlug); ?>" class="btn btn-warning btn-sm fw-bold px-3 py-1 text-dark shadow-sm text-nowrap">
-                                                    View <?php echo $wCount; ?> Members &rarr;
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-
-                    <!-- Collapsible Universal Search Section for All 1,099 Members -->
-                    <div class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                            <div>
-                                <h3 class="h5 fw-bold mb-1" style="color: var(--primary-navy);">
-                                    🔍 Search Across All 1,099 Ward Members (Bihar-wide)
-                                </h3>
-                                <p class="small text-muted mb-0">Search and filter across all 38 districts simultaneously</p>
-                            </div>
-                            <button class="btn btn-outline-primary btn-sm fw-bold px-3 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#allMembersCollapse" aria-expanded="false" aria-controls="allMembersCollapse">
-                                <i class="bi bi-arrows-expand me-1"></i> Expand / Collapse All Members Table
-                            </button>
-                        </div>
-
-                        <div class="collapse mt-3" id="allMembersCollapse">
-                            <!-- Search & Filter Controls -->
-                            <div class="row g-2 mb-4 bg-light p-3 rounded-3 border">
-                                <div class="col-12 col-lg-4">
-                                    <label class="form-label small fw-bold text-muted mb-1">Search Ward Member / Block:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                                        <input type="text" id="globalZilaSearch" class="form-control border-start-0" placeholder="Search by member name, block, ward no...">
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-3">
-                                    <label class="form-label small fw-bold text-muted mb-1">Filter District:</label>
-                                    <select id="globalDistrictFilter" class="form-select bg-white">
-                                        <option value="">All 38 Districts</option>
-                                        <?php foreach ($districts as $d): ?>
-                                            <option value="<?php echo htmlspecialchars((string)($d['slug'] ?? '')); ?>">
-                                                <?php echo htmlspecialchars((string)($d['name'] ?? '')); ?> (<?php echo htmlspecialchars((string)($d['name_hi'] ?? '')); ?>)
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="col-6 col-lg-2">
-                                    <label class="form-label small fw-bold text-muted mb-1">Gender:</label>
-                                    <select id="globalGenderFilter" class="form-select bg-white">
-                                        <option value="">All Genders</option>
-                                        <option value="Female">महिला (Women)</option>
-                                        <option value="Male">पुरूष (Men)</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-3">
-                                    <label class="form-label small fw-bold text-muted mb-1">Reservation / Category:</label>
-                                    <select id="globalCategoryFilter" class="form-select bg-white">
-                                        <option value="">All Categories</option>
-                                        <option value="महिला">Women Reserved</option>
-                                        <option value="पिछड़ा">OBC / EBC (पिछड़ा वर्ग)</option>
-                                        <option value="अनुसूचित जाति">SC (अनुसूचित जाति)</option>
-                                        <option value="अनुसूचित जनजाति">ST (अनुसूचित जनजाति)</option>
-                                        <option value="अनारक्षित">Unreserved (सामान्य)</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Table Pagination & Page Size Toolbar -->
-                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                                <div class="d-flex align-items-center gap-2">
-                                    <label class="small text-muted fw-bold mb-0">Show</label>
-                                    <select id="zilaPageSize" class="form-select form-select-sm" style="width: 85px;">
-                                        <option value="25">25</option>
-                                        <option value="50" selected>50</option>
-                                        <option value="100">100</option>
-                                        <option value="250">250</option>
-                                    </select>
-                                    <label class="small text-muted mb-0">per page</label>
-                                </div>
-                                <div class="small text-muted" id="zilaPageInfo">Loading Members...</div>
-                                <div id="zilaTopPagination"></div>
-                            </div>
-
-                            <!-- Responsive Table -->
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0 small" id="allZilaTable">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th class="py-3">District</th>
-                                            <th class="py-3">Ward / क्षे० सं०</th>
-                                            <th class="py-3">Block / प्रखंड</th>
-                                            <th class="py-3">Elected Member</th>
-                                            <th class="py-3">Gender / Category</th>
-                                            <th class="py-3">Reservation Status</th>
-                                            <th class="py-3">Contact / Address</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="zilaTableBody">
-                                        <?php foreach ($allZilaMembers as $m): 
-                                            $zmDistSlug = (string)($m['district_slug'] ?? '');
-                                            $zmDist = (string)($m['district'] ?? '');
-                                            $zmBlock = (string)($m['block'] ?? '');
-                                            $zmWard = (string)($m['territory_no'] ?? '');
-                                            $zmName = (string)($m['candidate_name'] ?? '');
-                                            $zmFh = (string)($m['father_husband_name'] ?? '');
-                                            $zmGen = (string)($m['gender'] ?? '');
-                                            $zmGenHi = (string)($m['gender_hi'] ?? '');
-                                            $zmAge = $m['age'] ?? null;
-                                            $zmCat = (string)($m['category'] ?? '');
-                                            $zmRes = (string)($m['reservation'] ?? '');
-                                            $zmAddr = (string)($m['address'] ?? '');
-                                            $zmMob = (string)($m['mobile'] ?? '');
-                                        ?>
-                                            <tr class="global-zila-row"
-                                                data-name="<?php echo htmlspecialchars(strtolower($zmName . ' ' . $zmFh)); ?>"
-                                                data-district="<?php echo htmlspecialchars($zmDistSlug); ?>"
-                                                data-district-name="<?php echo htmlspecialchars(strtolower($zmDist)); ?>"
-                                                data-block="<?php echo htmlspecialchars(strtolower($zmBlock)); ?>"
-                                                data-ward="<?php echo htmlspecialchars($zmWard); ?>"
-                                                data-gender="<?php echo htmlspecialchars($zmGen); ?>"
-                                                data-category="<?php echo htmlspecialchars(strtolower($zmCat . ' ' . $zmRes)); ?>">
-                                                <td class="fw-bold">
-                                                    <a href="panchayat.php?tab=zila&district=<?php echo htmlspecialchars($zmDistSlug); ?>" class="text-decoration-none" style="color: var(--primary-navy);">
-                                                        <?php echo htmlspecialchars($zmDist); ?>
-                                                    </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <span class="badge bg-secondary rounded-pill px-2 py-1">
-                                                        #<?php echo htmlspecialchars($zmWard); ?>
-                                                    </span>
-                                                </td>
-                                                <td class="fw-semibold text-dark">
-                                                    <?php echo htmlspecialchars($zmBlock); ?>
-                                                </td>
-                                                <td>
-                                                    <div class="fw-bold text-primary" style="font-size: 0.95rem;">
-                                                        <?php echo htmlspecialchars($zmName); ?>
-                                                    </div>
-                                                    <?php if (!empty($zmFh)): ?>
-                                                        <div class="text-muted small">W/o or S/o: <?php echo htmlspecialchars($zmFh); ?></div>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <span class="badge <?php echo $zmGen === 'Female' ? 'bg-danger bg-opacity-10 text-danger' : 'bg-primary bg-opacity-10 text-primary'; ?> fw-semibold">
-                                                            <?php echo htmlspecialchars($zmGenHi ?: $zmGen); ?> <?php echo $zmAge ? "({$zmAge} yrs)" : ''; ?>
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-muted small mt-1"><?php echo htmlspecialchars($zmCat); ?></div>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-light text-dark border">
-                                                        <?php echo htmlspecialchars($zmRes ?: 'General'); ?>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <?php if (!empty($zmMob)): ?>
-                                                        <span class="badge bg-light text-secondary border py-1 px-2 fw-semibold mb-1 d-inline-flex align-items-center gap-1" title="Contact Protected">
-                                                            <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($zmMob)); ?>
-                                                        </span>
-                                                    <?php endif; ?>
-                                                    <div class="text-muted small text-truncate" style="max-width: 200px;" title="<?php echo htmlspecialchars($zmAddr); ?>">
-                                                        <?php echo htmlspecialchars($zmAddr); ?>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <!-- Bottom Pagination Bar -->
-                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
-                                <div class="small text-muted" id="zilaBottomInfo"></div>
-                                <div id="zilaPagination"></div>
-                            </div>
-                        </div>
-                    </div>
-
+<!-- Hero Header Section -->
+<section class="hero-section py-4 py-lg-5">
+    <div class="container text-start">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb small mb-0 bg-white bg-opacity-10 px-3 py-2 rounded-pill d-inline-flex border border-white border-opacity-10">
+                <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>/" class="text-white-50 text-decoration-none">Home</a></li>
+                <?php if ($singlePanchayat && $districtObj): ?>
+                    <li class="breadcrumb-item"><a href="<?php echo getPanchayatUrl(); ?>" class="text-white-50 text-decoration-none">Panchayats</a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo getDistrictUrl($districtObj['slug']); ?>" class="text-white-50 text-decoration-none"><?php echo htmlspecialchars($districtObj['name']); ?></a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="text-white-50 text-decoration-none"><?php echo htmlspecialchars($singlePanchayat['block']); ?> Block</a></li>
+                    <li class="breadcrumb-item active text-warning fw-bold" aria-current="page"><?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?></li>
+                <?php elseif ($singleBlockObj && $districtObj): ?>
+                    <li class="breadcrumb-item"><a href="<?php echo getPanchayatUrl(); ?>" class="text-white-50 text-decoration-none">Panchayats</a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo getPanchayatUrl($districtObj['slug']); ?>" class="text-white-50 text-decoration-none"><?php echo htmlspecialchars($districtObj['name']); ?></a></li>
+                    <li class="breadcrumb-item active text-warning fw-bold" aria-current="page"><?php echo htmlspecialchars($singleBlockObj['sub_district']); ?> Block</li>
+                <?php elseif ($districtObj): ?>
+                    <li class="breadcrumb-item"><a href="<?php echo getPanchayatUrl(); ?>" class="text-white-50 text-decoration-none">Panchayati Raj &amp; CD Blocks</a></li>
+                    <li class="breadcrumb-item active text-warning fw-bold" aria-current="page"><?php echo htmlspecialchars($districtObj['name']); ?></li>
                 <?php else: ?>
-                    <!-- ========================================================= -->
-                    <!-- 2. SELECTED DISTRICT WARD MEMBERS VIEW                    -->
-                    <!-- ========================================================= -->
-                    <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white" id="zila-directory">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                            <div>
-                                <a href="panchayat.php?tab=zila" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-1 mb-2">
-                                    &larr; View All 38 District Summary
-                                </a>
-                                <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">
-                                    🏛️ <?php echo htmlspecialchars($districtObj['name'] ?? $selectedDistrict); ?> District Zila Parishad Ward Members
-                                </h2>
-                                <p class="small text-muted mb-0">Elected territorial ward members for <?php echo htmlspecialchars($districtObj['name'] ?? $selectedDistrict); ?> District Board (Tenure: 2021–2026)</p>
+                    <li class="breadcrumb-item active text-warning fw-bold" aria-current="page">Panchayati Raj &amp; CD Blocks</li>
+                <?php endif; ?>
+            </ol>
+        </nav>
+
+        <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+            <?php if ($singlePanchayat && $districtObj): ?>
+                <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm">
+                    🌾 Gram Panchayat Profile
+                </span>
+                <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    📍 <?php echo htmlspecialchars($singlePanchayat['block']); ?> Block
+                </span>
+                <span class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    🏢 <?php echo htmlspecialchars($districtObj['name']); ?> District
+                </span>
+                <?php if (!empty($singlePanchayat['delimitation_status'])): ?>
+                    <span class="badge bg-info bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                        ✅ <?php echo htmlspecialchars($singlePanchayat['delimitation_status']); ?>
+                    </span>
+                <?php endif; ?>
+            <?php elseif ($singleBlockObj && $districtObj): ?>
+                <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm">
+                    📍 CD Block Panchayats Hub
+                </span>
+                <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    🏢 <?php echo htmlspecialchars($districtObj['name']); ?> District
+                </span>
+                <span class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    🌾 <?php echo count($panchayatsInBlock); ?> Gram Panchayats
+                </span>
+            <?php elseif ($districtObj): ?>
+                <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm">
+                    🏛️ Panchayati Raj &amp; CD Blocks
+                </span>
+                <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    38 Districts
+                </span>
+                <span class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    534 CD Blocks
+                </span>
+            <?php else: ?>
+                <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm">
+                    🏛️ Panchayati Raj &amp; CD Blocks
+                </span>
+                <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    38 Districts
+                </span>
+                <span class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    534 CD Blocks
+                </span>
+                <span class="badge bg-info bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    8,400+ Gram Panchayats
+                </span>
+            <?php endif; ?>
+        </div>
+
+        <h1 class="display-6 fw-extrabold text-white mb-2">
+            <?php if ($singlePanchayat && $districtObj): ?>
+                <?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?> Gram Panchayat <br>
+                <span style="color: var(--accent-saffron);">
+                    <?php echo htmlspecialchars($singlePanchayat['block']); ?> Block, <?php echo htmlspecialchars($districtObj['name']); ?> District
+                </span>
+            <?php elseif ($singleBlockObj && $districtObj): ?>
+                <?php echo htmlspecialchars($singleBlockObj['sub_district']); ?> Block Gram Panchayats <br>
+                <span style="color: var(--accent-saffron);">
+                    <?php echo count($panchayatsInBlock); ?> Panchayats, <?php echo htmlspecialchars($districtObj['name']); ?> District
+                </span>
+            <?php elseif ($districtObj): ?>
+                <?php echo htmlspecialchars($districtObj['name']); ?> District CD Blocks &amp; Panchayats <br>
+                <span style="color: var(--accent-saffron);"><?php echo htmlspecialchars($districtObj['name_hi'] ?? ''); ?> Panchayati Raj Directory</span>
+            <?php else: ?>
+                Bihar Panchayati Raj &amp; CD Blocks Directory <br>
+                <span style="color: var(--accent-saffron);">38 Districts &amp; 534 Community Development Blocks</span>
+            <?php endif; ?>
+        </h1>
+
+        <p class="lead text-white-50 mb-4" style="max-width: 840px; font-size: 1.05rem;">
+            <?php if ($singlePanchayat && $districtObj): ?>
+                Complete governance dossier of <strong><?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?></strong> Gram Panchayat: elected Mukhiya (ग्राम प्रधान), Sarpanch (न्याय पीठ), Block Samiti Pramukh, and Zila Parishad territorial representation in <?php echo htmlspecialchars($districtObj['name']); ?>, Bihar.
+            <?php elseif ($singleBlockObj && $districtObj): ?>
+                Explore all <strong><?php echo count($panchayatsInBlock); ?> Gram Panchayats</strong> in <?php echo htmlspecialchars($singleBlockObj['sub_district']); ?> Block. View elected Mukhiyas, Sarpanchs, local demographics, and direct links to each Panchayat profile.
+            <?php elseif ($districtObj): ?>
+                Explore all Community Development (CD) Blocks, Gram Panchayats distribution, Census 2011 demographics, and official district &amp; block portals in <?php echo htmlspecialchars($districtObj['name']); ?> District.
+            <?php else: ?>
+                Explore Bihar's 3-tier local governance structure across all 38 Districts and 534 CD Blocks. Access block demographics, gram panchayat rosters, census statistics, and representative directories.
+            <?php endif; ?>
+        </p>
+
+        <div class="d-flex flex-wrap gap-2">
+            <?php if ($singlePanchayat && $districtObj): ?>
+                <a href="<?php echo getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
+                    <i class="bi bi-building-check me-1"></i> All <?php echo htmlspecialchars($singlePanchayat['block']); ?> Panchayats
+                </a>
+                <a href="<?php echo getBlockUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
+                    <i class="bi bi-geo-alt-fill me-1"></i> <?php echo htmlspecialchars($singlePanchayat['block']); ?> Block Hub
+                </a>
+                <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-people-fill me-1"></i> Block Samiti
+                </a>
+                <a href="<?php echo getZilaParishadUrl($districtObj['slug']); ?>" class="btn btn-info fw-bold px-3 py-2 text-dark shadow-sm">
+                    <i class="bi bi-bank me-1"></i> Zila Parishad
+                </a>
+            <?php elseif ($singleBlockObj && $districtObj): ?>
+                <a href="<?php echo getPanchayatUrl($districtObj['slug']); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
+                    <i class="bi bi-arrow-left me-1"></i> All <?php echo htmlspecialchars($districtObj['name']); ?> Blocks
+                </a>
+                <a href="<?php echo getBlockUrl($districtObj['slug'], slugify($singleBlockObj['sub_district'])); ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
+                    <i class="bi bi-geo-alt-fill me-1"></i> Block Demographics
+                </a>
+                <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], slugify($singleBlockObj['sub_district'])); ?>" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-people me-1"></i> Samiti Pramukh
+                </a>
+                <a href="<?php echo getZilaParishadUrl($districtObj['slug']); ?>" class="btn btn-info fw-bold px-3 py-2 text-dark shadow-sm">
+                    <i class="bi bi-bank me-1"></i> Zila Parishad
+                </a>
+            <?php else: ?>
+                <a href="<?php echo SITE_URL; ?>/blocks" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
+                    <i class="bi bi-geo-alt-fill me-1"></i> All 534 Blocks Directory
+                </a>
+                <a href="<?php echo getPanchayatSamitiUrl($selectedDistrictSlug); ?>" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-people-fill me-1"></i> Panchayat Samiti
+                </a>
+                <a href="<?php echo getZilaParishadUrl($selectedDistrictSlug); ?>" class="btn btn-info fw-bold px-3 py-2 text-dark shadow-sm">
+                    <i class="bi bi-bank me-1"></i> Zila Parishad Boards
+                </a>
+                <a href="<?php echo getCensusUrl($selectedDistrictSlug); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
+                    <i class="bi bi-bar-chart-fill me-1"></i> Census Demographics
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content Area -->
+<main class="container my-4 my-lg-5">
+    <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-4'); ?>
+
+    <?php if ($singlePanchayat && $districtObj): ?>
+        <!-- ============================================================= -->
+        <!-- 1. COMPLETE DEDICATED GRAM PANCHAYAT PROFILE VIEW             -->
+        <!-- ============================================================= -->
+        
+        <!-- Quick Administrative Overview Ribbon -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white border-start border-4 border-warning">
+            <div class="row g-3 align-items-center justify-content-between">
+                <div class="col-12 col-md-8">
+                    <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                        <span class="badge bg-primary-subtle text-primary fw-bold px-2.5 py-1 rounded-pill small">
+                            🏢 <?php echo htmlspecialchars(trim(preg_replace('/\s+division$/i', '', $districtObj['division'] ?? 'Bihar'))); ?> Division
+                        </span>
+                        <span class="badge bg-warning-subtle text-dark fw-bold px-2.5 py-1 rounded-pill small">
+                            📍 <?php echo htmlspecialchars($singlePanchayat['block']); ?> Block
+                        </span>
+                        <span class="badge bg-light text-muted border px-2.5 py-1 rounded-pill small">
+                            District HQ: <?php echo htmlspecialchars($districtObj['headquarters'] ?? $districtObj['name']); ?>
+                        </span>
+                    </div>
+                    <h2 class="fw-bold font-heading text-navy fs-3 mb-1">
+                        <?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?>
+                        <?php if (!empty($singlePanchayat['panchayat_hi']) && $singlePanchayat['panchayat_hi'] !== $singlePanchayat['panchayat_name']): ?>
+                            <span class="text-muted fs-4 fw-normal">(<?php echo htmlspecialchars($singlePanchayat['panchayat_hi']); ?>)</span>
+                        <?php endif; ?>
+                    </h2>
+                    <p class="text-muted small mb-0">
+                        Official Gram Panchayat Profile &bull; 3-Tier Local Self Governance Structure (PRIs)
+                    </p>
+                </div>
+                <div class="col-12 col-md-4 text-md-end">
+                    <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                        <a href="<?php echo getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-warning rounded-pill px-3 py-1.5 fw-bold btn-sm text-dark shadow-sm">
+                            <i class="bi bi-building-check me-1"></i> All <?php echo htmlspecialchars($singlePanchayat['block']); ?> Panchayats
+                        </a>
+                        <a href="<?php echo getPanchayatUrl($districtObj['slug']); ?>" class="btn btn-outline-secondary rounded-pill px-3 py-1.5 fw-semibold btn-sm">
+                            All Blocks
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 Core Governance Pillars: Mukhiya, Sarpanch, Samiti, Zila Parishad -->
+        <div class="row g-4 mb-4">
+            
+            <!-- 1. MUKHIYA CARD -->
+            <div class="col-12 col-lg-6">
+                <div class="tier-card tier-card-mukhiya p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="tier-avatar-box bg-warning bg-opacity-10 text-warning">
+                                👑
                             </div>
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="badge bg-primary rounded-pill px-3 py-2 fs-6" id="totalMembersCount">
-                                    <?php echo count($zilaMembers); ?> Wards Loaded
+                            <div>
+                                <span class="tier-header-badge bg-warning bg-opacity-15 text-dark mb-1">
+                                    Tier 1 &bull; Village Executive
                                 </span>
+                                <h4 class="fw-bold text-navy font-heading mb-0 fs-5">
+                                    Gram Mukhiya (मुखिया)
+                                </h4>
                             </div>
                         </div>
+                        <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2.5 py-1 rounded-pill small">
+                            Incumbent
+                        </span>
+                    </div>
 
-                        <!-- Leadership Cards for this district -->
-                        <?php 
-                        $curSlug = $districtObj['slug'] ?? strtolower($selectedDistrict);
-                        $curSum = $zilaSummary[$curSlug] ?? null;
-                        $curCh = $curSum['chairman'] ?? null;
-                        $curVch = $curSum['vice_chairman'] ?? null;
-                        if ($curCh || $curVch):
-                        ?>
-                            <div class="row g-3 mb-4">
-                                <?php if ($curCh): ?>
-                                    <div class="col-12 col-md-6">
-                                        <div class="p-3 rounded-3 bg-light border-start border-4 border-warning">
-                                            <div class="small text-muted fw-semibold">अध्यक्ष / Chairperson</div>
-                                            <div class="h5 fw-bold text-dark mb-0 mt-1">
-                                                👑 <?php echo htmlspecialchars($curCh['candidate_name'] ?? 'N/A'); ?>
-                                            </div>
-                                            <?php if (!empty($curCh['category'])): ?>
-                                                <div class="text-muted extra-small mt-1"><?php echo htmlspecialchars($curCh['category']); ?> <?php echo !empty($curCh['gender_hi']) ? "({$curCh['gender_hi']})" : ''; ?></div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if ($curVch): ?>
-                                    <div class="col-12 col-md-6">
-                                        <div class="p-3 rounded-3 bg-light border-start border-4 border-info">
-                                            <div class="small text-muted fw-semibold">उपाध्यक्ष / Vice-Chairperson</div>
-                                            <div class="h5 fw-bold text-dark mb-0 mt-1">
-                                                🎖️ <?php echo htmlspecialchars($curVch['candidate_name'] ?? 'N/A'); ?>
-                                            </div>
-                                            <?php if (!empty($curVch['category'])): ?>
-                                                <div class="text-muted extra-small mt-1"><?php echo htmlspecialchars($curVch['category']); ?></div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
+                    <div class="p-3 bg-light rounded-3 mb-3 border">
+                        <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                            <div>
+                                <div class="text-muted small">Elected Mukhiya Name</div>
+                                <h5 class="fw-bold text-dark mb-0 fs-5">
+                                    <?php echo htmlspecialchars($singlePanchayat['current_mukhiya'] ?: 'Details Available'); ?>
+                                </h5>
+                            </div>
+                            <?php if (!empty($singlePanchayat['mukhiya_mobile'])): ?>
+                                <div>
+                                    <?php echo renderMaskedPhoneButton($singlePanchayat['mukhiya_mobile'], ($singlePanchayat['current_mukhiya'] ?? 'Mukhiya') . ' (Mukhiya - ' . $singlePanchayat['panchayat_name'] . ')'); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if (!empty($singlePanchayat['mukhiya_address'])): ?>
+                            <div class="small text-muted border-top pt-2">
+                                <i class="bi bi-geo-alt-fill text-danger me-1"></i>
+                                <strong>Address:</strong> <?php echo htmlspecialchars($singlePanchayat['mukhiya_address']); ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Mukhiya Profile Attributes -->
+                    <div class="px-1 mb-3">
+                        <?php if (!empty($singlePanchayat['mukhiya_father_husband'])): ?>
+                            <div class="profile-prop-row">
+                                <span class="text-muted"><i class="bi bi-person me-1"></i> Father / Husband:</span>
+                                <span class="fw-semibold text-dark"><?php echo htmlspecialchars($singlePanchayat['mukhiya_father_husband']); ?></span>
                             </div>
                         <?php endif; ?>
 
-                        <!-- Search & Filter Controls for Selected District -->
-                        <div class="row g-2 mb-4 bg-light p-3 rounded-3 border">
-                            <div class="col-12 col-md-6">
-                                <label class="form-label small fw-bold text-muted mb-1">Search Ward Member / Block:</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                                    <input type="text" id="globalZilaSearch" class="form-control border-start-0" placeholder="Search by member name, block, ward no...">
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-3">
-                                <label class="form-label small fw-bold text-muted mb-1">Gender:</label>
-                                <select id="globalGenderFilter" class="form-select bg-white">
-                                    <option value="">All Genders</option>
-                                    <option value="Female">महिला (Women)</option>
-                                    <option value="Male">पुरूष (Men)</option>
-                                </select>
-                            </div>
-                            <div class="col-6 col-md-3">
-                                <label class="form-label small fw-bold text-muted mb-1">Reservation / Category:</label>
-                                <select id="globalCategoryFilter" class="form-select bg-white">
-                                    <option value="">All Categories</option>
-                                    <option value="महिला">Women Reserved</option>
-                                    <option value="पिछड़ा">OBC / EBC (पिछड़ा वर्ग)</option>
-                                    <option value="अनुसूचित जाति">SC (अनुसूचित जाति)</option>
-                                    <option value="अनुसूचित जनजाति">ST (अनुसूचित जनजाति)</option>
-                                    <option value="अनारक्षित">Unreserved (सामान्य)</option>
-                                </select>
-                            </div>
+                        <div class="profile-prop-row">
+                            <span class="text-muted"><i class="bi bi-gender-ambiguous me-1"></i> Gender &amp; Age:</span>
+                            <span class="fw-semibold text-dark">
+                                <?php 
+                                $mGen = $singlePanchayat['mukhiya_gender_hi'] ?: $singlePanchayat['mukhiya_gender'] ?: 'N/A';
+                                $mAge = !empty($singlePanchayat['mukhiya_age']) ? "{$singlePanchayat['mukhiya_age']} Years" : '';
+                                echo htmlspecialchars(trim("{$mGen} " . ($mAge ? "({$mAge})" : ''))); 
+                                ?>
+                            </span>
                         </div>
 
-                        <!-- Table Pagination & Page Size Toolbar -->
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                            <div class="d-flex align-items-center gap-2">
-                                <label class="small text-muted fw-bold mb-0">Show</label>
-                                <select id="zilaPageSize" class="form-select form-select-sm" style="width: 85px;">
-                                    <option value="25">25</option>
-                                    <option value="50" selected>50</option>
-                                    <option value="100">100</option>
-                                </select>
-                                <label class="small text-muted mb-0">per page</label>
-                            </div>
-                            <div class="small text-muted" id="zilaPageInfo">Loading Members...</div>
-                            <div id="zilaTopPagination"></div>
+                        <div class="profile-prop-row">
+                            <span class="text-muted"><i class="bi bi-tag me-1"></i> Social Category:</span>
+                            <span class="fw-semibold text-dark"><?php echo htmlspecialchars($singlePanchayat['mukhiya_category'] ?: 'General'); ?></span>
                         </div>
 
-                        <!-- Responsive Table for Selected District -->
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0 small" id="allZilaTable">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="py-3 text-center" style="width: 90px;">Ward / क्षे० सं०</th>
-                                        <th class="py-3">Block / प्रखंड</th>
-                                        <th class="py-3">Elected Member</th>
-                                        <th class="py-3">Gender / Category</th>
-                                        <th class="py-3">Reservation Status</th>
-                                        <th class="py-3">Contact / Address</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="zilaTableBody">
-                                    <?php foreach ($zilaMembers as $m): 
-                                        $zmBlock = (string)($m['block'] ?? '');
-                                        $zmWard = (string)($m['territory_no'] ?? '');
-                                        $zmName = (string)($m['candidate_name'] ?? '');
-                                        $zmFh = (string)($m['father_husband_name'] ?? '');
-                                        $zmGen = (string)($m['gender'] ?? '');
-                                        $zmGenHi = (string)($m['gender_hi'] ?? '');
-                                        $zmAge = $m['age'] ?? null;
-                                        $zmCat = (string)($m['category'] ?? '');
-                                        $zmRes = (string)($m['reservation'] ?? '');
-                                        $zmAddr = (string)($m['address'] ?? '');
-                                        $zmMob = (string)($m['mobile'] ?? '');
-                                    ?>
-                                        <tr class="global-zila-row"
-                                            data-name="<?php echo htmlspecialchars(strtolower($zmName . ' ' . $zmFh)); ?>"
-                                            data-district=""
-                                            data-district-name=""
-                                            data-block="<?php echo htmlspecialchars(strtolower($zmBlock)); ?>"
-                                            data-ward="<?php echo htmlspecialchars($zmWard); ?>"
-                                            data-gender="<?php echo htmlspecialchars($zmGen); ?>"
-                                            data-category="<?php echo htmlspecialchars(strtolower($zmCat . ' ' . $zmRes)); ?>">
-                                            <td class="text-center">
-                                                <span class="badge bg-secondary rounded-pill px-2 py-1">
-                                                    #<?php echo htmlspecialchars($zmWard); ?>
-                                                </span>
-                                            </td>
-                                            <td class="fw-semibold text-dark">
-                                                <?php echo htmlspecialchars($zmBlock); ?>
-                                            </td>
-                                            <td>
-                                                <div class="fw-bold text-primary" style="font-size: 0.95rem;">
-                                                    <?php echo htmlspecialchars($zmName); ?>
-                                                </div>
-                                                <?php if (!empty($zmFh)): ?>
-                                                    <div class="text-muted small">W/o or S/o: <?php echo htmlspecialchars($zmFh); ?></div>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <span class="badge <?php echo $zmGen === 'Female' ? 'bg-danger bg-opacity-10 text-danger' : 'bg-primary bg-opacity-10 text-primary'; ?> fw-semibold">
-                                                        <?php echo htmlspecialchars($zmGenHi ?: $zmGen); ?> <?php echo $zmAge ? "({$zmAge} yrs)" : ''; ?>
-                                                    </span>
-                                                </div>
-                                                <div class="text-muted small mt-1"><?php echo htmlspecialchars($zmCat); ?></div>
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-light text-dark border">
-                                                    <?php echo htmlspecialchars($zmRes ?: 'General'); ?>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <?php if (!empty($zmMob)): ?>
-                                                    <span class="badge bg-light text-secondary border py-1 px-2 fw-semibold mb-1 d-inline-flex align-items-center gap-1" title="Contact Protected">
-                                                        <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($zmMob)); ?>
-                                                    </span>
-                                                <?php endif; ?>
-                                                <div class="text-muted small text-truncate" style="max-width: 220px;" title="<?php echo htmlspecialchars($zmAddr); ?>">
-                                                    <?php echo htmlspecialchars($zmAddr); ?>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Bottom Pagination Bar -->
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
-                            <div class="small text-muted" id="zilaBottomInfo"></div>
-                            <div id="zilaPagination"></div>
-                        </div>
-                    </section>
-                <?php endif; ?>
-            </div>
-
-            <!-- ========================================================= -->
-            <!-- TAB 4: DISTRICT CHAIRPERSONS & VICE-CHAIRPERSONS          -->
-            <!-- ========================================================= -->
-            <div class="tab-pane fade <?php echo $selectedTab === 'officials' ? 'show active' : ''; ?>" id="officials-pane" role="tabpanel">
-                <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                        <div>
-                            <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">
-                                👑 Bihar Zila Parishad Chairpersons & Vice-Chairpersons (All 38 Districts)
-                            </h2>
-                            <p class="small text-muted mb-0">District Panchayat Board Heads (अध्यक्ष) and Deputy Heads (उपाध्यक्ष)</p>
-                        </div>
-                    </div>
-
-                    <div class="row g-3">
-                        <?php foreach ($districts as $d): 
-                            $slug = $d['slug'] ?? '';
-                            $summary = $zilaSummary[$slug] ?? null;
-                            $ch = $summary['chairman'] ?? null;
-                            $vch = $summary['vice_chairman'] ?? null;
-                        ?>
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card border-0 shadow-sm rounded-3 p-3 h-100 bg-light border-top border-4 border-warning">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <h3 class="h5 fw-bold mb-0" style="color: var(--primary-navy);">
-                                            <a href="district.php?slug=<?php echo htmlspecialchars((string)$slug); ?>" class="text-decoration-none text-dark">
-                                                <?php echo htmlspecialchars((string)($d['name'] ?? '')); ?>
-                                            </a>
-                                        </h3>
-                                        <span class="badge bg-secondary rounded-pill"><?php echo $summary['total_wards'] ?? 0; ?> Wards</span>
-                                    </div>
-                                    
-                                    <!-- Chairman -->
-                                    <div class="bg-white p-2 rounded-2 mb-2 border">
-                                        <div class="small fw-bold text-warning-emphasis">अध्यक्ष / Chairperson</div>
-                                        <div class="fw-bold text-primary"><?php echo !empty($ch['candidate_name']) ? htmlspecialchars((string)$ch['candidate_name']) : 'N/A'; ?></div>
-                                        <?php if (!empty($ch['reservation'])): ?>
-                                            <span class="badge bg-light text-dark border extra-small"><?php echo htmlspecialchars((string)$ch['reservation']); ?></span>
-                                        <?php endif; ?>
-                                        <?php if (!empty($ch['gender_hi'])): ?>
-                                            <span class="badge bg-light text-secondary border extra-small"><?php echo htmlspecialchars((string)$ch['gender_hi']); ?></span>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <!-- Vice Chairman -->
-                                    <div class="bg-white p-2 rounded-2 border">
-                                        <div class="small fw-bold text-info-emphasis">उपाध्यक्ष / Vice-Chairperson</div>
-                                        <div class="fw-bold text-dark"><?php echo !empty($vch['candidate_name']) ? htmlspecialchars((string)$vch['candidate_name']) : 'N/A'; ?></div>
-                                        <?php if (!empty($vch['category'])): ?>
-                                            <span class="badge bg-light text-dark border extra-small"><?php echo htmlspecialchars((string)$vch['category']); ?></span>
-                                        <?php endif; ?>
-                                        <?php if (!empty($vch['gender_hi'])): ?>
-                                            <span class="badge bg-light text-secondary border extra-small"><?php echo htmlspecialchars((string)$vch['gender_hi']); ?></span>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <div class="mt-3 text-end">
-                                        <a href="district.php?slug=<?php echo htmlspecialchars((string)$slug); ?>" class="small fw-bold text-decoration-none" style="color: var(--secondary-navy);">
-                                            View <?php echo htmlspecialchars((string)($d['name'] ?? '')); ?> Ward Roster &rarr;
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </section>
-            </div>
-
-            <!-- ========================================================= -->
-            <!-- TAB 5: 2016 PANCHAYAT ELECTION HISTORICAL ARCHIVE         -->
-            <!-- ========================================================= -->
-            <div class="tab-pane fade <?php echo $selectedTab === 'archive2016' ? 'show active' : ''; ?>" id="archive2016-pane" role="tabpanel">
-                <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                        <div>
-                            <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="badge bg-secondary text-white fw-bold px-2 py-1">Historical Election Archive</span>
-                                <span class="badge bg-warning text-dark fw-bold px-2 py-1">2016–2021 Tenure</span>
-                            </div>
-                            <h2 class="h4 fw-bold mb-1" style="color: var(--primary-navy);">
-                                ⏳ 2016 Bihar Panchayat Election Master Archive
-                            </h2>
-                            <p class="small text-muted mb-0">Official elected representatives from the 2016 Bihar Panchayat Elections: <strong>8,045 Gram Panchayat Mukhiyas</strong> and <strong>389 Block Panchayat Samiti Pramukhs</strong></p>
-                        </div>
-                        <div>
-                            <span class="badge bg-secondary rounded-pill px-3 py-2">
-                                <?php echo count($mukhiyas2016); ?> Mukhiyas | <?php echo count($samiti2016); ?> Blocks
+                        <div class="profile-prop-row">
+                            <span class="text-muted"><i class="bi bi-patch-check me-1"></i> Seat Reservation:</span>
+                            <span class="badge bg-warning bg-opacity-25 text-dark fw-bold">
+                                <?php echo htmlspecialchars($singlePanchayat['mukhiya_reservation'] ?: $singlePanchayat['reservation_2026_mukhiya'] ?: 'General / Unreserved'); ?>
                             </span>
                         </div>
                     </div>
 
-                    <!-- Inner Archive Navigation Pills -->
-                    <ul class="nav nav-pills mb-3" id="archiveSubTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active fw-bold py-1 px-3" id="archive-mukhiya-tab" data-bs-toggle="pill" data-bs-target="#archive-mukhiya-subpane" type="button" role="tab">
-                                🌾 2016 Mukhiya Directory (8,045 Panchayats)
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link fw-bold py-1 px-3" id="archive-samiti-tab" data-bs-toggle="pill" data-bs-target="#archive-samiti-subpane" type="button" role="tab">
-                                🏢 2016 Block Pramukh & Samiti (389 Blocks)
-                            </button>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content" id="archiveSubTabContent">
-
-                        <!-- SUBTAB 1: 2016 MUKHIYAS DIRECTORY -->
-                        <div class="tab-pane fade show active" id="archive-mukhiya-subpane" role="tabpanel">
-                            
-                            <!-- Search & Filter Controls -->
-                            <div class="row g-2 mb-3 bg-light p-3 rounded-3 border">
-                                <div class="col-12 col-lg-6">
-                                    <label class="form-label small fw-bold text-muted mb-1">Search 2016 Mukhiya / Panchayat / Block:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                                        <input type="text" id="mukhiya2016Search" class="form-control border-start-0" placeholder="Search by name, panchayat, block...">
-                                    </div>
+                    <!-- 2016 Ex-Mukhiya Archive Section -->
+                    <?php if (!empty($singlePanchayat['mukhiya_2016'])): ?>
+                        <div class="mt-auto pt-3 border-top">
+                            <div class="p-2.5 bg-white rounded-3 border small">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="badge bg-secondary-subtle text-secondary fw-bold" style="font-size: 0.7rem;">2016–2021 Tenure Record</span>
+                                    <?php if (!empty($singlePanchayat['mukhiya_2016_mobile'])): ?>
+                                        <div><?php echo renderMaskedPhoneButton($singlePanchayat['mukhiya_2016_mobile'], $singlePanchayat['mukhiya_2016'] . ' (Ex-Mukhiya)'); ?></div>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="col-12 col-lg-6">
-                                    <label class="form-label small fw-bold text-muted mb-1">Filter District:</label>
-                                    <select id="mukhiya2016DistrictFilter" class="form-select bg-white" onchange="if(this.value){ window.location.href='<?php echo SITE_URL; ?>/panchayat-samiti/'+this.value; } else { window.location.href='<?php echo SITE_URL; ?>/panchayat-samiti'; }">
-                                        <option value="">All 38 Districts</option>
-                                        <?php foreach ($districts as $d): ?>
-                                            <option value="<?php echo htmlspecialchars((string)($d['slug'] ?? '')); ?>" <?php echo $selectedDistrict === ($d['slug'] ?? '') ? 'selected' : ''; ?>>
-                                                <?php echo htmlspecialchars((string)($d['name'] ?? '')); ?> (<?php echo htmlspecialchars((string)($d['name_hi'] ?? '')); ?>)
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                <div class="text-dark">
+                                    <strong>Ex-Mukhiya:</strong> <?php echo htmlspecialchars($singlePanchayat['mukhiya_2016']); ?>
+                                    <?php if (!empty($singlePanchayat['mukhiya_2016_f_name'])): ?>
+                                        <span class="text-muted">(Father: <?php echo htmlspecialchars($singlePanchayat['mukhiya_2016_f_name']); ?>)</span>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-
-                            <!-- Table Pagination & Page Size Toolbar -->
-                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                                <div class="d-flex align-items-center gap-2">
-                                    <label class="small text-muted fw-bold mb-0">Show</label>
-                                    <select id="mukhiya2016PageSize" class="form-select form-select-sm" style="width: 85px;">
-                                        <option value="25">25</option>
-                                        <option value="50" selected>50</option>
-                                        <option value="100">100</option>
-                                        <option value="250">250</option>
-                                    </select>
-                                    <label class="small text-muted mb-0">per page</label>
-                                </div>
-                                <div class="small text-muted" id="mukhiya2016PageInfo">
-                                    Loading 2016 Mukhiyas...
-                                </div>
-                                <div id="mukhiya2016TopPagination"></div>
-                            </div>
-
-                            <!-- 2016 Mukhiya Table -->
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0 small" id="mukhiya2016Table">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th class="py-3">#</th>
-                                            <th class="py-3">District</th>
-                                            <th class="py-3">Block / प्रखंड</th>
-                                            <th class="py-3">Gram Panchayat</th>
-                                            <th class="py-3">2016 Elected Mukhiya</th>
-                                            <th class="py-3">Age & Education</th>
-                                            <th class="py-3">Contact & Address</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                        $m16Idx = 1;
-                                        foreach ($mukhiyas2016 as $m16): 
-                                            $m16Dist = (string)($m16['district'] ?? '');
-                                            $m16DistSlug = (string)($m16['district_slug'] ?? '');
-                                            $m16Block = (string)($m16['block'] ?? '');
-                                            $m16Panch = (string)($m16['panchayat'] ?? '');
-                                            $m16Name = (string)($m16['candidate_name'] ?? '');
-                                            $m16Fh = (string)($m16['father_husband_name'] ?? '');
-                                            $m16Mob = (string)($m16['mobile'] ?? '');
-                                            $m16Age = $m16['age'] ?? null;
-                                            $m16Qual = (string)($m16['qualification'] ?? '');
-                                            $m16Addr = (string)($m16['address'] ?? '');
-                                        ?>
-                                            <tr class="mukhiya-2016-row"
-                                                data-district="<?php echo htmlspecialchars($m16DistSlug); ?>"
-                                                data-name="<?php echo htmlspecialchars(strtolower($m16Name . ' ' . $m16Fh . ' ' . $m16Panch . ' ' . $m16Block)); ?>">
-                                                <td class="text-muted fw-bold"><?php echo $m16Idx++; ?></td>
-                                                <td>
-                                                    <span class="badge bg-light text-dark border">
-                                                        <?php echo htmlspecialchars($m16Dist); ?>
-                                                    </span>
-                                                </td>
-                                                <td class="fw-semibold text-dark">
-                                                    <?php echo htmlspecialchars($m16Block); ?>
-                                                </td>
-                                                <td>
-                                                    <span class="fw-bold" style="color: var(--primary-navy);">
-                                                        🌾 <?php echo htmlspecialchars($m16Panch); ?>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <div class="fw-bold text-success" style="font-size: 0.95rem;">
-                                                        <i class="bi bi-person-badge-fill me-1"></i>
-                                                        <?php echo htmlspecialchars($m16Name); ?>
-                                                    </div>
-                                                    <?php if (!empty($m16Fh)): ?>
-                                                        <div class="text-muted extra-small">W/o or S/o: <?php echo htmlspecialchars($m16Fh); ?></div>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if ($m16Age): ?>
-                                                        <span class="badge bg-secondary bg-opacity-10 text-secondary fw-semibold"><?php echo $m16Age; ?> yrs</span>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($m16Qual)): ?>
-                                                        <div class="text-muted extra-small mt-1"><?php echo htmlspecialchars($m16Qual); ?></div>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if (!empty($m16Mob)): ?>
-                                                        <span class="badge bg-light text-secondary border py-1 px-2 extra-small d-inline-flex align-items-center gap-1 mb-1" title="Contact Protected">
-                                                            <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($m16Mob)); ?>
-                                                        </span>
-                                                    <?php endif; ?>
-                                                    <div class="text-muted extra-small text-truncate" style="max-width: 200px;" title="<?php echo htmlspecialchars($m16Addr); ?>">
-                                                        <?php echo htmlspecialchars($m16Addr); ?>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <!-- Bottom Pagination Bar -->
-                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
-                                <div class="small text-muted" id="mukhiya2016BottomInfo"></div>
-                                <div id="mukhiya2016Pagination"></div>
                             </div>
                         </div>
+                    <?php endif; ?>
+                </div>
+            </div>
 
-                        <!-- SUBTAB 2: 2016 BLOCK SAMITI PRAMUKHS -->
-                        <div class="tab-pane fade" id="archive-samiti-subpane" role="tabpanel">
-                            
-                            <!-- Search Controls -->
-                            <div class="row g-2 mb-3 bg-light p-3 rounded-3 border">
-                                <div class="col-12">
-                                    <label class="form-label small fw-bold text-muted mb-1">Search Block Pramukh / Block Name:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                                        <input type="text" id="samiti2016Search" class="form-control border-start-0" placeholder="Search block name, pramukh name...">
-                                    </div>
-                                </div>
+            <!-- 2. SARPANCH CARD -->
+            <div class="col-12 col-lg-6">
+                <div class="tier-card tier-card-sarpanch p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="tier-avatar-box bg-primary bg-opacity-10 text-primary">
+                                ⚖️
                             </div>
-
-                            <!-- Table Pagination & Page Size Toolbar -->
-                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                                <div class="d-flex align-items-center gap-2">
-                                    <label class="small text-muted fw-bold mb-0">Show</label>
-                                    <select id="samiti2016PageSize" class="form-select form-select-sm" style="width: 85px;">
-                                        <option value="25">25</option>
-                                        <option value="50" selected>50</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                    <label class="small text-muted mb-0">per page</label>
-                                </div>
-                                <div class="small text-muted" id="samiti2016PageInfo">
-                                    Loading Blocks...
-                                </div>
-                                <div id="samiti2016TopPagination"></div>
-                            </div>
-
-                            <!-- 2016 Block Samiti Table -->
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0 small" id="samiti2016Table">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th class="py-3">#</th>
-                                            <th class="py-3">District (जिला)</th>
-                                            <th class="py-3">Block (प्रखंड)</th>
-                                            <th class="py-3">Pramukh 2016 (प्रमुख पदधारक)</th>
-                                            <th class="py-3">Up-Pramukh 2016 (उप प्रमुख पदधारक)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $sIndex = 1; foreach ($samiti2016 as $sb): ?>
-                                            <tr class="samiti-2016-row"
-                                                data-name="<?php echo htmlspecialchars(strtolower($sb['block_hi'] . ' ' . $sb['block'] . ' ' . $sb['pramukh_2016'] . ' ' . $sb['up_pramukh_2016'])); ?>"
-                                                data-district="<?php echo htmlspecialchars($sb['district_slug']); ?>">
-                                                <td class="text-muted fw-bold"><?php echo $sIndex++; ?></td>
-                                                <td>
-                                                    <span class="badge bg-light text-dark border">
-                                                        <?php echo htmlspecialchars($sb['district']); ?> (<?php echo htmlspecialchars($sb['district_hi']); ?>)
-                                                    </span>
-                                                </td>
-                                                <td class="fw-bold" style="color: var(--primary-navy); font-size: 0.95rem;">
-                                                    <?php echo htmlspecialchars($sb['block_hi'] ?: $sb['block']); ?>
-                                                </td>
-                                                <td>
-                                                    <div class="fw-bold text-success" style="font-size: 0.95rem;">
-                                                        <i class="bi bi-person-check-fill me-1"></i>
-                                                        <?php echo htmlspecialchars($sb['pramukh_2016'] ?: 'Not Disclosed'); ?>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="fw-semibold text-primary">
-                                                        <?php echo htmlspecialchars($sb['up_pramukh_2016'] ?: 'Not Disclosed'); ?>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <!-- Bottom Pagination Bar -->
-                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 pt-3 border-top">
-                                <div class="small text-muted" id="samiti2016BottomInfo"></div>
-                                <div id="samiti2016Pagination"></div>
+                            <div>
+                                <span class="tier-header-badge bg-primary bg-opacity-15 text-primary mb-1">
+                                    Tier 1 &bull; Gram Kutchery Judiciary
+                                </span>
+                                <h4 class="fw-bold text-navy font-heading mb-0 fs-5">
+                                    Gram Sarpanch (सरपंच)
+                                </h4>
                             </div>
                         </div>
-
+                        <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-2.5 py-1 rounded-pill small">
+                            Judicial Head
+                        </span>
                     </div>
-                </section>
+
+                    <div class="p-3 bg-light rounded-3 mb-3 border">
+                        <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                            <div>
+                                <div class="text-muted small">Elected Sarpanch Name</div>
+                                <h5 class="fw-bold text-dark mb-0 fs-5">
+                                    <?php echo htmlspecialchars($singlePanchayat['current_sarpanch'] ?: 'Details Available'); ?>
+                                </h5>
+                            </div>
+                            <?php if (!empty($singlePanchayat['sarpanch_mobile'])): ?>
+                                <div>
+                                    <?php echo renderMaskedPhoneButton($singlePanchayat['sarpanch_mobile'], ($singlePanchayat['current_sarpanch'] ?? 'Sarpanch') . ' (Sarpanch - ' . $singlePanchayat['panchayat_name'] . ')'); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if (!empty($singlePanchayat['sarpanch_address'])): ?>
+                            <div class="small text-muted border-top pt-2">
+                                <i class="bi bi-geo-alt-fill text-danger me-1"></i>
+                                <strong>Address:</strong> <?php echo htmlspecialchars($singlePanchayat['sarpanch_address']); ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Sarpanch Profile Attributes -->
+                    <div class="px-1 mb-3">
+                        <?php if (!empty($singlePanchayat['sarpanch_father_husband'])): ?>
+                            <div class="profile-prop-row">
+                                <span class="text-muted"><i class="bi bi-person me-1"></i> Father / Husband:</span>
+                                <span class="fw-semibold text-dark"><?php echo htmlspecialchars($singlePanchayat['sarpanch_father_husband']); ?></span>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="profile-prop-row">
+                            <span class="text-muted"><i class="bi bi-gender-ambiguous me-1"></i> Gender &amp; Age:</span>
+                            <span class="fw-semibold text-dark">
+                                <?php 
+                                $sGen = $singlePanchayat['sarpanch_gender_hi'] ?: $singlePanchayat['sarpanch_gender'] ?: 'N/A';
+                                $sAge = !empty($singlePanchayat['sarpanch_age']) ? "{$singlePanchayat['sarpanch_age']} Years" : '';
+                                echo htmlspecialchars(trim("{$sGen} " . ($sAge ? "({$sAge})" : ''))); 
+                                ?>
+                            </span>
+                        </div>
+
+                        <div class="profile-prop-row">
+                            <span class="text-muted"><i class="bi bi-tag me-1"></i> Social Category:</span>
+                            <span class="fw-semibold text-dark"><?php echo htmlspecialchars($singlePanchayat['sarpanch_category'] ?: 'General'); ?></span>
+                        </div>
+
+                        <div class="profile-prop-row">
+                            <span class="text-muted"><i class="bi bi-patch-check me-1"></i> Seat Reservation:</span>
+                            <span class="badge bg-primary bg-opacity-25 text-navy fw-bold">
+                                <?php echo htmlspecialchars($singlePanchayat['sarpanch_reservation'] ?: $singlePanchayat['reservation_2026_sarpanch'] ?: 'General / Unreserved'); ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                        <span class="small text-muted">Presides over Gram Kutchery dispute resolutions</span>
+                        <a href="<?php echo getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold">
+                            All <?php echo htmlspecialchars($singlePanchayat['block']); ?> Panchayats &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. PANCHAYAT SAMITI CARD -->
+            <div class="col-12 col-lg-6">
+                <div class="tier-card tier-card-samiti p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="tier-avatar-box bg-success bg-opacity-10 text-success">
+                                🏛️
+                            </div>
+                            <div>
+                                <span class="tier-header-badge bg-success bg-opacity-15 text-success mb-1">
+                                    Tier 2 &bull; Block Level Samiti
+                                </span>
+                                <h4 class="fw-bold text-navy font-heading mb-0 fs-5">
+                                    Panchayat Samiti (प्रखंड प्रमुख)
+                                </h4>
+                            </div>
+                        </div>
+                        <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2.5 py-1 rounded-pill small">
+                            <?php echo htmlspecialchars($singlePanchayat['block']); ?> Block
+                        </span>
+                    </div>
+
+                    <p class="text-muted small mb-3">
+                        Intermediate Tier-2 governance unit coordinating Gram Panchayats across <strong><?php echo htmlspecialchars($singlePanchayat['block']); ?> CD Block</strong>.
+                    </p>
+
+                    <div class="p-3 bg-light rounded-3 mb-3 border">
+                        <div class="mb-2">
+                            <span class="text-muted small d-block">Block Pramukh (प्रखंड प्रमुख)</span>
+                            <h5 class="fw-bold text-navy mb-0 fs-5">
+                                <?php echo htmlspecialchars($blockSamiti['pramukh_2016'] ?? 'Pramukh Appointed'); ?>
+                            </h5>
+                        </div>
+
+                        <?php if (!empty($blockSamiti['up_pramukh_2016'])): ?>
+                            <div class="border-top pt-2 mt-2">
+                                <span class="text-muted small d-block">Up-Pramukh (उप प्रमुख)</span>
+                                <div class="fw-semibold text-dark">
+                                    <?php echo htmlspecialchars($blockSamiti['up_pramukh_2016']); ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="profile-prop-row">
+                        <span class="text-muted"><i class="bi bi-geo me-1"></i> Block Jurisdiction:</span>
+                        <span class="fw-semibold text-dark"><?php echo htmlspecialchars($singlePanchayat['block']); ?> Sub-District</span>
+                    </div>
+
+                    <div class="profile-prop-row">
+                        <span class="text-muted"><i class="bi bi-diagram-3 me-1"></i> Governance Level:</span>
+                        <span class="badge bg-success bg-opacity-25 text-success fw-bold">Panchayat Samiti (प्रखंड स्तर)</span>
+                    </div>
+
+                    <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                        <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-sm btn-success rounded-pill px-3 text-white fw-semibold">
+                            Samiti Details &rarr;
+                        </a>
+                        <a href="<?php echo getBlockUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold">
+                            Visit Block Hub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. ZILA PARISHAD CARD -->
+            <div class="col-12 col-lg-6">
+                <div class="tier-card tier-card-zila p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="tier-avatar-box" style="background-color: #f3e8ff; color: #7c3aed;">
+                                🏢
+                            </div>
+                            <div>
+                                <span class="tier-header-badge bg-primary-subtle text-primary mb-1">
+                                    Tier 3 &bull; Apex District Board
+                                </span>
+                                <h4 class="fw-bold text-navy font-heading mb-0 fs-5">
+                                    Zila Parishad (जिला परिषद सदस्य)
+                                </h4>
+                            </div>
+                        </div>
+                        <span class="badge bg-primary-subtle text-primary fw-bold px-2.5 py-1 rounded-pill small">
+                            <?php echo htmlspecialchars($districtObj['name']); ?> ZP
+                        </span>
+                    </div>
+
+                    <?php if (!empty($zilaParishadMembers)): ?>
+                        <div class="mb-3">
+                            <div class="small text-muted mb-2">
+                                <?php if ($isSpecificZilaTerritory): ?>
+                                    Territorial Member representing Territory No. <strong><?php echo htmlspecialchars($terrNo); ?></strong>:
+                                <?php else: ?>
+                                    Elected Zila Parishad Territorial Members representing <strong><?php echo htmlspecialchars($singlePanchayat['block']); ?> Block</strong>:
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="d-flex flex-column gap-2">
+                                <?php foreach ($zilaParishadMembers as $zm): ?>
+                                    <div class="p-3 bg-light rounded-3 border">
+                                        <div class="d-flex justify-content-between align-items-center mb-1 flex-wrap gap-2">
+                                            <div>
+                                                <div class="fw-bold text-navy fs-6">
+                                                    <?php echo htmlspecialchars($zm['candidate_name'] ?? $zm['member_name'] ?? 'Zila Parishad Member'); ?>
+                                                </div>
+                                                <div class="small text-muted">
+                                                    Territory No: <strong><?php echo htmlspecialchars($zm['territory_no'] ?? $zm['ward_no'] ?? 'N/A'); ?></strong>
+                                                    &bull; Category: <strong><?php echo htmlspecialchars($zm['category'] ?? 'General'); ?></strong>
+                                                    <?php if (!empty($zm['gender'])): ?>
+                                                        &bull; <?php echo htmlspecialchars($zm['gender']); ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <?php if (!empty($zm['mobile'])): ?>
+                                                <div>
+                                                    <?php echo renderMaskedPhoneButton($zm['mobile'], ($zm['candidate_name'] ?? 'ZP Member') . ' (ZP Territory ' . ($zm['territory_no'] ?? '') . ')'); ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <?php if (!empty($zm['address'])): ?>
+                                            <div class="small text-muted border-top pt-1 mt-1">
+                                                <i class="bi bi-geo-alt me-1 text-danger"></i> <?php echo htmlspecialchars($zm['address']); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="p-3 bg-light rounded-3 mb-3 border text-center py-4">
+                            <i class="bi bi-bank text-muted fs-2 d-block mb-1"></i>
+                            <div class="fw-bold text-dark mb-1">Zila Parishad Territorial Representative</div>
+                            <p class="text-muted small mb-0">Under <?php echo htmlspecialchars($districtObj['name']); ?> Zila Parishad Board jurisdiction.</p>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                        <span class="small text-muted">Highest tier of Panchayati Raj in Bihar</span>
+                        <a href="<?php echo getZilaParishadUrl($districtObj['slug']); ?>" class="btn btn-sm btn-primary rounded-pill px-3 fw-semibold shadow-sm">
+                            District ZP Board &rarr;
+                        </a>
+                    </div>
+                </div>
             </div>
 
         </div>
 
-        <!-- FAQ Section -->
-        <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 bg-white mt-4">
-            <h2 class="h4 fw-bold mb-3 pb-2 border-bottom" style="color: var(--primary-navy);">
-                ❓ Bihar Panchayati Raj: Frequently Asked Questions (FAQ)
-            </h2>
-            <div class="d-flex flex-column gap-3">
-                <div class="bg-light p-3 rounded-3">
-                    <h3 class="h6 fw-bold mb-1" style="color: var(--primary-navy);">What is the difference between Mukhiya and Sarpanch in Bihar?</h3>
-                    <p class="small text-muted mb-0">
-                        In Bihar Panchayati Raj, <strong>Mukhiya</strong> is the executive head of the Gram Panchayat responsible for local governance, village welfare schemes, rural roads, water, and development funds. <strong>Sarpanch</strong> is the judicial head of the Gram Katchahry (ग्राम कचहरी) empowered to resolve minor civil disputes, property boundary conflicts, and petty criminal complaints through consensual arbitration.
-                    </p>
+        <!-- Sibling Panchayats in this Block Navigation Section -->
+        <?php if (!empty($panchayatsInSameBlock)): ?>
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div>
+                        <span class="badge bg-success-subtle text-success fw-bold px-2.5 py-1 rounded-pill small mb-1">
+                            Block Navigation
+                        </span>
+                        <h4 class="fw-bold text-navy font-heading mb-0 fs-5">
+                            Other Gram Panchayats in <?php echo htmlspecialchars($singlePanchayat['block']); ?> Block (<?php echo count($panchayatsInSameBlock); ?>)
+                        </h4>
+                    </div>
+                    <a href="<?php echo getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold">
+                        View All in <?php echo htmlspecialchars($singlePanchayat['block']); ?> &rarr;
+                    </a>
                 </div>
-                <div class="bg-light p-3 rounded-3">
-                    <h3 class="h6 fw-bold mb-1" style="color: var(--primary-navy);">What is the term of Bihar Mukhiya, Sarpanch, and Zila Parishad members?</h3>
-                    <p class="small text-muted mb-0">
-                        All representatives in Bihar Panchayati Raj are elected for a tenure of 5 years. The current board tenure runs from 2021 through 2026.
-                    </p>
-                </div>
-                <div class="bg-light p-3 rounded-3">
-                    <h3 class="h6 fw-bold mb-1" style="color: var(--primary-navy);">How is women reservation implemented in Bihar Panchayat Elections?</h3>
-                    <p class="small text-muted mb-0">
-                        Bihar provides statutory 50% horizontal quota across all categories (Scheduled Castes, Scheduled Tribes, Extremely Backward Classes, and General) for women candidates contesting Mukhiya, Sarpanch, Ward Member, Panchayat Samiti, and Zila Parishad posts.
-                    </p>
+                
+                <div class="d-flex flex-wrap gap-2">
+                    <?php foreach ($panchayatsInSameBlock as $sb): 
+                        $sbUrl = getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block']), slugify($sb['panchayat_name']));
+                    ?>
+                        <a href="<?php echo htmlspecialchars($sbUrl); ?>" class="sibling-panchayat-pill">
+                            🌾 <?php echo htmlspecialchars($sb['panchayat_name']); ?>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
             </div>
-        </section>
+        <?php endif; ?>
 
-        <!-- Bottom Footer Ad Banner -->
-        <?php renderGoogleAd('footer_banner', GOOGLE_AD_SLOT_FOOTER, 'mt-4'); ?>
+    <?php elseif ($singleBlockObj && $districtObj): ?>
+        <!-- ============================================================= -->
+        <!-- 2. DEDICATED BLOCK PANCHAYATS DIRECTORY VIEW                  -->
+        <!-- ============================================================= -->
+        <?php 
+        $bName = $singleBlockObj['sub_district'];
+        $bSlug = slugify($bName);
+        $bPop = intval($singleBlockObj['population'] ?? 0);
+        $bLit = floatval($singleBlockObj['literacy_rate'] ?? 0);
+        $bHouseholds = intval($singleBlockObj['households'] ?? 0);
+        $bCode = $singleBlockObj['sub_dist_code'] ?? 'N/A';
+        ?>
 
-    </main>
+        <!-- Block Header & Summary Card -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white border-top border-4 border-warning">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4 pb-3 border-bottom">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                        <span class="badge bg-primary-subtle text-primary fw-bold px-2.5 py-1 rounded-pill small">
+                            📍 CD Block Directory
+                        </span>
+                        <span class="badge bg-light text-muted border px-2.5 py-1 rounded-pill small">
+                            Code: <?php echo htmlspecialchars($bCode); ?>
+                        </span>
+                        <span class="badge bg-success-subtle text-success fw-bold px-2.5 py-1 rounded-pill small">
+                            🏢 <?php echo htmlspecialchars($districtObj['name']); ?> District
+                        </span>
+                    </div>
+                    <h2 class="fw-bold font-heading text-navy fs-3 mb-1">
+                        <?php echo htmlspecialchars($bName); ?> Block Gram Panchayats
+                    </h2>
+                    <p class="text-muted small mb-0">
+                        Official directory of all <?php echo count($panchayatsInBlock); ?> Gram Panchayats, Mukhiyas, and Sarpanchs in <?php echo htmlspecialchars($bName); ?> Block.
+                    </p>
+                </div>
 
-    <!-- Client-side Fast Filter & High-Performance Pagination JS -->
-    <script>
-    class TablePaginator {
-        constructor(config) {
-            this.tableId = config.tableId;
-            this.rowSelector = config.rowSelector;
-            this.pageSizeSelectId = config.pageSizeSelectId;
-            this.pageInfoId = config.pageInfoId;
-            this.bottomInfoId = config.bottomInfoId;
-            this.paginationContainerId = config.paginationContainerId;
-            this.topPaginationContainerId = config.topPaginationContainerId;
-            this.countBadgeId = config.countBadgeId;
-            this.unitName = config.unitName || 'Entries';
-            this.pageSize = config.defaultPageSize || 50;
-            this.currentPage = 1;
-            this.allRows = Array.from(document.querySelectorAll(this.rowSelector));
-            this.filteredRows = [...this.allRows];
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="<?php echo getPanchayatUrl($districtObj['slug']); ?>" class="btn btn-outline-secondary rounded-pill px-3 py-1.5 fw-semibold btn-sm">
+                        <i class="bi bi-arrow-left me-1"></i> All <?php echo htmlspecialchars($districtObj['name']); ?> Blocks
+                    </a>
+                    <a href="<?php echo getBlockUrl($districtObj['slug'], $bSlug); ?>" class="btn btn-primary rounded-pill px-3 py-1.5 fw-semibold btn-sm shadow-sm">
+                        <i class="bi bi-geo-alt-fill me-1"></i> Block Demographics
+                    </a>
+                </div>
+            </div>
 
-            this.init();
-        }
+            <!-- Block Quick Metrics -->
+            <div class="row g-3">
+                <div class="col-6 col-md-3">
+                    <div class="bg-light rounded-3 p-3 border text-center h-100">
+                        <i class="bi bi-building-check text-success fs-4 d-block mb-1"></i>
+                        <span class="text-muted small fw-bold text-uppercase d-block">Gram Panchayats</span>
+                        <span class="fs-4 fw-bold text-success"><?php echo count($panchayatsInBlock); ?></span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="bg-light rounded-3 p-3 border text-center h-100">
+                        <i class="bi bi-people-fill text-primary fs-4 d-block mb-1"></i>
+                        <span class="text-muted small fw-bold text-uppercase d-block">Population</span>
+                        <span class="fs-4 fw-bold text-dark"><?php echo number_format($bPop); ?></span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="bg-light rounded-3 p-3 border text-center h-100">
+                        <i class="bi bi-book-half text-warning fs-4 d-block mb-1"></i>
+                        <span class="text-muted small fw-bold text-uppercase d-block">Literacy Rate</span>
+                        <span class="fs-4 fw-bold text-dark"><?php echo $bLit ? "{$bLit}%" : 'N/A'; ?></span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="bg-light rounded-3 p-3 border text-center h-100">
+                        <i class="bi bi-house-door-fill text-info fs-4 d-block mb-1"></i>
+                        <span class="text-muted small fw-bold text-uppercase d-block">Households</span>
+                        <span class="fs-4 fw-bold text-dark"><?php echo number_format($bHouseholds); ?></span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        init() {
-            const pageSizeSelect = document.getElementById(this.pageSizeSelectId);
-            if (pageSizeSelect) {
-                pageSizeSelect.addEventListener('change', (e) => {
-                    this.pageSize = parseInt(e.target.value, 10) || 50;
-                    this.currentPage = 1;
-                    this.render();
-                });
+        <!-- Search Bar for Panchayats in this Block -->
+        <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
+            <div class="row g-3 align-items-center justify-content-between">
+                <div class="col-12 col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 rounded-start-pill ps-3"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" id="panchayatSearchInput" class="form-control bg-light border-start-0 rounded-end-pill px-2" placeholder="Search panchayat, mukhiya, or sarpanch..." onkeyup="filterBlockPanchayats()">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 text-md-end">
+                    <span class="badge bg-success text-white fw-bold px-3 py-2 rounded-pill fs-6" id="panchayatCountBadge">
+                        Showing <?php echo count($panchayatsInBlock); ?> Panchayats
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid of Panchayats in this Block -->
+        <div class="row g-3 g-lg-4" id="panchayatsGrid">
+            <?php foreach ($panchayatsInBlock as $p): 
+                $pSlug = slugify($p['panchayat_name']);
+                $pProfileUrl = getPanchayatUrl($districtObj['slug'], $bSlug, $pSlug);
+                $pSearch = strtolower(($p['panchayat_name'] ?? '') . ' ' . ($p['current_mukhiya'] ?? '') . ' ' . ($p['current_sarpanch'] ?? '') . ' ' . ($p['mukhiya_category'] ?? ''));
+            ?>
+                <div class="col-12 col-md-6 col-lg-4 panchayat-card-item" data-search="<?php echo htmlspecialchars($pSearch, ENT_QUOTES); ?>">
+                    <div class="admin-card h-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <span class="badge bg-warning-subtle text-dark fw-bold px-2 py-0.5 rounded small mb-1" style="font-size: 0.72rem;">
+                                        🌾 Gram Panchayat
+                                    </span>
+                                    <h4 class="fw-bold mb-0 text-navy font-heading fs-5">
+                                        <a href="<?php echo htmlspecialchars($pProfileUrl); ?>" class="text-decoration-none text-navy hover-primary">
+                                            <?php echo htmlspecialchars($p['panchayat_name']); ?>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <?php if (!empty($p['reservation_2026_mukhiya'])): ?>
+                                    <span class="badge bg-light text-muted border small px-2 py-1" style="font-size: 0.7rem;">
+                                        <?php echo htmlspecialchars($p['reservation_2026_mukhiya']); ?>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Leaders Mini Roster -->
+                            <div class="bg-light rounded-3 p-3 my-3 border small">
+                                <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
+                                    <div>
+                                        <span class="text-muted d-block" style="font-size: 0.72rem;">👑 Mukhiya (मुखिया):</span>
+                                        <strong class="text-dark fs-6"><?php echo htmlspecialchars($p['current_mukhiya'] ?: 'Details Available'); ?></strong>
+                                    </div>
+                                    <?php if (!empty($p['mukhiya_mobile'])): ?>
+                                        <div><?php echo renderMaskedPhoneButton($p['mukhiya_mobile'], $p['current_mukhiya'] . ' (Mukhiya)'); ?></div>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="text-muted d-block" style="font-size: 0.72rem;">⚖️ Sarpanch (सरपंच):</span>
+                                        <strong class="text-dark fs-6"><?php echo htmlspecialchars($p['current_sarpanch'] ?: 'Details Available'); ?></strong>
+                                    </div>
+                                    <?php if (!empty($p['sarpanch_mobile'])): ?>
+                                        <div><?php echo renderMaskedPhoneButton($p['sarpanch_mobile'], $p['current_sarpanch'] . ' (Sarpanch)'); ?></div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Action Link -->
+                        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                            <span class="small text-muted">Tier 1 PRI Body</span>
+                            <a href="<?php echo htmlspecialchars($pProfileUrl); ?>" class="btn btn-sm btn-primary fw-bold text-white rounded-pill px-3 py-1.5 shadow-sm">
+                                View Profile <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <script>
+        function filterBlockPanchayats() {
+            const query = document.getElementById('panchayatSearchInput').value.toLowerCase().trim();
+            const items = document.querySelectorAll('.panchayat-card-item');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const itemSearch = item.getAttribute('data-search').toLowerCase();
+                if (query === '' || itemSearch.includes(query)) {
+                    item.classList.remove('d-none');
+                    visibleCount++;
+                } else {
+                    item.classList.add('d-none');
+                }
+            });
+
+            const badge = document.getElementById('panchayatCountBadge');
+            if (badge) {
+                badge.innerText = 'Showing ' + visibleCount + ' Panchayats';
             }
-            this.render();
         }
+        </script>
 
-        setFilteredRows(rows) {
-            this.filteredRows = rows;
-            this.currentPage = 1;
-            this.render();
-        }
+    <?php elseif (!empty($selectedDistrictSlug) && $districtObj): ?>
+        <!-- ============================================================= -->
+        <!-- 3. SELECTED DISTRICT: BLOCKS & PANCHAYATI RAJ DIRECTORY       -->
+        <!-- ============================================================= -->
+        <?php 
+        $dStats = $districtCensusStats[$selectedDistrictSlug] ?? [];
+        $dTotalBlocks = count($districtBlocks) ?: ($dStats['total_blocks'] ?? 0);
+        $dTotalPanchayats = $districtPanchayatCounts[$selectedDistrictSlug] ?? count($allDistrictPanchayats);
+        $dPop = intval($dStats['total_pop'] ?? $districtObj['population'] ?? 0);
+        $dLit = round(floatval($dStats['avg_literacy'] ?? 0), 1);
+        $dHouseholds = intval($dStats['total_households'] ?? 0);
+        $cleanDivision = trim(preg_replace('/\s+division$/i', '', $districtObj['division'] ?? 'Bihar'));
+        ?>
 
-        goToPage(page) {
-            const totalPages = Math.ceil(this.filteredRows.length / this.pageSize) || 1;
-            if (page < 1) page = 1;
-            if (page > totalPages) page = totalPages;
-            this.currentPage = page;
-            this.render();
+        <!-- District Header & Summary Statistics Banner -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white border-top border-4 border-warning">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4 pb-3 border-bottom">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge bg-primary-subtle text-primary fw-bold px-2.5 py-1 rounded-pill small">🏢 <?php echo htmlspecialchars($cleanDivision); ?> Division</span>
+                        <?php if (!empty($districtObj['headquarters'])): ?>
+                            <span class="badge bg-light text-muted border px-2.5 py-1 rounded-pill small">HQ: <?php echo htmlspecialchars($districtObj['headquarters']); ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <h2 class="fw-bold font-heading text-navy fs-3 mb-1">
+                        <?php echo htmlspecialchars($districtObj['name']); ?> District
+                        <?php if (!empty($districtObj['name_hi'])): ?>
+                            <span class="text-muted fs-4 fw-normal">(<?php echo htmlspecialchars($districtObj['name_hi']); ?>)</span>
+                        <?php endif; ?>
+                    </h2>
+                    <p class="text-muted small mb-0">
+                        CD Blocks &amp; Gram Panchayats Administrative Directory of <?php echo htmlspecialchars($districtObj['name']); ?>
+                    </p>
+                </div>
 
-            const table = document.getElementById(this.tableId);
-            if (table) {
-                const rect = table.getBoundingClientRect();
-                if (rect.top < 80) {
-                    table.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="<?php echo getPanchayatUrl(); ?>" class="btn btn-outline-secondary rounded-pill px-3 py-1.5 fw-semibold btn-sm">
+                        <i class="bi bi-grid-fill me-1"></i> Browse All 38 Districts
+                    </a>
+                    <a href="<?php echo getDistrictUrl($selectedDistrictSlug); ?>" class="btn btn-outline-primary rounded-pill px-3 py-1.5 fw-semibold btn-sm">
+                        <i class="bi bi-building me-1"></i> Visit District Hub
+                    </a>
+                </div>
+            </div>
+
+            <!-- Key District Demographics & Panchayati Raj Metrics -->
+            <div class="row g-3">
+                <div class="col-6 col-md-3">
+                    <div class="bg-light rounded-3 p-3 border border-light text-center h-100">
+                        <i class="bi bi-geo-alt-fill text-primary fs-4 d-block mb-1"></i>
+                        <span class="text-muted small fw-bold text-uppercase d-block">CD Blocks</span>
+                        <span class="fs-4 fw-bold text-dark"><?php echo number_format($dTotalBlocks); ?></span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="bg-light rounded-3 p-3 border border-light text-center h-100">
+                        <i class="bi bi-building-check text-success fs-4 d-block mb-1"></i>
+                        <span class="text-muted small fw-bold text-uppercase d-block">Gram Panchayats</span>
+                        <span class="fs-4 fw-bold text-success"><?php echo $dTotalPanchayats ? number_format($dTotalPanchayats) : 'Mapped'; ?></span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="bg-light rounded-3 p-3 border border-light text-center h-100">
+                        <i class="bi bi-people-fill text-info fs-4 d-block mb-1"></i>
+                        <span class="text-muted small fw-bold text-uppercase d-block">Population</span>
+                        <span class="fs-4 fw-bold text-dark"><?php echo number_format($dPop); ?></span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="bg-light rounded-3 p-3 border border-light text-center h-100">
+                        <i class="bi bi-book-half text-warning fs-4 d-block mb-1"></i>
+                        <span class="text-muted small fw-bold text-uppercase d-block">Avg Literacy</span>
+                        <span class="fs-4 fw-bold text-dark"><?php echo $dLit ? "{$dLit}%" : "N/A"; ?></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar & Switch District Controls -->
+        <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
+            <div class="row g-3 align-items-center justify-content-between">
+                <div class="col-12 col-md-6">
+                    <label class="fw-bold text-navy small mb-1 d-block"><i class="bi bi-search text-primary me-1"></i> Search CD Blocks in <?php echo htmlspecialchars($districtObj['name']); ?>:</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 rounded-start-pill ps-3"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" id="blockSearchInput" class="form-control bg-light border-start-0 rounded-end-pill px-2" placeholder="Type block name (e.g. Chapra, Amnour, Manjhi)..." onkeyup="filterBlocks()">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 text-md-end">
+                    <label class="fw-bold text-navy small mb-1 d-block"><i class="bi bi-arrow-repeat text-primary me-1"></i> Switch District:</label>
+                    <select class="form-select form-select-sm rounded-pill d-inline-block w-auto" style="min-width: 240px;" onchange="if(this.value){ location.href = this.value; }">
+                        <?php foreach ($districts as $d): ?>
+                            <option value="<?php echo getPanchayatUrl($d['slug']); ?>" <?php echo $selectedDistrictSlug === $d['slug'] ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($d['name']); ?> District
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Counter Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+            <div>
+                <span class="badge bg-primary-subtle text-primary fw-bold px-3 py-1.5 rounded-pill small">Sub-District Directory</span>
+                <h3 class="fw-bold font-heading text-navy mt-1 fs-4 mb-0">Community Development Blocks in <?php echo htmlspecialchars($districtObj['name']); ?></h3>
+            </div>
+            <div class="badge bg-primary text-white fw-bold fs-6 px-3 py-2 rounded-pill shadow-sm" id="blockCountBadge">
+                Showing <?php echo count($districtBlocks); ?> Blocks
+            </div>
+        </div>
+
+        <!-- Redesigned Blocks Grid with Direct Panchayat View Options -->
+        <div class="row g-3 g-lg-4" id="blocksGrid">
+            <?php foreach ($districtBlocks as $blk): 
+                $bSlug = slugify($blk['sub_district']);
+                $bUrl = getBlockUrl($selectedDistrictSlug, $bSlug);
+                $bPop = intval($blk['population'] ?? 0);
+                $bMale = intval($blk['male'] ?? 0);
+                $bFemale = intval($blk['female'] ?? 0);
+                $bLit = floatval($blk['literacy_rate'] ?? 0);
+                $bHouseholds = intval($blk['households'] ?? 0);
+                $bCode = $blk['sub_dist_code'] ?? 'N/A';
+
+                // Look up count of panchayats in this block
+                $panchayatsInThisBlock = $blockPanchayatsMap[$bSlug] ?? [];
+                $pCount = count($panchayatsInThisBlock);
+                $bBlockPanchayatsUrl = getPanchayatUrl($selectedDistrictSlug, $bSlug);
+
+                $searchStr = strtolower(($blk['sub_district'] ?? '') . ' ' . $bCode . ' ' . $districtObj['name']);
+            ?>
+                <div class="col-12 col-md-6 col-lg-4 block-stat-item" data-search="<?php echo htmlspecialchars($searchStr, ENT_QUOTES); ?>">
+                    <div class="admin-card admin-card-block h-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <span class="badge bg-warning-subtle text-dark fw-bold px-2 py-0.5 rounded small mb-1" style="font-size: 0.72rem;">
+                                        📍 CD Block
+                                    </span>
+                                    <h4 class="fw-bold mb-0 text-navy font-heading fs-5">
+                                        <a href="<?php echo htmlspecialchars($bBlockPanchayatsUrl); ?>" class="text-decoration-none text-navy hover-primary" title="View all panchayats in <?php echo htmlspecialchars($blk['sub_district']); ?>">
+                                            <?php echo htmlspecialchars($blk['sub_district']); ?>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <span class="badge bg-light text-muted border small px-2 py-1">
+                                    Code: <?php echo htmlspecialchars($bCode); ?>
+                                </span>
+                            </div>
+
+                            <!-- Block Statistics Micro Dashboard -->
+                            <div class="row g-2 my-3">
+                                <div class="col-6">
+                                    <a href="<?php echo htmlspecialchars($bBlockPanchayatsUrl); ?>" class="text-decoration-none d-block">
+                                        <div class="metric-mini-box bg-success bg-opacity-10 border-success border-opacity-25 hover-shadow">
+                                            <span class="text-success fw-bold d-block" style="font-size: 0.72rem;">Gram Panchayats</span>
+                                            <strong class="text-success fs-6"><?php echo $pCount ? number_format($pCount) . ' Panchayats' : 'Mapped'; ?></strong>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <div class="metric-mini-box">
+                                        <span class="text-muted d-block" style="font-size: 0.72rem;">Population</span>
+                                        <strong class="text-dark fs-6"><?php echo number_format($bPop); ?></strong>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="metric-mini-box">
+                                        <span class="text-muted d-block" style="font-size: 0.72rem;">Literacy Rate</span>
+                                        <strong class="text-primary fs-6"><?php echo $bLit ? "{$bLit}%" : 'N/A'; ?></strong>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="metric-mini-box">
+                                        <span class="text-muted d-block" style="font-size: 0.72rem;">Households</span>
+                                        <strong class="text-dark fs-6"><?php echo number_format($bHouseholds); ?></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Direct Action Links with View Panchayats Option -->
+                        <div class="mt-auto pt-3 border-top">
+                            <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-2">
+                                <a href="<?php echo htmlspecialchars($bBlockPanchayatsUrl); ?>" class="btn btn-sm btn-success rounded-pill fw-bold px-3 py-1.5 small text-white shadow-sm" title="View all <?php echo $pCount; ?> Gram Panchayats">
+                                    🌾 View <?php echo $pCount ? $pCount : ''; ?> Panchayats <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                                
+                                <div class="d-flex gap-1">
+                                    <a href="<?php echo getPanchayatSamitiUrl($selectedDistrictSlug, $bSlug); ?>" class="btn btn-sm btn-outline-secondary rounded-pill fw-semibold px-2.5 py-1.5 small text-truncate" title="Panchayat Samiti Pramukh">
+                                        <i class="bi bi-people me-1"></i> Samiti
+                                    </a>
+                                    <a href="<?php echo htmlspecialchars($bUrl); ?>" class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-2.5 py-1.5 small text-nowrap" title="CD Block Overview">
+                                        Block Hub
+                                    </a>
+                                </div>
+                            </div>
+
+                            <?php if (!empty($panchayatsInThisBlock)): ?>
+                                <!-- Collapsible Quick-View Drawer of Gram Panchayats -->
+                                <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none small text-muted w-100 text-start mt-1 d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#quickPanchayats_<?php echo $bSlug; ?>" aria-expanded="false">
+                                    <span style="font-size: 0.75rem;"><i class="bi bi-grid-3x3-gap-fill text-success me-1"></i> Quick list (<?php echo $pCount; ?> Panchayats)</span>
+                                    <i class="bi bi-chevron-down" style="font-size: 0.7rem;"></i>
+                                </button>
+                                <div class="collapse mt-2 pt-2 border-top" id="quickPanchayats_<?php echo $bSlug; ?>">
+                                    <div class="d-flex flex-wrap gap-1" style="max-height: 180px; overflow-y: auto;">
+                                        <?php foreach ($panchayatsInThisBlock as $pItem): 
+                                            $pItemUrl = getPanchayatUrl($selectedDistrictSlug, $bSlug, slugify($pItem['panchayat_name']));
+                                        ?>
+                                            <a href="<?php echo htmlspecialchars($pItemUrl); ?>" class="btn btn-sm btn-light border rounded-pill px-2 py-0.5 text-truncate" style="font-size: 0.75rem;" title="<?php echo htmlspecialchars($pItem['panchayat_name']); ?> (Mukhiya: <?php echo htmlspecialchars($pItem['current_mukhiya'] ?: 'N/A'); ?>)">
+                                                🌾 <?php echo htmlspecialchars($pItem['panchayat_name']); ?>
+                                            </a>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div id="noBlocksAlert" class="alert alert-info rounded-4 text-center py-5 d-none mt-4 shadow-sm">
+            <i class="bi bi-search fs-1 text-primary mb-2 d-block"></i>
+            <h5 class="fw-bold text-dark mb-1">No Block found in <?php echo htmlspecialchars($districtObj['name']); ?></h5>
+            <p class="text-muted mb-3">Try searching for another block name or sub-district code.</p>
+            <button class="btn btn-primary rounded-pill px-4 py-2 fw-semibold" onclick="clearBlockSearch()">Clear Search</button>
+        </div>
+
+        <script>
+        function filterBlocks() {
+            const query = document.getElementById('blockSearchInput').value.toLowerCase().trim();
+            const items = document.querySelectorAll('.block-stat-item');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const itemSearch = item.getAttribute('data-search').toLowerCase();
+                if (query === '' || itemSearch.includes(query)) {
+                    item.classList.remove('d-none');
+                    visibleCount++;
+                } else {
+                    item.classList.add('d-none');
+                }
+            });
+
+            const badge = document.getElementById('blockCountBadge');
+            if (badge) {
+                badge.innerText = 'Showing ' + visibleCount + ' Blocks';
+            }
+            
+            const noResults = document.getElementById('noBlocksAlert');
+            if (noResults) {
+                if (visibleCount === 0) {
+                    noResults.classList.remove('d-none');
+                } else {
+                    noResults.classList.add('d-none');
                 }
             }
         }
 
-        render() {
-            const totalItems = this.filteredRows.length;
-            const totalPages = Math.ceil(totalItems / this.pageSize) || 1;
-            if (this.currentPage > totalPages) this.currentPage = totalPages;
+        function clearBlockSearch() {
+            document.getElementById('blockSearchInput').value = '';
+            filterBlocks();
+        }
+        </script>
 
-            const startIndex = (this.currentPage - 1) * this.pageSize;
-            const endIndex = Math.min(startIndex + this.pageSize, totalItems);
+    <?php else: ?>
+        <!-- ============================================================= -->
+        <!-- 4. ALL 38 DISTRICTS OVERVIEW & DIRECTORY                      -->
+        <!-- ============================================================= -->
+        
+        <!-- State Overview Highlights -->
+        <div class="row g-3 g-lg-4 mb-4">
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-primary">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase">Districts</small>
+                        <i class="bi bi-building text-primary fs-4"></i>
+                    </div>
+                    <div class="fs-3 fw-bold text-navy">38</div>
+                    <small class="text-muted">Administrative Districts</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-warning">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase">CD Blocks</small>
+                        <i class="bi bi-geo-alt-fill text-warning fs-4"></i>
+                    </div>
+                    <div class="fs-3 fw-bold text-dark"><?php echo number_format($totalStateBlocks); ?></div>
+                    <small class="text-muted">Sub-District Units</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-success">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase">Gram Panchayats</small>
+                        <i class="bi bi-building-check text-success fs-4"></i>
+                    </div>
+                    <div class="fs-3 fw-bold text-success"><?php echo number_format($totalStatePanchayats); ?></div>
+                    <small class="text-muted">Local Village Bodies</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-info">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase">Total Population</small>
+                        <i class="bi bi-people-fill text-info fs-4"></i>
+                    </div>
+                    <div class="fs-3 fw-bold text-dark">10.41 Cr</div>
+                    <small class="text-muted">Census Demographics</small>
+                </div>
+            </div>
+        </div>
 
-            // Hide all rows
-            this.allRows.forEach(r => r.style.display = 'none');
+        <!-- Interactive Search & Division Filter Hub -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white border-top border-4 border-primary">
+            <div class="row g-3 align-items-center justify-content-between mb-3">
+                <div class="col-12 col-md-7">
+                    <h4 class="fw-bold text-navy font-heading mb-1 fs-5">
+                        <i class="bi bi-funnel-fill text-primary me-1"></i> Browse Districts by Division or Search
+                    </h4>
+                    <p class="text-muted small mb-0">Select any division below or search by district name, headquarters, or Hindi name.</p>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 rounded-start-pill ps-3"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" id="districtSearchInput" class="form-control bg-light border-start-0 rounded-end-pill px-2" placeholder="Type district name (e.g. Patna, Saran, Gaya)..." autocomplete="off" onkeyup="filterDistricts()">
+                    </div>
+                </div>
+            </div>
 
-            // Show current page items
-            for (let i = startIndex; i < endIndex; i++) {
-                if (this.filteredRows[i]) {
-                    this.filteredRows[i].style.display = '';
+            <!-- Division Quick Filter Pills -->
+            <div class="d-flex flex-wrap gap-2 pt-3 border-top align-items-center" id="divisionPillsContainer">
+                <span class="fw-bold text-muted small me-1"><i class="bi bi-geo-fill text-primary"></i> Division:</span>
+                
+                <button type="button" class="division-pill-btn active" data-division="all" onclick="filterDivision('all', this)">
+                    All Bihar <span class="division-badge-count">38</span>
+                </button>
+
+                <?php foreach ($divisionsList as $div): 
+                    $count = $divisionCounts[$div] ?? 0;
+                ?>
+                    <button type="button" class="division-pill-btn" data-division="<?php echo htmlspecialchars(strtolower($div)); ?>" onclick="filterDivision('<?php echo htmlspecialchars(strtolower($div)); ?>', this)">
+                        <?php echo htmlspecialchars($div); ?> <span class="division-badge-count"><?php echo $count; ?></span>
+                    </button>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <!-- Filter Counter Ribbon -->
+        <div class="d-flex align-items-center justify-content-between mb-3 px-1">
+            <span class="text-muted small fw-semibold" id="filterStatusText">Showing all 38 districts across Bihar</span>
+            <span class="badge bg-primary-subtle text-primary fw-bold px-3 py-1.5 rounded-pill small" id="districtCountBadge">38 Districts</span>
+        </div>
+
+        <!-- Redesigned 38 Districts Grid -->
+        <div class="row g-3 g-lg-4" id="districtsGrid">
+            <?php foreach ($districts as $d): 
+                $dSlug = strtolower($d['slug']);
+                $census = $districtCensusStats[$dSlug] ?? [];
+                $bCount = intval($census['total_blocks'] ?? 0);
+                $pCount = intval($districtPanchayatCounts[$dSlug] ?? 0);
+                
+                $rawDivision = $d['division'] ?? 'Bihar';
+                $cleanDivision = trim(preg_replace('/\s+division$/i', '', $rawDivision));
+                $divisionKey = strtolower($cleanDivision);
+                
+                $searchStr = strtolower($d['name'] . ' ' . ($d['name_hi'] ?? '') . ' ' . ($d['headquarters'] ?? '') . ' ' . $cleanDivision . ' ' . $rawDivision);
+                $districtPanchayatUrl = getPanchayatUrl($dSlug);
+                $districtHubUrl = getDistrictUrl($dSlug);
+                $dPop = intval($d['population'] ?? $census['total_pop'] ?? 0);
+            ?>
+                <div class="col-12 col-md-6 col-lg-4 district-stat-item" data-search="<?php echo htmlspecialchars($searchStr, ENT_QUOTES); ?>" data-division="<?php echo htmlspecialchars($divisionKey, ENT_QUOTES); ?>">
+                    <div class="admin-card h-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <!-- Header Info -->
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <span class="badge bg-primary-subtle text-primary fw-bold px-2 py-0.5 rounded small mb-1" style="font-size: 0.72rem;">
+                                        🏛️ <?php echo htmlspecialchars($cleanDivision); ?> Division
+                                    </span>
+                                    <h5 class="fw-bold mb-0 text-navy font-heading fs-5">
+                                        <a href="<?php echo htmlspecialchars($districtPanchayatUrl); ?>" class="text-decoration-none text-navy hover-primary">
+                                            <?php echo htmlspecialchars($d['name']); ?>
+                                        </a>
+                                        <?php if (!empty($d['name_hi'])): ?>
+                                            <span class="text-muted fs-6 fw-normal ms-1">(<?php echo htmlspecialchars($d['name_hi']); ?>)</span>
+                                        <?php endif; ?>
+                                    </h5>
+                                </div>
+                                <span class="badge bg-light text-muted border small px-2 py-1">
+                                    HQ: <?php echo htmlspecialchars($d['headquarters'] ?? $d['name']); ?>
+                                </span>
+                            </div>
+
+                            <!-- Micro-Metrics Dashboard -->
+                            <div class="row g-2 my-3">
+                                <div class="col-4">
+                                    <div class="metric-mini-box">
+                                        <span class="text-muted d-block" style="font-size: 0.72rem;">CD Blocks</span>
+                                        <strong class="text-dark fs-6"><?php echo $bCount ? number_format($bCount) : 'Mapped'; ?></strong>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="metric-mini-box">
+                                        <span class="text-muted d-block" style="font-size: 0.72rem;">Panchayats</span>
+                                        <strong class="text-success fs-6"><?php echo $pCount ? number_format($pCount) : 'Mapped'; ?></strong>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="metric-mini-box">
+                                        <span class="text-muted d-block" style="font-size: 0.72rem;">Population</span>
+                                        <strong class="text-primary fs-6"><?php echo $dPop ? round($dPop / 100000, 1) . 'L' : 'N/A'; ?></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Links -->
+                        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center gap-2">
+                            <div class="d-flex gap-2">
+                                <a href="<?php echo htmlspecialchars($districtHubUrl); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-2.5 py-1 small" title="District Hub">
+                                    <i class="bi bi-building"></i> Hub
+                                </a>
+                                <a href="<?php echo getZilaParishadUrl($dSlug); ?>" class="btn btn-sm btn-outline-info text-dark rounded-pill px-2.5 py-1 small" title="Zila Parishad">
+                                    <i class="bi bi-bank"></i> Zila Parishad
+                                </a>
+                            </div>
+                            <a href="<?php echo htmlspecialchars($districtPanchayatUrl); ?>" class="btn btn-sm btn-primary fw-bold text-white rounded-pill px-3 py-1.5 shadow-sm text-nowrap">
+                                View Blocks <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div id="noDistrictsAlert" class="alert alert-info rounded-4 text-center py-5 d-none mt-4 shadow-sm">
+            <i class="bi bi-search fs-1 text-primary mb-2 d-block"></i>
+            <h5 class="fw-bold text-dark mb-1">No District found</h5>
+            <p class="text-muted mb-3">Try searching for another district name, headquarters, or reset the division filter.</p>
+            <button class="btn btn-primary rounded-pill px-4 py-2 fw-semibold" onclick="clearDistrictSearch()">Reset All Filters</button>
+        </div>
+
+        <script>
+        let currentDivision = 'all';
+
+        function filterDivision(div, btn) {
+            currentDivision = div.toLowerCase().trim();
+            document.querySelectorAll('.division-pill-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            filterDistricts();
+        }
+
+        function filterDistricts() {
+            const query = document.getElementById('districtSearchInput').value.toLowerCase().trim();
+            const items = document.querySelectorAll('.district-stat-item');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const itemSearch = item.getAttribute('data-search').toLowerCase();
+                const itemDiv = (item.getAttribute('data-division') || '').toLowerCase();
+                
+                const matchQuery = query === '' || itemSearch.includes(query);
+                const matchDiv = currentDivision === 'all' || itemDiv === currentDivision || itemDiv.includes(currentDivision);
+
+                if (matchQuery && matchDiv) {
+                    item.classList.remove('d-none');
+                    visibleCount++;
+                } else {
+                    item.classList.add('d-none');
+                }
+            });
+            
+            const badge = document.getElementById('districtCountBadge');
+            if (badge) {
+                badge.innerText = visibleCount + ' Districts';
+            }
+
+            const statusText = document.getElementById('filterStatusText');
+            if (statusText) {
+                if (currentDivision !== 'all') {
+                    const divTitle = currentDivision.charAt(0).toUpperCase() + currentDivision.slice(1);
+                    statusText.innerText = 'Showing ' + visibleCount + ' districts in ' + divTitle + ' Division';
+                } else if (query !== '') {
+                    statusText.innerText = 'Showing ' + visibleCount + ' matching districts';
+                } else {
+                    statusText.innerText = 'Showing all 38 districts across Bihar';
                 }
             }
 
-            const infoHtml = totalItems === 0 
-                ? `No matching ${this.unitName.toLowerCase()} found`
-                : `Showing <strong>${(startIndex + 1).toLocaleString()}</strong> to <strong>${endIndex.toLocaleString()}</strong> of <strong>${totalItems.toLocaleString()}</strong> ${this.unitName}`;
-
-            const pageInfo = document.getElementById(this.pageInfoId);
-            if (pageInfo) pageInfo.innerHTML = infoHtml;
-
-            const bottomInfo = document.getElementById(this.bottomInfoId);
-            if (bottomInfo) bottomInfo.innerHTML = infoHtml + (totalPages > 1 ? ` (Page ${this.currentPage} of ${totalPages})` : '');
-
-            if (this.countBadgeId) {
-                const badge = document.getElementById(this.countBadgeId);
-                if (badge) badge.textContent = `${totalItems.toLocaleString()} ${this.unitName}`;
-            }
-
-            this.renderPaginationButtons(this.paginationContainerId, totalPages);
-            if (this.topPaginationContainerId) {
-                this.renderTopPaginationButtons(this.topPaginationContainerId, totalPages);
+            const noResults = document.getElementById('noDistrictsAlert');
+            if (noResults) {
+                if (visibleCount === 0) {
+                    noResults.classList.remove('d-none');
+                } else {
+                    noResults.classList.add('d-none');
+                }
             }
         }
 
-        renderPaginationButtons(containerId, totalPages) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            if (totalPages <= 1) {
-                container.innerHTML = '';
-                return;
-            }
-
-            let html = '<ul class="pagination pagination-sm mb-0 flex-wrap justify-content-center justify-content-md-end">';
-
-            html += `<li class="page-item ${this.currentPage === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="javascript:void(0)" onclick="window['${this.tableId}_paginator'].goToPage(1)" title="First Page">« First</a>
-            </li>`;
-            html += `<li class="page-item ${this.currentPage === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="javascript:void(0)" onclick="window['${this.tableId}_paginator'].goToPage(${this.currentPage - 1})" title="Previous Page">‹ Prev</a>
-            </li>`;
-
-            const maxPages = 5;
-            let start = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
-            let end = Math.min(totalPages, start + maxPages - 1);
-            if (end - start + 1 < maxPages) {
-                start = Math.max(1, end - maxPages + 1);
-            }
-
-            if (start > 1) {
-                html += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="window['${this.tableId}_paginator'].goToPage(1)">1</a></li>`;
-                if (start > 2) html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-            }
-
-            for (let p = start; p <= end; p++) {
-                html += `<li class="page-item ${p === this.currentPage ? 'active' : ''}">
-                    <a class="page-link" href="javascript:void(0)" onclick="window['${this.tableId}_paginator'].goToPage(${p})">${p}</a>
-                </li>`;
-            }
-
-            if (end < totalPages) {
-                if (end < totalPages - 1) html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-                html += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="window['${this.tableId}_paginator'].goToPage(${totalPages})">${totalPages}</a></li>`;
-            }
-
-            html += `<li class="page-item ${this.currentPage === totalPages ? 'disabled' : ''}">
-                <a class="page-link" href="javascript:void(0)" onclick="window['${this.tableId}_paginator'].goToPage(${this.currentPage + 1})" title="Next Page">Next ›</a>
-            </li>`;
-            html += `<li class="page-item ${this.currentPage === totalPages ? 'disabled' : ''}">
-                <a class="page-link" href="javascript:void(0)" onclick="window['${this.tableId}_paginator'].goToPage(${totalPages})" title="Last Page">Last »</a>
-            </li>`;
-
-            html += '</ul>';
-            container.innerHTML = html;
-        }
-
-        renderTopPaginationButtons(containerId, totalPages) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            if (totalPages <= 1) {
-                container.innerHTML = '';
-                return;
-            }
-
-            let html = `<div class="btn-group btn-group-sm">
-                <button class="btn btn-outline-secondary" ${this.currentPage === 1 ? 'disabled' : ''} onclick="window['${this.tableId}_paginator'].goToPage(${this.currentPage - 1})" title="Previous Page">‹</button>
-                <span class="btn btn-light text-dark fw-bold border" style="cursor: default; font-size: 0.8rem;">Page ${this.currentPage} / ${totalPages}</span>
-                <button class="btn btn-outline-secondary" ${this.currentPage === totalPages ? 'disabled' : ''} onclick="window['${this.tableId}_paginator'].goToPage(${this.currentPage + 1})" title="Next Page">›</button>
-            </div>`;
-            container.innerHTML = html;
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // 1. Mukhiya Paginator & Filter
-        window['mukhiyaTable_paginator'] = new TablePaginator({
-            tableId: 'mukhiyaTable',
-            rowSelector: '#mukhiyaTable .mukhiya-row',
-            pageSizeSelectId: 'mukhiyaPageSize',
-            pageInfoId: 'mukhiyaPageInfo',
-            bottomInfoId: 'mukhiyaBottomInfo',
-            paginationContainerId: 'mukhiyaPagination',
-            topPaginationContainerId: 'mukhiyaTopPagination',
-            countBadgeId: 'totalMukhiyaBadge',
-            unitName: 'Mukhiyas',
-            defaultPageSize: 50
-        });
-
-        const mSearch = document.getElementById('mukhiyaSearch');
-        const mGenderFilter = document.getElementById('mukhiyaGenderFilter');
-        const mCategoryFilter = document.getElementById('mukhiyaCategoryFilter');
-
-        function filterMukhiyaRows() {
-            const query = (mSearch?.value || '').toLowerCase().trim();
-            const selectedGender = mGenderFilter?.value || '';
-            const selectedCat = (mCategoryFilter?.value || '').toLowerCase().trim();
-
-            const matched = window['mukhiyaTable_paginator'].allRows.filter(row => {
-                const districtName = (row.getAttribute('data-district-name') || '');
-                const block = (row.getAttribute('data-block') || '');
-                const panchayat = (row.getAttribute('data-panchayat') || '');
-                const name = (row.getAttribute('data-name') || '');
-                const gender = (row.getAttribute('data-gender') || '');
-                const category = (row.getAttribute('data-category') || '');
-
-                const matchesQuery = !query || districtName.includes(query) || block.includes(query) || panchayat.includes(query) || name.includes(query);
-                const matchesGender = !selectedGender || gender === selectedGender;
-                const matchesCat = !selectedCat || category.includes(selectedCat);
-
-                return matchesQuery && matchesGender && matchesCat;
+        function clearDistrictSearch() {
+            document.getElementById('districtSearchInput').value = '';
+            currentDivision = 'all';
+            document.querySelectorAll('.division-pill-btn').forEach(b => {
+                if (b.getAttribute('data-division') === 'all') b.classList.add('active');
+                else b.classList.remove('active');
             });
-
-            window['mukhiyaTable_paginator'].setFilteredRows(matched);
+            filterDistricts();
         }
+        </script>
+    <?php endif; ?>
 
-        if (mSearch) mSearch.addEventListener('input', filterMukhiyaRows);
-        if (mGenderFilter) mGenderFilter.addEventListener('change', filterMukhiyaRows);
-        if (mCategoryFilter) mCategoryFilter.addEventListener('change', filterMukhiyaRows);
+    <!-- Official Data Sources Attribution Banner -->
+    <section class="mt-5 pt-4 border-top">
+        <div class="p-4 rounded-4 bg-light border d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px;">
+                    <i class="bi bi-shield-check fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="fw-bold text-dark font-heading mb-1">Standardized Public &amp; Government Data Sources</h6>
+                    <p class="text-muted small mb-0">Local Block boundaries, Gram Panchayat distributions, Census 2011 stats, and administrative rosters reference Census of India, LGD Portal, and SEC Bihar.</p>
+                </div>
+            </div>
+            <a href="<?php echo SITE_URL; ?>/census" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold text-nowrap">
+                <i class="bi bi-bar-chart-line me-1"></i>View Census Directory
+            </a>
+        </div>
+    </section>
 
-        // 2. Sarpanch Paginator & Filter
-        window['sarpanchTable_paginator'] = new TablePaginator({
-            tableId: 'sarpanchTable',
-            rowSelector: '#sarpanchTable .sarpanch-row',
-            pageSizeSelectId: 'sarpanchPageSize',
-            pageInfoId: 'sarpanchPageInfo',
-            bottomInfoId: 'sarpanchBottomInfo',
-            paginationContainerId: 'sarpanchPagination',
-            topPaginationContainerId: 'sarpanchTopPagination',
-            countBadgeId: 'totalSarpanchBadge',
-            unitName: 'Sarpanchs',
-            defaultPageSize: 50
-        });
-
-        const sSearch = document.getElementById('sarpanchSearch');
-        const sGenderFilter = document.getElementById('sarpanchGenderFilter');
-        const sCategoryFilter = document.getElementById('sarpanchCategoryFilter');
-
-        function filterSarpanchRows() {
-            const query = (sSearch?.value || '').toLowerCase().trim();
-            const selectedGender = sGenderFilter?.value || '';
-            const selectedCat = (sCategoryFilter?.value || '').toLowerCase().trim();
-
-            const matched = window['sarpanchTable_paginator'].allRows.filter(row => {
-                const districtName = (row.getAttribute('data-district-name') || '');
-                const block = (row.getAttribute('data-block') || '');
-                const panchayat = (row.getAttribute('data-panchayat') || '');
-                const name = (row.getAttribute('data-name') || '');
-                const gender = (row.getAttribute('data-gender') || '');
-                const category = (row.getAttribute('data-category') || '');
-
-                const matchesQuery = !query || districtName.includes(query) || block.includes(query) || panchayat.includes(query) || name.includes(query);
-                const matchesGender = !selectedGender || gender === selectedGender;
-                const matchesCat = !selectedCat || category.includes(selectedCat);
-
-                return matchesQuery && matchesGender && matchesCat;
-            });
-
-            window['sarpanchTable_paginator'].setFilteredRows(matched);
-        }
-
-        if (sSearch) sSearch.addEventListener('input', filterSarpanchRows);
-        if (sGenderFilter) sGenderFilter.addEventListener('change', filterSarpanchRows);
-        if (sCategoryFilter) sCategoryFilter.addEventListener('change', filterSarpanchRows);
-
-        // 3. Zila Parishad Paginator & Filter
-        window['allZilaTable_paginator'] = new TablePaginator({
-            tableId: 'allZilaTable',
-            rowSelector: '#allZilaTable .global-zila-row',
-            pageSizeSelectId: 'zilaPageSize',
-            pageInfoId: 'zilaPageInfo',
-            bottomInfoId: 'zilaBottomInfo',
-            paginationContainerId: 'zilaPagination',
-            topPaginationContainerId: 'zilaTopPagination',
-            countBadgeId: 'totalMembersCount',
-            unitName: 'Members',
-            defaultPageSize: 50
-        });
-
-        const zSearch = document.getElementById('globalZilaSearch');
-        const zDistrictFilter = document.getElementById('globalDistrictFilter');
-        const zGenderFilter = document.getElementById('globalGenderFilter');
-        const zCategoryFilter = document.getElementById('globalCategoryFilter');
-
-        function filterAllZilaRows() {
-            const query = (zSearch?.value || '').toLowerCase().trim();
-            const selectedDistrict = (zDistrictFilter?.value || '').toLowerCase().trim();
-            const selectedGender = zGenderFilter?.value || '';
-            const selectedCat = (zCategoryFilter?.value || '').toLowerCase().trim();
-
-            const matched = window['allZilaTable_paginator'].allRows.filter(row => {
-                const name = (row.getAttribute('data-name') || '').toLowerCase();
-                const district = (row.getAttribute('data-district') || '').toLowerCase();
-                const districtName = (row.getAttribute('data-district-name') || '').toLowerCase();
-                const block = (row.getAttribute('data-block') || '').toLowerCase();
-                const ward = (row.getAttribute('data-ward') || '').toLowerCase();
-                const gender = row.getAttribute('data-gender') || '';
-                const category = (row.getAttribute('data-category') || '').toLowerCase();
-
-                const matchesQuery = !query || name.includes(query) || block.includes(query) || ward.includes(query) || districtName.includes(query);
-                const matchesDistrict = !selectedDistrict || district === selectedDistrict;
-                const matchesGender = !selectedGender || gender === selectedGender;
-                const matchesCat = !selectedCat || category.includes(selectedCat);
-
-                return matchesQuery && matchesDistrict && matchesGender && matchesCat;
-            });
-
-            window['allZilaTable_paginator'].setFilteredRows(matched);
-        }
-
-        if (zSearch) zSearch.addEventListener('input', filterAllZilaRows);
-        if (zDistrictFilter) zDistrictFilter.addEventListener('change', filterAllZilaRows);
-        if (zGenderFilter) zGenderFilter.addEventListener('change', filterAllZilaRows);
-        if (zCategoryFilter) zCategoryFilter.addEventListener('change', filterAllZilaRows);
-
-        // 3b. District Summary Filter
-        const zDistSummarySearch = document.getElementById('zilaDistSummarySearch');
-        if (zDistSummarySearch) {
-            zDistSummarySearch.addEventListener('input', function() {
-                const q = this.value.toLowerCase().trim();
-                document.querySelectorAll('.zila-dist-summary-row').forEach(row => {
-                    const searchData = (row.getAttribute('data-search') || row.textContent).toLowerCase();
-                    row.style.display = (!q || searchData.includes(q)) ? '' : 'none';
-                });
-            });
-        }
-
-        // 4. 2016 Mukhiya Paginator & Filter
-        window['mukhiya2016Table_paginator'] = new TablePaginator({
-            tableId: 'mukhiya2016Table',
-            rowSelector: '#mukhiya2016Table .mukhiya-2016-row',
-            pageSizeSelectId: 'mukhiya2016PageSize',
-            pageInfoId: 'mukhiya2016PageInfo',
-            bottomInfoId: 'mukhiya2016BottomInfo',
-            paginationContainerId: 'mukhiya2016Pagination',
-            topPaginationContainerId: 'mukhiya2016TopPagination',
-            unitName: '2016 Mukhiyas',
-            defaultPageSize: 50
-        });
-
-        const m16Search = document.getElementById('mukhiya2016Search');
-        if (m16Search) {
-            m16Search.addEventListener('input', function() {
-                const query = this.value.toLowerCase().trim();
-                const matched = window['mukhiya2016Table_paginator'].allRows.filter(row => {
-                    const name = (row.getAttribute('data-name') || '').toLowerCase();
-                    return !query || name.includes(query);
-                });
-                window['mukhiya2016Table_paginator'].setFilteredRows(matched);
-            });
-        }
-
-        // 5. 2016 Block Samiti Paginator & Filter
-        window['samiti2016Table_paginator'] = new TablePaginator({
-            tableId: 'samiti2016Table',
-            rowSelector: '#samiti2016Table .samiti-2016-row',
-            pageSizeSelectId: 'samiti2016PageSize',
-            pageInfoId: 'samiti2016PageInfo',
-            bottomInfoId: 'samiti2016BottomInfo',
-            paginationContainerId: 'samiti2016Pagination',
-            topPaginationContainerId: 'samiti2016TopPagination',
-            unitName: 'Block Samitis',
-            defaultPageSize: 50
-        });
-
-        const samiti2016Search = document.getElementById('samiti2016Search');
-        if (samiti2016Search) {
-            samiti2016Search.addEventListener('input', function() {
-                const query = this.value.toLowerCase().trim();
-                const matched = window['samiti2016Table_paginator'].allRows.filter(row => {
-                    const name = (row.getAttribute('data-name') || '').toLowerCase();
-                    return !query || name.includes(query);
-                });
-                window['samiti2016Table_paginator'].setFilteredRows(matched);
-            });
-        // Auto pre-filter if specific panchayat or block is requested via clean URL
-        <?php if (!empty($selectedPanchayat)): ?>
-        const initPanchayatQuery = <?php echo json_encode($selectedPanchayat); ?>;
-        if (mSearch) { mSearch.value = initPanchayatQuery; filterMukhiyaRows(); }
-        if (sSearch) { sSearch.value = initPanchayatQuery; filterSarpanchRows(); }
-        <?php endif; ?>
-
-        <?php if (!empty($selectedBlock)): ?>
-        const initBlockQuery = <?php echo json_encode($selectedBlock); ?>;
-        if (samiti2016Search) { samiti2016Search.value = initBlockQuery; }
-        <?php endif; ?>
-    });
-    </script>
+    <?php renderGoogleAd('footer_banner', GOOGLE_AD_SLOT_FOOTER, 'my-4'); ?>
+</main>
 
 <?php require_once __DIR__ . '/footer.php'; ?>

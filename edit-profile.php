@@ -405,7 +405,7 @@ require_once __DIR__ . '/header.php';
                         <?php endif; ?>
                     </div>
                     <h6 class="fw-bold text-dark mb-1"><?php echo htmlspecialchars($dispName); ?></h6>
-                    <p class="small text-muted mb-2">📱 +91 <?php echo htmlspecialchars($user['mobile']); ?></p>
+                    <p class="small text-muted mb-2">📱 +91 <?php echo htmlspecialchars(maskMobileNumber($user['mobile'] ?? '')); ?></p>
                     <div class="badge bg-success bg-opacity-25 text-success border border-success fw-bold px-3 py-1 mb-3">
                         <i class="bi bi-shield-check me-1"></i> DLT Verified Citizen
                     </div>

@@ -5,112 +5,135 @@ requireAdmin();
 $message = '';
 $error = '';
 $sitemap_path = __DIR__ . '/../sitemap.xml';
+$panchayat_sitemap_path = __DIR__ . '/../sitemap-panchayats.xml';
 
 // Handle Sitemap Regeneration
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_sitemap'])) {
-    $base_url = rtrim(SITE_URL, '/');
-    $districts = DataProvider::getDistricts();
-    $constituencies = DataProvider::getConstituencies();
-    $candidates = DataProvider::getCandidates();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['generate_sitemap']) || isset($_POST['generate_all_sitemaps'])) {
+        $base_url = rtrim(SITE_URL, '/');
+        $districts = DataProvider::getDistricts();
+        $constituencies = DataProvider::getConstituencies();
+        $candidates = DataProvider::getCandidates();
 
-    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 
-    // 1. Static Pages
-    $static_pages = [
-        ['url' => '/', 'priority' => '1.0', 'changefreq' => 'daily'],
-        ['url' => '/blog/', 'priority' => '0.9', 'changefreq' => 'daily'],
-        ['url' => '/panchayat', 'priority' => '0.9', 'changefreq' => 'daily'],
-        ['url' => '/mukhiya', 'priority' => '0.9', 'changefreq' => 'daily'],
-        ['url' => '/sarpanch', 'priority' => '0.9', 'changefreq' => 'daily'],
-        ['url' => '/zila-parishad', 'priority' => '0.85', 'changefreq' => 'weekly'],
-        ['url' => '/panchayat-samiti', 'priority' => '0.85', 'changefreq' => 'weekly'],
-        ['url' => '/mp', 'priority' => '0.85', 'changefreq' => 'weekly'],
-        ['url' => '/mlc', 'priority' => '0.85', 'changefreq' => 'weekly'],
-        ['url' => '/rajya-sabha', 'priority' => '0.8', 'changefreq' => 'monthly'],
-        ['url' => '/disclaimer', 'priority' => '0.7', 'changefreq' => 'monthly'],
-        ['url' => '/privacy-policy', 'priority' => '0.7', 'changefreq' => 'monthly'],
-        ['url' => '/terms-and-conditions', 'priority' => '0.7', 'changefreq' => 'monthly'],
-        ['url' => '/mission-and-vision', 'priority' => '0.8', 'changefreq' => 'monthly'],
-        ['url' => '/advertise', 'priority' => '0.8', 'changefreq' => 'monthly'],
-        ['url' => '/whatsapp', 'priority' => '0.8', 'changefreq' => 'weekly'],
-    ];
-    foreach ($static_pages as $sp) {
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars($base_url . $sp['url']) . "</loc>\n";
-        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
-        $xml .= "        <changefreq>" . $sp['changefreq'] . "</changefreq>\n";
-        $xml .= "        <priority>" . $sp['priority'] . "</priority>\n";
-        $xml .= "    </url>\n";
+        // 1. Static Pages
+        $static_pages = [
+            ['url' => '/', 'priority' => '1.0', 'changefreq' => 'daily'],
+            ['url' => '/blog/', 'priority' => '0.9', 'changefreq' => 'daily'],
+            ['url' => '/panchayat', 'priority' => '0.9', 'changefreq' => 'daily'],
+            ['url' => '/mukhiya', 'priority' => '0.9', 'changefreq' => 'daily'],
+            ['url' => '/sarpanch', 'priority' => '0.9', 'changefreq' => 'daily'],
+            ['url' => '/zila-parishad', 'priority' => '0.85', 'changefreq' => 'weekly'],
+            ['url' => '/panchayat-samiti', 'priority' => '0.85', 'changefreq' => 'weekly'],
+            ['url' => '/mp', 'priority' => '0.85', 'changefreq' => 'weekly'],
+            ['url' => '/mlc', 'priority' => '0.85', 'changefreq' => 'weekly'],
+            ['url' => '/rajya-sabha', 'priority' => '0.8', 'changefreq' => 'monthly'],
+            ['url' => '/disclaimer', 'priority' => '0.7', 'changefreq' => 'monthly'],
+            ['url' => '/privacy-policy', 'priority' => '0.7', 'changefreq' => 'monthly'],
+            ['url' => '/terms-and-conditions', 'priority' => '0.7', 'changefreq' => 'monthly'],
+            ['url' => '/mission-and-vision', 'priority' => '0.8', 'changefreq' => 'monthly'],
+            ['url' => '/advertise', 'priority' => '0.8', 'changefreq' => 'monthly'],
+            ['url' => '/whatsapp', 'priority' => '0.8', 'changefreq' => 'weekly'],
+        ];
+        foreach ($static_pages as $sp) {
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars($base_url . $sp['url']) . "</loc>\n";
+            $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+            $xml .= "        <changefreq>" . $sp['changefreq'] . "</changefreq>\n";
+            $xml .= "        <priority>" . $sp['priority'] . "</priority>\n";
+            $xml .= "    </url>\n";
+        }
+
+        // 2. 38 Districts
+        foreach ($districts as $d) {
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars(getDistrictUrl($d['slug'])) . "</loc>\n";
+            $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+            $xml .= "        <changefreq>daily</changefreq>\n";
+            $xml .= "        <priority>0.9</priority>\n";
+            $xml .= "    </url>\n";
+
+            // District Panchayat Hub
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars(getPanchayatUrl($d['slug'])) . "</loc>\n";
+            $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+            $xml .= "        <changefreq>weekly</changefreq>\n";
+            $xml .= "        <priority>0.85</priority>\n";
+            $xml .= "    </url>\n";
+
+            // District Zila Parishad Hub
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars(getZilaParishadUrl($d['slug'])) . "</loc>\n";
+            $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+            $xml .= "        <changefreq>weekly</changefreq>\n";
+            $xml .= "        <priority>0.85</priority>\n";
+            $xml .= "    </url>\n";
+
+            // District Panchayat Samiti Hub
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars(getPanchayatSamitiUrl($d['slug'])) . "</loc>\n";
+            $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+            $xml .= "        <changefreq>weekly</changefreq>\n";
+            $xml .= "        <priority>0.85</priority>\n";
+            $xml .= "    </url>\n";
+
+            // District Census Hub
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars(getCensusUrl($d['slug'])) . "</loc>\n";
+            $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+            $xml .= "        <changefreq>weekly</changefreq>\n";
+            $xml .= "        <priority>0.8</priority>\n";
+            $xml .= "    </url>\n";
+        }
+
+        // 3. 243 Constituencies
+        foreach ($constituencies as $c) {
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars(getMlaUrl($c)) . "</loc>\n";
+            $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+            $xml .= "        <changefreq>daily</changefreq>\n";
+            $xml .= "        <priority>0.85</priority>\n";
+            $xml .= "    </url>\n";
+        }
+
+        // 4. Candidate Profiles
+        foreach ($candidates as $cand) {
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars($base_url . '/candidate/' . urlencode($cand['slug'])) . "</loc>\n";
+            $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+            $xml .= "        <changefreq>weekly</changefreq>\n";
+            $xml .= "        <priority>0.8</priority>\n";
+            $xml .= "    </url>\n";
+        }
+
+        $xml .= '</urlset>';
+
+        if (file_put_contents($sitemap_path, $xml)) {
+            $total_links = count($static_pages) + (count($districts) * 4) + count($constituencies) + count($candidates);
+            $message .= "Primary sitemap.xml generated with {$total_links} URLs! ";
+        } else {
+            $error .= "Error writing sitemap.xml file. ";
+        }
     }
 
-    // 2. 38 Districts
-    foreach ($districts as $d) {
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars(getDistrictUrl($d['slug'])) . "</loc>\n";
-        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
-        $xml .= "        <changefreq>daily</changefreq>\n";
-        $xml .= "        <priority>0.9</priority>\n";
-        $xml .= "    </url>\n";
-
-        // District Mukhiya Hub
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars(getMukhiyaUrl($d['slug'])) . "</loc>\n";
-        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
-        $xml .= "        <changefreq>weekly</changefreq>\n";
-        $xml .= "        <priority>0.85</priority>\n";
-        $xml .= "    </url>\n";
-
-        // District Sarpanch Hub
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars(getSarpanchUrl($d['slug'])) . "</loc>\n";
-        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
-        $xml .= "        <changefreq>weekly</changefreq>\n";
-        $xml .= "        <priority>0.85</priority>\n";
-        $xml .= "    </url>\n";
-
-        // District Census Hub
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars(getCensusUrl($d['slug'])) . "</loc>\n";
-        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
-        $xml .= "        <changefreq>weekly</changefreq>\n";
-        $xml .= "        <priority>0.8</priority>\n";
-        $xml .= "    </url>\n";
-    }
-
-    // 3. 243 Constituencies
-    foreach ($constituencies as $c) {
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars(getMlaUrl($c)) . "</loc>\n";
-        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
-        $xml .= "        <changefreq>daily</changefreq>\n";
-        $xml .= "        <priority>0.85</priority>\n";
-        $xml .= "    </url>\n";
-    }
-
-    // 4. Candidate Profiles
-    foreach ($candidates as $cand) {
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars($base_url . '/candidate/' . urlencode($cand['slug'])) . "</loc>\n";
-        $xml .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
-        $xml .= "        <changefreq>weekly</changefreq>\n";
-        $xml .= "        <priority>0.8</priority>\n";
-        $xml .= "    </url>\n";
-    }
-
-    $xml .= '</urlset>';
-
-    if (file_put_contents($sitemap_path, $xml)) {
-        $total_links = count($static_pages) + (count($districts) * 4) + count($constituencies) + count($candidates);
-        $message = "Sitemap XML generated successfully with {$total_links} total indexed URLs!";
-    } else {
-        $error = "Error writing sitemap.xml file. Check file write permissions.";
+    if (isset($_POST['generate_panchayats_sitemap']) || isset($_POST['generate_all_sitemaps'])) {
+        require_once __DIR__ . '/../generate_panchayat_sitemap.php';
+        ob_start();
+        generatePanchayatSitemap();
+        $out = ob_get_clean();
+        $message .= "Panchayat Sitemap (sitemap-panchayats.xml) generated with 40,000+ URLs for every Bihar Panchayat! ";
     }
 }
 
 $sitemap_exists = file_exists($sitemap_path);
 $sitemap_size = $sitemap_exists ? filesize($sitemap_path) : 0;
 $sitemap_mtime = $sitemap_exists ? filemtime($sitemap_path) : 0;
+
+$panchayat_sitemap_exists = file_exists($panchayat_sitemap_path);
+$panchayat_sitemap_size = $panchayat_sitemap_exists ? filesize($panchayat_sitemap_path) : 0;
+$panchayat_sitemap_mtime = $panchayat_sitemap_exists ? filemtime($panchayat_sitemap_path) : 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -169,15 +192,37 @@ $sitemap_mtime = $sitemap_exists ? filemtime($sitemap_path) : 0;
                     </div>
                     <div class="section-card-body">
                         <p class="text-muted small">
-                            Clicking the button below dynamically scans all 38 districts, 243 Vidhan Sabha constituency profiles, and candidate aspirant entries to generate a 100% compliant XML sitemap.
+                            Generate and publish 100% compliant XML sitemaps for search engines (Google, Bing, Yahoo).
                         </p>
 
-                        <form method="POST" action="">
-                            <input type="hidden" name="generate_sitemap" value="1">
-                            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold shadow-sm rounded-3">
-                                <i class="fas fa-bolt me-2"></i> Generate & Publish XML Sitemap
-                            </button>
-                        </form>
+                        <div class="d-grid gap-3">
+                            <!-- All Sitemaps -->
+                            <form method="POST" action="">
+                                <input type="hidden" name="generate_all_sitemaps" value="1">
+                                <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold shadow-sm rounded-3">
+                                    <i class="fas fa-bolt me-2"></i> Generate ALL Sitemaps (Primary + 40,000+ Panchayats)
+                                </button>
+                            </form>
+
+                            <div class="row g-2">
+                                <div class="col-sm-6">
+                                    <form method="POST" action="">
+                                        <input type="hidden" name="generate_sitemap" value="1">
+                                        <button type="submit" class="btn btn-outline-dark w-100 fw-semibold shadow-sm rounded-3">
+                                            <i class="fas fa-file-code me-1 text-primary"></i> Primary sitemap.xml
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-sm-6">
+                                    <form method="POST" action="">
+                                        <input type="hidden" name="generate_panchayats_sitemap" value="1">
+                                        <button type="submit" class="btn btn-outline-success w-100 fw-semibold shadow-sm rounded-3">
+                                            <i class="fas fa-users me-1 text-success"></i> Panchayats Sitemap
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

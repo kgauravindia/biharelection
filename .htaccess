@@ -61,36 +61,38 @@ AddDefaultCharset UTF-8
     RewriteRule ^tags/(.+)/?$ blog.php?tag=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 1. MLA & Assembly Constituencies (e.g. /mla/118-chapra, /mla/chapra, /constituency/118-chapra)
+    # 1. MLA & Assembly Constituencies (e.g. /mla, /mla/118-chapra, /constituency/118-chapra)
     # -------------------------------------------------------------
-    RewriteRule ^mla/?$ vidhan-sabha.php [L,QSA]
+    RewriteRule ^mla/?$ mla.php [L,QSA]
     RewriteRule ^mla/([0-9]+)-([a-zA-Z0-9_-]+)/?$ vidhan-sabha.php?ac=$1&slug=$2 [L,QSA]
     RewriteRule ^mla/([a-zA-Z0-9_-]+)/?$ vidhan-sabha.php?slug=$1 [L,QSA]
 
-    RewriteRule ^constituency/?$ vidhan-sabha.php [L,QSA]
+    RewriteRule ^constituencies/?$ mla.php [L,QSA]
+    RewriteRule ^constituency/?$ mla.php [L,QSA]
     RewriteRule ^constituency/([0-9]+)-([a-zA-Z0-9_-]+)/?$ vidhan-sabha.php?ac=$1&slug=$2 [L,QSA]
     RewriteRule ^constituency/([a-zA-Z0-9_-]+)/?$ vidhan-sabha.php?slug=$1 [L,QSA]
 
-    RewriteRule ^vidhan-sabha/?$ vidhan-sabha.php [L,QSA]
+    RewriteRule ^vidhan-sabha/?$ mla.php [L,QSA]
     RewriteRule ^vidhan-sabha/([0-9]+)-([a-zA-Z0-9_-]+)/?$ vidhan-sabha.php?ac=$1&slug=$2 [L,QSA]
     RewriteRule ^vidhan-sabha/([a-zA-Z0-9_-]+)/?$ vidhan-sabha.php?slug=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 2. MP (Lok Sabha & Rajya Sabha) (e.g. /mp, /mp/saran, /lok-sabha/saran)
+    # 2. MP (Lok Sabha & Rajya Sabha) (e.g. /mp, /lok-sabha, /rajya-sabha)
     # -------------------------------------------------------------
-    RewriteRule ^mp/?$ representatives.php?tab=loksabha [L,QSA]
-    RewriteRule ^mp/([a-zA-Z0-9_-]+)/?$ representatives.php?tab=loksabha&slug=$1 [L,QSA]
-    RewriteRule ^lok-sabha/?$ representatives.php?tab=loksabha [L,QSA]
-    RewriteRule ^lok-sabha/([a-zA-Z0-9_-]+)/?$ representatives.php?tab=loksabha&slug=$1 [L,QSA]
-    RewriteRule ^rajya-sabha/?$ representatives.php?tab=rajyasabha [L,QSA]
+    RewriteRule ^mp/?$ mp.php [L,QSA]
+    RewriteRule ^mp/([a-zA-Z0-9_-]+)/?$ mp.php?slug=$1 [L,QSA]
+    RewriteRule ^lok-sabha/?$ mp.php?house=loksabha [L,QSA]
+    RewriteRule ^lok-sabha/([a-zA-Z0-9_-]+)/?$ mp.php?house=loksabha&slug=$1 [L,QSA]
+    RewriteRule ^rajya-sabha/?$ mp.php?house=rajyasabha [L,QSA]
+    RewriteRule ^rajya-sabha/([a-zA-Z0-9_-]+)/?$ mp.php?house=rajyasabha&slug=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 3. MLC (Vidhan Parishad) (e.g. /mlc, /mlc/saran, /vidhan-parishad)
+    # 3. MLC (Vidhan Parishad) (e.g. /mlc, /vidhan-parishad)
     # -------------------------------------------------------------
-    RewriteRule ^mlc/?$ representatives.php?tab=mlc [L,QSA]
-    RewriteRule ^mlc/([a-zA-Z0-9_-]+)/?$ representatives.php?tab=mlc&slug=$1 [L,QSA]
-    RewriteRule ^vidhan-parishad/?$ representatives.php?tab=mlc [L,QSA]
-    RewriteRule ^vidhan-parishad/([a-zA-Z0-9_-]+)/?$ representatives.php?tab=mlc&slug=$1 [L,QSA]
+    RewriteRule ^mlc/?$ mlc.php [L,QSA]
+    RewriteRule ^mlc/([a-zA-Z0-9_-]+)/?$ mlc.php?slug=$1 [L,QSA]
+    RewriteRule ^vidhan-parishad/?$ mlc.php [L,QSA]
+    RewriteRule ^vidhan-parishad/([a-zA-Z0-9_-]+)/?$ mlc.php?slug=$1 [L,QSA]
 
     # -------------------------------------------------------------
     # 4. District Hubs & Drilldowns (e.g. /district/saran, /district/ac-chapra, /district/chapra/sandha)
@@ -105,52 +107,67 @@ AddDefaultCharset UTF-8
     RewriteRule ^district/([a-zA-Z0-9_-]+)/?$ district.php?slug=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 5. Mukhiya Directory (e.g. /mukhiya, /mukhiya/saran, /mukhiya/saran/sandha)
+    # 5. CD Blocks & Sub-districts (e.g. /block/amnour, /block/saran/amnour, /blocks)
     # -------------------------------------------------------------
-    RewriteRule ^mukhiya/?$ panchayat.php?tab=mukhiya [L,QSA]
-    RewriteRule ^mukhiya/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?tab=mukhiya&district=$1&panchayat=$2 [L,QSA]
-    RewriteRule ^mukhiya/([a-zA-Z0-9_-]+)/?$ panchayat.php?tab=mukhiya&district=$1 [L,QSA]
+    RewriteRule ^blocks/?$ block.php [L,QSA]
+    RewriteRule ^block/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ block.php?district=$1&slug=$2 [L,QSA]
+    RewriteRule ^block/([a-zA-Z0-9_-]+)/?$ block.php?slug=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 6. Sarpanch Directory (e.g. /sarpanch, /sarpanch/saran, /sarpanch/saran/sandha)
+    # 6. Mukhiya & Sarpanch Legacy Aliases -> Unified Panchayat System
     # -------------------------------------------------------------
-    RewriteRule ^sarpanch/?$ panchayat.php?tab=sarpanch [L,QSA]
-    RewriteRule ^sarpanch/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?tab=sarpanch&district=$1&panchayat=$2 [L,QSA]
-    RewriteRule ^sarpanch/([a-zA-Z0-9_-]+)/?$ panchayat.php?tab=sarpanch&district=$1 [L,QSA]
+    RewriteRule ^mukhiya/?$ panchayat.php [L,QSA]
+    RewriteRule ^mukhiya/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?district=$1&panchayat=$2 [L,QSA]
+    RewriteRule ^mukhiya/([a-zA-Z0-9_-]+)/?$ panchayat.php?slug=$1 [L,QSA]
+
+    RewriteRule ^sarpanch/?$ panchayat.php [L,QSA]
+    RewriteRule ^sarpanch/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?district=$1&panchayat=$2 [L,QSA]
+    RewriteRule ^sarpanch/([a-zA-Z0-9_-]+)/?$ panchayat.php?slug=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 7. Zila Parishad / Jila Parisad (e.g. /zila-parishad, /zila-parishad/saran, /jila-parisad/saran)
+    # 8. Zila Parishad / Jila Parisad (e.g. /zila-parishad, /zila-parishad/saran, /zila-parishad/siwan/1)
     # -------------------------------------------------------------
-    RewriteRule ^zila-parishad/?$ panchayat.php?tab=zila [L,QSA]
-    RewriteRule ^zila-parishad/([a-zA-Z0-9_-]+)/?$ panchayat.php?tab=zila&district=$1 [L,QSA]
-    RewriteRule ^jila-parisad/?$ panchayat.php?tab=zila [L,QSA]
-    RewriteRule ^jila-parisad/([a-zA-Z0-9_-]+)/?$ panchayat.php?tab=zila&district=$1 [L,QSA]
-    RewriteRule ^jila-parishad/?$ panchayat.php?tab=zila [L,QSA]
-    RewriteRule ^jila-parishad/([a-zA-Z0-9_-]+)/?$ panchayat.php?tab=zila&district=$1 [L,QSA]
+    RewriteRule ^zila-parishad/?$ zila-parishad.php [L,QSA]
+    RewriteRule ^zila-parishad/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ zila-parishad.php?district=$1&ward=$2 [L,QSA]
+    RewriteRule ^zila-parishad/([a-zA-Z0-9_-]+)/?$ zila-parishad.php?district=$1 [L,QSA]
+    RewriteRule ^jila-parisad/?$ zila-parishad.php [L,QSA]
+    RewriteRule ^jila-parisad/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ zila-parishad.php?district=$1&ward=$2 [L,QSA]
+    RewriteRule ^jila-parisad/([a-zA-Z0-9_-]+)/?$ zila-parishad.php?district=$1 [L,QSA]
+    RewriteRule ^jila-parishad/?$ zila-parishad.php [L,QSA]
+    RewriteRule ^jila-parishad/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ zila-parishad.php?district=$1&ward=$2 [L,QSA]
+    RewriteRule ^jila-parishad/([a-zA-Z0-9_-]+)/?$ zila-parishad.php?district=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 8. Panchayat Samiti / Block Pramukh (e.g. /panchayat-samiti, /panchayat-samiti/saran, /panchayat-samiti/saran/chapra)
+    # 9. Panchayat Samiti / Block Pramukh (e.g. /panchayat-samiti, /panchayat-samiti/saran, /panchayat-samiti/saran/chapra)
     # -------------------------------------------------------------
-    RewriteRule ^panchayat-samiti/?$ panchayat.php?tab=samiti [L,QSA]
-    RewriteRule ^panchayat-samiti/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?tab=samiti&district=$1&block=$2 [L,QSA]
-    RewriteRule ^panchayat-samiti/([a-zA-Z0-9_-]+)/?$ panchayat.php?tab=samiti&district=$1 [L,QSA]
+    RewriteRule ^panchayat-samiti/?$ panchayat-samiti.php [L,QSA]
+    RewriteRule ^panchayat-samiti/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat-samiti.php?district=$1&block=$2 [L,QSA]
+    RewriteRule ^panchayat-samiti/([a-zA-Z0-9_-]+)/?$ panchayat-samiti.php?district=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 9. General Panchayat Hub (e.g. /panchayat, /panchayat/saran, /panchayat/saran/sandha)
+    # 10. Gram Panchayats (e.g. /panchayat, /panchayat/saran, /panchayat/patna/maner/khaspur, /patna/maner/khaspur)
     # -------------------------------------------------------------
+    RewriteRule ^panchayats/?$ panchayat.php [L,QSA]
     RewriteRule ^panchayat/?$ panchayat.php [L,QSA]
+    RewriteRule ^panchayat/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?district=$1&block=$2&panchayat=$3 [L,QSA]
     RewriteRule ^panchayat/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?district=$1&panchayat=$2 [L,QSA]
-    RewriteRule ^panchayat/([a-zA-Z0-9_-]+)/?$ panchayat.php?district=$1 [L,QSA]
+    RewriteRule ^panchayat/([a-zA-Z0-9_-]+)/?$ panchayat.php?slug=$1 [L,QSA]
+
+    # District 3-segment & 2-segment fallback to Panchayat Profile
+    RewriteRule ^district/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?district=$1&block=$2&panchayat=$3 [L,QSA]
+
+    # Clean 3-segment root routing (e.g. /patna/maner/khaspur, /saran/chapra/sandha)
+    RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?district=$1&block=$2&panchayat=$3 [L,QSA]
 
     # -------------------------------------------------------------
-    # 10. Census Hub (e.g. /census, /census/saran, /census/saran/chapra)
+    # 11. Census Hub (e.g. /census, /census/saran, /census/saran/chapra)
     # -------------------------------------------------------------
     RewriteRule ^census/?$ census.php [L,QSA]
     RewriteRule ^census/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ census.php?district=$1&subdistrict=$2 [L,QSA]
     RewriteRule ^census/([a-zA-Z0-9_-]+)/?$ census.php?district=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 11. Candidates, Auth & Other Pages
+    # 12. Candidates, Auth & Other Pages
     # -------------------------------------------------------------
     RewriteRule ^candidate/([a-zA-Z0-9_-]+)/?$ candidate.php?slug=$1 [L,QSA]
     RewriteRule ^representatives/?$ representatives.php [L,QSA]

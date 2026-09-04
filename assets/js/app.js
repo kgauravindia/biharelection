@@ -41,7 +41,8 @@ function initLiveSearch() {
 function fetchSearchData(query) {
     const dropdown = document.getElementById('searchDropdown');
     
-    fetch(`api/search.php?q=${encodeURIComponent(query)}`)
+    const baseUrl = window.SITE_URL || '';
+    fetch(`${baseUrl}/api/search.php?q=${encodeURIComponent(query)}`)
         .then(res => res.json())
         .then(data => {
             if (!data || data.length === 0) {
@@ -56,26 +57,42 @@ function fetchSearchData(query) {
             let html = '';
             data.forEach(item => {
                 let icon = '🏛️';
-                let tag = item.type.toUpperCase();
+                let tag = (item.type || 'INFO').toUpperCase();
+                let tagClass = 'ac-tag';
                 let url = item.url || '#';
 
-                if (item.type === 'constituency') {
+                if (item.type === 'mla' || item.type === 'constituency') {
                     icon = '🗳️';
+                    tag = 'MLA';
+                } else if (item.type === 'mp') {
+                    icon = '🏛️';
+                    tag = 'MP';
+                } else if (item.type === 'mukhiya') {
+                    icon = '👑';
+                    tag = 'MUKHIYA';
+                } else if (item.type === 'sarpanch') {
+                    icon = '⚖️';
+                    tag = 'SARPANCH';
                 } else if (item.type === 'district') {
+                    icon = '🏢';
+                    tag = 'DISTRICT';
+                } else if (item.type === 'block') {
                     icon = '📍';
+                    tag = 'BLOCK';
                 } else if (item.type === 'candidate') {
                     icon = '👤';
+                    tag = 'LEADER';
                 }
 
                 html += `
                     <a href="${url}" class="search-item">
                         <div>
                             <div style="font-weight: 700; font-size: 0.95rem; color: #0b192c;">
-                                ${icon} ${item.title} <span style="font-size: 0.85rem; color: #64748b; font-weight: normal;">(${item.subtitle})</span>
+                                ${icon} ${escapeHtml(item.title)} <span style="font-size: 0.85rem; color: #64748b; font-weight: normal;">(${escapeHtml(item.subtitle)})</span>
                             </div>
-                            <div class="search-item-meta">${item.extra || ''}</div>
+                            <div class="search-item-meta">${escapeHtml(item.extra || '')}</div>
                         </div>
-                        <span class="ac-tag">${tag}</span>
+                        <span class="${tagClass}">${tag}</span>
                     </a>
                 `;
             });

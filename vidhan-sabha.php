@@ -499,11 +499,11 @@ require_once __DIR__ . '/header.php';
                                 <tr>
                                     <td><span class="badge bg-secondary">2015 Assembly</span></td>
                                     <td>
-                                        <div class="fw-bold text-navy"><?php echo htmlspecialchars($res2015['winner_name'] ?? $res2015['winner']); ?></div>
+                                        <div class="fw-bold text-navy"><?php echo htmlspecialchars($res2015['winner_name'] ?? $res2015['winner'] ?? ''); ?></div>
                                         <?php if (!empty($mla2015['mobile'])): ?>
-                                            <span class="badge bg-light text-secondary border py-0 px-2 fw-semibold mt-1 d-inline-flex align-items-center gap-1 extra-small" title="Contact Protected">
-                                                <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($mla2015['mobile'])); ?>
-                                            </span>
+                                            <div class="mt-1">
+                                                <?php echo renderMaskedPhoneButton($mla2015['mobile'], $res2015['winner_name'] ?? 'MLA'); ?>
+                                            </div>
                                         <?php endif; ?>
                                     </td>
                                     <td><span class="badge-party <?php echo strtolower($res2015['winner_party'] ?? ($ac['election_2015']['summary']['winner_party'] ?? 'other')); ?>"><?php echo htmlspecialchars($res2015['winner_party'] ?? ($ac['election_2015']['summary']['winner_party'] ?? '-')); ?></span></td>
