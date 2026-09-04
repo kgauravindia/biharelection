@@ -113,8 +113,7 @@ require_once __DIR__ . '/header.php';
     <!-- Main Content Container -->
     <main class="container my-5">
 
-        <!-- Top Leaderboard Ad Slot -->
-        <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-5'); ?>
+
 
         <!-- 38 District Hubs Section (Alphabetical A-Z Order with Patna Highlight) -->
         <section class="mb-5">
@@ -171,8 +170,7 @@ require_once __DIR__ . '/header.php';
             </div>
         </section>
 
-        <!-- Mid-Feed In-Article Ad Slot -->
-        <?php renderGoogleAd('in_feed', GOOGLE_AD_SLOT_INFEED, 'my-5'); ?>
+
 
         <!-- Featured 243 Assembly Constituencies -->
         <section class="mb-5">
@@ -273,10 +271,7 @@ require_once __DIR__ . '/header.php';
                 </table>
             </div>
 
-            <!-- In-Table Ad Slot -->
-            <div class="pt-3">
-                <?php renderGoogleAd('table_banner', GOOGLE_AD_SLOT_TABLE); ?>
-            </div>
+
         </section>
 
         <!-- Candidate & Political Leaders Directory -->
@@ -346,8 +341,7 @@ require_once __DIR__ . '/header.php';
             <?php endif; ?>
         </section>
 
-        <!-- Bottom Footer Ad Banner -->
-        <?php renderGoogleAd('footer_banner', GOOGLE_AD_SLOT_FOOTER, 'mb-5'); ?>
+
 
         <!-- Partner & Commercial Callout Banner -->
         <section class="card border-0 rounded-4 p-4 text-white shadow-lg" style="background: linear-gradient(135deg, #0b192c, #1e3e62);">
