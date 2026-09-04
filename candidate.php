@@ -74,14 +74,14 @@ require_once __DIR__ . '/header.php';
             </div>
 
             <div class="d-flex align-items-center gap-3 gap-md-4 flex-wrap">
-                <img src="<?php echo $candidate['photo']; ?>" alt="<?php echo htmlspecialchars($candidate['name']); ?>" class="rounded-circle border border-4 border-white shadow" style="width: 100px; height: 100px; object-fit: cover;">
+                <img src="<?php echo !empty($candidate['photo']) ? htmlspecialchars($candidate['photo']) : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=faces'; ?>" alt="<?php echo htmlspecialchars($candidate['name'] ?? ''); ?>" class="rounded-circle border border-4 border-white shadow" style="width: 100px; height: 100px; object-fit: cover;">
                 <div>
                     <h1 class="display-6 fw-extrabold text-white mb-1">
-                        <?php echo htmlspecialchars($candidate['name']); ?> 
-                        <span style="color: var(--accent-saffron); font-size: 1.6rem;">(<?php echo htmlspecialchars($candidate['name_hi']); ?>)</span>
+                        <?php echo htmlspecialchars($candidate['name'] ?? ''); ?> 
+                        <span style="color: var(--accent-saffron); font-size: 1.6rem;">(<?php echo htmlspecialchars($candidate['name_hi'] ?? ($candidate['name'] ?? '')); ?>)</span>
                     </h1>
                     <p class="lead text-white-50 mb-0" style="font-size: 1.05rem;">
-                        <?php echo htmlspecialchars($candidate['designation']); ?>
+                        <?php echo htmlspecialchars($candidate['designation'] ?? 'Political Representative'); ?>
                     </p>
                 </div>
             </div>
@@ -100,8 +100,8 @@ require_once __DIR__ . '/header.php';
                     <label class="form-label fw-bold small text-muted text-uppercase mb-2">Switch Candidate Profile:</label>
                     <select class="form-select form-select-lg" onchange="window.location.href='candidate.php?slug=' + this.value" style="font-size: 1rem;">
                         <?php foreach ($allCandidates as $cItem): ?>
-                            <option value="<?php echo $cItem['slug']; ?>" <?php echo $cItem['slug'] == $candidate['slug'] ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($cItem['name']); ?> (<?php echo $cItem['party_short']; ?>) — <?php echo htmlspecialchars($cItem['constituency']); ?>
+                            <option value="<?php echo htmlspecialchars($cItem['slug'] ?? ''); ?>" <?php echo ($cItem['slug'] ?? '') == ($candidate['slug'] ?? '') ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($cItem['name'] ?? ''); ?> (<?php echo htmlspecialchars($cItem['party_short'] ?? ''); ?>) — <?php echo htmlspecialchars($cItem['constituency'] ?? ''); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -120,28 +120,28 @@ require_once __DIR__ . '/header.php';
                         <div class="col-6 col-md-3">
                             <div class="bg-light p-3 rounded-3 text-center">
                                 <div class="small text-muted">Declared Assets</div>
-                                <div class="h5 fw-bold text-success mb-0"><?php echo $candidate['assets_declared']; ?></div>
+                                <div class="h5 fw-bold text-success mb-0"><?php echo !empty($candidate['assets_declared']) ? htmlspecialchars($candidate['assets_declared']) : 'Disclosed'; ?></div>
                             </div>
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="bg-light p-3 rounded-3 text-center">
                                 <div class="small text-muted">Liabilities</div>
-                                <div class="h5 fw-bold text-danger mb-0"><?php echo $candidate['liabilities']; ?></div>
+                                <div class="h5 fw-bold text-danger mb-0"><?php echo !empty($candidate['liabilities']) ? htmlspecialchars($candidate['liabilities']) : 'Nil / None'; ?></div>
                             </div>
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="bg-light p-3 rounded-3 text-center">
                                 <div class="small text-muted">Criminal Cases</div>
-                                <div class="h5 fw-bold <?php echo $candidate['criminal_cases'] > 0 ? 'text-danger' : 'text-success'; ?> mb-0">
-                                    <?php echo $candidate['criminal_cases']; ?> Cases
+                                <div class="h5 fw-bold <?php echo ((int)($candidate['criminal_cases'] ?? 0) > 0) ? 'text-danger' : 'text-success'; ?> mb-0">
+                                    <?php echo (int)($candidate['criminal_cases'] ?? 0); ?> Cases
                                 </div>
                             </div>
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="bg-light p-3 rounded-3 text-center">
                                 <div class="small text-muted">Education</div>
-                                <div class="small fw-bold text-navy text-truncate mt-1" title="<?php echo htmlspecialchars($candidate['education']); ?>">
-                                    <?php echo htmlspecialchars($candidate['education']); ?>
+                                <div class="small fw-bold text-navy text-truncate mt-1" title="<?php echo htmlspecialchars($candidate['education'] ?? 'Graduate'); ?>">
+                                    <?php echo htmlspecialchars($candidate['education'] ?? 'Graduate'); ?>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@ require_once __DIR__ . '/header.php';
                         📖 Biography & Political Journey
                     </h2>
                     <p class="small text-muted mb-0 lh-lg">
-                        <?php echo htmlspecialchars($candidate['bio']); ?>
+                        <?php echo htmlspecialchars($candidate['bio'] ?? "Political leader and public representative from {$candidate['constituency']} constituency, Bihar."); ?>
                     </p>
                 </div>
 
@@ -178,19 +178,32 @@ require_once __DIR__ . '/header.php';
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($candidate['election_record'] as $rec): ?>
-                                <tr>
-                                    <td class="fw-bold"><?php echo $rec['year']; ?></td>
-                                    <td><?php echo $rec['election']; ?></td>
-                                    <td class="fw-semibold"><?php echo $rec['constituency']; ?></td>
-                                    <td>
-                                        <span class="badge <?php echo $rec['result'] === 'Won' ? 'bg-success' : 'bg-secondary'; ?>">
-                                            <?php echo $rec['result']; ?>
-                                        </span>
-                                    </td>
-                                    <td class="fw-bold"><?php echo number_format($rec['votes']); ?></td>
-                                </tr>
-                                <?php endforeach; ?>
+                                <?php if (!empty($candidate['election_record']) && is_array($candidate['election_record'])): ?>
+                                    <?php foreach ($candidate['election_record'] as $key => $rec): ?>
+                                    <?php 
+                                        $recYear = $rec['year'] ?? (is_numeric($key) ? $key : (preg_match('/^\d{4}/', (string)$key, $ym) ? $ym[0] : '2026'));
+                                        $recElection = $rec['election'] ?? (stripos((string)$key, 'byelection') !== false || stripos((string)$key, 'bye') !== false ? 'Assembly Bye-Election' : 'Bihar Vidhan Sabha');
+                                        $recConst = $rec['constituency'] ?? ($candidate['constituency'] ?? '-');
+                                        $recResult = $rec['result'] ?? $rec['status'] ?? 'Contested';
+                                        $recVotes = $rec['votes'] ?? 0;
+                                    ?>
+                                    <tr>
+                                        <td class="fw-bold"><?php echo htmlspecialchars($recYear); ?></td>
+                                        <td><?php echo htmlspecialchars($recElection); ?></td>
+                                        <td class="fw-semibold"><?php echo htmlspecialchars($recConst); ?></td>
+                                        <td>
+                                            <span class="badge <?php echo in_array(strtolower($recResult), ['won', 'elected']) ? 'bg-success' : 'bg-secondary'; ?>">
+                                                <?php echo htmlspecialchars($recResult); ?>
+                                            </span>
+                                        </td>
+                                        <td class="fw-bold"><?php echo is_numeric($recVotes) ? number_format((int)$recVotes) : htmlspecialchars($recVotes); ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-3">No previous election records filed yet.</td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -208,7 +221,7 @@ require_once __DIR__ . '/header.php';
                     <p class="small text-white-50 mb-3">
                         Publish your complete manifesto, video gallery, and WhatsApp broadcast channels to 10,000+ local voters.
                     </p>
-                    <a href="<?php echo getAdvertiseUrl(['category' => 'candidate', 'claim' => $candidate['slug']]); ?>" class="btn btn-warning btn-sm w-100 fw-bold text-dark">
+                    <a href="<?php echo getAdvertiseUrl(['category' => 'candidate', 'claim' => $candidate['slug'] ?? '']); ?>" class="btn btn-warning btn-sm w-100 fw-bold text-dark">
                         Upgrade to VIP Profile &rarr;
                     </a>
                 </div>
@@ -222,12 +235,16 @@ require_once __DIR__ . '/header.php';
                         🔗 Official Social Links
                     </h3>
                     <div class="d-flex flex-column gap-2">
-                        <?php foreach ($candidate['social_links'] as $platform => $link): ?>
-                            <a href="<?php echo htmlspecialchars($link); ?>" target="_blank" class="btn btn-light btn-sm text-start fw-semibold d-flex justify-content-between align-items-center">
-                                <span><?php echo ucfirst($platform); ?> Profile</span>
-                                <i class="bi bi-box-arrow-up-right small"></i>
-                            </a>
-                        <?php endforeach; ?>
+                        <?php if (!empty($candidate['social_links']) && is_array($candidate['social_links'])): ?>
+                            <?php foreach ($candidate['social_links'] as $platform => $link): ?>
+                                <a href="<?php echo htmlspecialchars($link); ?>" target="_blank" class="btn btn-light btn-sm text-start fw-semibold d-flex justify-content-between align-items-center">
+                                    <span><?php echo ucfirst(htmlspecialchars($platform)); ?> Profile</span>
+                                    <i class="bi bi-box-arrow-up-right small"></i>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="small text-muted py-2">Social media links will be updated soon.</div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
