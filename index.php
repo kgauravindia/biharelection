@@ -294,7 +294,10 @@ require_once __DIR__ . '/header.php';
                         <div>
                             <div class="candidate-card-header"></div>
                             <div class="px-3 pb-3">
-                                <img src="<?php echo $cand['photo']; ?>" alt="<?php echo htmlspecialchars($cand['name']); ?>" class="candidate-card-avatar">
+                                <?php $candLetter = mb_strtoupper(mb_substr(trim($cand['name'] ?? 'C'), 0, 1, 'UTF-8'), 'UTF-8'); ?>
+                                <div class="candidate-card-avatar rounded-circle d-flex align-items-center justify-content-center fw-bold text-white fs-3 mx-auto shadow-sm" style="background: linear-gradient(135deg, var(--secondary-navy, #1e3e62), var(--accent-saffron, #ff9933));">
+                                    <?php echo htmlspecialchars($candLetter); ?>
+                                </div>
                                 <h3 class="h6 fw-bold mb-0 text-navy d-flex align-items-center justify-content-center gap-1">
                                     <?php echo htmlspecialchars($cand['name']); ?>
                                     <?php if (!empty($cand['verified'])): ?>

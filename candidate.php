@@ -74,7 +74,12 @@ require_once __DIR__ . '/header.php';
             </div>
 
             <div class="d-flex align-items-center gap-3 gap-md-4 flex-wrap">
-                <img src="<?php echo !empty($candidate['photo']) ? htmlspecialchars($candidate['photo']) : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=faces'; ?>" alt="<?php echo htmlspecialchars($candidate['name'] ?? ''); ?>" class="rounded-circle border border-4 border-white shadow" style="width: 100px; height: 100px; object-fit: cover;">
+                <?php 
+                    $firstLetter = mb_strtoupper(mb_substr(trim($candidate['name'] ?? 'C'), 0, 1, 'UTF-8'), 'UTF-8');
+                ?>
+                <div class="rounded-circle border border-4 border-white shadow d-flex align-items-center justify-content-center fw-bold text-white fs-1" style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--accent-saffron, #ff9933), #e65100); flex-shrink: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
+                    <?php echo htmlspecialchars($firstLetter); ?>
+                </div>
                 <div>
                     <h1 class="display-6 fw-extrabold text-white mb-1">
                         <?php echo htmlspecialchars($candidate['name'] ?? ''); ?> 
