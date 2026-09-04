@@ -676,5 +676,117 @@ CREATE TABLE IF NOT EXISTS `categories` (
   INDEX `idx_slug` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 28. Multi-Year Election Detailed Results
+CREATE TABLE IF NOT EXISTS `election_detailed_results` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `year` INT NOT NULL,
+  `ac_no` INT NOT NULL,
+  `ac_name` VARCHAR(150) NOT NULL,
+  `candidate_name` VARCHAR(150) NOT NULL,
+  `gender` VARCHAR(20) DEFAULT NULL,
+  `age` INT DEFAULT NULL,
+  `category` VARCHAR(50) DEFAULT NULL,
+  `party` VARCHAR(100) NOT NULL,
+  `symbol` VARCHAR(100) DEFAULT NULL,
+  `votes_general` INT DEFAULT 0,
+  `votes_postal` INT DEFAULT 0,
+  `votes_total` INT DEFAULT 0,
+  `vote_share_valid` DECIMAL(5,2) DEFAULT 0.00,
+  `vote_share_electors` DECIMAL(5,2) DEFAULT 0.00,
+  `total_electors` INT DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`year`, `ac_no`),
+  INDEX (`party`),
+  INDEX (`candidate_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 29. Multi-Year Successful Candidates & Runners-Up
+CREATE TABLE IF NOT EXISTS `election_successful_candidates` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `year` INT NOT NULL,
+  `ac_no` INT NOT NULL,
+  `constituency` VARCHAR(150) NOT NULL,
+  `winner_name` VARCHAR(150) NOT NULL,
+  `winner_gender` VARCHAR(20) DEFAULT NULL,
+  `winner_party` VARCHAR(100) NOT NULL,
+  `winner_symbol` VARCHAR(100) DEFAULT NULL,
+  `winner_age` INT DEFAULT NULL,
+  `winner_category` VARCHAR(50) DEFAULT NULL,
+  `winner_votes` INT DEFAULT 0,
+  `runner_up_name` VARCHAR(150) DEFAULT NULL,
+  `runner_up_gender` VARCHAR(20) DEFAULT NULL,
+  `runner_up_party` VARCHAR(100) DEFAULT NULL,
+  `runner_up_votes` INT DEFAULT 0,
+  `margin` INT DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`year`, `ac_no`),
+  INDEX (`winner_party`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 30. Multi-Year AC Electors & Turnout Summary
+CREATE TABLE IF NOT EXISTS `election_ac_summary` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `year` INT NOT NULL,
+  `ac_no` INT NOT NULL,
+  `ac_name` VARCHAR(150) NOT NULL,
+  `reservation` VARCHAR(20) DEFAULT 'GEN',
+  `total_electors` INT DEFAULT 0,
+  `electors_male` INT DEFAULT 0,
+  `electors_female` INT DEFAULT 0,
+  `electors_third_gender` INT DEFAULT 0,
+  `electors_service` INT DEFAULT 0,
+  `voters_male` INT DEFAULT 0,
+  `voters_female` INT DEFAULT 0,
+  `voters_third_gender` INT DEFAULT 0,
+  `voters_postal` INT DEFAULT 0,
+  `voters_total` INT DEFAULT 0,
+  `turnout_percent` DECIMAL(5,2) DEFAULT 0.00,
+  `valid_votes` INT DEFAULT 0,
+  `nota_votes` INT DEFAULT 0,
+  `polling_stations` INT DEFAULT 0,
+  `winner_name` VARCHAR(150) DEFAULT NULL,
+  `winner_party` VARCHAR(100) DEFAULT NULL,
+  `winner_votes` INT DEFAULT 0,
+  `runner_up_name` VARCHAR(150) DEFAULT NULL,
+  `runner_up_party` VARCHAR(100) DEFAULT NULL,
+  `runner_up_votes` INT DEFAULT 0,
+  `margin` INT DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`year`, `ac_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 31. Multi-Year Party Performance Statistics
+CREATE TABLE IF NOT EXISTS `election_party_performance` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `year` INT NOT NULL,
+  `party_type` VARCHAR(100) DEFAULT NULL,
+  `abbreviation` VARCHAR(50) NOT NULL,
+  `contested` INT DEFAULT 0,
+  `won` INT DEFAULT 0,
+  `fd` INT DEFAULT 0,
+  `votes_polled` BIGINT DEFAULT 0,
+  `vote_share_valid` VARCHAR(50) DEFAULT NULL,
+  `vote_share_total` VARCHAR(50) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`year`, `abbreviation`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 32. Bye-Election Detailed Candidate Results
+CREATE TABLE IF NOT EXISTS `bye_election_detailed_results` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `year` INT NOT NULL,
+  `ac_no` INT NOT NULL,
+  `ac_name` VARCHAR(150) NOT NULL,
+  `candidate_name` VARCHAR(150) NOT NULL,
+  `party` VARCHAR(100) NOT NULL,
+  `votes_general` INT DEFAULT 0,
+  `votes_postal` INT DEFAULT 0,
+  `votes_total` INT DEFAULT 0,
+  `vote_share_valid` DECIMAL(5,2) DEFAULT 0.00,
+  `margin` INT DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX (`year`, `ac_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;
 

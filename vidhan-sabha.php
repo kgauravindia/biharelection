@@ -41,8 +41,11 @@ $acNo = (int)$ac['ac_no'];
 $res2025 = DataProvider::getElectionSuccessfulCandidates($acNo, 2025) ?: ($ac['election_2025'] ?? $ac['election_2020'] ?? []);
 $res2020 = DataProvider::getElectionSuccessfulCandidates($acNo, 2020) ?: ($ac['election_2020'] ?? []);
 $sum2020 = DataProvider::getElectionAcSummary($acNo, 2020) ?: [];
+$res2015 = DataProvider::getElectionSuccessfulCandidates($acNo, 2015) ?: ($ac['election_2015']['summary'] ?? []);
+$sum2015 = DataProvider::getElectionAcSummary($acNo, 2015) ?: [];
 $cands2025 = DataProvider::getElectionDetailedResults($acNo, 2025);
 $cands2020 = DataProvider::getElectionDetailedResults($acNo, 2020);
+$cands2015 = DataProvider::getElectionDetailedResults($acNo, 2015);
 $byeElections = DataProvider::getByeElectionDetailedResults($acNo);
 $mla2015 = DataProvider::getMlas2015($acNo);
 
@@ -244,6 +247,13 @@ require_once __DIR__ . '/header.php';
                                 </button>
                             </li>
                             <?php endif; ?>
+                            <?php if (!empty($cands2015)): ?>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-bold py-1 px-3" id="tab-2015-btn" data-bs-toggle="pill" data-bs-target="#tab-2015" type="button" role="tab">
+                                    2015 Assembly (<?php echo count($cands2015); ?>)
+                                </button>
+                            </li>
+                            <?php endif; ?>
                             <?php if ($hasByeElection): ?>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link fw-bold py-1 px-3 text-warning-emphasis" id="tab-bye-btn" data-bs-toggle="pill" data-bs-target="#tab-bye" type="button" role="tab">
@@ -276,7 +286,7 @@ require_once __DIR__ . '/header.php';
                                     <tbody>
                                         <?php $idx25 = 1; foreach ($cands2025 as $cand): ?>
                                         <tr class="<?php echo $idx25 === 1 ? 'table-success' : ''; ?>">
-                                            <td class="text-muted"><?php echo $idx25; ?></td>
+                                             <td class="text-muted"><?php echo $idx25; ?></td>
                                             <td class="fw-bold">
                                                 <?php echo htmlspecialchars($cand['candidate_name']); ?>
                                                 <?php if ($idx25 === 1): ?>
@@ -332,6 +342,47 @@ require_once __DIR__ . '/header.php';
                                             <td class="fw-bold text-primary"><?php echo $cand['vote_share_valid']; ?>%</td>
                                         </tr>
                                         <?php $idx20++; endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+
+                        <!-- 2015 Candidates Table Pane -->
+                        <?php if (!empty($cands2015)): ?>
+                        <div class="tab-pane fade" id="tab-2015" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0 small">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Candidate Name</th>
+                                            <th>Party</th>
+                                            <th>Category</th>
+                                            <th>EVM Votes</th>
+                                            <th>Postal</th>
+                                            <th>Total Votes</th>
+                                            <th>% Votes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $idx15 = 1; foreach ($cands2015 as $cand): ?>
+                                        <tr class="<?php echo $idx15 === 1 ? 'table-success' : ''; ?>">
+                                            <td class="text-muted"><?php echo $idx15; ?></td>
+                                            <td class="fw-bold">
+                                                <?php echo htmlspecialchars($cand['candidate_name']); ?>
+                                                <?php if ($idx15 === 1): ?>
+                                                    <span class="badge bg-success ms-1">Winner</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td><span class="badge-party <?php echo strtolower($cand['party']); ?>"><?php echo htmlspecialchars($cand['party']); ?></span></td>
+                                            <td><?php echo htmlspecialchars($cand['category'] ?? '-'); ?></td>
+                                            <td><?php echo number_format($cand['votes_general']); ?></td>
+                                            <td><?php echo number_format($cand['votes_postal']); ?></td>
+                                            <td class="fw-bold"><?php echo number_format($cand['votes_total']); ?></td>
+                                            <td class="fw-bold text-secondary"><?php echo $cand['vote_share_valid']; ?>%</td>
+                                        </tr>
+                                        <?php $idx15++; endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -425,22 +476,24 @@ require_once __DIR__ . '/header.php';
                                 </tr>
                                 <?php endif; ?>
 
+                                <?php if (!empty($res2015['winner_name']) || !empty($res2015['winner'])): ?>
                                 <tr>
                                     <td><span class="badge bg-secondary">2015 Assembly</span></td>
                                     <td>
-                                        <div class="fw-bold text-navy"><?php echo htmlspecialchars($mla2015['mla_name'] ?? ($ac['election_2015']['winner'] ?? '-')); ?></div>
+                                        <div class="fw-bold text-navy"><?php echo htmlspecialchars($res2015['winner_name'] ?? $res2015['winner']); ?></div>
                                         <?php if (!empty($mla2015['mobile'])): ?>
                                             <span class="badge bg-light text-secondary border py-0 px-2 fw-semibold mt-1 d-inline-flex align-items-center gap-1 extra-small" title="Contact Protected">
                                                 <i class="bi bi-telephone text-success"></i> <?php echo htmlspecialchars(maskMobileNumber($mla2015['mobile'])); ?>
                                             </span>
                                         <?php endif; ?>
                                     </td>
-                                    <td><span class="badge-party <?php echo strtolower($mla2015['party'] ?? ($ac['election_2015']['winner_party'] ?? 'other')); ?>"><?php echo htmlspecialchars($mla2015['party'] ?? ($ac['election_2015']['winner_party'] ?? '-')); ?></span></td>
-                                    <td><?php echo number_format($ac['election_2015']['winner_votes'] ?? 0); ?> <?php if (!empty($ac['election_2015']['winner_vote_share'])): ?>(<?php echo $ac['election_2015']['winner_vote_share']; ?>%)<?php endif; ?></td>
-                                    <td><?php echo htmlspecialchars($ac['election_2015']['runner_up'] ?? '-'); ?> <?php if (!empty($ac['election_2015']['runner_up_party'])): ?>(<?php echo $ac['election_2015']['runner_up_party']; ?>)<?php endif; ?></td>
-                                    <td class="text-success fw-bold"><?php echo number_format($ac['election_2015']['margin'] ?? 0); ?></td>
-                                    <td><?php echo $ac['election_2015']['turnout_percent'] ?? '-'; ?>%</td>
+                                    <td><span class="badge-party <?php echo strtolower($res2015['winner_party'] ?? ($ac['election_2015']['summary']['winner_party'] ?? 'other')); ?>"><?php echo htmlspecialchars($res2015['winner_party'] ?? ($ac['election_2015']['summary']['winner_party'] ?? '-')); ?></span></td>
+                                    <td><?php echo number_format($res2015['winner_votes'] ?? 0); ?><?php if (!empty($res2015['winner_vote_share'])): ?> (<?php echo $res2015['winner_vote_share']; ?>%)<?php endif; ?></td>
+                                    <td><?php echo htmlspecialchars($res2015['runner_up_name'] ?? $res2015['runner_up'] ?? '-'); ?> (<?php echo htmlspecialchars($res2015['runner_up_party'] ?? '-'); ?>)</td>
+                                    <td class="text-success fw-bold"><?php echo number_format($res2015['margin'] ?? 0); ?></td>
+                                    <td><?php echo $sum2015['turnout_percent'] ?? ($res2015['turnout_percent'] ?? ($ac['election_2015']['summary']['turnout'] ?? '-')); ?>%</td>
                                 </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
