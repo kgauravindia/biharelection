@@ -163,14 +163,14 @@ require_once __DIR__ . '/header.php';
                     $rParty25 = $res2025['runner_up_party'] ?? '';
                     $rVotes25 = $res2025['runner_up_votes'] ?? 0;
                     $margin25 = $res2025['margin'] ?? 0;
-                    $turnout25 = $res2025['turnout_percent'] ?? ($sum2020['turnout_percent'] ?? '-');
+                    $turnout25 = !empty($res2025['turnout_percent']) ? $res2025['turnout_percent'] . '%' : '-';
                 ?>
                 <div class="card border-0 shadow-sm p-3 p-md-4 mb-4 rounded-3 bg-white">
                     <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
                         <h2 class="h5 fw-bold mb-0" style="color: var(--primary-navy);">
                             🗳️ Bihar Vidhan Sabha 2025 Official Result
                         </h2>
-                        <span class="badge bg-success fw-bold px-3 py-2">Turnout: <?php echo $turnout25; ?>%</span>
+                        <span class="badge bg-success fw-bold px-3 py-2">Turnout: <?php echo $turnout25; ?></span>
                     </div>
 
                     <div class="row g-3 mb-3">
@@ -233,16 +233,23 @@ require_once __DIR__ . '/header.php';
                             📋 Contesting Candidates & Complete Vote Counts
                         </h2>
                         <ul class="nav nav-pills small" id="electionTab" role="tablist">
+                            <?php if ($hasByeElection): ?>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active fw-bold py-1 px-3 text-warning-emphasis" id="tab-bye-btn" data-bs-toggle="pill" data-bs-target="#tab-bye" type="button" role="tab">
+                                    <i class="bi bi-star-fill text-warning me-1"></i> <?php echo htmlspecialchars($byeElections[0]['year'] ?? '2026'); ?> Bye-Election (<?php echo count($byeElections); ?>)
+                                </button>
+                            </li>
+                            <?php endif; ?>
                             <?php if (!empty($cands2025)): ?>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active fw-bold py-1 px-3" id="tab-2025-btn" data-bs-toggle="pill" data-bs-target="#tab-2025" type="button" role="tab">
+                                <button class="nav-link <?php echo !$hasByeElection ? 'active' : ''; ?> fw-bold py-1 px-3" id="tab-2025-btn" data-bs-toggle="pill" data-bs-target="#tab-2025" type="button" role="tab">
                                     2025 Assembly (<?php echo count($cands2025); ?>)
                                 </button>
                             </li>
                             <?php endif; ?>
                             <?php if (!empty($cands2020)): ?>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link <?php echo empty($cands2025) ? 'active' : ''; ?> fw-bold py-1 px-3" id="tab-2020-btn" data-bs-toggle="pill" data-bs-target="#tab-2020" type="button" role="tab">
+                                <button class="nav-link <?php echo (!$hasByeElection && empty($cands2025)) ? 'active' : ''; ?> fw-bold py-1 px-3" id="tab-2020-btn" data-bs-toggle="pill" data-bs-target="#tab-2020" type="button" role="tab">
                                     2020 Assembly (<?php echo count($cands2020); ?>)
                                 </button>
                             </li>
@@ -254,21 +261,55 @@ require_once __DIR__ . '/header.php';
                                 </button>
                             </li>
                             <?php endif; ?>
-                            <?php if ($hasByeElection): ?>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link fw-bold py-1 px-3 text-warning-emphasis" id="tab-bye-btn" data-bs-toggle="pill" data-bs-target="#tab-bye" type="button" role="tab">
-                                    2026 Bye-Election (<?php echo count($byeElections); ?>)
-                                </button>
-                            </li>
-                            <?php endif; ?>
                         </ul>
                     </div>
 
                     <div class="tab-content" id="electionTabContent">
                         
+                        <!-- Bye-Election Table Pane (If Present) -->
+                        <?php if ($hasByeElection): ?>
+                        <div class="tab-pane fade show active" id="tab-bye" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0 small">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Candidate Name</th>
+                                            <th>Party</th>
+                                            <th>Category</th>
+                                            <th>EVM Votes</th>
+                                            <th>Postal</th>
+                                            <th>Total Votes</th>
+                                            <th>% Votes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $idxBye = 1; foreach ($byeElections as $cand): ?>
+                                        <tr class="<?php echo $idxBye === 1 ? 'table-success' : ''; ?>">
+                                            <td class="text-muted"><?php echo $idxBye; ?></td>
+                                            <td class="fw-bold">
+                                                <?php echo htmlspecialchars($cand['candidate_name']); ?>
+                                                <?php if ($idxBye === 1): ?>
+                                                    <span class="badge bg-success ms-1">Elected MLA</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td><span class="badge-party <?php echo strtolower($cand['party']); ?>"><?php echo htmlspecialchars($cand['party']); ?></span></td>
+                                            <td><?php echo htmlspecialchars($cand['category'] ?? '-'); ?></td>
+                                            <td><?php echo number_format($cand['votes_general']); ?></td>
+                                            <td><?php echo number_format($cand['votes_postal']); ?></td>
+                                            <td class="fw-bold"><?php echo number_format($cand['votes_total']); ?></td>
+                                            <td class="fw-bold text-success"><?php echo $cand['vote_share_valid']; ?>%</td>
+                                        </tr>
+                                        <?php $idxBye++; endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+
                         <!-- 2025 Candidates Table Pane -->
                         <?php if (!empty($cands2025)): ?>
-                        <div class="tab-pane fade show active" id="tab-2025" role="tabpanel">
+                        <div class="tab-pane fade <?php echo !$hasByeElection ? 'show active' : ''; ?>" id="tab-2025" role="tabpanel">
                             <div class="table-responsive">
                                 <table class="table table-hover align-middle mb-0 small">
                                     <thead class="table-light">
@@ -309,7 +350,7 @@ require_once __DIR__ . '/header.php';
 
                         <!-- 2020 Candidates Table Pane -->
                         <?php if (!empty($cands2020)): ?>
-                        <div class="tab-pane fade <?php echo empty($cands2025) ? 'show active' : ''; ?>" id="tab-2020" role="tabpanel">
+                        <div class="tab-pane fade <?php echo (!$hasByeElection && empty($cands2025)) ? 'show active' : ''; ?>" id="tab-2020" role="tabpanel">
                             <div class="table-responsive">
                                 <table class="table table-hover align-middle mb-0 small">
                                     <thead class="table-light">
@@ -327,7 +368,7 @@ require_once __DIR__ . '/header.php';
                                     <tbody>
                                         <?php $idx20 = 1; foreach ($cands2020 as $cand): ?>
                                         <tr class="<?php echo $idx20 === 1 ? 'table-success' : ''; ?>">
-                                            <td class="text-muted"><?php echo $idx20; ?></td>
+                                             <td class="text-muted"><?php echo $idx20; ?></td>
                                             <td class="fw-bold">
                                                 <?php echo htmlspecialchars($cand['candidate_name']); ?>
                                                 <?php if ($idx20 === 1): ?>
@@ -389,54 +430,13 @@ require_once __DIR__ . '/header.php';
                         </div>
                         <?php endif; ?>
 
-                        <!-- Bye-Election Table Pane -->
-                        <?php if ($hasByeElection): ?>
-                        <div class="tab-pane fade" id="tab-bye" role="tabpanel">
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0 small">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Candidate Name</th>
-                                            <th>Party</th>
-                                            <th>Category</th>
-                                            <th>EVM Votes</th>
-                                            <th>Postal</th>
-                                            <th>Total Votes</th>
-                                            <th>% Votes</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $idxBye = 1; foreach ($byeElections as $cand): ?>
-                                        <tr class="<?php echo $idxBye === 1 ? 'table-success' : ''; ?>">
-                                            <td class="text-muted"><?php echo $idxBye; ?></td>
-                                            <td class="fw-bold">
-                                                <?php echo htmlspecialchars($cand['candidate_name']); ?>
-                                                <?php if ($idxBye === 1): ?>
-                                                    <span class="badge bg-success ms-1">Elected MLA</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td><span class="badge-party <?php echo strtolower($cand['party']); ?>"><?php echo htmlspecialchars($cand['party']); ?></span></td>
-                                            <td><?php echo htmlspecialchars($cand['category'] ?? '-'); ?></td>
-                                            <td><?php echo number_format($cand['votes_general']); ?></td>
-                                            <td><?php echo number_format($cand['votes_postal']); ?></td>
-                                            <td class="fw-bold"><?php echo number_format($cand['votes_total']); ?></td>
-                                            <td class="fw-bold text-success"><?php echo $cand['vote_share_valid']; ?>%</td>
-                                        </tr>
-                                        <?php $idxBye++; endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <?php endif; ?>
-
                     </div>
                 </div>
 
-                <!-- Historical Comparison Table (2025 vs 2020 vs 2015) -->
+                <!-- Historical Comparison Table (Bye-Election vs 2025 vs 2020 vs 2015) -->
                 <div class="card border-0 shadow-sm p-3 p-md-4 mb-4 rounded-3 bg-white">
                     <h2 class="h5 fw-bold mb-3 pb-2 border-bottom" style="color: var(--primary-navy);">
-                        📜 Historical Assembly Elections (2025 vs 2020 vs 2015)
+                        📜 Historical Assembly Elections (<?php echo $hasByeElection ? ($byeElections[0]['year'] ?? '2026') . ' Bye-Election vs ' : ''; ?>2025 vs 2020 vs 2015)
                     </h2>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0 small">
@@ -452,6 +452,25 @@ require_once __DIR__ . '/header.php';
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if ($hasByeElection && !empty($byeElections)): ?>
+                                <?php 
+                                    $byeWinner = $byeElections[0] ?? [];
+                                    $byeRunner = $byeElections[1] ?? [];
+                                    $byeTotalPolled = array_sum(array_column($byeElections, 'votes_total'));
+                                    $byeElectors = !empty($byeWinner['total_electors']) ? (int)$byeWinner['total_electors'] : (int)$totalElectors;
+                                    $byeTurnout = $byeElectors > 0 ? round(($byeTotalPolled / $byeElectors) * 100, 2) . '%' : '-';
+                                ?>
+                                <tr class="table-warning">
+                                    <td><span class="badge bg-warning text-dark fw-bold"><?php echo htmlspecialchars($byeWinner['year'] ?? '2026'); ?> Bye-Election</span></td>
+                                    <td class="fw-bold text-navy"><?php echo htmlspecialchars($byeWinner['candidate_name'] ?? '-'); ?></td>
+                                    <td><span class="badge-party <?php echo strtolower($byeWinner['party'] ?? ''); ?>"><?php echo htmlspecialchars($byeWinner['party'] ?? '-'); ?></span></td>
+                                    <td><?php echo number_format($byeWinner['votes_total'] ?? 0); ?><?php if (!empty($byeWinner['vote_share_valid'])): ?> (<?php echo $byeWinner['vote_share_valid']; ?>%)<?php endif; ?></td>
+                                    <td><?php echo htmlspecialchars($byeRunner['candidate_name'] ?? '-'); ?> (<?php echo htmlspecialchars($byeRunner['party'] ?? '-'); ?>)</td>
+                                    <td class="text-success fw-bold"><?php echo number_format($byeWinner['margin'] ?? 0); ?></td>
+                                    <td><?php echo $byeTurnout; ?></td>
+                                </tr>
+                                <?php endif; ?>
+
                                 <?php if (!empty($res2025['winner_name']) || !empty($res2025['winner'])): ?>
                                 <tr>
                                     <td><span class="badge bg-success">2025 Assembly</span></td>
@@ -460,7 +479,7 @@ require_once __DIR__ . '/header.php';
                                     <td><?php echo number_format($res2025['winner_votes'] ?? 0); ?><?php if (!empty($res2025['winner_vote_share'])): ?> (<?php echo $res2025['winner_vote_share']; ?>%)<?php endif; ?></td>
                                     <td><?php echo htmlspecialchars($res2025['runner_up_name'] ?? $res2025['runner_up'] ?? '-'); ?> (<?php echo htmlspecialchars($res2025['runner_up_party'] ?? '-'); ?>)</td>
                                     <td class="text-success fw-bold"><?php echo number_format($res2025['margin'] ?? 0); ?></td>
-                                    <td><?php echo $res2025['turnout_percent'] ?? ($sum2020['turnout_percent'] ?? '-'); ?>%</td>
+                                    <td><?php echo !empty($res2025['turnout_percent']) ? $res2025['turnout_percent'] . '%' : '-'; ?></td>
                                 </tr>
                                 <?php endif; ?>
 
