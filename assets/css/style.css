@@ -370,13 +370,22 @@ body {
   padding: 3px 8px;
   border-radius: 6px;
   text-transform: uppercase;
+  display: inline-block;
+  background: #64748b;
+  color: #ffffff;
 }
 
-.badge-party.bjp { background: #ff9933; color: #ffffff; }
-.badge-party.rjd { background: #009933; color: #ffffff; }
-.badge-party.jdu { background: #006600; color: #ffffff; }
-.badge-party.inc { background: #0080ff; color: #ffffff; }
-.badge-party.cpiml { background: #cc0000; color: #ffffff; }
+.badge-party.bjp, .badge-party.bharatiyajanataparty { background: #ff9933; color: #ffffff; }
+.badge-party.rjd, .badge-party.rashtriyajanatadal { background: #009933; color: #ffffff; }
+.badge-party.jdu, .badge-party.janatadalunited { background: #006600; color: #ffffff; }
+.badge-party.inc, .badge-party.congress, .badge-party.indiannationalcongress { background: #0080ff; color: #ffffff; }
+.badge-party.cpiml, .badge-party.cpimll, .badge-party.cpi, .badge-party.cpim { background: #cc0000; color: #ffffff; }
+.badge-party.jansuraajparty, .badge-party.jansuraaj, .badge-party.jsp { background: #f59e0b; color: #111827; }
+.badge-party.ljpr, .badge-party.ljp { background: #0284c7; color: #ffffff; }
+.badge-party.aimim { background: #065f46; color: #ffffff; }
+.badge-party.vsip, .badge-party.vip { background: #e11d48; color: #ffffff; }
+.badge-party.ham, .badge-party.hams { background: #854d0e; color: #ffffff; }
+.badge-party.ind, .badge-party.independent { background: #475569; color: #ffffff; }
 .badge-party.other { background: #64748b; color: #ffffff; }
 
 /* ---------------- Candidate Cards ---------------- */

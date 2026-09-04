@@ -52,8 +52,8 @@ require_once __DIR__ . '/header.php';
                             <li>✓ Integrated social channel links</li>
                         </ul>
                     </div>
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=<?php echo urlencode('Hi, I want to create a Basic Political Profile on Bihar Election'); ?>" target="_blank" class="btn btn-primary w-100 fw-bold py-2 shadow-sm" style="background: var(--secondary-navy); border: none;">
-                        Book via WhatsApp &rarr;
+                    <a href="<?php echo SITE_URL; ?>/contact" class="btn btn-primary w-100 fw-bold py-2 shadow-sm" style="background: var(--secondary-navy); border: none;">
+                        Book Package &rarr;
                     </a>
                 </div>
             </div>
@@ -72,11 +72,11 @@ require_once __DIR__ . '/header.php';
                         <ul class="list-unstyled small text-muted lh-lg mb-4">
                             <li>✓ <strong>Verified Badge</strong> profile page</li>
                             <li>✓ Detailed manifesto, photo & video gallery</li>
-                            <li>✓ Promotion to <strong>10,000+ WhatsApp</strong> subscribers</li>
+                            <li>✓ Promotion to opt-in digital subscribers</li>
                             <li>✓ Top featured slot on your Assembly Constituency page</li>
                         </ul>
                     </div>
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=<?php echo urlencode('Hi, I want to book a VIP Candidate Premium Profile on Bihar Election'); ?>" target="_blank" class="btn btn-warning w-100 fw-bold py-2 text-dark shadow-sm">
+                    <a href="<?php echo SITE_URL; ?>/contact" class="btn btn-warning w-100 fw-bold py-2 text-dark shadow-sm">
                         Activate VIP Package &rarr;
                     </a>
                 </div>
@@ -95,11 +95,11 @@ require_once __DIR__ . '/header.php';
                         <ul class="list-unstyled small text-muted lh-lg mb-4">
                             <li>✓ 1-Year Listing in your District Election Hub</li>
                             <li>✓ Sponsored banner on target Assembly pages</li>
-                            <li>✓ Direct call and WhatsApp lead button</li>
+                            <li>✓ Direct call and lead inquiry button</li>
                             <li>✓ Prominent local Google search presence</li>
                         </ul>
                     </div>
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=<?php echo urlencode('Hi, I want to book a District Business Listing on Bihar Election'); ?>" target="_blank" class="btn btn-outline-secondary w-100 fw-bold py-2">
+                    <a href="<?php echo SITE_URL; ?>/contact" class="btn btn-outline-secondary w-100 fw-bold py-2">
                         Add Business Listing &rarr;
                     </a>
                 </div>
@@ -110,7 +110,7 @@ require_once __DIR__ . '/header.php';
         <!-- Banner & Media Rate Card -->
         <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-5 bg-white">
             <h2 class="h5 fw-bold mb-3 pb-2 border-bottom" style="color: var(--primary-navy);">
-                📊 Media & Banner Advertising Rate Card
+                📊 Media &amp; Banner Advertising Rate Card
             </h2>
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0 small">
@@ -127,25 +127,25 @@ require_once __DIR__ . '/header.php';
                             <td class="fw-bold">District Directory Listing</td>
                             <td>38 District Hubs</td>
                             <td class="fw-bold text-warning">₹1,999 / year</td>
-                            <td><a href="https://api.whatsapp.com/send?phone=919876543210&text=Book+District+Listing" target="_blank" class="text-warning fw-bold text-decoration-none">Book Now &rarr;</a></td>
+                            <td><a href="<?php echo SITE_URL; ?>/contact" class="text-warning fw-bold text-decoration-none">Book Now &rarr;</a></td>
                         </tr>
                         <tr>
                             <td class="fw-bold">Constituency Page Sponsor</td>
                             <td>243 Dedicated Assembly Pages</td>
                             <td class="fw-bold text-warning">₹4,999 / year</td>
-                            <td><a href="https://api.whatsapp.com/send?phone=919876543210&text=Book+AC+Sponsor" target="_blank" class="text-warning fw-bold text-decoration-none">Book Now &rarr;</a></td>
+                            <td><a href="<?php echo SITE_URL; ?>/contact" class="text-warning fw-bold text-decoration-none">Book Now &rarr;</a></td>
                         </tr>
                         <tr>
                             <td class="fw-bold">Homepage Banner</td>
                             <td>Bihar Election Main Portal</td>
                             <td class="fw-bold text-warning">₹10,000 / month</td>
-                            <td><a href="https://api.whatsapp.com/send?phone=919876543210&text=Book+Homepage+Banner" target="_blank" class="text-warning fw-bold text-decoration-none">Book Now &rarr;</a></td>
+                            <td><a href="<?php echo SITE_URL; ?>/contact" class="text-warning fw-bold text-decoration-none">Book Now &rarr;</a></td>
                         </tr>
                         <tr>
                             <td class="fw-bold">Premium Header Banner</td>
                             <td>All 1,500+ Platform Pages</td>
                             <td class="fw-bold text-warning">₹15,000 / month</td>
-                            <td><a href="https://api.whatsapp.com/send?phone=919876543210&text=Book+Premium+Banner" target="_blank" class="text-warning fw-bold text-decoration-none">Book Now &rarr;</a></td>
+                            <td><a href="<?php echo SITE_URL; ?>/contact" class="text-warning fw-bold text-decoration-none">Book Now &rarr;</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -170,8 +170,8 @@ require_once __DIR__ . '/header.php';
                 <div class="col-12 col-md-4">
                     <div class="bg-white bg-opacity-10 p-3 p-lg-4 rounded-3 h-100">
                         <div class="fs-2 mb-2">📲</div>
-                        <h3 class="h6 fw-bold mb-1">Direct WhatsApp Network</h3>
-                        <p class="small text-white-50 mb-0">Deliver updates and candidate manifestos directly to 10,000+ opt-in WhatsApp subscribers.</p>
+                        <h3 class="h6 fw-bold mb-1">Direct Civic Network</h3>
+                        <p class="small text-white-50 mb-0">Deliver updates and candidate manifestos directly to engaged community members.</p>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -184,8 +184,8 @@ require_once __DIR__ . '/header.php';
             </div>
 
             <div class="text-center">
-                <a href="https://api.whatsapp.com/send?phone=919876543210&text=<?php echo urlencode('Hello, I would like to inquire about advertising on Bihar Election'); ?>" target="_blank" class="btn btn-warning btn-lg fw-bold px-4 text-dark shadow-sm">
-                    <i class="bi bi-whatsapp"></i> Inquire Directly via WhatsApp
+                <a href="<?php echo SITE_URL; ?>/contact" class="btn btn-warning btn-lg fw-bold px-4 text-dark shadow-sm">
+                    <i class="bi bi-envelope-fill me-1"></i> Contact Advertising Desk &rarr;
                 </a>
             </div>
         </section>

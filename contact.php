@@ -7,7 +7,7 @@ require_once __DIR__ . '/includes/auth_helper.php';
 
 $pageTitle = 'Contact Us — Bihar Election Intelligence & Editorial Desk';
 $pageDescription = 'Get in touch with Bihar Election team for editorial inquiries, candidate profile updates, advertisement bookings, and civic partnership.';
-$pageKeywords = 'Contact Bihar Election, Bihar Election Office, Candidate Profile Verification, OfferPlant Technologies Patna, Election Helpline Bihar';
+$pageKeywords = 'Contact Bihar Election, Bihar Election Office, Candidate Profile Verification, OfferPlant Technologies Chapra, Election Helpline Bihar';
 $pageCanonical = SITE_URL . '/contact/';
 $activeNav = 'contact';
 
@@ -190,7 +190,7 @@ include __DIR__ . '/header.php';
                             <div>
                                 <span class="d-block text-muted small fw-semibold">Corporate Operator</span>
                                 <p class="text-dark fw-bold mb-0 small">OfferPlant Technologies Private Limited</p>
-                                <span class="text-muted small">Patna, Bihar, India</span>
+                                <span class="text-muted small">Chapra, Bihar, India</span>
                             </div>
                         </div>
                     </div>
@@ -200,7 +200,7 @@ include __DIR__ . '/header.php';
                         <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom" style="font-family: 'Outfit', sans-serif;">
                             <i class="bi bi-share me-2 text-primary"></i> Follow Official Channels
                         </h5>
-                        <p class="text-muted small mb-3">Join over 100,000+ voters and citizens receiving authentic daily electoral intelligence.</p>
+                        <p class="text-muted small mb-3">Join voters and citizens receiving authentic daily electoral intelligence.</p>
 
                         <div class="row g-2">
                             <div class="col-6">
@@ -237,6 +237,33 @@ include __DIR__ . '/header.php';
                     </div>
 
                 </div>
+            </div>
+        </div>
+        
+        <!-- Google Map Section -->
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mt-5">
+            <div class="p-3 p-md-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-danger-subtle text-danger p-2 rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                        <i class="bi bi-geo-alt-fill fs-5"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-0" style="font-family: 'Outfit', sans-serif;">BiharElection.Com Official Headquarters</h5>
+                        <p class="text-muted small mb-0">Editorial Operations &bull; Bihar, India</p>
+                    </div>
+                </div>
+                <a href="https://maps.app.goo.gl/84B4uQ36XBxTaPth8" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill fw-bold px-3 py-2">
+                    <i class="bi bi-box-arrow-up-right me-1"></i> Open in Google Maps
+                </a>
+            </div>
+            <div class="ratio ratio-21x9" style="min-height: 380px;">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.299895416711!2d84.7477043!3d25.7936785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3992bb006c93fde9%3A0x6dac9b0a19ddddbf!2sBiharElection.Com!5e0!3m2!1sen!2sin!4v1788535588755!5m2!1sen!2sin" 
+                    style="border:0; width: 100%; height: 100%;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="strict-origin-when-cross-origin">
+                </iframe>
             </div>
         </div>
 

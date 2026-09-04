@@ -7,7 +7,7 @@ require_once __DIR__ . '/includes/auth_helper.php';
 
 $pageTitle = 'About Us — Bihar Election Intelligence & Democratic Data Hub';
 $pageDescription = 'BiharElection.com is Bihar’s premier open civic intelligence and electoral analytics portal covering 243 Vidhan Sabha seats, 8,000+ Panchayats, and candidate profiles.';
-$pageKeywords = 'About Bihar Election, Bihar Election Portal, OfferPlant Technologies Patna, Bihar Vidhan Sabha Analytics, Panchayat Data Bihar';
+$pageKeywords = 'About Bihar Election, Bihar Election Portal, OfferPlant Technologies Chapra, Bihar Vidhan Sabha Analytics, Panchayat Data Bihar';
 $pageCanonical = SITE_URL . '/about/';
 $activeNav = 'about';
 
@@ -111,7 +111,7 @@ include __DIR__ . '/header.php';
                 <div class="col-lg-8">
                     <h4 class="fw-bold text-dark mb-3" style="font-family: 'Outfit', sans-serif;">Operated by OfferPlant Technologies Private Limited</h4>
                     <p class="text-muted mb-3" style="line-height: 1.7;">
-                        Based out of Patna, Bihar, <strong>OfferPlant Technologies Private Limited</strong> is a leading technology and digital solutions enterprise. Through BiharElection.com, we combine cutting-edge software architecture, high-speed database indices, and deep local journalism to create Bihar’s most authoritative civic knowledge graph.
+                        Based out of Chapra, Bihar, <strong>OfferPlant Technologies Private Limited</strong> is a leading technology and digital solutions enterprise. Through BiharElection.com, we combine cutting-edge software architecture, high-speed database indices, and deep local journalism to create Bihar’s most authoritative civic knowledge graph.
                     </p>
                     <p class="text-muted mb-0 small">
                         Our digital newsroom and data verification desk operate round-the-clock during election cycles to ensure zero misinformation, instant booth-level fact-checking, and seamless voter literacy dissemination.
@@ -121,7 +121,7 @@ include __DIR__ . '/header.php';
                     <div class="p-4 bg-light rounded-4 border">
                         <i class="bi bi-building-check text-danger display-4 mb-2 d-block"></i>
                         <h6 class="fw-bold text-dark mb-1">Corporate Headquarters</h6>
-                        <p class="text-muted small mb-3">Patna, Bihar, India</p>
+                        <p class="text-muted small mb-3">Chapra, Bihar, India</p>
                         <a href="<?php echo SITE_URL; ?>/contact" class="btn btn-sm btn-danger rounded-pill px-4 fw-bold">
                             Contact Us &rarr;
                         </a>

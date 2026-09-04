@@ -1089,6 +1089,26 @@ function maskMobileNumber($phone, $forceMask = true) {
 }
 
 /**
+ * Masks an email address for privacy (e.g. nitish.kumar@bihar.gov.in -> ni*****r@bihar.gov.in)
+ */
+function maskEmailAddress($email) {
+    $email = trim((string)$email);
+    if (empty($email)) return '';
+    if (strpos($email, '@') === false) return '******';
+    
+    list($user, $domain) = explode('@', $email, 2);
+    $uLen = strlen($user);
+    if ($uLen <= 2) {
+        $maskedUser = substr($user, 0, 1) . '***';
+    } elseif ($uLen <= 4) {
+        $maskedUser = substr($user, 0, 1) . '**' . substr($user, -1);
+    } else {
+        $maskedUser = substr($user, 0, 2) . str_repeat('*', min(6, $uLen - 3)) . substr($user, -1);
+    }
+    return $maskedUser . '@' . $domain;
+}
+
+/**
  * Renders interactive phone reveal badge:
  * - When guest clicks: Prompts Citizen Login Modal
  * - When logged-in citizen clicks: Instantly reveals full contact number & enables 1-click calling
