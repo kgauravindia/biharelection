@@ -354,6 +354,122 @@ class DataProvider {
         return null;
     }
 
+    public static function getByeElectionDetailedResults($acNo = null, $year = null) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $sql = "SELECT * FROM bye_election_detailed_results WHERE 1=1";
+            $params = [];
+            if ($acNo !== null) {
+                $sql .= " AND ac_no = :ac_no";
+                $params[':ac_no'] = (int)$acNo;
+            }
+            if ($year !== null) {
+                $sql .= " AND year = :year";
+                $params[':year'] = (int)$year;
+            }
+            $sql .= " ORDER BY year DESC, votes_total DESC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Throwable $e) {
+            error_log("Error fetching bye_election_detailed_results: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public static function getElectionDetailedResults($acNo = null, $year = null) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $sql = "SELECT * FROM election_detailed_results WHERE 1=1";
+            $params = [];
+            if ($acNo !== null) {
+                $sql .= " AND ac_no = :ac_no";
+                $params[':ac_no'] = (int)$acNo;
+            }
+            if ($year !== null) {
+                $sql .= " AND year = :year";
+                $params[':year'] = (int)$year;
+            }
+            $sql .= " ORDER BY year DESC, votes_total DESC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Throwable $e) {
+            error_log("Error fetching election_detailed_results: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public static function getElectionSuccessfulCandidates($acNo = null, $year = null) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $sql = "SELECT * FROM election_successful_candidates WHERE 1=1";
+            $params = [];
+            if ($acNo !== null) {
+                $sql .= " AND ac_no = :ac_no";
+                $params[':ac_no'] = (int)$acNo;
+            }
+            if ($year !== null) {
+                $sql .= " AND year = :year";
+                $params[':year'] = (int)$year;
+            }
+            $sql .= " ORDER BY year DESC, ac_no ASC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            return $acNo !== null ? $stmt->fetch(PDO::FETCH_ASSOC) : $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Throwable $e) {
+            error_log("Error fetching election_successful_candidates: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public static function getElectionAcSummary($acNo = null, $year = null) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $sql = "SELECT * FROM election_ac_summary WHERE 1=1";
+            $params = [];
+            if ($acNo !== null) {
+                $sql .= " AND ac_no = :ac_no";
+                $params[':ac_no'] = (int)$acNo;
+            }
+            if ($year !== null) {
+                $sql .= " AND year = :year";
+                $params[':year'] = (int)$year;
+            }
+            $sql .= " ORDER BY year DESC, ac_no ASC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            return $acNo !== null ? $stmt->fetch(PDO::FETCH_ASSOC) : $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Throwable $e) {
+            error_log("Error fetching election_ac_summary: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public static function getElectionPartyPerformance($year = null) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $sql = "SELECT * FROM election_party_performance WHERE 1=1";
+            $params = [];
+            if ($year !== null) {
+                $sql .= " AND year = :year";
+                $params[':year'] = (int)$year;
+            }
+            $sql .= " ORDER BY year DESC, won DESC, votes_polled DESC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Throwable $e) {
+            error_log("Error fetching election_party_performance: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public static function getPanchayats($districtSlug = null) {
         if (self::$panchayats === null) {
             self::$panchayats = [];
