@@ -192,62 +192,74 @@ require_once __DIR__ . '/header.php';
     <main class="container my-5">
 
         <!-- Bihar 3-Tier Panchayati Raj Leadership & Local Governance Structure -->
-        <section class="mb-5">
-            <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4 pb-2 border-bottom">
+        <section class="my-5 py-2">
+            <!-- Section Header with Clear Spacing -->
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4 pb-3 border-bottom">
                 <div>
-                    <div class="d-flex align-items-center gap-2 mb-1">
-                        <span class="badge bg-primary text-white fw-bold px-2.5 py-1 rounded-pill small">3-Tier System</span>
-                        <h2 class="h4 fw-bold mb-0" style="color: var(--primary-navy);">Bihar Panchayati Raj Leadership Directory (त्रिस्तरीय व्यवस्था)</h2>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge bg-primary text-white fw-bold px-3 py-1.5 rounded-pill small shadow-sm">
+                            <i class="bi bi-diagram-3-fill me-1"></i> त्रिस्तरीय पंचायती राज व्यवस्था
+                        </span>
                     </div>
-                    <p class="small text-muted mb-0">Complete elected leadership structure from District (Zila Parishad) to Block (Panchayat Samiti) and Village (Gram Panchayat &amp; Katchahry)</p>
+                    <h2 class="h3 fw-bold mb-1" style="color: var(--primary-navy); font-family: var(--font-heading);">
+                        Bihar Panchayati Raj Leadership Directory
+                    </h2>
+                    <p class="text-muted mb-0 small lh-base">
+                        Complete elected leadership structure from District (Zila Parishad) to Block (Panchayat Samiti) and Village (Gram Panchayat &amp; Katchahry)
+                    </p>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="<?php echo getZilaParishadUrl(); ?>" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3">
-                        Zila Parishad &rarr;
+                    <a href="<?php echo getZilaParishadUrl(); ?>" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3 py-1.5 shadow-sm">
+                        <i class="bi bi-shield-shaded me-1"></i> Zila Parishad &rarr;
                     </a>
-                    <a href="<?php echo getPanchayatSamitiUrl(); ?>" class="btn btn-outline-success btn-sm fw-bold rounded-pill px-3">
-                        Panchayat Samiti &rarr;
+                    <a href="<?php echo getPanchayatSamitiUrl(); ?>" class="btn btn-outline-success btn-sm fw-bold rounded-pill px-3 py-1.5 shadow-sm">
+                        <i class="bi bi-building-gear me-1"></i> Panchayat Samiti &rarr;
                     </a>
                 </div>
             </div>
 
-            <div class="row g-3 g-lg-4">
+            <!-- 3-Tier Leadership Cards Grid -->
+            <div class="row g-4">
+                
                 <!-- Tier 1: Zila Parishad (District Level) -->
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card border-0 shadow-sm rounded-4 p-3 p-lg-4 h-100 d-flex flex-column justify-content-between border-top border-4 border-primary bg-white">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100 d-flex flex-column justify-content-between border-top border-4 border-primary bg-white position-relative hover-lift">
                         <div>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-2.5 py-1 rounded-pill border border-primary border-opacity-25">
+                                <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-3 py-1.5 rounded-pill border border-primary border-opacity-25 small">
                                     🏛️ District Level (शीर्ष स्तर)
                                 </span>
-                                <span class="badge bg-light text-dark border">38 Districts</span>
+                                <span class="badge bg-light text-dark border px-2.5 py-1 rounded-pill small fw-semibold">38 Districts</span>
                             </div>
-                            <h3 class="h5 fw-bold mb-2 text-navy">
+
+                            <h3 class="h5 fw-bold mb-2 text-navy" style="font-family: var(--font-heading);">
                                 जिला परिषद (Zila Parishad)
                             </h3>
-                            <p class="small text-muted mb-3">
+                            <p class="small text-muted mb-4 lh-base">
                                 Highest tier of local governance across all 38 districts of Bihar with apex administrative leadership.
                             </p>
 
-                            <div class="bg-light p-3 rounded-3 mb-3 border">
-                                <div class="d-flex justify-content-between align-items-center py-1.5 border-bottom">
-                                    <span class="small text-muted">अध्यक्ष (Adhyaksh):</span>
-                                    <span class="badge bg-white text-dark border fw-bold">38 Chairperson Seats</span>
+                            <!-- Breakdown Table / Stats Box -->
+                            <div class="bg-light bg-opacity-70 p-3 rounded-3 mb-4 border">
+                                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                    <span class="small text-secondary fw-semibold">अध्यक्ष (Adhyaksh):</span>
+                                    <span class="badge bg-white text-primary border border-primary border-opacity-25 fw-bold px-2.5 py-1 shadow-2xs">38 Chairperson Seats</span>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center py-1.5 border-bottom">
-                                    <span class="small text-muted">उपाध्यक्ष (Upadhyaksh):</span>
-                                    <span class="badge bg-white text-dark border fw-bold">38 Vice-Chairperson Seats</span>
+                                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                    <span class="small text-secondary fw-semibold">उपाध्यक्ष (Upadhyaksh):</span>
+                                    <span class="badge bg-white text-dark border fw-bold px-2.5 py-1 shadow-2xs">38 Vice-Chairperson Seats</span>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center py-1.5">
-                                    <span class="small text-muted">क्षेत्रीय सदस्य (Territory Members):</span>
-                                    <span class="badge bg-primary text-white fw-bold">1,153+ Wards</span>
+                                <div class="d-flex justify-content-between align-items-center pt-2">
+                                    <span class="small text-secondary fw-semibold">क्षेत्रीय सदस्य (Territory Members):</span>
+                                    <span class="badge text-white fw-bold px-2.5 py-1 shadow-2xs" style="background: #7c3aed;">1,153+ Wards</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="pt-2 border-top d-flex gap-2">
-                            <a href="<?php echo getZilaParishadUrl(); ?>" class="btn btn-primary btn-sm w-100 fw-bold py-2 rounded-3 shadow-none">
-                                <i class="bi bi-shield-shaded me-1"></i> 38 Adhyaksh / Upadhyaksh Roster &rarr;
+                        <!-- Card Action CTA -->
+                        <div class="pt-3 border-top">
+                            <a href="<?php echo getZilaParishadUrl(); ?>" class="btn btn-primary btn-sm w-100 fw-bold py-2 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-shield-shaded"></i> Explore 38 District Adhyaksh &rarr;
                             </a>
                         </div>
                     </div>
@@ -255,40 +267,43 @@ require_once __DIR__ . '/header.php';
 
                 <!-- Tier 2: Panchayat Samiti (Block Level) -->
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card border-0 shadow-sm rounded-4 p-3 p-lg-4 h-100 d-flex flex-column justify-content-between border-top border-4 border-success bg-white">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100 d-flex flex-column justify-content-between border-top border-4 border-success bg-white position-relative hover-lift">
                         <div>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2.5 py-1 rounded-pill border border-success border-opacity-25">
+                                <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-1.5 rounded-pill border border-success border-opacity-25 small">
                                     🏢 Block Level (मध्यवर्ती स्तर)
                                 </span>
-                                <span class="badge bg-light text-dark border">534 Blocks</span>
+                                <span class="badge bg-light text-dark border px-2.5 py-1 rounded-pill small fw-semibold">534 Blocks</span>
                             </div>
-                            <h3 class="h5 fw-bold mb-2 text-navy">
+
+                            <h3 class="h5 fw-bold mb-2 text-navy" style="font-family: var(--font-heading);">
                                 पंचायत समिति (Panchayat Samiti)
                             </h3>
-                            <p class="small text-muted mb-3">
+                            <p class="small text-muted mb-4 lh-base">
                                 Intermediate executive tier operating across all 534 Community Development Blocks (प्रखंड).
                             </p>
 
-                            <div class="bg-light p-3 rounded-3 mb-3 border">
-                                <div class="d-flex justify-content-between align-items-center py-1.5 border-bottom">
-                                    <span class="small text-muted">प्रमुख (Pramukh):</span>
-                                    <span class="badge bg-white text-dark border fw-bold">534 Block Pramukhs</span>
+                            <!-- Breakdown Table / Stats Box -->
+                            <div class="bg-light bg-opacity-70 p-3 rounded-3 mb-4 border">
+                                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                    <span class="small text-secondary fw-semibold">प्रमुख (Pramukh):</span>
+                                    <span class="badge bg-white text-success border border-success border-opacity-25 fw-bold px-2.5 py-1 shadow-2xs">534 Block Pramukhs</span>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center py-1.5 border-bottom">
-                                    <span class="small text-muted">उप-प्रमुख (Up-Pramukh):</span>
-                                    <span class="badge bg-white text-dark border fw-bold">534 Vice-Pramukhs</span>
+                                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                    <span class="small text-secondary fw-semibold">उप-प्रमुख (Up-Pramukh):</span>
+                                    <span class="badge bg-white text-dark border fw-bold px-2.5 py-1 shadow-2xs">534 Vice-Pramukhs</span>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center py-1.5">
-                                    <span class="small text-muted">समिति सदस्य (Samiti Members):</span>
-                                    <span class="badge bg-success text-white fw-bold">11,000+ Members</span>
+                                <div class="d-flex justify-content-between align-items-center pt-2">
+                                    <span class="small text-secondary fw-semibold">समिति सदस्य (Samiti Members):</span>
+                                    <span class="badge bg-success text-white fw-bold px-2.5 py-1 shadow-2xs">11,000+ Members</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="pt-2 border-top d-flex gap-2">
-                            <a href="<?php echo getPanchayatSamitiUrl(); ?>" class="btn btn-success btn-sm w-100 fw-bold py-2 rounded-3 shadow-none">
-                                <i class="bi bi-building-gear me-1"></i> 534 Pramukh / Up-Pramukh Hub &rarr;
+                        <!-- Card Action CTA -->
+                        <div class="pt-3 border-top">
+                            <a href="<?php echo getPanchayatSamitiUrl(); ?>" class="btn btn-success btn-sm w-100 fw-bold py-2 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-1 text-white">
+                                <i class="bi bi-building-gear"></i> Explore 534 Block Pramukh Hub &rarr;
                             </a>
                         </div>
                     </div>
@@ -296,47 +311,51 @@ require_once __DIR__ . '/header.php';
 
                 <!-- Tier 3: Gram Panchayat & Gram Katchahry (Village Level) -->
                 <div class="col-12 col-md-12 col-lg-4">
-                    <div class="card border-0 shadow-sm rounded-4 p-3 p-lg-4 h-100 d-flex flex-column justify-content-between border-top border-4 border-warning bg-white">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100 d-flex flex-column justify-content-between border-top border-4 border-warning bg-white position-relative hover-lift">
                         <div>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="badge bg-warning bg-opacity-10 text-dark fw-bold px-2.5 py-1 rounded-pill border border-warning border-opacity-50">
+                                <span class="badge bg-warning bg-opacity-15 text-dark fw-bold px-3 py-1.5 rounded-pill border border-warning border-opacity-40 small">
                                     🌾 Village Level (ग्राम स्तर)
                                 </span>
-                                <span class="badge bg-light text-dark border">8,053+ Panchayats</span>
+                                <span class="badge bg-light text-dark border px-2.5 py-1 rounded-pill small fw-semibold">8,053+ Panchayats</span>
                             </div>
-                            <h3 class="h5 fw-bold mb-2 text-navy">
+
+                            <h3 class="h5 fw-bold mb-2 text-navy" style="font-family: var(--font-heading);">
                                 ग्राम पंचायत एवं कचहरी
                             </h3>
-                            <p class="small text-muted mb-3">
+                            <p class="small text-muted mb-4 lh-base">
                                 Grassroots administrative &amp; judicial local self-governance across all rural villages in Bihar.
                             </p>
 
-                            <div class="bg-light p-3 rounded-3 mb-3 border">
-                                <div class="d-flex justify-content-between align-items-center py-1.5 border-bottom">
-                                    <span class="small text-muted">मुखिया एवं उप-मुखिया:</span>
-                                    <span class="badge bg-white text-dark border fw-bold">8,053+ Mukhiya / Up-Mukhiya</span>
+                            <!-- Breakdown Table / Stats Box -->
+                            <div class="bg-light bg-opacity-70 p-3 rounded-3 mb-4 border">
+                                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                    <span class="small text-secondary fw-semibold">मुखिया एवं उप-मुखिया:</span>
+                                    <span class="badge bg-white text-dark border border-warning border-opacity-50 fw-bold px-2.5 py-1 shadow-2xs">8,053+ Mukhiya / Up-Mukhiya</span>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center py-1.5 border-bottom">
-                                    <span class="small text-muted">सरपंच एवं उप-सरपंच:</span>
-                                    <span class="badge bg-white text-dark border fw-bold">8,053+ Sarpanch / Up-Sarpanch</span>
+                                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                    <span class="small text-secondary fw-semibold">सरपंच एवं उप-सरपंच:</span>
+                                    <span class="badge bg-white text-danger border border-danger border-opacity-25 fw-bold px-2.5 py-1 shadow-2xs">8,053+ Sarpanch / Up-Sarpanch</span>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center py-1.5">
-                                    <span class="small text-muted">वार्ड सदस्य एवं पंच:</span>
-                                    <span class="badge bg-dark text-white fw-bold">1,14,000+ Wards</span>
+                                <div class="d-flex justify-content-between align-items-center pt-2">
+                                    <span class="small text-secondary fw-semibold">वार्ड सदस्य एवं पंच:</span>
+                                    <span class="badge bg-dark text-white fw-bold px-2.5 py-1 shadow-2xs">1,14,000+ Wards</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="pt-2 border-top d-flex gap-2">
-                            <a href="<?php echo SITE_URL; ?>/mukhiya" class="btn btn-outline-warning text-dark btn-sm flex-fill fw-bold py-2 rounded-3 shadow-none">
-                                👑 Mukhiyas &rarr;
+                        <!-- Card Action CTA (Dual Buttons) -->
+                        <div class="pt-3 border-top d-flex gap-2">
+                            <a href="<?php echo SITE_URL; ?>/mukhiya" class="btn btn-outline-warning text-dark btn-sm flex-fill fw-bold py-2 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-1">
+                                🌾 Mukhiyas &rarr;
                             </a>
-                            <a href="<?php echo SITE_URL; ?>/sarpanch" class="btn btn-outline-secondary btn-sm flex-fill fw-bold py-2 rounded-3 shadow-none">
+                            <a href="<?php echo SITE_URL; ?>/sarpanch" class="btn btn-outline-danger btn-sm flex-fill fw-bold py-2 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-1">
                                 ⚖️ Sarpanchs &rarr;
                             </a>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
