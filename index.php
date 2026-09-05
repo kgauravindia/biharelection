@@ -55,7 +55,7 @@ require_once __DIR__ . '/header.php';
             </div>
 
             <!-- Quick Pill Links (Touch horizontal scrollable on mobile) -->
-            <div class="d-flex flex-nowrap flex-sm-wrap justify-content-start justify-content-sm-center align-items-center gap-2 mt-3 overflow-x-auto pb-2 px-1">
+            <div class="d-flex flex-nowrap flex-sm-wrap justify-content-start justify-content-sm-center align-items-center gap-2 mt-3 overflow-x-auto pill-scroll-container pb-2 px-1">
                 <span class="small text-white-50 text-nowrap">Popular:</span>
                 <a href="<?php echo getDistrictUrl('patna'); ?>" class="pill-link fw-bold text-warning">👑 Patna Hub</a>
                 <a href="<?php echo SITE_URL; ?>/mla" class="pill-link">🗳️ 243 MLAs</a>
@@ -69,9 +69,9 @@ require_once __DIR__ . '/header.php';
         </div>
     </section>
 
-    <!-- Live Governance & Electoral Stat Grid Bar (Redesigned) -->
+    <!-- Live Governance & Electoral Stat Grid Bar (Swipeable on Mobile) -->
     <div class="container" style="margin-top: -30px; position: relative; z-index: 10;">
-        <div class="row g-2 g-md-3 row-cols-2 row-cols-md-3 row-cols-xl-6">
+        <div class="row g-2 g-md-3 row-cols-2 row-cols-md-3 row-cols-xl-6 mobile-scroll-row">
             <!-- 1: Assembly MLAs -->
             <div class="col">
                 <a href="<?php echo SITE_URL; ?>/mla" class="governance-stat-card p-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset d-block">
