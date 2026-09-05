@@ -1,0 +1,275 @@
+[
+    {
+        "district": "Patna",
+        "district_hi": "पटना",
+        "district_slug": "patna",
+        "adhyaksh_2016": "अंजु देवी",
+        "upadhyaksh_2016": "झयेति सोनी"
+    },
+    {
+        "district": "वक्सर",
+        "district_hi": "वक्सर",
+        "district_slug": "-",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Rohtas",
+        "district_hi": "रोहतास",
+        "district_slug": "rohtas",
+        "adhyaksh_2016": "नथाुनी राम",
+        "upadhyaksh_2016": "आशा देवी"
+    },
+    {
+        "district": "भ्ाोजपुर",
+        "district_hi": "भ्ाोजपुर",
+        "district_slug": "-",
+        "adhyaksh_2016": "श्रीमती आरती देवी",
+        "upadhyaksh_2016": "श्रीमती फलवती देवी"
+    },
+    {
+        "district": "Nalanda",
+        "district_hi": "नालंदा",
+        "district_slug": "nalanda",
+        "adhyaksh_2016": "श्रीमति तनुजा कुमारी",
+        "upadhyaksh_2016": "श्रीमति संगीता देवी"
+    },
+    {
+        "district": "Kaimur",
+        "district_hi": "कैमूर",
+        "district_slug": "kaimur",
+        "adhyaksh_2016": "श्री विश्वम्भ्ार नाथा सिंह उर्फ वकील",
+        "upadhyaksh_2016": "श्री सुनील कुमार सिह"
+    },
+    {
+        "district": "Gaya",
+        "district_hi": "गया",
+        "district_slug": "gaya",
+        "adhyaksh_2016": "श्रीमती कःणा कुमारी",
+        "upadhyaksh_2016": "श्रीमती ःबी कुमारी"
+    },
+    {
+        "district": "Nawada",
+        "district_hi": "नवादा",
+        "district_slug": "nawada",
+        "adhyaksh_2016": "श्रीमती पुष्पा देवी",
+        "upadhyaksh_2016": "श्रीमती गीता देवी"
+    },
+    {
+        "district": "Aurangabad",
+        "district_hi": "औरंगाबाद",
+        "district_slug": "aurangabad",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Jehanabad",
+        "district_hi": "जहानाबाद",
+        "district_slug": "jehanabad",
+        "adhyaksh_2016": "श्रीमती आभ्ाा रानी",
+        "upadhyaksh_2016": "श्रीराम बाबु पासवान"
+    },
+    {
+        "district": "Arwal",
+        "district_hi": "अरवल",
+        "district_slug": "arwal",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Saran",
+        "district_hi": "सारण",
+        "district_slug": "saran",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Siwan",
+        "district_hi": "सिवान",
+        "district_slug": "siwan",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Gopalganj",
+        "district_hi": "गोपालगंज",
+        "district_slug": "gopalganj",
+        "adhyaksh_2016": "मुकेश पाण्डेय्",
+        "upadhyaksh_2016": "अमित कुमार"
+    },
+    {
+        "district": "Muzaffarpur",
+        "district_hi": "मुजफ्फरपुर",
+        "district_slug": "muzaffarpur",
+        "adhyaksh_2016": "श्रीमती इन्दिरा देवी",
+        "upadhyaksh_2016": "श्रीमती निःपमा सिंह"
+    },
+    {
+        "district": "Vaishali",
+        "district_hi": "वैशाली",
+        "district_slug": "vaishali",
+        "adhyaksh_2016": "श्री प्रभ्ाु साह",
+        "upadhyaksh_2016": "श्री पंकज कुमार"
+    },
+    {
+        "district": "Paschim Champaran",
+        "district_hi": "पश्चिम चम्पारण",
+        "district_slug": "paschim-champaran",
+        "adhyaksh_2016": "श्री शश्लेन्द्र कुमार",
+        "upadhyaksh_2016": "श्रीमती रेणु देवी"
+    },
+    {
+        "district": "Paschim Champaran",
+        "district_hi": "पश्चिम चम्पारण",
+        "district_slug": "paschim-champaran",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Purvi Champaran",
+        "district_hi": "पूर्वी चम्पारण",
+        "district_slug": "purvi-champaran",
+        "adhyaksh_2016": "श्रीमति प्रिय्ंका जय्सवाल",
+        "upadhyaksh_2016": "श्री कमलेश्वर सिंह"
+    },
+    {
+        "district": "Sitamarhi",
+        "district_hi": "सीतामढ़ी",
+        "district_slug": "sitamarhi",
+        "adhyaksh_2016": "श्रीमती उमा देवी",
+        "upadhyaksh_2016": "श्री देवेन्द्र साह"
+    },
+    {
+        "district": "Sheohar",
+        "district_hi": "शिवहर",
+        "district_slug": "sheohar",
+        "adhyaksh_2016": "श्रीमती निलम देवी",
+        "upadhyaksh_2016": "श्री सुखलाल राम"
+    },
+    {
+        "district": "Bhagalpur",
+        "district_hi": "भागलपुर",
+        "district_slug": "bhagalpur",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Banka",
+        "district_hi": "बांका",
+        "district_slug": "banka",
+        "adhyaksh_2016": "श्री सुशील कुमार सिह",
+        "upadhyaksh_2016": "श्रीमती अर्चना देवी"
+    },
+    {
+        "district": "Madhubani",
+        "district_hi": "मधुबनी",
+        "district_slug": "madhubani",
+        "adhyaksh_2016": "श्रीमती शीला देवी",
+        "upadhyaksh_2016": "श्री मोहम्मद मराज आलम"
+    },
+    {
+        "district": "Samastipur",
+        "district_hi": "समस्तीपुर",
+        "district_slug": "samastipur",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Darbhanga",
+        "district_hi": "दरभंगा",
+        "district_slug": "darbhanga",
+        "adhyaksh_2016": "श्रीमति गीता देवी",
+        "upadhyaksh_2016": "श्रीमति ललिता >ा"
+    },
+    {
+        "district": "Saharsa",
+        "district_hi": "सहरसा",
+        "district_slug": "saharsa",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Madhepura",
+        "district_hi": "मधेपुरा",
+        "district_slug": "madhepura",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Supaul",
+        "district_hi": "सुपौल",
+        "district_slug": "supaul",
+        "adhyaksh_2016": "श्रीमति रंजू देवी",
+        "upadhyaksh_2016": "श्रीमति गोय्त्र्ी प्रकाश"
+    },
+    {
+        "district": "Purnia",
+        "district_hi": "पूर्णिया",
+        "district_slug": "purnia",
+        "adhyaksh_2016": "श्रीमती कान्ति देवी",
+        "upadhyaksh_2016": "श्री निरज कुमार सिंह"
+    },
+    {
+        "district": "Araria",
+        "district_hi": "अररिया",
+        "district_slug": "araria",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Kishanganj",
+        "district_hi": "किशनगंज",
+        "district_slug": "kishanganj",
+        "adhyaksh_2016": "श्रीमति ःकिय बेगम",
+        "upadhyaksh_2016": "श्री कमःल होदा"
+    },
+    {
+        "district": "Katihar",
+        "district_hi": "कटिहार",
+        "district_slug": "katihar",
+        "adhyaksh_2016": "गुडडी कुमारी",
+        "upadhyaksh_2016": "अंजली देवी"
+    },
+    {
+        "district": "Munger",
+        "district_hi": "मुंगेर",
+        "district_slug": "munger",
+        "adhyaksh_2016": "",
+        "upadhyaksh_2016": ""
+    },
+    {
+        "district": "Jamui",
+        "district_hi": "जमुई",
+        "district_slug": "jamui",
+        "adhyaksh_2016": "श्रीमती विनीता कुमारी",
+        "upadhyaksh_2016": "जुबश्दा खातुन"
+    },
+    {
+        "district": "Begusarai",
+        "district_hi": "बेगूसराय",
+        "district_slug": "begusarai",
+        "adhyaksh_2016": "श्री संजीव कुमार",
+        "upadhyaksh_2016": "श्री सुुभ्ाान धुनियॅ"
+    },
+    {
+        "district": "Khagaria",
+        "district_hi": "खगड़िया",
+        "district_slug": "khagaria",
+        "adhyaksh_2016": "कुमारी श्वेता भ्ाारती",
+        "upadhyaksh_2016": "श्री मिथालेश कुमार"
+    },
+    {
+        "district": "Lakhisarai",
+        "district_hi": "लखीसराय",
+        "district_slug": "lakhisarai",
+        "adhyaksh_2016": "श्री रामशंकर शर्मा",
+        "upadhyaksh_2016": "श्री मनोज कुमार"
+    },
+    {
+        "district": "Sheikhpura",
+        "district_hi": "शेखपुरा",
+        "district_slug": "sheikhpura",
+        "adhyaksh_2016": "श्रीमती निर्मला कुमारी",
+        "upadhyaksh_2016": "श्री रंजीत कुमार सिंह"
+    }
+]

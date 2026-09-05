@@ -1,0 +1,527 @@
+[
+    {
+        "sr_no": 39,
+        "name": "Dr. Kumud Verma",
+        "constituency": "Vidhan Sabha",
+        "tenure": "29.06.2020- 28.06.2026",
+        "contact": "8757005337"
+    },
+    {
+        "sr_no": 41,
+        "name": "Md. Farooq",
+        "constituency": "Vidhan Sabha",
+        "tenure": "29.06.2020- 28.06.2026",
+        "contact": "9892909134"
+    },
+    {
+        "sr_no": 40,
+        "name": "Prof. Gulam Gaus",
+        "constituency": "Vidhan Sabha",
+        "tenure": "29.06.2020- 28.06.2026",
+        "contact": "9431800997"
+    },
+    {
+        "sr_no": 35,
+        "name": "Shri Aditya Narayan Panday",
+        "constituency": "Local Bodies, Gopalganj",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9431115721"
+    },
+    {
+        "sr_no": 50,
+        "name": "Shri Arjun Sahani",
+        "constituency": "Vidhan Sabha",
+        "tenure": "22.07.16- 21.07.22",
+        "contact": "9771836666"
+    },
+    {
+        "sr_no": 32,
+        "name": "Shri Ashok Kumar Agrawal",
+        "constituency": "Local Bodies, Katihar",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "7549000010"
+    },
+    {
+        "sr_no": 2,
+        "name": "Shri Awadhesh Narain Singh",
+        "constituency": "Graduate, Gaya",
+        "tenure": "09.05.17- 08.05.23",
+        "contact": "9431018630"
+    },
+    {
+        "sr_no": 42,
+        "name": "Shri Bhisma Sahani",
+        "constituency": "Vidhan Sabha",
+        "tenure": "29.06.2020- 28.06.2026",
+        "contact": "9430531853"
+    },
+    {
+        "sr_no": 4,
+        "name": "Shri Birendra Narayan Yadav",
+        "constituency": "Graduate, Saran",
+        "tenure": "09.05.17- 08.05.23",
+        "contact": "9431216822"
+    },
+    {
+        "sr_no": 60,
+        "name": "Shri C. P. Sinha Alias Chandeshwar Prasad Sinha",
+        "constituency": "Vidhan Sabha",
+        "tenure": "22.07.16- 21.07.22",
+        "contact": "9931025315\/ 9471005989"
+    },
+    {
+        "sr_no": 29,
+        "name": "Shri Dilip Kumar Jaiswal",
+        "constituency": "Local Bodies, Purnia, Araria & Kishanganj",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9430911111"
+    },
+    {
+        "sr_no": 28,
+        "name": "Shri Dilip Rai",
+        "constituency": "Local Bodies, Sitamarhi & Sheohar",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9431248192"
+    },
+    {
+        "sr_no": 24,
+        "name": "Shri Dinesh Prasad Singh",
+        "constituency": "Local Bodies, Muzaffarpur",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9431239800"
+    },
+    {
+        "sr_no": 52,
+        "name": "Shri Gulam Rasool",
+        "constituency": "Vidhan Sabha",
+        "tenure": "22.07.16- 21.07.22",
+        "contact": "9431023864"
+    },
+    {
+        "sr_no": 26,
+        "name": "Shri Harinarayan Chaudhry",
+        "constituency": "Local Bodies, Samastipur",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9430048324"
+    },
+    {
+        "sr_no": 43,
+        "name": "Shri Khalid Anwar",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "9811210546"
+    },
+    {
+        "sr_no": 37,
+        "name": "Shri Mangal Pandey",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "9470034488"
+    },
+    {
+        "sr_no": 30,
+        "name": "Shri Manoj Yadav",
+        "constituency": "Local Bodies, Bhagalpur & Banka",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9431213333"
+    },
+    {
+        "sr_no": 48,
+        "name": "Shri MD. Qumar Alam",
+        "constituency": "Vidhan Sabha",
+        "tenure": "22.07.16- 21.07.22",
+        "contact": "9507405733"
+    },
+    {
+        "sr_no": 54,
+        "name": "Shri Nitish Kumar",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "0612-2215167 \/ 2222079"
+    },
+    {
+        "sr_no": 45,
+        "name": "Shri Prem Chandra Mishra",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "9801717517\/ 9431074117"
+    },
+    {
+        "sr_no": 14,
+        "name": "Shri Radha Charan Sah",
+        "constituency": "Local Bodies, Bhojpur",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9431627031"
+    },
+    {
+        "sr_no": 19,
+        "name": "Shri Rajan Kumar Singh",
+        "constituency": "Local Bodies, Aurangabad",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9934414950"
+    },
+    {
+        "sr_no": 23,
+        "name": "Shri Rajesh Kumar Alias Bablu Gupta",
+        "constituency": "Local Bodies, East Champaran",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9430256455"
+    },
+    {
+        "sr_no": 27,
+        "name": "Shri Rajesh Ram",
+        "constituency": "L.B, West Champaran",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9934498904"
+    },
+    {
+        "sr_no": 36,
+        "name": "Shri Rajnish Kumar",
+        "constituency": "Local Bodies, Begusarai & Khagaria",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9931596111"
+    },
+    {
+        "sr_no": 44,
+        "name": "Shri Rambali Singh",
+        "constituency": "Vidhan Sabha",
+        "tenure": "29.06.2020- 28.06.2026",
+        "contact": "9431420981"
+    },
+    {
+        "sr_no": 46,
+        "name": "Shri Ramchandra Purve",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "9097602619"
+    },
+    {
+        "sr_no": 49,
+        "name": "Shri Ramishwar Mahto",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "9811143105"
+    },
+    {
+        "sr_no": 53,
+        "name": "Shri Rannvijay Kumar Singh",
+        "constituency": "Vidhan Sabha",
+        "tenure": "22.07.16- 21.07.22",
+        "contact": "9717722899"
+    },
+    {
+        "sr_no": 13,
+        "name": "Shri Ritlal Rai",
+        "constituency": "Local Bodies, Patna",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": ""
+    },
+    {
+        "sr_no": 20,
+        "name": "Shri Sachidanand Rai",
+        "constituency": "Local Bodies, Saran",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9903250841"
+    },
+    {
+        "sr_no": 18,
+        "name": "Shri Salman Raghib",
+        "constituency": "Local Bodies, Nawada",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9431239800"
+    },
+    {
+        "sr_no": 51,
+        "name": "Shri Sameer Kumar Singh",
+        "constituency": "Vidhan Sabha",
+        "tenure": "29.06.2020- 28.06.2026",
+        "contact": "9431649446"
+    },
+    {
+        "sr_no": 58,
+        "name": "Shri Samrat Choudhary",
+        "constituency": "Vidhan Sabha",
+        "tenure": "29.06.2020- 28.06.2026",
+        "contact": "9431114448"
+    },
+    {
+        "sr_no": 61,
+        "name": "Shri Sanjay Kumar Jha",
+        "constituency": "Vidhan Sabha",
+        "tenure": "31.05.2019-6.05.24",
+        "contact": "9431815723"
+    },
+    {
+        "sr_no": 55,
+        "name": "Shri Sanjay Paswan",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "9868135959"
+    },
+    {
+        "sr_no": 47,
+        "name": "Shri Sanjay Prakash",
+        "constituency": "Vidhan Sabha",
+        "tenure": "29.06.2020- 28.06.2026",
+        "contact": "9334363334"
+    },
+    {
+        "sr_no": 31,
+        "name": "Shri Sanjay Prasad",
+        "constituency": "Local Bodies, Munger, Jamui Lakhisarai & Shekhpura",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9473195535"
+    },
+    {
+        "sr_no": 12,
+        "name": "Shri Sanjeev Kumar Singh",
+        "constituency": "Teacher, Koshi",
+        "tenure": "09.05.17- 08.05.23",
+        "contact": "9431432673"
+    },
+    {
+        "sr_no": 8,
+        "name": "Shri Sanjeev Shyam Singh",
+        "constituency": "Teacher, Gaya",
+        "tenure": "09.05.17- 08.05.23",
+        "contact": "9431223240"
+    },
+    {
+        "sr_no": 17,
+        "name": "Shri Santosh Kumar Singh",
+        "constituency": "Local Bodies, Rohtas & Kaimur",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9934011562"
+    },
+    {
+        "sr_no": 63,
+        "name": "Shri Santosh Kumar Suman",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "9934434060"
+    },
+    {
+        "sr_no": 25,
+        "name": "Shri Subodh Kumar",
+        "constituency": "Local Bodies, Vaishali",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "7250054689"
+    },
+    {
+        "sr_no": 34,
+        "name": "Shri Suman Kumar",
+        "constituency": "Local Bodies, Madhubani",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9334114399\/ 9234641301"
+    },
+    {
+        "sr_no": 22,
+        "name": "Shri Sunil Kumar Singh",
+        "constituency": "Local Bodies, Darbhanga",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9939708046"
+    },
+    {
+        "sr_no": 59,
+        "name": "Shri Sunil Kumar Singh",
+        "constituency": "Vidhan Sabha",
+        "tenure": "29.06.2020- 28.06.2026",
+        "contact": "9931000006"
+    },
+    {
+        "sr_no": 62,
+        "name": "Shri Sushil Kumar Modi",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "9431017530"
+    },
+    {
+        "sr_no": 21,
+        "name": "Shri Tunji Pandey",
+        "constituency": "Local Bodies, Siwan",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9835004141"
+    },
+    {
+        "sr_no": 57,
+        "name": "Shri Vinod Narayan Jha",
+        "constituency": "Vidhan Sabha",
+        "tenure": "22.07.16- 21.07.22",
+        "contact": "9431815998"
+    },
+    {
+        "sr_no": 15,
+        "name": "Smt. Manorma Devi",
+        "constituency": "Local Bodies, Gaya, Jehanabad & Arwal",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9572347044"
+    },
+    {
+        "sr_no": 33,
+        "name": "Smt. Nutan Singh",
+        "constituency": "Local Bodies, Saharsa, Madhepura & Supaul",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9431243590"
+    },
+    {
+        "sr_no": 38,
+        "name": "Smt. Rabri Devi",
+        "constituency": "Vidhan Sabha",
+        "tenure": "07.05.18- 06.05.24",
+        "contact": "9471006333"
+    },
+    {
+        "sr_no": 16,
+        "name": "Smt. Reena Devi alias Reena Yadav",
+        "constituency": "Local Bodies, Nalanda",
+        "tenure": "17.07.15- 16.07.21",
+        "contact": "9430015188\/ 8002695888"
+    },
+    {
+        "sr_no": 56,
+        "name": "Tanveer Akhtar",
+        "constituency": "Vidhan Sabha",
+        "tenure": "22.07.16- 21.07.22",
+        "contact": "9471953786"
+    },
+    {
+        "sr_no": 1,
+        "name": "Vacant",
+        "constituency": "Graduate, Patna",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 3,
+        "name": "Vacant",
+        "constituency": "Graduate, Tirhut",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 5,
+        "name": "Vacant",
+        "constituency": "Graduate, Darbhanga",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 6,
+        "name": "Vacant",
+        "constituency": "Graduate, Koshi",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 7,
+        "name": "Vacant",
+        "constituency": "Teacher, Patna",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 9,
+        "name": "Vacant",
+        "constituency": "Teacher, Tirhut",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 10,
+        "name": "Vacant",
+        "constituency": "Teacher, Saran",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 11,
+        "name": "Vacant",
+        "constituency": "Teacher, Darbhanga",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 64,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 65,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 66,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 67,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 68,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 69,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 70,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 71,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 72,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 73,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 74,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    },
+    {
+        "sr_no": 75,
+        "name": "Vacant",
+        "constituency": "Nominated",
+        "tenure": "",
+        "contact": ""
+    }
+]

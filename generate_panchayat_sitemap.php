@@ -107,59 +107,6 @@ function generatePanchayatSitemap() {
     } else {
         echo "ERROR: Failed to write sitemap-panchayats.xml.\n";
     }
-
-    // Update sitemap_index.xml with updated timestamp
-    updateSitemapIndex();
-}
-
-function updateSitemapIndex() {
-    $indexPath = __DIR__ . '/sitemap_index.xml';
-    $now = date('c');
-
-    $indexXml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-    $indexXml .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-    $indexXml .= '    <!-- BiharElection.com Custom Platform Sitemaps -->' . "\n";
-    $indexXml .= "    <sitemap>\n";
-    $indexXml .= "        <loc>https://biharelection.com/sitemap.xml</loc>\n";
-    $indexXml .= "        <lastmod>{$now}</lastmod>\n";
-    $indexXml .= "    </sitemap>\n";
-    $indexXml .= "    <sitemap>\n";
-    $indexXml .= "        <loc>https://biharelection.com/sitemap-panchayats.xml</loc>\n";
-    $indexXml .= "        <lastmod>{$now}</lastmod>\n";
-    $indexXml .= "    </sitemap>\n";
-    $indexXml .= "    <sitemap>\n";
-    $indexXml .= "        <loc>https://biharelection.com/sitemap-census.xml</loc>\n";
-    $indexXml .= "        <lastmod>{$now}</lastmod>\n";
-    $indexXml .= "    </sitemap>\n\n";
-    $indexXml .= '    <!-- Original WordPress Sitemaps (Preserving All Original URLs) -->' . "\n";
-    $indexXml .= "    <sitemap>\n";
-    $indexXml .= "        <loc>https://biharelection.com/post-sitemap.xml</loc>\n";
-    $indexXml .= "        <lastmod>2026-08-12T09:23:45+00:00</lastmod>\n";
-    $indexXml .= "    </sitemap>\n";
-    $indexXml .= "    <sitemap>\n";
-    $indexXml .= "        <loc>https://biharelection.com/page-sitemap.xml</loc>\n";
-    $indexXml .= "        <lastmod>2026-04-11T06:53:06+00:00</lastmod>\n";
-    $indexXml .= "    </sitemap>\n";
-    $indexXml .= "    <sitemap>\n";
-    $indexXml .= "        <loc>https://biharelection.com/category-sitemap.xml</loc>\n";
-    $indexXml .= "        <lastmod>2026-08-12T09:23:45+00:00</lastmod>\n";
-    $indexXml .= "    </sitemap>\n";
-    $indexXml .= "    <sitemap>\n";
-    $indexXml .= "        <loc>https://biharelection.com/post_tag-sitemap.xml</loc>\n";
-    $indexXml .= "        <lastmod>2026-08-12T09:23:45+00:00</lastmod>\n";
-    $indexXml .= "    </sitemap>\n";
-    $indexXml .= "    <sitemap>\n";
-    $indexXml .= "        <loc>https://biharelection.com/author-sitemap.xml</loc>\n";
-    $indexXml .= "        <lastmod>2026-08-12T09:23:45+00:00</lastmod>\n";
-    $indexXml .= "    </sitemap>\n";
-    $indexXml .= "    <sitemap>\n";
-    $indexXml .= "        <loc>https://biharelection.com/date-sitemap.xml</loc>\n";
-    $indexXml .= "        <lastmod>2026-08-12T09:23:45+00:00</lastmod>\n";
-    $indexXml .= "    </sitemap>\n";
-    $indexXml .= '</sitemapindex>';
-
-    file_put_contents($indexPath, $indexXml);
-    echo "SUCCESS: Updated sitemap_index.xml with latest timestamps.\n";
 }
 
 // Execute if run directly from CLI

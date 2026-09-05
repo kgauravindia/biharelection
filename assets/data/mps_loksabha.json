@@ -1,0 +1,362 @@
+[
+    {
+        "pc_no": 1,
+        "pc_name": "Araria",
+        "slug": "araria",
+        "mp_name": "Pradeep Kumar Singh",
+        "party": "BJP",
+        "criminal_cases": 3,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 2,
+        "pc_name": "Arrah",
+        "slug": "arrah",
+        "mp_name": "R. K. Singh",
+        "party": "BJP",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 3,
+        "pc_name": "Aurangabad",
+        "slug": "aurangabad",
+        "mp_name": "Sushil Kumar Singh",
+        "party": "BJP",
+        "criminal_cases": 3,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 4,
+        "pc_name": "Banka",
+        "slug": "banka",
+        "mp_name": "Giridhari Yadav",
+        "party": "JD(U)",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 5,
+        "pc_name": "Begusarai",
+        "slug": "begusarai",
+        "mp_name": "Giriraj Singh",
+        "party": "BJP",
+        "criminal_cases": 6,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 6,
+        "pc_name": "Bhagalpur",
+        "slug": "bhagalpur",
+        "mp_name": "Ajay Kumar Mandal",
+        "party": "JD(U)",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 7,
+        "pc_name": "Buxar",
+        "slug": "buxar",
+        "mp_name": "Ashwini Kumar Choubey",
+        "party": "BJP",
+        "criminal_cases": 3,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 8,
+        "pc_name": "Darbhanga",
+        "slug": "darbhanga",
+        "mp_name": "Gopal Jee Thakur",
+        "party": "BJP",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 9,
+        "pc_name": "Gaya (Sc)",
+        "slug": "gaya",
+        "mp_name": "Vijay Kumar",
+        "party": "JD(U)",
+        "criminal_cases": 3,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 10,
+        "pc_name": "Gopalganj (Sc)",
+        "slug": "gopalganj",
+        "mp_name": "Dr. Alok Kumar Suman",
+        "party": "JD(U)",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 11,
+        "pc_name": "Hajipur (Sc)",
+        "slug": "hajipur",
+        "mp_name": "Pashu Pati Kumar Paras",
+        "party": "LJP",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 12,
+        "pc_name": "Jahanabad",
+        "slug": "jahanabad",
+        "mp_name": "Chandeshwar Prasad",
+        "party": "JD(U)",
+        "criminal_cases": 3,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 13,
+        "pc_name": "Jamui (Sc)",
+        "slug": "jamui",
+        "mp_name": "Chirag Kumar Paswan",
+        "party": "LJP",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 14,
+        "pc_name": "Jhanjharpur",
+        "slug": "jhanjharpur",
+        "mp_name": "Ramprit Mandal",
+        "party": "JD(U)",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 15,
+        "pc_name": "Karakat",
+        "slug": "karakat",
+        "mp_name": "Mahabali Singh",
+        "party": "JD(U)",
+        "criminal_cases": 3,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 16,
+        "pc_name": "Katihar",
+        "slug": "katihar",
+        "mp_name": "Dulal Chandra Goswami",
+        "party": "JD(U)",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 17,
+        "pc_name": "Khagaria",
+        "slug": "khagaria",
+        "mp_name": "Choudhary Mehboob Ali Kaiser",
+        "party": "LJP",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 18,
+        "pc_name": "Kishanganj",
+        "slug": "kishanganj",
+        "mp_name": "Dr. Mohammad Jawed",
+        "party": "INC",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 19,
+        "pc_name": "Madhepura",
+        "slug": "madhepura",
+        "mp_name": "Dinesh Chandra Yadav",
+        "party": "JD(U)",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 20,
+        "pc_name": "Madhubani",
+        "slug": "madhubani",
+        "mp_name": "Ashok Kumar Yadav",
+        "party": "BJP",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 21,
+        "pc_name": "Maharajganj",
+        "slug": "maharajganj",
+        "mp_name": "Janardan Singh 'sigriwal\"",
+        "party": "BJP",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 22,
+        "pc_name": "Munger",
+        "slug": "munger",
+        "mp_name": "Rajiv Ranjan Singh",
+        "party": "JD(U)",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 23,
+        "pc_name": "Muzaffarpur",
+        "slug": "muzaffarpur",
+        "mp_name": "Ajay Nishad",
+        "party": "BJP",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 24,
+        "pc_name": "Nalanda",
+        "slug": "nalanda",
+        "mp_name": "Kaushlendra Kumar",
+        "party": "JD(U)",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 25,
+        "pc_name": "Nawada",
+        "slug": "nawada",
+        "mp_name": "Chandan Singh",
+        "party": "LJP",
+        "criminal_cases": 2,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 26,
+        "pc_name": "Paschim Champaran",
+        "slug": "paschim-champaran",
+        "mp_name": "Dr. Sanjay Jaiswal",
+        "party": "BJP",
+        "criminal_cases": 5,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 27,
+        "pc_name": "Pataliputra",
+        "slug": "pataliputra",
+        "mp_name": "Ram Kripal Yadav",
+        "party": "BJP",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 28,
+        "pc_name": "Patna Sahib",
+        "slug": "patna-sahib",
+        "mp_name": "Ravi Shankar Prasad",
+        "party": "BJP",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 29,
+        "pc_name": "Purnia",
+        "slug": "purnia",
+        "mp_name": "Santosh Kumar",
+        "party": "JD(U)",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 30,
+        "pc_name": "Purvi Champaran",
+        "slug": "purvi-champaran",
+        "mp_name": "Radha Mohan Singh",
+        "party": "BJP",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 31,
+        "pc_name": "Samastipur (Sc)",
+        "slug": "samastipur",
+        "mp_name": "Ramchandra Paswan",
+        "party": "LJP",
+        "criminal_cases": 5,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 32,
+        "pc_name": "Saran",
+        "slug": "saran",
+        "mp_name": "Rajiv Pratap Rudy",
+        "party": "BJP",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 33,
+        "pc_name": "Sasaram (Sc)",
+        "slug": "sasaram",
+        "mp_name": "Chhedi Paswan",
+        "party": "BJP",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 34,
+        "pc_name": "Sheohar",
+        "slug": "sheohar",
+        "mp_name": "Rama Devi",
+        "party": "BJP",
+        "criminal_cases": 1,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 35,
+        "pc_name": "Sitamarhi",
+        "slug": "sitamarhi",
+        "mp_name": "Sunil Kumar Pintu",
+        "party": "JD(U)",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 36,
+        "pc_name": "Siwan",
+        "slug": "siwan",
+        "mp_name": "Kavita Singh",
+        "party": "JD(U)",
+        "criminal_cases": 4,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 37,
+        "pc_name": "Supaul",
+        "slug": "supaul",
+        "mp_name": "Dileshwar Kamait",
+        "party": "JD(U)",
+        "criminal_cases": 2,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 38,
+        "pc_name": "Ujiarpur",
+        "slug": "ujiarpur",
+        "mp_name": "Nityanand Rai",
+        "party": "BJP",
+        "criminal_cases": 3,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 39,
+        "pc_name": "Vaishali",
+        "slug": "vaishali",
+        "mp_name": "Veena Devi (w\/o Dinesh Prasad Singh)",
+        "party": "LJP",
+        "criminal_cases": 0,
+        "house": "Lok Sabha"
+    },
+    {
+        "pc_no": 40,
+        "pc_name": "Valmiki Nagar",
+        "slug": "valmiki-nagar",
+        "mp_name": "Baidyanath Prasad Mahto",
+        "party": "JD(U)",
+        "criminal_cases": 4,
+        "house": "Lok Sabha"
+    }
+]

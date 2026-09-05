@@ -41,11 +41,13 @@ AddDefaultCharset UTF-8
     RewriteRule ^ - [L]
 
     # -------------------------------------------------------------
-    # Legacy /sitemap/ Folder -> 301 Redirect to Root Sitemaps
+    # Legacy Sitemaps -> 301 Redirect to Active Sitemaps
     # -------------------------------------------------------------
-    RewriteRule ^sitemap/sitemap[-_]?index\.xml$ sitemap_index.xml [L,R=301,NC]
+    RewriteRule ^sitemap_index\.xml$ sitemap.xml [L,R=301,NC]
+    RewriteRule ^(post|page|category|post_tag|author|date)-sitemap\.xml$ sitemap-extra.xml [L,R=301,NC]
+    RewriteRule ^sitemap/sitemap[-_]?index\.xml$ sitemap.xml [L,R=301,NC]
     RewriteRule ^sitemap/(.+)\.xml$ $1.xml [L,R=301,NC]
-    RewriteRule ^sitemap/?$ sitemap_index.xml [L,R=301,NC]
+    RewriteRule ^sitemap/?$ sitemap.xml [L,R=301,NC]
 
     # Catch any relative advertise.php or asset requests from sub-routes
     # -------------------------------------------------------------
