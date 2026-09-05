@@ -28,7 +28,7 @@ $activeNav = $activeNav ?? 'home';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <!-- Custom Theme Styling -->
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css?v=2.6">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css?v=3.0">
     
     <?php if (defined('GOOGLE_ADS_ENABLED') && GOOGLE_ADS_ENABLED && defined('GOOGLE_ADSENSE_CLIENT') && GOOGLE_ADSENSE_CLIENT !== 'ca-pub-XXXXXXXXXXXXXXXX'): ?>
     <!-- Google AdSense Official Script -->

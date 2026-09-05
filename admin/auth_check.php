@@ -115,6 +115,31 @@ function initAdminTables($conn) {
         `is_active` TINYINT(1) DEFAULT 1,
         `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+    // Panchayat Samiti (Tier-2 Block Level) Table
+    $conn->query("CREATE TABLE IF NOT EXISTS `panchayat_samiti` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `district` VARCHAR(100) NOT NULL,
+        `district_slug` VARCHAR(100) NOT NULL,
+        `block` VARCHAR(100) NOT NULL,
+        `pramukh_name` VARCHAR(150) DEFAULT NULL,
+        `up_pramukh_name` VARCHAR(150) DEFAULT NULL,
+        `gender` VARCHAR(20) DEFAULT 'Male',
+        `category` VARCHAR(50) DEFAULT 'सामान्य वर्ग',
+        `mobile` VARCHAR(50) DEFAULT NULL,
+        `address` TEXT DEFAULT NULL,
+        `tenure` VARCHAR(50) DEFAULT '2021-2026',
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX (`district`),
+        INDEX (`block`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+    // Seed panchayat_samiti from panchayat_samiti_2016 if table empty
+    $chk_ps = $conn->query("SELECT id FROM `panchayat_samiti` LIMIT 1");
+    if ($chk_ps && $chk_ps->num_rows === 0) {
+        $conn->query("INSERT INTO `panchayat_samiti` (`district`, `district_slug`, `block`, `pramukh_name`, `up_pramukh_name`, `tenure`)
+                      SELECT `district`, `district_slug`, `block`, `pramukh_2016`, `up_pramukh_2016`, '2021-2026' FROM `panchayat_samiti_2016`");
+    }
 }
 
 // Global sanitization function

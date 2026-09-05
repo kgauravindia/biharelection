@@ -335,7 +335,7 @@ require_once __DIR__ . '/header.php';
                                     </div>
                                     <div>
                                         <div class="fw-bold fs-6 text-dark"><?php echo htmlspecialchars($zm['member_name']); ?></div>
-                                        <small class="text-muted">Ward No. <?php echo htmlspecialchars($zm['ward_no']); ?> &bull; <?php echo htmlspecialchars($zm['category'] ?? 'General'); ?></small>
+                                        <small class="text-muted">Territory No. <?php echo htmlspecialchars($zm['ward_no']); ?> &bull; <?php echo htmlspecialchars($zm['category'] ?? 'General'); ?></small>
                                     </div>
                                 </div>
                             <?php endforeach; ?>

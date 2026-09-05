@@ -30,6 +30,31 @@ if (!empty($requestedSlug) && !$singleMlc) {
     exit;
 }
 
+function getMlcQuotaType($constituency) {
+    $const = (string)$constituency;
+    if (stripos($const, 'Local') !== false || stripos($const, 'प्राधिकार') !== false || stripos($const, 'L.B') !== false) {
+        return 'Local';
+    } elseif (stripos($const, 'Nominated') !== false || stripos($const, 'मनोनीत') !== false) {
+        return 'Nominated';
+    } elseif (stripos($const, 'Graduate') !== false || stripos($const, 'स्नातक') !== false) {
+        return 'Graduates';
+    } elseif (stripos($const, 'Teacher') !== false || stripos($const, 'शिक्षक') !== false) {
+        return 'Teachers';
+    }
+    return 'Assembly';
+}
+
+function getMlcQuotaLabel($quotaType) {
+    switch ($quotaType) {
+        case 'Local': return 'Local Authorities (स्थानीय प्राधिकार)';
+        case 'Assembly': return 'Assembly Quota (विधान सभा)';
+        case 'Nominated': return 'Governor Nominated (मनोनीत)';
+        case 'Graduates': return 'Graduates (स्नातक)';
+        case 'Teachers': return 'Teachers (शिक्षक)';
+        default: return 'Legislative Council';
+    }
+}
+
 $activeNav = 'mlc';
 $mlcs = DataProvider::getMlcs();
 
@@ -45,18 +70,8 @@ $quotaCounts = [
 $partyCounts = [];
 
 foreach ($mlcs as $m) {
-    $const = $m['constituency'] ?? '';
-    if (stripos($const, 'Local') !== false || stripos($const, 'प्राधिकार') !== false) {
-        $quotaCounts['Local']++;
-    } elseif (stripos($const, 'Nominated') !== false || stripos($const, 'मनोनीत') !== false) {
-        $quotaCounts['Nominated']++;
-    } elseif (stripos($const, 'Graduates') !== false || stripos($const, 'स्नातक') !== false) {
-        $quotaCounts['Graduates']++;
-    } elseif (stripos($const, 'Teachers') !== false || stripos($const, 'शिक्षक') !== false) {
-        $quotaCounts['Teachers']++;
-    } else {
-        $quotaCounts['Assembly']++;
-    }
+    $qType = getMlcQuotaType($m['constituency'] ?? '');
+    $quotaCounts[$qType]++;
 
     $party = trim($m['party'] ?? 'Other');
     if ($party) {
@@ -80,17 +95,8 @@ if ($singleMlc) {
     $address = (string)($singleMlc['address'] ?? '');
     $term = (string)($singleMlc['tenure'] ?? 'Active 6-Year Term');
 
-    $quotaType = 'Assembly';
-    if (stripos($const, 'Local') !== false || stripos($const, 'प्राधिकार') !== false) {
-        $quotaType = 'Local Authorities';
-    } elseif (stripos($const, 'Nominated') !== false || stripos($const, 'मनोनीत') !== false) {
-        $quotaType = 'Governor Nominated';
-    } elseif (stripos($const, 'Graduates') !== false || stripos($const, 'स्नातक') !== false) {
-        $quotaType = 'Graduates';
-    } elseif (stripos($const, 'Teachers') !== false || stripos($const, 'शिक्षक') !== false) {
-        $quotaType = 'Teachers';
-    }
-
+    $quotaType = getMlcQuotaType($const);
+    $quotaLabel = getMlcQuotaLabel($quotaType);
     $partyCleanClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $party));
 
     $pageTitle = "{$mName}" . ($mNameHi ? " ({$mNameHi})" : "") . " MLC Profile - Bihar Vidhan Parishad";
@@ -107,8 +113,8 @@ require_once __DIR__ . '/header.php';
 
 <style>
 .mlc-avatar-img {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     object-fit: cover;
     border-radius: 50%;
     border: 2px solid #e2e8f0;
@@ -121,25 +127,47 @@ require_once __DIR__ . '/header.php';
     object-fit: cover;
     border-radius: 50%;
     border: 4px solid #ffffff;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     background-color: #f8fafc;
 }
+.quota-metric-card {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 14px rgba(11, 25, 44, 0.05);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    text-decoration: none !important;
+}
+.quota-metric-card:hover, .quota-metric-card.active {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 32px -6px rgba(30, 64, 175, 0.16);
+    border-color: #3b82f6;
+}
+.quota-btn {
+    border-radius: 50px !important;
+    font-weight: 600;
+    font-size: 0.825rem;
+    padding: 6px 16px;
+    transition: all 0.2s ease;
+}
 .quota-btn.active {
-    background-color: var(--secondary-navy, #0b1a30) !important;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
     color: #ffffff !important;
-    border-color: var(--secondary-navy, #0b1a30) !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
 }
 .profile-detail-card {
     background-color: #f8fafc;
     border: 1px solid #e2e8f0;
-    border-radius: 1rem;
+    border-radius: 16px;
     padding: 1.25rem;
     transition: all 0.2s ease;
 }
 .profile-detail-card:hover {
     background-color: #ffffff;
-    border-color: var(--primary-accent, #0284c7);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    border-color: #93c5fd;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
 }
 </style>
 
@@ -546,34 +574,100 @@ require_once __DIR__ . '/header.php';
 <main class="container my-4 my-lg-5">
     <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-4'); ?>
 
-    <!-- Highlight Metrics -->
-    <div class="row g-3 g-lg-4 mb-4">
-        <div class="col-6 col-lg-3">
-            <div class="card border-0 shadow-sm rounded-4 p-3.5 h-100 border-start border-4 border-info bg-white">
-                <span class="text-muted small fw-bold text-uppercase">Local Authorities</span>
-                <div class="h3 fw-bold mb-1 text-navy font-heading"><?php echo $quotaCounts['Local']; ?> MLCs</div>
-                <small class="text-muted">Elected by Panchayat/Local bodies</small>
+    <!-- Highlight 5-Quota Command Metrics -->
+    <div class="row g-2 g-md-3 row-cols-2 row-cols-md-3 row-cols-xl-5 mb-4">
+        <!-- 1: Local Authorities -->
+        <div class="col">
+            <div class="quota-metric-card p-3 h-100 d-flex flex-column justify-content-between" onclick="filterQuota('Local', document.querySelector('[data-quota=\'Local\']'))">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="stat-icon-wrapper stat-icon-zp">
+                        🏛️
+                    </div>
+                    <span class="badge bg-purple bg-opacity-10 text-purple border border-purple border-opacity-25 extra-small fw-bold px-2 py-0.5 rounded-pill" style="color: #7c3aed; background: rgba(124,58,237,0.1);">
+                        Local Bodies
+                    </span>
+                </div>
+                <div>
+                    <div class="fs-4 fw-extrabold text-navy mb-0 lh-1"><?php echo $quotaCounts['Local']; ?> MLCs</div>
+                    <div class="fw-bold text-dark small mt-1 text-truncate">Local Authorities</div>
+                    <div class="extra-small text-muted text-truncate">Panchayat &amp; ULB Electors</div>
+                </div>
             </div>
         </div>
-        <div class="col-6 col-lg-3">
-            <div class="card border-0 shadow-sm rounded-4 p-3.5 h-100 border-start border-4 border-primary bg-white">
-                <span class="text-muted small fw-bold text-uppercase">Assembly Quota</span>
-                <div class="h3 fw-bold mb-1 text-navy font-heading"><?php echo $quotaCounts['Assembly']; ?> MLCs</div>
-                <small class="text-muted">Elected by Bihar MLAs</small>
+
+        <!-- 2: Assembly Quota -->
+        <div class="col">
+            <div class="quota-metric-card p-3 h-100 d-flex flex-column justify-content-between" onclick="filterQuota('Assembly', document.querySelector('[data-quota=\'Assembly\']'))">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="stat-icon-wrapper stat-icon-mla">
+                        🗳️
+                    </div>
+                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 extra-small fw-bold px-2 py-0.5 rounded-pill">
+                        243 MLAs
+                    </span>
+                </div>
+                <div>
+                    <div class="fs-4 fw-extrabold text-navy mb-0 lh-1"><?php echo $quotaCounts['Assembly']; ?> MLCs</div>
+                    <div class="fw-bold text-dark small mt-1 text-truncate">Assembly Quota</div>
+                    <div class="extra-small text-muted text-truncate">Elected by Bihar MLAs</div>
+                </div>
             </div>
         </div>
-        <div class="col-6 col-lg-3">
-            <div class="card border-0 shadow-sm rounded-4 p-3.5 h-100 border-start border-4 border-warning bg-white">
-                <span class="text-muted small fw-bold text-uppercase">Nominated Quota</span>
-                <div class="h3 fw-bold mb-1 text-navy font-heading"><?php echo $quotaCounts['Nominated']; ?> MLCs</div>
-                <small class="text-muted">Governor-nominated luminaries</small>
+
+        <!-- 3: Governor Nominated -->
+        <div class="col">
+            <div class="quota-metric-card p-3 h-100 d-flex flex-column justify-content-between" onclick="filterQuota('Nominated', document.querySelector('[data-quota=\'Nominated\']'))">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="stat-icon-wrapper stat-icon-gp">
+                        🎖️
+                    </div>
+                    <span class="badge bg-warning bg-opacity-10 text-dark border border-warning border-opacity-50 extra-small fw-bold px-2 py-0.5 rounded-pill">
+                        Governor
+                    </span>
+                </div>
+                <div>
+                    <div class="fs-4 fw-extrabold text-navy mb-0 lh-1"><?php echo $quotaCounts['Nominated']; ?> MLCs</div>
+                    <div class="fw-bold text-dark small mt-1 text-truncate">Nominated Quota</div>
+                    <div class="extra-small text-muted text-truncate">Governor-Nominated Luminaries</div>
+                </div>
             </div>
         </div>
-        <div class="col-6 col-lg-3">
-            <div class="card border-0 shadow-sm rounded-4 p-3.5 h-100 border-start border-4 border-success bg-white">
-                <span class="text-muted small fw-bold text-uppercase">Graduates &amp; Teachers</span>
-                <div class="h3 fw-bold mb-1 text-navy font-heading"><?php echo ($quotaCounts['Graduates'] + $quotaCounts['Teachers']); ?> MLCs</div>
-                <small class="text-muted"><?php echo $quotaCounts['Graduates']; ?> Graduates + <?php echo $quotaCounts['Teachers']; ?> Teachers</small>
+
+        <!-- 4: Graduates Quota -->
+        <div class="col">
+            <div class="quota-metric-card p-3 h-100 d-flex flex-column justify-content-between" onclick="filterQuota('Graduates', document.querySelector('[data-quota=\'Graduates\']'))">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="stat-icon-wrapper stat-icon-ps">
+                        🎓
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 extra-small fw-bold px-2 py-0.5 rounded-pill">
+                        Divisions
+                    </span>
+                </div>
+                <div>
+                    <div class="fs-4 fw-extrabold text-navy mb-0 lh-1"><?php echo $quotaCounts['Graduates']; ?> MLCs</div>
+                    <div class="fw-bold text-dark small mt-1 text-truncate">Graduates Quota</div>
+                    <div class="extra-small text-muted text-truncate">Graduate Degree Electors</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5: Teachers Quota -->
+        <div class="col">
+            <div class="quota-metric-card p-3 h-100 d-flex flex-column justify-content-between" onclick="filterQuota('Teachers', document.querySelector('[data-quota=\'Teachers\']'))">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="stat-icon-wrapper stat-icon-gk">
+                        📚
+                    </div>
+                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 extra-small fw-bold px-2 py-0.5 rounded-pill">
+                        Teaching
+                    </span>
+                </div>
+                <div>
+                    <div class="fs-4 fw-extrabold text-navy mb-0 lh-1"><?php echo $quotaCounts['Teachers']; ?> MLCs</div>
+                    <div class="fw-bold text-dark small mt-1 text-truncate">Teachers Quota</div>
+                    <div class="extra-small text-muted text-truncate">Secondary/Higher Teachers</div>
+                </div>
             </div>
         </div>
     </div>
@@ -587,36 +681,32 @@ require_once __DIR__ . '/header.php';
                 </label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
-                    <input type="text" id="mlcSearchInput" class="form-control bg-light border-start-0 ps-0" placeholder="e.g. Nawal Kishor, नीतीश कुमार, Patna, शिक्षक..." onkeyup="filterMlcRoster()">
+                    <input type="text" id="mlcSearchInput" class="form-control bg-light border-start-0 ps-0" placeholder="e.g. Nitish Kumar, मंगल पाण्डेय, Patna, Graduate, Teacher..." onkeyup="filterMlcRoster()">
                 </div>
             </div>
 
             <div class="col-lg-6">
-                <div class="row g-2">
-                    <div class="col-sm-12">
-                        <label for="mlcPartyFilter" class="form-label small fw-bold text-navy mb-1">
-                            <i class="bi bi-flag text-primary me-1"></i> Filter by Political Party
-                        </label>
-                        <select id="mlcPartyFilter" class="form-select bg-light" onchange="filterMlcRoster()">
-                            <option value="">All Political Parties (<?php echo count($mlcs); ?>)</option>
-                            <?php foreach ($partyCounts as $pName => $pNum): ?>
-                                <option value="<?php echo htmlspecialchars($pName); ?>"><?php echo htmlspecialchars($pName); ?> (<?php echo $pNum; ?>)</option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
+                <label for="mlcPartyFilter" class="form-label small fw-bold text-navy mb-1">
+                    <i class="bi bi-flag text-primary me-1"></i> Filter by Political Party
+                </label>
+                <select id="mlcPartyFilter" class="form-select bg-light" onchange="filterMlcRoster()">
+                    <option value="">All Political Parties (<?php echo count($mlcs); ?>)</option>
+                    <?php foreach ($partyCounts as $pName => $pNum): ?>
+                        <option value="<?php echo htmlspecialchars($pName); ?>"><?php echo htmlspecialchars($pName); ?> (<?php echo $pNum; ?>)</option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
 
         <!-- Quota Filter Pills -->
         <div class="d-flex flex-wrap gap-1.5 mt-3 pt-3 border-top align-items-center">
-            <span class="small fw-bold text-navy me-2"><i class="bi bi-funnel-fill text-info"></i> Quota:</span>
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 quota-btn active" data-quota="All" onclick="filterQuota('All', this)">All (<?php echo $quotaCounts['All']; ?>)</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 quota-btn" data-quota="Local" onclick="filterQuota('Local', this)">Local Authorities (<?php echo $quotaCounts['Local']; ?>)</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 quota-btn" data-quota="Assembly" onclick="filterQuota('Assembly', this)">Elected by MLAs (<?php echo $quotaCounts['Assembly']; ?>)</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 quota-btn" data-quota="Nominated" onclick="filterQuota('Nominated', this)">Governor Nominated (<?php echo $quotaCounts['Nominated']; ?>)</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 quota-btn" data-quota="Graduates" onclick="filterQuota('Graduates', this)">Graduates (<?php echo $quotaCounts['Graduates']; ?>)</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 quota-btn" data-quota="Teachers" onclick="filterQuota('Teachers', this)">Teachers (<?php echo $quotaCounts['Teachers']; ?>)</button>
+            <span class="small fw-bold text-navy me-2"><i class="bi bi-funnel-fill text-primary"></i> Quota Filter:</span>
+            <button type="button" class="btn btn-sm btn-outline-secondary quota-btn active" data-quota="All" onclick="filterQuota('All', this)">All (<?php echo $quotaCounts['All']; ?>)</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary quota-btn" data-quota="Local" onclick="filterQuota('Local', this)">🏛️ Local Authorities (<?php echo $quotaCounts['Local']; ?>)</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary quota-btn" data-quota="Assembly" onclick="filterQuota('Assembly', this)">🗳️ Assembly Quota (<?php echo $quotaCounts['Assembly']; ?>)</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary quota-btn" data-quota="Nominated" onclick="filterQuota('Nominated', this)">🎖️ Governor Nominated (<?php echo $quotaCounts['Nominated']; ?>)</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary quota-btn" data-quota="Graduates" onclick="filterQuota('Graduates', this)">🎓 Graduates (<?php echo $quotaCounts['Graduates']; ?>)</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary quota-btn" data-quota="Teachers" onclick="filterQuota('Teachers', this)">📚 Teachers (<?php echo $quotaCounts['Teachers']; ?>)</button>
         </div>
     </div>
 
@@ -661,19 +751,24 @@ require_once __DIR__ . '/header.php';
                             $dob = (string)($mlc['dob'] ?? '');
                             $address = (string)($mlc['address'] ?? '');
 
-                            // Categorize quota tag for search
-                            $quotaType = 'Assembly';
-                            if (stripos($const, 'Local') !== false || stripos($const, 'प्राधिकार') !== false) {
-                                $quotaType = 'Local';
-                            } elseif (stripos($const, 'Nominated') !== false || stripos($const, 'मनोनीत') !== false) {
-                                $quotaType = 'Nominated';
-                            } elseif (stripos($const, 'Graduates') !== false || stripos($const, 'स्नातक') !== false) {
-                                $quotaType = 'Graduates';
-                            } elseif (stripos($const, 'Teachers') !== false || stripos($const, 'शिक्षक') !== false) {
-                                $quotaType = 'Teachers';
-                            }
-
+                            $quotaType = getMlcQuotaType($const);
                             $partyCleanClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $party));
+
+                            $quotaBadgeClass = 'bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25';
+                            $quotaIcon = '🗳️';
+                            if ($quotaType === 'Local') {
+                                $quotaBadgeClass = 'bg-purple bg-opacity-10 text-purple border border-purple border-opacity-25';
+                                $quotaIcon = '🏛️';
+                            } elseif ($quotaType === 'Nominated') {
+                                $quotaBadgeClass = 'bg-warning bg-opacity-10 text-dark border border-warning border-opacity-50';
+                                $quotaIcon = '🎖️';
+                            } elseif ($quotaType === 'Graduates') {
+                                $quotaBadgeClass = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25';
+                                $quotaIcon = '🎓';
+                            } elseif ($quotaType === 'Teachers') {
+                                $quotaBadgeClass = 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25';
+                                $quotaIcon = '📚';
+                            }
                         ?>
                             <tr class="mlc-row"
                                 data-name="<?php echo htmlspecialchars(strtolower($mName . ' ' . $mNameHi . ' ' . $desig)); ?>"
@@ -694,7 +789,7 @@ require_once __DIR__ . '/header.php';
                                                  alt="<?php echo htmlspecialchars($mName); ?>" 
                                                  class="mlc-avatar-img shadow-xs" 
                                                  loading="lazy" 
-                                                 onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=<?php echo urlencode($mName); ?>&background=0b1a30&color=fff';">
+                                                 onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=<?php echo urlencode($mName); ?>&background=0f172a&color=fff';">
                                         <?php else: ?>
                                             <div class="mlc-avatar-img d-flex align-items-center justify-content-center text-secondary fw-bold">
                                                 <i class="bi bi-person-fill fs-5"></i>
@@ -716,10 +811,10 @@ require_once __DIR__ . '/header.php';
                                     </div>
                                 </td>
 
-                                <td style="min-width: 180px;">
+                                <td style="min-width: 190px;">
                                     <div class="fw-semibold text-dark small mb-1"><?php echo htmlspecialchars($const); ?></div>
-                                    <span class="badge bg-info bg-opacity-10 text-dark border small px-2 py-0.5">
-                                        <?php echo htmlspecialchars($quotaType); ?> Quota
+                                    <span class="badge <?php echo $quotaBadgeClass; ?> extra-small px-2 py-0.5 rounded-pill">
+                                        <?php echo $quotaIcon . ' ' . htmlspecialchars($quotaType); ?> Quota
                                     </span>
                                 </td>
 

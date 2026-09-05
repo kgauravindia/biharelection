@@ -56,11 +56,17 @@ if ($db_menu) {
         <a href="sarpanchs.php" class="nav-link-custom <?php echo ($current_page == 'sarpanchs.php') ? 'active' : ''; ?>" title="Gram Kutchery Sarpanchs">
             <i class="fas fa-scale-balanced text-warning"></i> <span>Sarpanch Directory</span>
         </a>
+        <a href="panchayat-samiti.php" class="nav-link-custom <?php echo ($current_page == 'panchayat-samiti.php') ? 'active' : ''; ?>" title="Block Panchayat Samiti Pramukhs">
+            <i class="fas fa-award text-success"></i> <span>Panchayat Samiti</span>
+        </a>
         <a href="zila-parishad.php" class="nav-link-custom <?php echo ($current_page == 'zila-parishad.php') ? 'active' : ''; ?>" title="Zila Parishad Members & Chiefs">
             <i class="fas fa-building-columns text-primary"></i> <span>Zila Parishad</span>
         </a>
         <a href="panchayats.php" class="nav-link-custom <?php echo ($current_page == 'panchayats.php') ? 'active' : ''; ?>" title="Panchayat Directory Overview">
             <i class="fas fa-tree-city text-success"></i> <span>Panchayats</span>
+        </a>
+        <a href="bulk-upload.php" class="nav-link-custom <?php echo ($current_page == 'bulk-upload.php') ? 'active' : ''; ?>" title="Bulk CSV Upload Hub">
+            <i class="fas fa-cloud-arrow-up text-danger"></i> <span>Bulk Data Upload</span>
         </a>
 
         <div class="nav-section-title">Editorial & Content</div>

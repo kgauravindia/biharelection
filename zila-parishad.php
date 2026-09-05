@@ -86,18 +86,18 @@ if (!empty($selectedDistrict)) {
 
 // Dynamic SEO Metadata
 if ($singleMember && $districtObj) {
-    $mName = $singleMember['candidate_name'] ?: 'Ward Member';
+    $mName = $singleMember['candidate_name'] ?: 'Territory Member';
     $mWard = $singleMember['territory_no'] ?: $wardInput;
     $mBlock = $singleMember['block'] ?: $districtObj['name'];
-    $pageTitle = "{$mName} - Zila Parishad Member (Ward {$mWard}, {$mBlock}) | {$districtObj['name']}, Bihar";
-    $pageDescription = "Official profile, contact number, registered address, and territorial jurisdiction of {$mName}, elected Zila Parishad Member for Ward {$mWard} ({$mBlock}) in {$districtObj['name']} District Board, Bihar.";
+    $pageTitle = "{$mName} - Zila Parishad Member (Territory No. {$mWard}, {$mBlock}) | {$districtObj['name']}, Bihar";
+    $pageDescription = "Official profile, contact number, registered address, and territorial jurisdiction of {$mName}, elected Zila Parishad Member for Territory No. {$mWard} ({$mBlock}) in {$districtObj['name']} District Board, Bihar.";
     $pageCanonical = getZilaParishadUrl($selectedDistrict, $mWard);
 } elseif ($districtObj) {
-    $pageTitle = "{$districtObj['name']} District Zila Parishad: Board President & " . (count($zilaMembers) ?: ($zilaDistrictCounts[$selectedDistrict] ?? 'Territorial')) . " Ward Members";
-    $pageDescription = "Official directory of {$districtObj['name']} District Zila Parishad Board Chairperson (अध्यक्ष), Vice-Chairperson (उपाध्यक्ष), and elected Territorial Ward Members in Bihar.";
+    $pageTitle = "{$districtObj['name']} District Zila Parishad: Board President & " . (count($zilaMembers) ?: ($zilaDistrictCounts[$selectedDistrict] ?? 'Territorial')) . " Territorial Members";
+    $pageDescription = "Official directory of {$districtObj['name']} District Zila Parishad Board Chairperson (अध्यक्ष), Vice-Chairperson (उपाध्यक्ष), and elected Territorial Members in Bihar.";
     $pageCanonical = getZilaParishadUrl($selectedDistrict);
 } else {
-    $pageTitle = "Bihar Zila Parishad Directory: 38 District Boards (अध्यक्ष, उपाध्यक्ष व 1,099+ वार्ड सदस्य)";
+    $pageTitle = "Bihar Zila Parishad Directory: 38 District Boards (अध्यक्ष, उपाध्यक्ष व 1,099+ प्रादेशिक सदस्य)";
     $pageDescription = "Official directory of Bihar Zila Parishad Board Chairpersons (अध्यक्ष), Vice-Chairpersons (उपाध्यक्ष), and 38 District Panchayat Boards across Bihar.";
     $pageCanonical = SITE_URL . "/zila-parishad";
 }
@@ -214,7 +214,7 @@ require_once __DIR__ . '/header.php';
                 38 District Boards
             </span>
             <span class="badge bg-info bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
-                1,099+ Territorial Ward Members
+                1,099+ Territorial Members
             </span>
         </div>
 
@@ -226,7 +226,7 @@ require_once __DIR__ . '/header.php';
                 <?php if ($singleMember && $districtObj): ?>
                     <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>/zila-parishad" class="text-white-50 text-decoration-none">Zila Parishad</a></li>
                     <li class="breadcrumb-item"><a href="<?php echo getZilaParishadUrl($selectedDistrict); ?>" class="text-white-50 text-decoration-none"><?php echo htmlspecialchars($districtObj['name']); ?> Board</a></li>
-                    <li class="breadcrumb-item active text-warning fw-bold" aria-current="page">Ward <?php echo htmlspecialchars($singleMember['territory_no'] ?? $wardInput); ?>: <?php echo htmlspecialchars($singleMember['candidate_name'] ?? ''); ?></li>
+                    <li class="breadcrumb-item active text-warning fw-bold" aria-current="page">Territory No. <?php echo htmlspecialchars($singleMember['territory_no'] ?? $wardInput); ?>: <?php echo htmlspecialchars($singleMember['candidate_name'] ?? ''); ?></li>
                 <?php elseif ($districtObj): ?>
                     <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>/zila-parishad" class="text-white-50 text-decoration-none">Zila Parishad Directory</a></li>
                     <li class="breadcrumb-item active text-warning fw-bold" aria-current="page"><?php echo htmlspecialchars($districtObj['name']); ?> District</li>
@@ -237,14 +237,14 @@ require_once __DIR__ . '/header.php';
         </nav>
 
         <?php if ($singleMember && $districtObj): 
-            $sName = $singleMember['candidate_name'] ?: 'Elected Ward Member';
+            $sName = $singleMember['candidate_name'] ?: 'Elected Territory Member';
             $sWard = $singleMember['territory_no'] ?: $wardInput;
             $sBlock = $singleMember['block'] ?: '';
         ?>
             <h1 class="display-6 fw-extrabold text-white mb-2">
                 <?php echo htmlspecialchars($sName); ?> <br>
                 <span style="color: var(--accent-saffron);">
-                    Zila Parishad Member &bull; Ward No. <?php echo htmlspecialchars($sWard); ?> (<?php echo htmlspecialchars($districtObj['name']); ?>)
+                    Zila Parishad Member &bull; Territory No. <?php echo htmlspecialchars($sWard); ?> (<?php echo htmlspecialchars($districtObj['name']); ?>)
                 </span>
             </h1>
             <p class="lead text-white-50 mb-4" style="font-size: 1.05rem; max-width: 850px;">
@@ -253,7 +253,7 @@ require_once __DIR__ . '/header.php';
 
             <div class="d-flex flex-wrap gap-2">
                 <a href="<?php echo getZilaParishadUrl($selectedDistrict); ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
-                    <i class="bi bi-arrow-left me-1"></i> All <?php echo htmlspecialchars($districtObj['name']); ?> Wards (<?php echo count($zilaMembers); ?>)
+                    <i class="bi bi-arrow-left me-1"></i> All <?php echo htmlspecialchars($districtObj['name']); ?> Territories (<?php echo count($zilaMembers); ?>)
                 </a>
                 <?php if (!empty($sBlock)): ?>
                     <a href="<?php echo getBlockUrl($selectedDistrict, slugify($sBlock)); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
@@ -272,11 +272,11 @@ require_once __DIR__ . '/header.php';
             <h1 class="display-6 fw-extrabold text-white mb-2">
                 <?php echo htmlspecialchars($districtObj['name']); ?> District Zila Parishad <br>
                 <span style="color: var(--accent-saffron);">
-                    Board President &amp; <?php echo (count($zilaMembers) ?: ($zilaDistrictCounts[$selectedDistrict] ?? 'Territorial')); ?> Ward Members
+                    Board President &amp; <?php echo (count($zilaMembers) ?: ($zilaDistrictCounts[$selectedDistrict] ?? 'Territorial')); ?> Territorial Members
                 </span>
             </h1>
             <p class="lead text-white-50 mb-4" style="font-size: 1.05rem; max-width: 850px;">
-                Official directory of <?php echo htmlspecialchars($districtObj['name']); ?> District Zila Parishad Chairperson (अध्यक्ष), Vice-Chairperson (उपाध्यक्ष), and elected Territorial Ward Members overseeing rural development.
+                Official directory of <?php echo htmlspecialchars($districtObj['name']); ?> District Zila Parishad Chairperson (अध्यक्ष), Vice-Chairperson (उपाध्यक्ष), and elected Territorial Members overseeing rural development.
             </p>
 
             <div class="d-flex flex-wrap gap-2">
@@ -298,11 +298,11 @@ require_once __DIR__ . '/header.php';
             <h1 class="display-6 fw-extrabold text-white mb-2">
                 Bihar Zila Parishad Directory <br>
                 <span style="color: var(--accent-saffron);">
-                    38 District Boards &bull; 1,099+ Territorial Ward Members
+                    38 District Boards &bull; 1,099+ Territorial Members
                 </span>
             </h1>
             <p class="lead text-white-50 mb-4" style="font-size: 1.05rem; max-width: 900px;">
-                Official directory of Bihar Zila Parishad Board Chairpersons (अध्यक्ष), Vice-Chairpersons (उपाध्यक्ष), and 1,099+ directly elected Territorial Ward Members overseeing rural infrastructure and District Planning Committees across all 38 districts.
+                Official directory of Bihar Zila Parishad Board Chairpersons (अध्यक्ष), Vice-Chairpersons (उपाध्यक्ष), and 1,099+ directly elected Territorial Members overseeing rural infrastructure and District Planning Committees across all 38 districts.
             </p>
 
             <div class="d-flex flex-wrap gap-2">
@@ -347,7 +347,7 @@ require_once __DIR__ . '/header.php';
         $initial = !empty($nameParts[0]) ? mb_substr($nameParts[0], 0, 1) : 'ZP';
     ?>
 
-        <!-- Top Previous / Next Ward Quick Switcher Toolbar -->
+        <!-- Top Previous / Next Territory Quick Switcher Toolbar -->
         <div class="card border-0 shadow-sm rounded-4 p-2.5 mb-4 bg-white">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
                 <div>
@@ -357,18 +357,18 @@ require_once __DIR__ . '/header.php';
                     ?>
                         <a href="<?php echo getZilaParishadUrl($selectedDistrict, $pW); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
                             <i class="bi bi-chevron-left"></i> 
-                            <span>Ward <?php echo htmlspecialchars($pW); ?>: <span class="d-none d-md-inline text-muted small"><?php echo htmlspecialchars($pN); ?></span></span>
+                            <span>Territory <?php echo htmlspecialchars($pW); ?>: <span class="d-none d-md-inline text-muted small"><?php echo htmlspecialchars($pN); ?></span></span>
                         </a>
                     <?php else: ?>
                         <span class="btn btn-sm btn-light border rounded-pill px-3 py-1.5 text-muted disabled small">
-                            <i class="bi bi-chevron-left"></i> First Ward
+                            <i class="bi bi-chevron-left"></i> First Territory
                         </span>
                     <?php endif; ?>
                 </div>
 
                 <div class="text-center">
                     <span class="badge bg-warning bg-opacity-20 text-dark fw-bold px-3 py-1.5 rounded-pill font-monospace">
-                        Ward <?php echo htmlspecialchars($mWard); ?> of <?php echo count($zilaMembers); ?> in <?php echo htmlspecialchars($mDist); ?>
+                        Territory No. <?php echo htmlspecialchars($mWard); ?> of <?php echo count($zilaMembers); ?> in <?php echo htmlspecialchars($mDist); ?>
                     </span>
                 </div>
 
@@ -378,12 +378,12 @@ require_once __DIR__ . '/header.php';
                         $nN = $nextWardMember['candidate_name'];
                     ?>
                         <a href="<?php echo getZilaParishadUrl($selectedDistrict, $nW); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
-                            <span>Ward <?php echo htmlspecialchars($nW); ?>: <span class="d-none d-md-inline text-muted small"><?php echo htmlspecialchars($nN); ?></span></span>
+                            <span>Territory <?php echo htmlspecialchars($nW); ?>: <span class="d-none d-md-inline text-muted small"><?php echo htmlspecialchars($nN); ?></span></span>
                             <i class="bi bi-chevron-right"></i>
                         </a>
                     <?php else: ?>
                         <span class="btn btn-sm btn-light border rounded-pill px-3 py-1.5 text-muted disabled small">
-                            Last Ward <i class="bi bi-chevron-right"></i>
+                            Last Territory <i class="bi bi-chevron-right"></i>
                         </span>
                     <?php endif; ?>
                 </div>
@@ -405,7 +405,7 @@ require_once __DIR__ . '/header.php';
                         <div class="flex-grow-1">
                             <div class="d-flex flex-wrap align-items-center gap-2 mb-1.5">
                                 <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill">
-                                    🏛️ Territorial Ward <?php echo htmlspecialchars($mWard); ?>
+                                    🏛️ Territory No. <?php echo htmlspecialchars($mWard); ?>
                                 </span>
                                 <?php if (!empty($mBlock)): ?>
                                     <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-3 py-1 rounded-pill">
@@ -431,8 +431,8 @@ require_once __DIR__ . '/header.php';
                     <div class="row g-3 mb-4">
                         <div class="col-6 col-sm-3">
                             <div class="zp-stat-tile">
-                                <span class="text-muted small d-block mb-1">प्रादेशिक क्षेत्र (Ward)</span>
-                                <strong class="fs-5 text-primary font-monospace">Ward <?php echo htmlspecialchars($mWard); ?></strong>
+                                <span class="text-muted small d-block mb-1">प्रादेशिक क्षेत्र (Territory)</span>
+                                <strong class="fs-5 text-primary font-monospace">Territory No. <?php echo htmlspecialchars($mWard); ?></strong>
                                 <small class="text-muted d-block mt-0.5" style="font-size: 0.72rem;">~50K Population</small>
                             </div>
                         </div>
@@ -486,7 +486,7 @@ require_once __DIR__ . '/header.php';
                             </div>
                             <div class="text-sm-end">
                                 <?php if (!empty($mMob)): ?>
-                                    <?php echo renderMaskedPhoneButton($mMob, $mName, "Zila Parishad Ward {$mWard} Member ({$mDist})"); ?>
+                                    <?php echo renderMaskedPhoneButton($mMob, $mName, "Zila Parishad Territory No. {$mWard} Member ({$mDist})"); ?>
                                 <?php else: ?>
                                     <span class="badge bg-secondary px-3 py-2 rounded-pill">Number On File Pending</span>
                                 <?php endif; ?>
@@ -503,12 +503,12 @@ require_once __DIR__ . '/header.php';
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-1">
                                     <h6 class="fw-bold text-navy mb-0">Registered Residential Address (स्थाई पता)</h6>
-                                    <button class="btn btn-sm btn-outline-secondary rounded-pill px-2.5 py-0.5 small" onclick="navigator.clipboard.writeText('<?php echo htmlspecialchars(addslashes($mAddr ?: "Ward {$mWard}, {$mBlock}, {$mDist}")); ?>'); this.innerText='Copied!';">
+                                    <button class="btn btn-sm btn-outline-secondary rounded-pill px-2.5 py-0.5 small" onclick="navigator.clipboard.writeText('<?php echo htmlspecialchars(addslashes($mAddr ?: "Territory No. {$mWard}, {$mBlock}, {$mDist}")); ?>'); this.innerText='Copied!';">
                                         <i class="bi bi-clipboard me-1"></i>Copy
                                     </button>
                                 </div>
                                 <p class="text-dark small mb-1.5 lh-base font-monospace" style="font-size: 0.95rem;">
-                                    <?php echo htmlspecialchars($mAddr ?: "Territorial Constituency Ward No. {$mWard}, Block: {$mBlock}, District: {$mDist}, Bihar"); ?>
+                                    <?php echo htmlspecialchars($mAddr ?: "Territorial Constituency No. {$mWard}, Block: {$mBlock}, District: {$mDist}, Bihar"); ?>
                                 </p>
                                 <div class="d-flex flex-wrap gap-2 text-muted small">
                                     <span>CD Block: <strong><?php echo htmlspecialchars($mBlock); ?></strong></span> &bull; 
@@ -533,10 +533,15 @@ require_once __DIR__ . '/header.php';
                         </div>
 
                         <div class="d-flex gap-2">
+                            <?php if (!empty($_SESSION['admin_logged_in'])): ?>
+                                <a href="<?php echo SITE_URL; ?>/admin/zila-parishad.php?district=<?php echo urlencode($districtObj['name']); ?>&q=<?php echo urlencode($mName); ?>" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
+                                    <i class="bi bi-pencil-square me-1"></i> Edit in Admin
+                                </a>
+                            <?php endif; ?>
                             <button type="button" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-semibold" onclick="window.print()">
                                 <i class="bi bi-printer me-1"></i> Print
                             </button>
-                            <a href="https://api.whatsapp.com/send?text=<?php echo urlencode("Zila Parishad Ward {$mWard} Member ({$mDist}): {$mName} - " . getZilaParishadUrl($selectedDistrict, $mWard)); ?>" target="_blank" class="btn btn-success btn-sm rounded-pill px-3.5 fw-bold shadow-sm">
+                            <a href="https://api.whatsapp.com/send?text=<?php echo urlencode("Zila Parishad Territory No. {$mWard} Member ({$mDist}): {$mName} - " . getZilaParishadUrl($selectedDistrict, $mWard)); ?>" target="_blank" class="btn btn-success btn-sm rounded-pill px-3.5 fw-bold shadow-sm">
                                 <i class="bi bi-whatsapp me-1"></i> Share Profile
                             </a>
                         </div>
@@ -555,7 +560,7 @@ require_once __DIR__ . '/header.php';
                             <div class="zp-hierarchy-dot bg-warning border border-2 border-white shadow-sm"></div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <h6 class="fw-bold text-navy mb-0">Tier 3 (Apex): District Zila Parishad (जिला परिषद)</h6>
-                                <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill">Current Level: Ward <?php echo htmlspecialchars($mWard); ?></span>
+                                <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill">Current Level: Territory No. <?php echo htmlspecialchars($mWard); ?></span>
                             </div>
                             <p class="text-muted small mb-0">Oversees rural infrastructure, District Planning Committee budgets, 15th Finance Commission fund approvals for all <?php echo htmlspecialchars($districtObj['name']); ?> district.</p>
                         </div>
@@ -604,24 +609,24 @@ require_once __DIR__ . '/header.php';
                         <div class="col-12 col-md-6">
                             <div class="p-3 bg-light rounded-3 border h-100">
                                 <div class="fw-bold text-navy mb-1">🤝 Public Grievance Redressal</div>
-                                <span class="text-muted">Represent rural citizens of Territorial Ward <?php echo htmlspecialchars($mWard); ?> before the District Magistrate (DM) and CEO Zila Parishad.</span>
+                                <span class="text-muted">Represent rural citizens of Territory No. <?php echo htmlspecialchars($mWard); ?> before the District Magistrate (DM) and CEO Zila Parishad.</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Neighboring Wards Interactive Matrix with Search -->
+                <!-- Neighboring Territories Interactive Matrix with Search -->
                 <?php if (!empty($zilaMembers) && count($zilaMembers) > 1): ?>
                     <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
                         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-3">
                             <div>
                                 <h5 class="fw-bold text-navy font-heading mb-0">
-                                    <i class="bi bi-grid-3x3-gap-fill text-warning me-2"></i> All <?php echo htmlspecialchars($districtObj['name']); ?> Territorial Wards Matrix
+                                    <i class="bi bi-grid-3x3-gap-fill text-warning me-2"></i> All <?php echo htmlspecialchars($districtObj['name']); ?> Territories Matrix
                                 </h5>
-                                <small class="text-muted">Switch between all <?php echo count($zilaMembers); ?> elected Ward Members in <?php echo htmlspecialchars($districtObj['name']); ?>:</small>
+                                <small class="text-muted">Switch between all <?php echo count($zilaMembers); ?> elected Territorial Members in <?php echo htmlspecialchars($districtObj['name']); ?>:</small>
                             </div>
-                            <div style="max-width: 200px;">
-                                <input type="text" id="wardFilterInput" class="form-control form-control-sm rounded-pill" placeholder="Filter ward no..." onkeyup="filterWardPills(this.value)">
+                            <div style="max-width: 220px;">
+                                <input type="text" id="wardFilterInput" class="form-control form-control-sm rounded-pill" placeholder="Filter territory no..." onkeyup="filterWardPills(this.value)">
                             </div>
                         </div>
 
@@ -637,8 +642,8 @@ require_once __DIR__ . '/header.php';
                                    class="btn btn-sm rounded-pill px-3 py-1.5 fw-semibold zp-ward-pill ward-item-pill <?php echo $isActive ? 'btn-warning text-dark fw-bold shadow-sm' : 'btn-outline-secondary'; ?>" 
                                    data-ward="<?php echo htmlspecialchars($otherWard); ?>"
                                    data-name="<?php echo htmlspecialchars(strtolower($otherName . ' ' . $otherBlock)); ?>"
-                                   title="Ward <?php echo htmlspecialchars($otherWard); ?>: <?php echo htmlspecialchars($otherName); ?> (<?php echo htmlspecialchars($otherBlock); ?>)">
-                                    Ward <?php echo htmlspecialchars($otherWard); ?>
+                                   title="Territory No. <?php echo htmlspecialchars($otherWard); ?>: <?php echo htmlspecialchars($otherName); ?> (<?php echo htmlspecialchars($otherBlock); ?>)">
+                                    Territory <?php echo htmlspecialchars($otherWard); ?>
                                     <?php if ($isActive): ?> <i class="bi bi-check-circle-fill ms-1"></i><?php endif; ?>
                                 </a>
                             <?php endforeach; ?>
@@ -701,7 +706,7 @@ require_once __DIR__ . '/header.php';
                     </div>
 
                     <a href="<?php echo getZilaParishadUrl($selectedDistrict); ?>" class="btn btn-warning btn-sm w-100 fw-bold rounded-pill shadow-sm">
-                        View All <?php echo htmlspecialchars($districtObj['name']); ?> Wards Roster &rarr;
+                        View All <?php echo htmlspecialchars($districtObj['name']); ?> Territories Roster &rarr;
                     </a>
                 </div>
 
@@ -789,7 +794,7 @@ require_once __DIR__ . '/header.php';
                     </h2>
                     <p class="text-muted small mb-0">
                         Headquarters: <strong><?php echo htmlspecialchars($districtObj['headquarters'] ?? $districtObj['name']); ?></strong> &bull; 
-                        Territorial Wards: <strong class="text-primary"><?php echo count($zilaMembers) ?: ($zilaDistrictCounts[$selectedDistrict] ?? 'Mapped'); ?> Wards</strong>
+                        Territorial Constituencies: <strong class="text-primary"><?php echo count($zilaMembers) ?: ($zilaDistrictCounts[$selectedDistrict] ?? 'Mapped'); ?> Territories</strong>
                     </p>
                 </div>
 
@@ -855,29 +860,29 @@ require_once __DIR__ . '/header.php';
                         <option value="" disabled <?php echo empty($selectedDistrict) ? 'selected' : ''; ?>>-- Switch District --</option>
                         <?php foreach ($districts as $d): ?>
                             <option value="<?php echo SITE_URL; ?>/zila-parishad/<?php echo urlencode($d['slug']); ?>" <?php echo $selectedDistrict === $d['slug'] ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($d['name']); ?> District (<?php echo $zilaDistrictCounts[$d['slug']] ?? 'Mapped'; ?> Wards)
+                                <?php echo htmlspecialchars($d['name']); ?> District (<?php echo $zilaDistrictCounts[$d['slug']] ?? 'Mapped'; ?> Territories)
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-12 col-md-7">
-                    <label class="form-label small fw-bold text-navy mb-1"><i class="bi bi-search text-primary"></i> Search Ward Number, Member Name or Block:</label>
-                    <input type="text" id="zilaSearchInput" class="form-control form-control-sm rounded-pill" placeholder="Type member name, ward no (e.g. 1) or block name...">
+                    <label class="form-label small fw-bold text-navy mb-1"><i class="bi bi-search text-primary"></i> Search Territory Number, Member Name or Block:</label>
+                    <input type="text" id="zilaSearchInput" class="form-control form-control-sm rounded-pill" placeholder="Type member name, territory no (e.g. 1) or block name...">
                 </div>
             </div>
         </div>
 
-        <!-- Territorial Ward Members Roster Table (Simplified with Link to Details) -->
+        <!-- Territorial Members Roster Table (Simplified with Link to Details) -->
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-4">
             <div class="card-header bg-white py-3 px-4 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
                 <div>
                     <h5 class="fw-bold text-navy mb-0">
-                        <i class="bi bi-people-fill text-primary me-2"></i> <?php echo htmlspecialchars($districtObj['name']); ?> Territorial Ward Members Roster
+                        <i class="bi bi-people-fill text-primary me-2"></i> <?php echo htmlspecialchars($districtObj['name']); ?> Territorial Members Roster
                     </h5>
-                    <small class="text-muted">Showing Name, Block Name &amp; Ward No. &bull; Click link to view full Address, Mobile &amp; Details</small>
+                    <small class="text-muted">Showing Name, Block Name &amp; Territory No. &bull; Click link to view full Address, Mobile &amp; Details</small>
                 </div>
                 <div class="badge bg-primary text-white fw-bold px-3 py-2 rounded-pill shadow-sm" id="totalMembersCount">
-                    <?php echo count($zilaMembers); ?> Ward Members
+                    <?php echo count($zilaMembers); ?> Territorial Members
                 </div>
             </div>
 
@@ -885,7 +890,7 @@ require_once __DIR__ . '/header.php';
                 <table class="table table-hover align-middle mb-0" id="districtZilaTable">
                     <thead class="table-light">
                         <tr>
-                            <th class="py-3 px-4 text-navy fw-bold small text-uppercase text-center" style="width: 110px;">No.</th>
+                            <th class="py-3 px-4 text-navy fw-bold small text-uppercase text-center" style="width: 140px;">Territory No.</th>
                             <th class="py-3 px-4 text-navy fw-bold small text-uppercase">Member Name</th>
                             <th class="py-3 px-4 text-navy fw-bold small text-uppercase">Block Name</th>
                             <th class="py-3 px-4 text-navy fw-bold small text-uppercase text-end" style="width: 240px;">Address, Mobile &amp; Details</th>
@@ -904,7 +909,7 @@ require_once __DIR__ . '/header.php';
                                     data-block="<?php echo htmlspecialchars(strtolower($zBlock)); ?>"
                                     data-ward="<?php echo htmlspecialchars($zWard); ?>">
                                     
-                                    <!-- No / Ward No -->
+                                    <!-- Territory No -->
                                     <td class="text-center fw-bold">
                                         <span class="badge bg-warning bg-opacity-25 text-dark px-3 py-2 rounded-pill font-monospace fs-6">
                                             <?php echo htmlspecialchars($zWard); ?>
@@ -918,7 +923,7 @@ require_once __DIR__ . '/header.php';
                                                 <?php echo htmlspecialchars($zName); ?>
                                             </a>
                                         </div>
-                                        <small class="text-muted">Ward No. <?php echo htmlspecialchars($zWard); ?> Representative</small>
+                                        <small class="text-muted">Territory No. <?php echo htmlspecialchars($zWard); ?> Representative</small>
                                     </td>
 
                                     <!-- Block Name -->
@@ -944,7 +949,7 @@ require_once __DIR__ . '/header.php';
                             <tr>
                                 <td colspan="4" class="text-center py-5 text-muted">
                                     <i class="bi bi-inbox fs-2 d-block mb-2 text-muted"></i>
-                                    No Territorial Ward Member records found for <?php echo htmlspecialchars($districtObj['name']); ?> District.
+                                    No Territorial Member records found for <?php echo htmlspecialchars($districtObj['name']); ?> District.
                                 </td>
                             </tr>
                         <?php endif; ?>
@@ -978,7 +983,7 @@ require_once __DIR__ . '/header.php';
                 });
 
                 const countBadge = document.getElementById('totalMembersCount');
-                if (countBadge) countBadge.innerText = visible + ' Ward Members';
+                if (countBadge) countBadge.innerText = visible + ' Territorial Members';
             }
 
             if (zSearch) zSearch.addEventListener('input', filterDistrictZila);
@@ -1012,7 +1017,7 @@ require_once __DIR__ . '/header.php';
                             <i class="bi bi-people-fill fs-4 text-primary"></i>
                         </div>
                         <div>
-                            <span class="text-muted small d-block">Territorial Wards</span>
+                            <span class="text-muted small d-block">Territorial Constituencies</span>
                             <h4 class="fw-extrabold text-navy mb-0"><?php echo number_format($totalWardsBihar ?: 1099); ?>+</h4>
                         </div>
                     </div>
@@ -1143,8 +1148,8 @@ require_once __DIR__ . '/header.php';
                             <!-- District 2-Metrics Row -->
                             <div class="d-flex justify-content-around align-items-center p-2.5 bg-light rounded-3 border small mb-2 text-center">
                                 <div>
-                                    <span class="text-muted d-block" style="font-size: 0.72rem;">Territorial Wards</span>
-                                    <strong class="text-primary fs-6"><?php echo $wCount ? number_format($wCount) . ' Wards' : 'Active Wards'; ?></strong>
+                                    <span class="text-muted d-block" style="font-size: 0.72rem;">Territory Constituencies</span>
+                                    <strong class="text-primary fs-6"><?php echo $wCount ? number_format($wCount) . ' Territories' : 'Active Territories'; ?></strong>
                                 </div>
                                 <div class="border-start ps-3">
                                     <span class="text-muted d-block" style="font-size: 0.72rem;">CD Blocks</span>
@@ -1159,7 +1164,7 @@ require_once __DIR__ . '/header.php';
                                 <i class="bi bi-building me-1"></i>District Hub
                             </a>
                             <a href="<?php echo htmlspecialchars($zilaDistUrl); ?>" class="btn btn-sm btn-warning fw-bold text-dark rounded-pill px-3 py-1.5 shadow-sm text-nowrap">
-                                View Ward Members <i class="bi bi-arrow-right ms-1"></i>
+                                View Territorial Members <i class="bi bi-arrow-right ms-1"></i>
                             </a>
                         </div>
                     </div>
