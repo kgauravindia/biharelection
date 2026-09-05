@@ -16,82 +16,83 @@ require_once __DIR__ . '/config.php';
                         <div class="bg-white p-2 rounded-3 shadow-sm d-inline-flex align-items-center justify-content-center">
                             <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" alt="Bihar Election Logo" class="footer-logo-img" height="38">
                         </div>
-                        <h2 class="h5 mb-0 text-white fw-bold text-nowrap" style="font-family: 'Outfit', sans-serif;">Bihar <span style="color: var(--accent-saffron);">Election</span></h2>
+                        <h2 class="h5 mb-0 text-white fw-bold text-nowrap" style="font-family: var(--font-heading);">Bihar <span style="color: var(--accent);">Election</span></h2>
                     </div>
-                    <p class="small text-white-50 lh-base">
-                        Bihar Election is an independent non-governmental election data and political intelligence platform covering all 38 districts and 243 Vidhan Sabha constituencies in Bihar.
+                    <p class="small text-white-50 lh-base mb-3">
+                        Bihar Election is an independent non-governmental election data and political intelligence platform covering all 38 districts, 534 blocks, and 243 Vidhan Sabha constituencies in Bihar.
                     </p>
-                    <div class="disclaimer-box p-3 rounded-end small text-white-50 bg-white bg-opacity-10 border-start border-3 border-warning">
-                        <strong>Important Disclaimer:</strong> Bihar Election is a private, independent information platform. It is not affiliated with the Election Commission of India (ECI) or the Bihar State Election Commission (SEC).
+                    <div class="disclaimer-box">
+                        <strong class="text-warning d-block mb-1"><i class="bi bi-shield-exclamation me-1"></i> Important Disclaimer:</strong>
+                        Bihar Election is a private, independent civic information portal. It is not affiliated with the Election Commission of India (ECI) or the Bihar State Election Commission (SEC).
                     </div>
                 </div>
 
                 <!-- Col 2: 9 Commissionaries (Alphabetical A-Z) -->
                 <div class="col-6 col-md-4 col-lg-2">
-                    <h3 class="h6 text-white fw-bold mb-3">9 Commissionaries</h3>
-                    <ul class="list-unstyled footer-links small">
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('bhagalpur'); ?>" class="text-white-50 text-decoration-none">Bhagalpur</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('darbhanga'); ?>" class="text-white-50 text-decoration-none">Darbhanga</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('saharsa'); ?>" class="text-white-50 text-decoration-none">Kosi (Saharsa)</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('gaya'); ?>" class="text-white-50 text-decoration-none">Magadh (Gaya)</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('munger'); ?>" class="text-white-50 text-decoration-none">Munger</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('patna'); ?>" class="text-white-50 text-decoration-none">👑 Patna (Capital)</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('purnia'); ?>" class="text-white-50 text-decoration-none">Purnia</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('saran'); ?>" class="text-white-50 text-decoration-none">Saran (Chhapra)</a></li>
-                        <li class="mb-2"><a href="<?php echo getDistrictUrl('muzaffarpur'); ?>" class="text-white-50 text-decoration-none">Tirhut (Muzaffarpur)</a></li>
-                        <li class="mb-2"><a href="<?php echo getCensusUrl(); ?>" class="text-warning fw-bold text-decoration-none">📊 Census 2011 Hub &rarr;</a></li>
+                    <h3 class="footer-heading">9 Divisions</h3>
+                    <ul class="list-unstyled footer-links small mb-0">
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('bhagalpur'); ?>" class="footer-link">Bhagalpur</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('darbhanga'); ?>" class="footer-link">Darbhanga</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('saharsa'); ?>" class="footer-link">Kosi (Saharsa)</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('gaya'); ?>" class="footer-link">Magadh (Gaya)</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('munger'); ?>" class="footer-link">Munger</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('patna'); ?>" class="footer-link text-warning fw-semibold">👑 Patna (Capital)</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('purnia'); ?>" class="footer-link">Purnia</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('saran'); ?>" class="footer-link">Saran (Chhapra)</a></li>
+                        <li class="mb-2"><a href="<?php echo getDistrictUrl('muzaffarpur'); ?>" class="footer-link">Tirhut (Muzaffarpur)</a></li>
+                        <li class="mb-2"><a href="<?php echo getCensusUrl(); ?>" class="footer-link text-warning fw-bold">📊 Census 2011 Hub &rarr;</a></li>
                     </ul>
                 </div>
 
                 <!-- Col 3: Legal & Policy Documents -->
                 <div class="col-6 col-md-4 col-lg-3">
-                    <h3 class="h6 text-white fw-bold mb-3">Company &amp; Portals</h3>
-                    <ul class="list-unstyled footer-links small">
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/about" class="text-white-50 text-decoration-none">🏢 About Us</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/contact" class="text-white-50 text-decoration-none">📞 Contact Us</a></li>
-                        <li class="mb-2"><a href="<?php echo getBlogUrl(); ?>" class="text-white-50 text-decoration-none">📰 News &amp; Blog</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/search-pin-code" class="text-white-50 text-decoration-none">📮 Search PIN Code</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mission-and-vision" class="text-white-50 text-decoration-none">🎯 Mission &amp; Vision</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/privacy-policy" class="text-white-50 text-decoration-none">🔒 Privacy Policy</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/disclaimer" class="text-white-50 text-decoration-none">⚠️ Disclaimer Notice</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/terms-and-conditions" class="text-white-50 text-decoration-none">📜 Terms &amp; Conditions</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/advertise" class="text-white-50 text-decoration-none">📢 Advertise &amp; Sponsorships</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/login" class="text-warning fw-semibold text-decoration-none"><i class="bi bi-box-arrow-in-right"></i> Client / Citizen Login</a></li>
+                    <h3 class="footer-heading">Portals &amp; Legal</h3>
+                    <ul class="list-unstyled footer-links small mb-0">
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/about" class="footer-link">🏢 About Us</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/contact" class="footer-link">📞 Contact Us</a></li>
+                        <li class="mb-2"><a href="<?php echo getBlogUrl(); ?>" class="footer-link">📰 News &amp; Blog</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/search-pin-code" class="footer-link">📮 Search PIN Code</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/mission-and-vision" class="footer-link">🎯 Mission &amp; Vision</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/privacy-policy" class="footer-link">🔒 Privacy Policy</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/disclaimer" class="footer-link">⚠️ Disclaimer Notice</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/terms-and-conditions" class="footer-link">📜 Terms &amp; Conditions</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/advertise" class="footer-link text-warning fw-semibold">📢 Advertise &amp; Sponsorships</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/login" class="footer-link text-warning fw-semibold"><i class="bi bi-box-arrow-in-right"></i> Client / Citizen Login</a></li>
                     </ul>
                 </div>
 
                 <!-- Col 4: Official Social Channels -->
                 <div class="col-12 col-md-4 col-lg-3">
-                    <h3 class="h6 text-white fw-bold mb-3">Follow Official Channels</h3>
-                    <ul class="list-unstyled footer-links small">
+                    <h3 class="footer-heading">Official Channels</h3>
+                    <ul class="list-unstyled footer-links small mb-3">
                         <li class="mb-2">
-                            <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="text-success text-decoration-none d-flex align-items-center gap-2">
-                                <i class="bi bi-whatsapp"></i> WhatsApp Channel
+                            <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="footer-link text-success fw-semibold">
+                                <i class="bi bi-whatsapp fs-6"></i> WhatsApp Channel
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="text-danger text-decoration-none d-flex align-items-center gap-2">
-                                <i class="bi bi-instagram"></i> Instagram (@BiharElectionAI)
+                            <a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="footer-link">
+                                <i class="bi bi-instagram fs-6 text-danger"></i> Instagram (@BiharElectionAI)
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="<?php echo FACEBOOK_URL; ?>" target="_blank" class="text-primary text-decoration-none d-flex align-items-center gap-2">
-                                <i class="bi bi-facebook"></i> Facebook (/BiharElectionAI)
+                            <a href="<?php echo FACEBOOK_URL; ?>" target="_blank" class="footer-link">
+                                <i class="bi bi-facebook fs-6 text-primary"></i> Facebook (/BiharElectionAI)
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="<?php echo TWITTER_URL; ?>" target="_blank" class="text-white-50 text-decoration-none d-flex align-items-center gap-2">
-                                <i class="bi bi-twitter-x"></i> X / Twitter (@BiharElectionAI)
+                            <a href="<?php echo TWITTER_URL; ?>" target="_blank" class="footer-link">
+                                <i class="bi bi-twitter-x fs-6"></i> X / Twitter (@BiharElectionAI)
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="<?php echo YOUTUBE_URL; ?>" target="_blank" class="text-danger text-decoration-none d-flex align-items-center gap-2">
-                                <i class="bi bi-youtube"></i> YouTube (@BiharElectionAI)
+                            <a href="<?php echo YOUTUBE_URL; ?>" target="_blank" class="footer-link">
+                                <i class="bi bi-youtube fs-6 text-danger"></i> YouTube (@BiharElectionAI)
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="text-info text-decoration-none d-flex align-items-center gap-2">
-                                <i class="bi bi-telegram"></i> Telegram (@BiharElectionAI)
+                            <a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="footer-link">
+                                <i class="bi bi-telegram fs-6 text-info"></i> Telegram (@BiharElectionAI)
                             </a>
                         </li>
                     </ul>
@@ -101,14 +102,14 @@ require_once __DIR__ . '/config.php';
 
             <!-- Bottom Copyright & Social Icons Row -->
             <div class="pt-3 mt-3 border-top border-white border-opacity-10 d-flex flex-wrap justify-content-between align-items-center gap-3 small text-white-50">
-                <div>&copy; <?php echo date('Y'); ?> Bihar Election. All Rights Reserved. &bull; Non-Government Civic Information Platform &bull; <a href="<?php echo SITE_URL; ?>/admin/login.php" class="text-white-50 text-decoration-none"><i class="bi bi-shield-lock"></i> Admin Portal</a></div>
-                <div class="d-flex gap-3 align-items-center">
-                    <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-whatsapp"></i></a>
-                    <a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-telegram"></i></a>
-                    <a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-instagram"></i></a>
-                    <a href="<?php echo FACEBOOK_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-facebook"></i></a>
-                    <a href="<?php echo TWITTER_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-twitter-x"></i></a>
-                    <a href="<?php echo YOUTUBE_URL; ?>" target="_blank" class="text-white-50 text-decoration-none fs-5"><i class="bi bi-youtube"></i></a>
+                <div>&copy; <?php echo date('Y'); ?> Bihar Election. All Rights Reserved. &bull; Non-Government Civic Information Platform &bull; <a href="<?php echo SITE_URL; ?>/admin/login.php" class="text-white-50 text-decoration-none footer-admin-link"><i class="bi bi-shield-lock"></i> Admin Portal</a></div>
+                <div class="d-flex gap-2 align-items-center">
+                    <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="footer-social-btn social-btn-whatsapp" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    <a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="footer-social-btn social-btn-telegram" title="Telegram"><i class="bi bi-telegram"></i></a>
+                    <a href="<?php echo INSTAGRAM_URL; ?>" target="_blank" class="footer-social-btn social-btn-instagram" title="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="<?php echo FACEBOOK_URL; ?>" target="_blank" class="footer-social-btn social-btn-facebook" title="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="<?php echo TWITTER_URL; ?>" target="_blank" class="footer-social-btn social-btn-x" title="X (Twitter)"><i class="bi bi-twitter-x"></i></a>
+                    <a href="<?php echo YOUTUBE_URL; ?>" target="_blank" class="footer-social-btn social-btn-youtube" title="YouTube"><i class="bi bi-youtube"></i></a>
                 </div>
             </div>
         </div>

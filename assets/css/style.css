@@ -752,12 +752,38 @@ a:hover {
   pointer-events: none;
 }
 
-/* ---------------- Site Footer ---------------- */
+/* ---------------- Site Footer (SaranIndex Modern Dark UI) ---------------- */
 .site-footer {
-  background: linear-gradient(180deg, #0f172a 0%, #060d17 100%) !important;
+  background: linear-gradient(180deg, #0b1329 0%, #030712 100%) !important;
   color: #94a3b8 !important;
-  border-top: 4px solid var(--accent);
   position: relative;
+  overflow: hidden;
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, #2563eb 0%, #f59e0b 50%, #10b981 100%) 1;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 8%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.14) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.site-footer::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: 5%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(40px);
 }
 
 .site-footer h2,
@@ -767,50 +793,153 @@ a:hover {
 .site-footer h6 {
   color: #ffffff !important;
   font-family: var(--font-heading);
-  letter-spacing: 0.3px;
 }
 
-.site-footer p {
-  color: #94a3b8;
-}
-
-.site-footer .footer-links a {
-  color: #94a3b8 !important;
-  transition: all 0.2s ease;
+.footer-heading {
+  color: #f59e0b !important;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  position: relative;
   display: inline-block;
-  text-decoration: none;
 }
 
-.site-footer .footer-links a:hover {
+.footer-heading::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2.5px;
+  background: linear-gradient(90deg, #f59e0b, rgba(245, 158, 11, 0.2));
+  border-radius: 2px;
+  margin-top: 6px;
+}
+
+.footer-links {
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.55rem;
+}
+
+.footer-link {
+  color: rgba(226, 232, 240, 0.72) !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.875rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.footer-link:hover {
   color: #ffffff !important;
-  transform: translateX(4px);
+  transform: translateX(5px);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.footer-link.text-warning {
+  color: #fbbf24 !important;
+}
+
+.footer-link.text-warning:hover {
+  color: #fef08a !important;
+  text-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
+}
+
+.footer-link.text-success {
+  color: #4ade80 !important;
+}
+
+.footer-link.text-success:hover {
+  color: #86efac !important;
+  text-shadow: 0 0 14px rgba(34, 197, 94, 0.4);
 }
 
 .site-footer .disclaimer-box {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-left: 3px solid #f59e0b !important;
-  color: #cbd5e1 !important;
-  font-size: 0.825rem;
-  line-height: 1.5;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 4px solid #f59e0b !important;
+  color: rgba(226, 232, 240, 0.75) !important;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  border-radius: 12px;
+  padding: 14px 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-.site-footer .footer-logo-img {
-  max-height: 40px;
-  width: auto;
+.footer-social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e2e8f0 !important;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.site-footer .border-top {
-  border-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-.site-footer a.text-white-50 {
-  color: rgba(255, 255, 255, 0.6) !important;
-  transition: color 0.2s ease;
-}
-
-.site-footer a.text-white-50:hover {
+.footer-social-btn:hover {
   color: #ffffff !important;
+  transform: scale(1.15) translateY(-3px);
+}
+
+.social-btn-facebook:hover {
+  background-color: #1877f2 !important;
+  border-color: #1877f2 !important;
+  box-shadow: 0 6px 20px rgba(24, 119, 242, 0.5);
+}
+
+.social-btn-instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888) !important;
+  border-color: transparent !important;
+  box-shadow: 0 6px 20px rgba(220, 39, 67, 0.5);
+}
+
+.social-btn-x:hover {
+  background-color: #000000 !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+}
+
+.social-btn-youtube:hover {
+  background-color: #ff0000 !important;
+  border-color: #ff0000 !important;
+  box-shadow: 0 6px 20px rgba(255, 0, 0, 0.5);
+}
+
+.social-btn-telegram:hover {
+  background-color: #24a1de !important;
+  border-color: #24a1de !important;
+  box-shadow: 0 6px 20px rgba(36, 161, 222, 0.5);
+}
+
+.social-btn-whatsapp:hover {
+  background-color: #25d366 !important;
+  border-color: #25d366 !important;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+.footer-admin-link {
+  transition: all 0.2s ease;
+}
+
+.footer-admin-link:hover {
+  color: #fbbf24 !important;
+  text-decoration: underline !important;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
 }
 
 /* ---------------- Responsive Tweaks ---------------- */
