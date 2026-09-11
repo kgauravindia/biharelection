@@ -9,7 +9,7 @@ $user = getCurrentUser();
 
 $pageTitle = 'Citizen Dashboard — ' . htmlspecialchars($user['name'] ?? 'User') . ' | Bihar Election';
 $pageDescription = 'Track daily contact views, monitor elected representatives, and access civic directories across Bihar.';
-$pageCanonical = SITE_URL . '/dashboard.php';
+$pageCanonical = SITE_URL . '/dashboard';
 $activeNav = 'dashboard';
 
 // Fetch Phone Reveals Statistics

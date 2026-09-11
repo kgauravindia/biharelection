@@ -8,7 +8,7 @@ require_once __DIR__ . '/includes/auth_helper.php';
 $pageTitle = 'Mission & Vision (हमारा मिशन) — Bihar Election';
 $pageDescription = 'BiharElection.com का मिशन है बिहार के प्रत्येक नागरिक एवं मतदाता तक निष्पक्ष, सटीक और समय पर चुनावी व लोकतांत्रिक जानकारी पहुँचाना।';
 $pageKeywords = 'Mission Bihar Election, Bihar Election Vision, निष्पक्ष चुनावी कवरेज, बिहार चुनाव 2026, Voter Awareness Bihar';
-$pageCanonical = SITE_URL . '/mission-and-vision/';
+$pageCanonical = SITE_URL . '/mission-and-vision';
 $activeNav = 'mission';
 
 include __DIR__ . '/header.php';

@@ -99,9 +99,8 @@ if ($singleMlc) {
     $quotaLabel = getMlcQuotaLabel($quotaType);
     $partyCleanClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $party));
 
-    $pageTitle = "{$mName}" . ($mNameHi ? " ({$mNameHi})" : "") . " MLC Profile - Bihar Vidhan Parishad";
-    $pageDescription = "{$mName} is a Member of the Bihar Legislative Council (MLC) representing {$const} ({$party}). View constituency, quota, party, verified contact details, and official Vidhan Parishad secretariat profile.";
-    $pageCanonical = SITE_URL . "/mlc/" . ($singleMlc['id'] ?? $singleMlc['sr_no']);
+    $mlcSlug = !empty($singleMlc['slug']) ? $singleMlc['slug'] : (!empty($singleMlc['name']) ? slugify($singleMlc['name']) : ($singleMlc['id'] ?? $singleMlc['sr_no']));
+    $pageCanonical = getMlcUrl($mlcSlug);
 } else {
     $pageTitle = "Bihar 75 Vidhan Parishad MLCs Directory: Legislative Council Members Official Roster";
     $pageDescription = "Official directory of all 75 Bihar Legislative Council (Vidhan Parishad) Members (MLCs): Local Authorities (24), Assembly Quota (27), Governor Nominated (12), Graduates (6), and Teachers (6) with verified contact details.";
@@ -193,6 +192,8 @@ require_once __DIR__ . '/header.php';
                     <img src="<?php echo htmlspecialchars($image); ?>" 
                          alt="<?php echo htmlspecialchars($mName); ?>" 
                          class="mlc-profile-photo"
+                         width="140"
+                         height="140"
                          loading="eager"
                          onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=<?php echo urlencode($mName); ?>&background=0b1a30&color=fff&size=200';">
                 <?php else: ?>
@@ -788,6 +789,8 @@ require_once __DIR__ . '/header.php';
                                             <img src="<?php echo htmlspecialchars($image); ?>" 
                                                  alt="<?php echo htmlspecialchars($mName); ?>" 
                                                  class="mlc-avatar-img shadow-xs" 
+                                                 width="50"
+                                                 height="50"
                                                  loading="lazy" 
                                                  onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=<?php echo urlencode($mName); ?>&background=0f172a&color=fff';">
                                         <?php else: ?>

@@ -8,7 +8,7 @@ require_once __DIR__ . '/includes/auth_helper.php';
 $pageTitle = 'Search PIN Code — Bihar & India Postal Code Directory';
 $pageDescription = 'Search PIN codes and post offices across Bihar and India. Instant lookup for Patna, Gaya, Muzaffarpur, Bhagalpur, and all 38 districts.';
 $pageKeywords = 'Bihar PIN Code Search, Patna Pincode, Postal Codes Bihar, Post Office Bihar Election, District Pincode Directory';
-$pageCanonical = SITE_URL . '/search-pin-code/';
+$pageCanonical = SITE_URL . '/search-pin-code';
 $activeNav = 'pincode';
 
 // Popular Bihar Pincodes

@@ -8,7 +8,7 @@ require_once __DIR__ . '/includes/auth_helper.php';
 $pageTitle = 'About Us — Bihar Election Intelligence & Democratic Data Hub';
 $pageDescription = 'BiharElection.com is Bihar’s premier open civic intelligence and electoral analytics portal covering 243 Vidhan Sabha seats, 8,000+ Panchayats, and candidate profiles.';
 $pageKeywords = 'About Bihar Election, Bihar Election Portal, OfferPlant Technologies Chapra, Bihar Vidhan Sabha Analytics, Panchayat Data Bihar';
-$pageCanonical = SITE_URL . '/about/';
+$pageCanonical = SITE_URL . '/about';
 $activeNav = 'about';
 
 include __DIR__ . '/header.php';

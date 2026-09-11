@@ -4,7 +4,7 @@ require_once __DIR__ . '/config.php';
 $pageTitle = 'Advertise & Listing Packages | Candidate Profiles, District Listings & Banners on Bihar Election';
 $pageDescription = 'Explore advertising and political listing packages on Bihar Election. Political candidate profiles (₹2,500 - ₹25,000), District Hub sponsors (₹1,999/yr), and banner advertising reaching 2-4 lakh monthly Bihar voters.';
 $pageKeywords = 'Bihar Election Advertising, Political candidate profile Bihar, District sponsor listing Bihar, Bihar political PR packages';
-$pageCanonical = SITE_URL . '/advertise.php';
+$pageCanonical = SITE_URL . '/advertise';
 $activeNav = 'advertise';
 
 require_once __DIR__ . '/header.php';

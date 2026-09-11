@@ -1003,35 +1003,35 @@ function renderGoogleAd($slotType = 'leaderboard', $slotId = '', $customClass = 
         'leaderboard' => [
             'class' => 'ad-leaderboard-slot',
             'label' => 'Advertisement / विज्ञापन',
-            'style' => 'display:block; min-height: 90px; text-align: center;',
+            'style' => 'display:block;',
             'format' => 'auto',
             'dims' => '728 × 90 Responsive Leaderboard'
         ],
         'in_feed' => [
             'class' => 'ad-infeed-slot',
             'label' => 'Sponsored / विज्ञापन',
-            'style' => 'display:block; min-height: 100px; text-align: center;',
+            'style' => 'display:block;',
             'format' => 'fluid',
             'dims' => 'Responsive In-Feed Native Ad Unit'
         ],
         'sidebar' => [
             'class' => 'ad-sidebar-slot',
             'label' => 'Advertisement',
-            'style' => 'display:block; min-height: 250px; text-align: center;',
+            'style' => 'display:block;',
             'format' => 'rectangle',
             'dims' => '300 × 250 Medium Rectangle / Skyscraper'
         ],
         'table_banner' => [
             'class' => 'ad-table-slot',
             'label' => 'Advertisement / विज्ञापन',
-            'style' => 'display:block; min-height: 90px; text-align: center;',
+            'style' => 'display:block;',
             'format' => 'horizontal',
             'dims' => 'Responsive Table Roster Banner'
         ],
         'footer_banner' => [
             'class' => 'ad-footer-slot',
             'label' => 'Advertisement',
-            'style' => 'display:block; min-height: 90px; text-align: center;',
+            'style' => 'display:block;',
             'format' => 'auto',
             'dims' => '728 × 90 Responsive Footer Banner'
         ],

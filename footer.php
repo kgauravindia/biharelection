@@ -6,7 +6,7 @@ require_once __DIR__ . '/config.php';
 ?>
 
     <!-- Footer with Clear Non-Government Disclaimer & Social Channels -->
-    <footer class="site-footer mt-5 pt-5 pb-4">
+    <footer class="site-footer mt-5 pt-5 pb-4 px-3 px-md-0">
         <div class="container">
             <div class="row g-4 mb-4">
                 
@@ -14,7 +14,7 @@ require_once __DIR__ . '/config.php';
                 <div class="col-12 col-lg-4">
                     <div class="d-flex align-items-center gap-3 mb-3 text-nowrap">
                         <div class="bg-white p-2 rounded-3 shadow-sm d-inline-flex align-items-center justify-content-center">
-                            <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" alt="Bihar Election Logo" class="footer-logo-img" height="38">
+                            <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" alt="Bihar Election Logo" class="footer-logo-img" width="38" height="38">
                         </div>
                         <h2 class="h5 mb-0 text-white fw-bold text-nowrap" style="font-family: var(--font-heading);">Bihar <span style="color: var(--accent);">Election</span></h2>
                     </div>

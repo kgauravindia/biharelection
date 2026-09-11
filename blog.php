@@ -242,7 +242,7 @@ if ($is_single && $pdo) {
     if (!empty($tag_filter)) {
         $pageTitle = '#' . htmlspecialchars($tag_display) . ' — Bihar Election Updates & News';
         $pageDescription = 'Read all articles, constituency analyses, and candidate news tagged with #' . htmlspecialchars($tag_display) . '.';
-        $pageCanonical = SITE_URL . '/tag/' . urlencode($tag_filter) . '/';
+        $pageCanonical = SITE_URL . '/tag/' . urlencode($tag_filter);
     } elseif ($active_cat_obj) {
         $pageTitle = htmlspecialchars($active_cat_obj['name']) . ' — Bihar Election Articles & News';
         $pageDescription = !empty($active_cat_obj['description']) ? htmlspecialchars(substr(strip_tags($active_cat_obj['description']), 0, 160)) : 'Browse Bihar Election ' . htmlspecialchars($active_cat_obj['name']) . ' news and analysis.';
@@ -250,7 +250,7 @@ if ($is_single && $pdo) {
     } else {
         $pageTitle = 'Bihar Election News, Analysis & Blog Articles 2026';
         $pageDescription = 'Read the latest Bihar election news, constituency insights, Panchayat delimitation reports, candidate lists, and political analysis.';
-        $pageCanonical = SITE_URL . '/blog/';
+        $pageCanonical = SITE_URL . '/blog';
     }
     $activeNav = 'blog';
 }
@@ -305,7 +305,7 @@ include __DIR__ . '/header.php';
                         <!-- Featured Image -->
                         <?php if (!empty($article['featured_image'])): ?>
                             <div class="mb-4 text-center">
-                                <img src="<?php echo htmlspecialchars($article['featured_image']); ?>" alt="<?php echo htmlspecialchars($article['title']); ?>" class="img-fluid rounded-4 shadow-sm border w-100 object-fit-cover" style="max-height: 440px;" onerror="this.style.display='none';">
+                                <img src="<?php echo htmlspecialchars($article['featured_image']); ?>" alt="<?php echo htmlspecialchars($article['title']); ?>" class="img-fluid rounded-4 shadow-sm border w-100 object-fit-cover" width="800" height="440" style="aspect-ratio: 16 / 9; max-height: 440px;" onerror="this.style.display='none';">
                             </div>
                         <?php endif; ?>
 
@@ -497,11 +497,11 @@ include __DIR__ . '/header.php';
                             <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white transition hover-elevate">
                                 <?php if (!empty($p['featured_image'])): ?>
                                     <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($p['slug']); ?>">
-                                        <img src="<?php echo htmlspecialchars($p['featured_image']); ?>" class="card-img-top object-fit-cover" height="200" alt="<?php echo htmlspecialchars($p['title']); ?>" onerror="this.onerror=null; this.src='<?php echo SITE_URL; ?>/assets/image/logo.png';">
+                                        <img src="<?php echo htmlspecialchars($p['featured_image']); ?>" class="card-img-top object-fit-cover" width="400" height="200" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="<?php echo htmlspecialchars($p['title']); ?>" onerror="this.onerror=null; this.src='<?php echo SITE_URL; ?>/assets/image/logo.png';">
                                     </a>
                                 <?php else: ?>
-                                    <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($p['slug']); ?>" class="bg-light d-flex align-items-center justify-content-center text-muted" style="height: 200px;">
-                                        <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" height="50" alt="Logo" class="opacity-75">
+                                    <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($p['slug']); ?>" class="bg-light d-flex align-items-center justify-content-center text-muted" style="height: 200px; aspect-ratio: 16 / 9;">
+                                        <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" width="50" height="50" alt="Logo" class="opacity-75">
                                     </a>
                                 <?php endif; ?>
 

@@ -8,7 +8,7 @@ require_once __DIR__ . '/includes/auth_helper.php';
 $pageTitle = 'Contact Us — Bihar Election Intelligence & Editorial Desk';
 $pageDescription = 'Get in touch with Bihar Election team for editorial inquiries, candidate profile updates, advertisement bookings, and civic partnership.';
 $pageKeywords = 'Contact Bihar Election, Bihar Election Office, Candidate Profile Verification, OfferPlant Technologies Chapra, Election Helpline Bihar';
-$pageCanonical = SITE_URL . '/contact/';
+$pageCanonical = SITE_URL . '/contact';
 $activeNav = 'contact';
 
 $success = '';

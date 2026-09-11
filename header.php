@@ -22,13 +22,18 @@ $activeNav = $activeNav ?? 'home';
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="<?php echo SITE_URL; ?>/assets/image/logo.png">
+
+    <!-- Preconnect for Google Web Fonts (Eliminates CLS / FOUT) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap">
     
     <!-- Bootstrap 5.3 CSS & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <!-- Custom Theme Styling -->
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css?v=3.0">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css?v=3.1">
     
     <?php if (defined('GOOGLE_ADS_ENABLED') && GOOGLE_ADS_ENABLED && defined('GOOGLE_ADSENSE_CLIENT') && GOOGLE_ADSENSE_CLIENT !== 'ca-pub-XXXXXXXXXXXXXXXX'): ?>
     <!-- Google AdSense Official Script -->
@@ -40,11 +45,11 @@ $activeNav = $activeNav ?? 'home';
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "Bihar Election",
-      "url": "http://localhost/biharelection",
+      "name": "<?php echo SITE_NAME; ?>",
+      "url": "<?php echo SITE_URL; ?>/",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "http://localhost/biharelection/vidhan-sabha.php?q={search_term_string}",
+        "target": "<?php echo SITE_URL; ?>/vidhan-sabha?q={search_term_string}",
         "query-input": "required name=search_term_string"
       },
       "description": "Bihar's Premier Non-Government Election Data & Political Intelligence Platform covering Panchayat to Parliament."
@@ -76,7 +81,7 @@ $activeNav = $activeNav ?? 'home';
     <header class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom shadow-sm">
         <div class="container">
             <a href="<?php echo SITE_URL; ?>/" class="brand-logo text-decoration-none me-lg-4 d-flex align-items-center gap-2 text-nowrap">
-                <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" alt="Bihar Election Logo" class="brand-logo-img" height="40">
+                <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" alt="Bihar Election Logo" class="brand-logo-img" width="40" height="40">
                 <span class="brand-title h5 mb-0 fw-bold text-nowrap" style="font-family: 'Outfit', sans-serif;">Bihar <span style="color: var(--accent-saffron);">Election</span></span>
             </a>
 

@@ -18,16 +18,30 @@ function generatePanchayatSitemap() {
     // Collect all unique panchayats
     $panchayatMap = [];
 
+    // Helper for canonical sitemap URLs
+    $toSitemapUrl = function($url) use ($base_url) {
+        $clean = preg_replace('#^https?://[^/]+(/biharelection)?#', $base_url, (string)$url);
+        if (strpos($clean, 'http') !== 0) {
+            $clean = $base_url . '/' . ltrim($clean, '/');
+        }
+        if (strlen($clean) > strlen($base_url) + 1) {
+            $clean = rtrim($clean, '/');
+        }
+        return $clean;
+    };
+
     // 1. Current Panchayats table
     $stmt1 = $pdo->query("SELECT id, district_slug, district, block, panchayat_name FROM panchayats WHERE panchayat_name IS NOT NULL AND panchayat_name != ''");
     while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)) {
         $dSlug = strtolower(trim($row['district_slug']));
+        $bSlug = slugify($row['block'] ?? '');
         $pSlug = slugify($row['panchayat_name']);
         if ($dSlug && $pSlug) {
-            $key = "{$dSlug}/{$pSlug}";
+            $key = $bSlug ? "{$dSlug}/{$bSlug}/{$pSlug}" : "{$dSlug}/{$pSlug}";
             if (!isset($panchayatMap[$key])) {
                 $panchayatMap[$key] = [
                     'district' => $dSlug,
+                    'block' => $bSlug,
                     'panchayat_slug' => $pSlug,
                     'name' => $row['panchayat_name'],
                     'has_mukhiya' => true,
@@ -41,12 +55,14 @@ function generatePanchayatSitemap() {
     $stmt2 = $pdo->query("SELECT id, district_slug, district, block, panchayat FROM mukhiyas_2016 WHERE panchayat IS NOT NULL AND panchayat != ''");
     while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
         $dSlug = strtolower(trim($row['district_slug']));
+        $bSlug = slugify($row['block'] ?? '');
         $pSlug = slugify($row['panchayat']);
         if ($dSlug && $pSlug) {
-            $key = "{$dSlug}/{$pSlug}";
+            $key = $bSlug ? "{$dSlug}/{$bSlug}/{$pSlug}" : "{$dSlug}/{$pSlug}";
             if (!isset($panchayatMap[$key])) {
                 $panchayatMap[$key] = [
                     'district' => $dSlug,
+                    'block' => $bSlug,
                     'panchayat_slug' => $pSlug,
                     'name' => $row['panchayat'],
                     'has_mukhiya' => true,
@@ -66,14 +82,14 @@ function generatePanchayatSitemap() {
         $dSlug = strtolower($d['slug']);
 
         $tierUrls = [
-            ['url' => "{$base_url}/panchayat/{$dSlug}", 'priority' => '0.85', 'freq' => 'weekly'],
-            ['url' => "{$base_url}/zila-parishad/{$dSlug}", 'priority' => '0.80', 'freq' => 'weekly'],
-            ['url' => "{$base_url}/panchayat-samiti/{$dSlug}", 'priority' => '0.80', 'freq' => 'weekly'],
+            ['url' => getPanchayatUrl($dSlug), 'priority' => '0.85', 'freq' => 'weekly'],
+            ['url' => getZilaParishadUrl($dSlug), 'priority' => '0.80', 'freq' => 'weekly'],
+            ['url' => getPanchayatSamitiUrl($dSlug), 'priority' => '0.80', 'freq' => 'weekly'],
         ];
 
         foreach ($tierUrls as $tu) {
             $xml .= "    <url>\n";
-            $xml .= "        <loc>" . htmlspecialchars($tu['url']) . "</loc>\n";
+            $xml .= "        <loc>" . htmlspecialchars($toSitemapUrl($tu['url'])) . "</loc>\n";
             $xml .= "        <lastmod>{$today}</lastmod>\n";
             $xml .= "        <changefreq>{$tu['freq']}</changefreq>\n";
             $xml .= "        <priority>{$tu['priority']}</priority>\n";
@@ -85,11 +101,14 @@ function generatePanchayatSitemap() {
     // 2. Individual Panchayat Profile URLs
     foreach ($panchayatMap as $p) {
         $dSlug = $p['district'];
+        $bSlug = $p['block'] ?? '';
         $pSlug = $p['panchayat_slug'];
+
+        $pUrl = $bSlug ? getPanchayatUrl($dSlug, $bSlug, $pSlug) : getPanchayatUrl($dSlug, $pSlug);
 
         // Canonical Panchayat URL
         $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars("{$base_url}/panchayat/{$dSlug}/{$pSlug}") . "</loc>\n";
+        $xml .= "        <loc>" . htmlspecialchars($toSitemapUrl($pUrl)) . "</loc>\n";
         $xml .= "        <lastmod>{$today}</lastmod>\n";
         $xml .= "        <changefreq>weekly</changefreq>\n";
         $xml .= "        <priority>0.80</priority>\n";

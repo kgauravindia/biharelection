@@ -15,7 +15,7 @@ $panchayats = DataProvider::getPanchayatData();
 $pageTitle = 'Bihar Election 2026: 243 Assembly Data, 38 Districts & Panchayat Delimitation Platform';
 $pageDescription = 'Bihar\'s comprehensive non-government election data platform. Explore all 243 Assembly Constituencies, 38 District Hubs (Patna, Muzaffarpur, Gaya, Bhagalpur), 2026 Panchayat Delimitation status & verified MLA profiles.';
 $pageKeywords = 'Bihar Election 2026, 243 Bihar Assembly Constituencies, Patna Vidhan Sabha, Bihar Election Results, 38 Districts Bihar, Bihar Panchayat 2026, Bihar MLA list, Bihar Political Data';
-$pageCanonical = SITE_URL . '/index.php';
+$pageCanonical = SITE_URL . '/';
 $activeNav = 'home';
 
 require_once __DIR__ . '/header.php';
@@ -36,17 +36,18 @@ require_once __DIR__ . '/header.php';
             </p>
 
             <!-- Search Hub Widget with Dynamic Suggestions Dropdown -->
-            <div class="search-widget mx-auto" style="max-width: 700px;">
+            <div class="search-widget mx-auto" style="max-width: 680px;">
                 <div class="search-input-group">
                     <input 
                         type="text" 
                         id="globalSearchInput" 
                         class="search-input" 
-                        placeholder="Search MLA, MP, Mukhiya, Sarpanch, District, or AC..."
+                        placeholder="Search MLA, MP, Mukhiya, Sarpanch, District, AC..."
                         autocomplete="off"
+                        aria-label="Search Bihar election leaders and administrative units"
                     >
-                    <button class="btn-search" onclick="document.getElementById('globalSearchInput').focus()">
-                        <i class="bi bi-search"></i> <span>Search</span>
+                    <button class="btn-search" type="button" onclick="document.getElementById('globalSearchInput').focus()">
+                        <i class="bi bi-search"></i> <span class="d-none d-sm-inline">Search</span>
                     </button>
                 </div>
 
@@ -54,134 +55,134 @@ require_once __DIR__ . '/header.php';
                 <div id="searchDropdown" class="search-dropdown"></div>
             </div>
 
-            <!-- Quick Pill Links (Touch horizontal scrollable on mobile) -->
-            <div class="d-flex flex-nowrap flex-sm-wrap justify-content-start justify-content-sm-center align-items-center gap-2 mt-3 overflow-x-auto pill-scroll-container pb-2 px-1">
-                <span class="small text-white-50 text-nowrap">Popular:</span>
+            <!-- Quick Pill Links (Mobile-first responsive chips) -->
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-1.5 gap-sm-2 mt-3 pt-1 hero-quick-pills">
+                <span class="small text-white-50 me-1 fw-semibold"><i class="bi bi-fire text-warning"></i> Popular:</span>
                 <a href="<?php echo getDistrictUrl('patna'); ?>" class="pill-link fw-bold text-warning">👑 Patna Hub</a>
                 <a href="<?php echo SITE_URL; ?>/mla" class="pill-link">🗳️ 243 MLAs</a>
                 <a href="<?php echo SITE_URL; ?>/mp" class="pill-link">🏛️ 40 MPs</a>
                 <a href="<?php echo SITE_URL; ?>/mlc" class="pill-link">📜 75 MLCs</a>
-                <a href="<?php echo getZilaParishadUrl(); ?>" class="pill-link">🏛️ 38 Adhyaksh &amp; 1,153+ ZP Members</a>
-                <a href="<?php echo getPanchayatSamitiUrl(); ?>" class="pill-link">🏢 534 Pramukh / Up-Pramukh</a>
-                <a href="<?php echo SITE_URL; ?>/mukhiya" class="pill-link">👑 8,053+ Mukhiya &amp; Up-Mukhiya</a>
-                <a href="<?php echo SITE_URL; ?>/sarpanch" class="pill-link">⚖️ 8,053+ Sarpanch &amp; Up-Sarpanch</a>
+                <a href="<?php echo getZilaParishadUrl(); ?>" class="pill-link">🏛️ Zila Parishad</a>
+                <a href="<?php echo getPanchayatSamitiUrl(); ?>" class="pill-link">🏢 534 Pramukhs</a>
+                <a href="<?php echo SITE_URL; ?>/mukhiya" class="pill-link">🌾 8,053+ Mukhiyas</a>
+                <a href="<?php echo SITE_URL; ?>/sarpanch" class="pill-link">⚖️ 8,053+ Sarpanchs</a>
             </div>
         </div>
     </section>
 
-    <!-- Live Governance & Electoral Stat Grid Bar (Swipeable on Mobile) -->
-    <div class="container" style="margin-top: -30px; position: relative; z-index: 10;">
-        <div class="row g-2 g-md-3 row-cols-2 row-cols-md-3 row-cols-xl-6 mobile-scroll-row">
+    <!-- Live Governance & Electoral Stat Grid Bar (Mobile-first 2-col / 3-col / 6-col Grid) -->
+    <div class="container governance-stat-container" style="margin-top: -28px; position: relative; z-index: 10;">
+        <div class="row g-2 g-md-3 row-cols-2 row-cols-md-3 row-cols-xl-6">
             <!-- 1: Assembly MLAs -->
             <div class="col">
-                <a href="<?php echo SITE_URL; ?>/mla" class="governance-stat-card p-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset d-block">
+                <a href="<?php echo SITE_URL; ?>/mla" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div class="stat-icon-wrapper stat-icon-mla">
                             🗳️
                         </div>
-                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 extra-small fw-bold px-2 py-0.5 rounded-pill">
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 stat-badge fw-bold px-2 py-0.5 rounded-pill">
                             Vidhan Sabha
                         </span>
                     </div>
                     <div>
-                        <div class="fs-4 fw-extrabold text-navy mb-0 lh-1">243</div>
-                        <div class="fw-bold text-dark small mt-1 text-truncate">Assembly MLAs</div>
-                        <div class="extra-small text-muted text-truncate">Elected Legislators</div>
+                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">243</div>
+                        <div class="fw-bold text-dark stat-title mt-1">Assembly MLAs</div>
+                        <div class="stat-subtitle text-muted">243 Constituencies</div>
                     </div>
                 </a>
             </div>
 
             <!-- 2: Adhyaksh / Upadhyaksh -->
             <div class="col">
-                <a href="<?php echo getZilaParishadUrl(); ?>" class="governance-stat-card p-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset d-block">
+                <a href="<?php echo getZilaParishadUrl(); ?>" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div class="stat-icon-wrapper stat-icon-zp">
                             📍
                         </div>
-                        <span class="badge bg-purple bg-opacity-10 text-purple border border-purple border-opacity-25 extra-small fw-bold px-2 py-0.5 rounded-pill" style="color: #7c3aed; background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.25) !important;">
-                            1,153+ Members
+                        <span class="badge bg-purple bg-opacity-10 text-purple border border-purple border-opacity-25 stat-badge fw-bold px-2 py-0.5 rounded-pill" style="color: #7c3aed; background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.25) !important;">
+                            1,153+ ZP
                         </span>
                     </div>
                     <div>
-                        <div class="fs-4 fw-extrabold text-navy mb-0 lh-1">38</div>
-                        <div class="fw-bold text-dark small mt-1 text-truncate" title="38 Districts Adhyaksh / Upadhyaksh">Adhyaksh / Upadhyaksh</div>
-                        <div class="extra-small text-muted text-truncate">38 ZP / 1,153+ Members</div>
+                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">38</div>
+                        <div class="fw-bold text-dark stat-title mt-1">ZP Adhyaksh</div>
+                        <div class="stat-subtitle text-muted">38 District Boards</div>
                     </div>
                 </a>
             </div>
 
             <!-- 3: Pramukh / Up-Pramukh -->
             <div class="col">
-                <a href="<?php echo getPanchayatSamitiUrl(); ?>" class="governance-stat-card p-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset d-block">
+                <a href="<?php echo getPanchayatSamitiUrl(); ?>" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div class="stat-icon-wrapper stat-icon-ps">
                             🏢
                         </div>
-                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 extra-small fw-bold px-2 py-0.5 rounded-pill">
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 stat-badge fw-bold px-2 py-0.5 rounded-pill">
                             534 Blocks
                         </span>
                     </div>
                     <div>
-                        <div class="fs-4 fw-extrabold text-navy mb-0 lh-1">534</div>
-                        <div class="fw-bold text-dark small mt-1 text-truncate" title="Pramukh / Up-Pramukh">Pramukh / Up-Pramukh</div>
-                        <div class="extra-small text-muted text-truncate">Panchayat Samiti Heads</div>
+                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">534</div>
+                        <div class="fw-bold text-dark stat-title mt-1">Block Pramukhs</div>
+                        <div class="stat-subtitle text-muted">Panchayat Samitis</div>
                     </div>
                 </a>
             </div>
 
             <!-- 4: Mukhiya & Up-Mukhiya -->
             <div class="col">
-                <a href="<?php echo SITE_URL; ?>/mukhiya" class="governance-stat-card p-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset d-block">
+                <a href="<?php echo SITE_URL; ?>/mukhiya" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div class="stat-icon-wrapper stat-icon-gp">
                             🌾
                         </div>
-                        <span class="badge bg-warning bg-opacity-10 text-dark border border-warning border-opacity-50 extra-small fw-bold px-2 py-0.5 rounded-pill">
-                            Panchayats
+                        <span class="badge bg-warning bg-opacity-10 text-dark border border-warning border-opacity-50 stat-badge fw-bold px-2 py-0.5 rounded-pill">
+                            Gram Panchayat
                         </span>
                     </div>
                     <div>
-                        <div class="fs-4 fw-extrabold text-navy mb-0 lh-1">8,053+</div>
-                        <div class="fw-bold text-dark small mt-1 text-truncate" title="Mukhiya & Up-Mukhiya">Mukhiya &amp; Up-Mukhiya</div>
-                        <div class="extra-small text-muted text-truncate">Gram Panchayat Heads</div>
+                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">8,053+</div>
+                        <div class="fw-bold text-dark stat-title mt-1">Gram Mukhiyas</div>
+                        <div class="stat-subtitle text-muted">Village Heads</div>
                     </div>
                 </a>
             </div>
 
             <!-- 5: Sarpanch & Up-Sarpanch -->
             <div class="col">
-                <a href="<?php echo SITE_URL; ?>/sarpanch" class="governance-stat-card p-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset d-block">
+                <a href="<?php echo SITE_URL; ?>/sarpanch" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div class="stat-icon-wrapper stat-icon-gk">
                             ⚖️
                         </div>
-                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 extra-small fw-bold px-2 py-0.5 rounded-pill">
-                            Katchahry
+                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 stat-badge fw-bold px-2 py-0.5 rounded-pill">
+                            Gram Katchahry
                         </span>
                     </div>
                     <div>
-                        <div class="fs-4 fw-extrabold text-navy mb-0 lh-1">8,053+</div>
-                        <div class="fw-bold text-dark small mt-1 text-truncate" title="Sarpanch & Up-Sarpanch">Sarpanch &amp; Up-Sarpanch</div>
-                        <div class="extra-small text-muted text-truncate">Judicial Village Heads</div>
+                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">8,053+</div>
+                        <div class="fw-bold text-dark stat-title mt-1">Sarpanch Heads</div>
+                        <div class="stat-subtitle text-muted">Judicial Village Heads</div>
                     </div>
                 </a>
             </div>
 
             <!-- 6: Total Electors -->
             <div class="col">
-                <a href="<?php echo SITE_URL; ?>/census" class="governance-stat-card p-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset d-block">
+                <a href="<?php echo SITE_URL; ?>/census" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div class="stat-icon-wrapper stat-icon-voters">
                             👥
                         </div>
-                        <span class="badge bg-info bg-opacity-10 text-dark border border-info border-opacity-25 extra-small fw-bold px-2 py-0.5 rounded-pill">
+                        <span class="badge bg-info bg-opacity-10 text-dark border border-info border-opacity-25 stat-badge fw-bold px-2 py-0.5 rounded-pill">
                             Electorate
                         </span>
                     </div>
                     <div>
-                        <div class="fs-4 fw-extrabold text-navy mb-0 lh-1">7.64 Cr+</div>
-                        <div class="fw-bold text-dark small mt-1 text-truncate">Total Electors</div>
-                        <div class="extra-small text-muted text-truncate">Bihar Registered Voters</div>
+                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">7.64 Cr+</div>
+                        <div class="fw-bold text-dark stat-title mt-1">Total Electors</div>
+                        <div class="stat-subtitle text-muted">Bihar Voters</div>
                     </div>
                 </a>
             </div>

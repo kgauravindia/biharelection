@@ -24,7 +24,7 @@ if (empty($mobile) || strlen($mobile) !== 10) {
 
 $pageTitle = 'Verify OTP — Bihar Election';
 $pageDescription = 'Verify your 6-digit security OTP sent via SMS to complete login to BiharElection.com.';
-$pageCanonical = SITE_URL . '/verify-otp.php';
+$pageCanonical = SITE_URL . '/verify-otp';
 $activeNav = 'login';
 
 $error = '';
@@ -86,7 +86,7 @@ require_once __DIR__ . '/header.php';
                     
                     <div class="p-4 text-center text-white" style="background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%);">
                         <a href="index.php" class="d-inline-block bg-white p-2 rounded-3 shadow-sm mb-3">
-                            <img src="assets/image/logo.png" alt="Bihar Election" height="46" class="d-block">
+                            <img src="assets/image/logo.png" alt="Bihar Election" width="46" height="46" class="d-block">
                         </a>
                         <h2 class="h4 fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">Verify Security OTP</h2>
                         <p class="small text-white-50 mb-0">Enter the 6-digit code sent via SMS to your mobile</p>

@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 $pageTitle = 'Edit Profile & Account Settings | Bihar Election';
 $pageDescription = 'Update your personal, electoral, and professional details on BiharElection.com.';
-$pageCanonical = SITE_URL . '/edit-profile.php';
+$pageCanonical = SITE_URL . '/edit-profile';
 $activeNav = 'profile';
 
 $profileHandle = !empty($user['username_handle']) ? $user['username_handle'] : (string)$user['id'];

@@ -22,14 +22,22 @@ $rajyaSabhaMps = DataProvider::getRajyaSabhaMps();
 $mlcs = DataProvider::getMlcs();
 $mlas2015 = DataProvider::getMlas2015();
 
-if ($selectedTab === 'loksabha') {
+if ($selectedTab === 'loksabha' && !empty($selectedSlug)) {
     $pageTitle = 'Bihar 40 Lok Sabha MPs: Parliamentary Constituencies Roster';
     $pageDescription = 'Official directory of 40 elected Lok Sabha Members of Parliament (MPs) across Bihar with victory margin, party affiliation, and contact details.';
     $pageCanonical = getMpUrl($selectedSlug);
-} elseif ($selectedTab === 'mlc') {
+} elseif ($selectedTab === 'mlc' && !empty($selectedSlug)) {
     $pageTitle = 'Bihar 75 Vidhan Parishad MLCs: Legislative Council Members Directory';
     $pageDescription = 'Official directory of 75 Bihar Legislative Council (Vidhan Parishad) MLCs across Graduate, Teacher, Local Authorities, and Assembly quotas.';
     $pageCanonical = getMlcUrl($selectedSlug);
+} elseif ($selectedTab === 'loksabha') {
+    $pageTitle = 'Bihar 40 Lok Sabha MPs: Parliamentary Constituencies Roster';
+    $pageDescription = 'Official directory of 40 elected Lok Sabha Members of Parliament (MPs) across Bihar with victory margin, party affiliation, and contact details.';
+    $pageCanonical = SITE_URL . '/representatives';
+} elseif ($selectedTab === 'mlc') {
+    $pageTitle = 'Bihar 75 Vidhan Parishad MLCs: Legislative Council Members Directory';
+    $pageDescription = 'Official directory of 75 Bihar Legislative Council (Vidhan Parishad) MLCs across Graduate, Teacher, Local Authorities, and Assembly quotas.';
+    $pageCanonical = SITE_URL . '/representatives';
 } else {
     $pageTitle = 'Bihar MPs, MLCs & Ex-MLAs Directory: Lok Sabha, Rajya Sabha & Vidhan Parishad';
     $pageDescription = 'Official directory of Bihar political representatives: 40 Lok Sabha MPs, 15 Rajya Sabha MPs, 75 Vidhan Parishad MLCs, and 243 Historical 2015-2020 MLAs.';

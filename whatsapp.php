@@ -5,7 +5,7 @@ $districts = DataProvider::getDistricts();
 $pageTitle = 'Bihar Election WhatsApp Channel & Daily Political Bulletin (10,000+ Subscribers)';
 $pageDescription = 'Subscribe to Bihar Election 3-Slot Daily WhatsApp Broadcast. Morning Top 5 Updates, Afternoon District Spotlight, and Evening Political Recap directly on your phone.';
 $pageKeywords = 'Bihar election WhatsApp group, Bihar politics daily bulletin, Bihar election broadcast channel';
-$pageCanonical = SITE_URL . '/whatsapp.php';
+$pageCanonical = SITE_URL . '/whatsapp';
 $activeNav = 'whatsapp';
 
 require_once __DIR__ . '/header.php';

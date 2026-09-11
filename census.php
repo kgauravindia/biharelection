@@ -7,10 +7,17 @@ require_once __DIR__ . '/config.php';
 
 $pageTitle = 'Bihar Census 2011: 38 Districts & 534 Blocks Population Demographics';
 $pageDescription = 'Complete Bihar Census 2011 Primary Census Abstract (PCA). Population data, sex ratio, literacy rates, SC/ST demographics, and workforce profiles for all 38 districts and 534 blocks.';
-$pageKeywords = 'Bihar Census 2011, Bihar district population, Bihar literacy rate 2011, Bihar sex ratio, Bihar SC ST population, Bihar block census data';
-$pageCanonical = SITE_URL . '/census.php';
-$activeNav = 'census';
+$activeTab = $_GET['tab'] ?? 'districts';
+$selectedDistrictFilter = $_GET['district'] ?? '';
+$selectedSubdistrict = $_GET['subdistrict'] ?? '';
 
+if (!empty($selectedDistrictFilter) && !empty($selectedSubdistrict)) {
+    $pageCanonical = getCensusUrl($selectedDistrictFilter, $selectedSubdistrict);
+} elseif (!empty($selectedDistrictFilter)) {
+    $pageCanonical = getCensusUrl($selectedDistrictFilter);
+} else {
+    $pageCanonical = getCensusUrl();
+}
 $biharCensus = DataProvider::getCensusBiharSummary();
 $districtsCensus = DataProvider::getCensusDistricts();
 $subDistrictsAll = DataProvider::getCensusSubDistricts();
@@ -19,9 +26,6 @@ $districtsList = DataProvider::getDistricts();
 $cTot = $biharCensus['total'] ?? [];
 $cRur = $biharCensus['rural'] ?? [];
 $cUrb = $biharCensus['urban'] ?? [];
-
-$activeTab = $_GET['tab'] ?? 'districts';
-$selectedDistrictFilter = $_GET['district'] ?? '';
 
 require_once __DIR__ . '/header.php';
 ?>

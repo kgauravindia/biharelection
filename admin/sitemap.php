@@ -1,6 +1,7 @@
 <?php
-require_once __DIR__ . '/auth_check.php';
-requireAdmin();
+if (php_sapi_name() !== 'cli' && isset($_SERVER['HTTP_HOST'])) {
+    requireAdmin();
+}
 
 $conn = getAdminDB();
 $message = '';
@@ -12,6 +13,10 @@ function toCanonicalUrl($url, $base = 'https://biharelection.com') {
     $clean = preg_replace('#^https?://[^/]+(/biharelection)?#', $base, (string)$url);
     if (strpos($clean, 'http') !== 0) {
         $clean = $base . '/' . ltrim($clean, '/');
+    }
+    // Remove trailing slash for all non-root paths to ensure uniform canonical indexing
+    if (strlen($clean) > strlen($base) + 1) {
+        $clean = rtrim($clean, '/');
     }
     return $clean;
 }
@@ -51,7 +56,7 @@ $sitemap_files = [
         'path' => __DIR__ . '/../sitemap-extra.xml',
         'icon' => 'fas fa-newspaper',
         'color' => 'warning',
-        'desc' => 'Published blog news, categories, tags, image extensions, institutional static pages & archives.',
+        'desc' => 'Published blog news, categories, tags & media image extensions.',
         'action' => 'generate_extra_sitemap'
     ],
 ];
@@ -79,22 +84,15 @@ function buildPrimarySitemap($base_url, $path) {
     $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 
-    // 1. Static & Hub Pages
+    // 1. Static & Primary Hub Pages (Only Primary Canonical URLs - No Redundant Aliases)
     $static_pages = [
         ['url' => '/', 'priority' => '1.0', 'changefreq' => 'daily'],
-        ['url' => '/blog/', 'priority' => '0.9', 'changefreq' => 'daily'],
+        ['url' => '/blog', 'priority' => '0.9', 'changefreq' => 'daily'],
         ['url' => '/mla', 'priority' => '0.9', 'changefreq' => 'daily'],
-        ['url' => '/vidhan-sabha', 'priority' => '0.9', 'changefreq' => 'daily'],
-        ['url' => '/constituencies', 'priority' => '0.9', 'changefreq' => 'daily'],
         ['url' => '/mp', 'priority' => '0.85', 'changefreq' => 'weekly'],
-        ['url' => '/lok-sabha', 'priority' => '0.85', 'changefreq' => 'weekly'],
-        ['url' => '/rajya-sabha', 'priority' => '0.80', 'changefreq' => 'weekly'],
         ['url' => '/mlc', 'priority' => '0.85', 'changefreq' => 'weekly'],
-        ['url' => '/vidhan-parishad', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/representatives', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/panchayat', 'priority' => '0.90', 'changefreq' => 'daily'],
-        ['url' => '/mukhiya', 'priority' => '0.90', 'changefreq' => 'daily'],
-        ['url' => '/sarpanch', 'priority' => '0.90', 'changefreq' => 'daily'],
         ['url' => '/zila-parishad', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/panchayat-samiti', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/blocks', 'priority' => '0.85', 'changefreq' => 'weekly'],
@@ -124,44 +122,12 @@ function buildPrimarySitemap($base_url, $path) {
         $dSlug = strtolower($d['slug'] ?? '');
         if (!$dSlug) continue;
 
-        // District Portal
+        // District Portal Hub
         $xml .= "    <url>\n";
         $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl(getDistrictUrl($dSlug), $base_url)) . "</loc>\n";
         $xml .= "        <lastmod>{$today}</lastmod>\n";
         $xml .= "        <changefreq>daily</changefreq>\n";
         $xml .= "        <priority>0.90</priority>\n";
-        $xml .= "    </url>\n";
-
-        // District Panchayat Hub
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl(getPanchayatUrl($dSlug), $base_url)) . "</loc>\n";
-        $xml .= "        <lastmod>{$today}</lastmod>\n";
-        $xml .= "        <changefreq>weekly</changefreq>\n";
-        $xml .= "        <priority>0.85</priority>\n";
-        $xml .= "    </url>\n";
-
-        // District Zila Parishad Hub
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl(getZilaParishadUrl($dSlug), $base_url)) . "</loc>\n";
-        $xml .= "        <lastmod>{$today}</lastmod>\n";
-        $xml .= "        <changefreq>weekly</changefreq>\n";
-        $xml .= "        <priority>0.85</priority>\n";
-        $xml .= "    </url>\n";
-
-        // District Panchayat Samiti Hub
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl(getPanchayatSamitiUrl($dSlug), $base_url)) . "</loc>\n";
-        $xml .= "        <lastmod>{$today}</lastmod>\n";
-        $xml .= "        <changefreq>weekly</changefreq>\n";
-        $xml .= "        <priority>0.85</priority>\n";
-        $xml .= "    </url>\n";
-
-        // District Census Hub
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl(getCensusUrl($dSlug), $base_url)) . "</loc>\n";
-        $xml .= "        <lastmod>{$today}</lastmod>\n";
-        $xml .= "        <changefreq>weekly</changefreq>\n";
-        $xml .= "        <priority>0.80</priority>\n";
         $xml .= "    </url>\n";
 
         // District Blocks Hub
@@ -217,6 +183,9 @@ function buildPrimarySitemap($base_url, $path) {
         if (!$mlcSlug && !empty($mlc['name'])) {
             $mlcSlug = slugify($mlc['name']);
         }
+        if (!$mlcSlug && !empty($mlc['id'])) {
+            $mlcSlug = (string)$mlc['id'];
+        }
         if ($mlcSlug) {
             $xml .= "    <url>\n";
             $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl(getMlcUrl($mlcSlug), $base_url)) . "</loc>\n";
@@ -248,7 +217,7 @@ function buildCensusSitemap($base_url, $path) {
 
     // 1. State Census overview
     $xml .= "    <url>\n";
-    $xml .= "        <loc>" . htmlspecialchars($base_url . '/census') . "</loc>\n";
+    $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl('/census', $base_url)) . "</loc>\n";
     $xml .= "        <lastmod>{$today}</lastmod>\n";
     $xml .= "        <changefreq>weekly</changefreq>\n";
     $xml .= "        <priority>0.85</priority>\n";
@@ -260,7 +229,7 @@ function buildCensusSitemap($base_url, $path) {
         if ($slug === 'bihar') continue;
 
         $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars($base_url . '/census/' . $slug) . "</loc>\n";
+        $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl('/census/' . $slug, $base_url)) . "</loc>\n";
         $xml .= "        <lastmod>{$today}</lastmod>\n";
         $xml .= "        <changefreq>monthly</changefreq>\n";
         $xml .= "        <priority>0.80</priority>\n";
@@ -278,7 +247,7 @@ function buildCensusSitemap($base_url, $path) {
                     $sdSlug = slugify($row['sub_district'] ?? '');
                     if ($dSlug && $sdSlug) {
                         $xml .= "    <url>\n";
-                        $xml .= "        <loc>" . htmlspecialchars($base_url . "/census/{$dSlug}/{$sdSlug}") . "</loc>\n";
+                        $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl("/census/{$dSlug}/{$sdSlug}", $base_url)) . "</loc>\n";
                         $xml .= "        <lastmod>{$today}</lastmod>\n";
                         $xml .= "        <changefreq>monthly</changefreq>\n";
                         $xml .= "        <priority>0.75</priority>\n";
@@ -307,7 +276,7 @@ function buildExtraSitemap($base_url, $path, $conn) {
                 while ($p = $res->fetch_assoc()) {
                     $postDate = !empty($p['updated_at']) ? date('c', strtotime($p['updated_at'])) : (!empty($p['published_at']) ? date('c', strtotime($p['published_at'])) : (!empty($p['created_at']) ? date('c', strtotime($p['created_at'])) : $today));
                     $postSlug = $p['slug'] ?: 'post-' . $p['id'];
-                    $postUrl = $base_url . '/blog/' . urlencode($postSlug) . '/';
+                    $postUrl = toCanonicalUrl('/blog/' . urlencode($postSlug), $base_url);
 
                     $xml .= "    <url>\n";
                     $xml .= "        <loc>" . htmlspecialchars($postUrl) . "</loc>\n";
@@ -337,8 +306,9 @@ function buildExtraSitemap($base_url, $path, $conn) {
             if ($res && $res->num_rows > 0) {
                 while ($cat = $res->fetch_assoc()) {
                     $cSlug = $cat['slug'] ?: slugify($cat['name']);
+                    $catUrl = toCanonicalUrl('/category/' . urlencode($cSlug), $base_url);
                     $xml .= "    <url>\n";
-                    $xml .= "        <loc>" . htmlspecialchars($base_url . '/category/' . urlencode($cSlug) . '/') . "</loc>\n";
+                    $xml .= "        <loc>" . htmlspecialchars($catUrl) . "</loc>\n";
                     $xml .= "        <lastmod>{$today}</lastmod>\n";
                     $xml .= "        <changefreq>weekly</changefreq>\n";
                     $xml .= "        <priority>0.7</priority>\n";
@@ -346,29 +316,6 @@ function buildExtraSitemap($base_url, $path, $conn) {
                 }
             }
         } catch (Throwable $e) {}
-    }
-
-    // 3. Static & Institutional Pages
-    $static_pages = [
-        ['url' => '/about', 'priority' => '0.8', 'freq' => 'monthly'],
-        ['url' => '/contact', 'priority' => '0.8', 'freq' => 'monthly'],
-        ['url' => '/mission-and-vision', 'priority' => '0.8', 'freq' => 'monthly'],
-        ['url' => '/advertise', 'priority' => '0.8', 'freq' => 'monthly'],
-        ['url' => '/whatsapp', 'priority' => '0.8', 'freq' => 'weekly'],
-        ['url' => '/search-pin-code', 'priority' => '0.8', 'freq' => 'monthly'],
-        ['url' => '/representatives', 'priority' => '0.8', 'freq' => 'weekly'],
-        ['url' => '/disclaimer', 'priority' => '0.7', 'freq' => 'monthly'],
-        ['url' => '/privacy-policy', 'priority' => '0.7', 'freq' => 'monthly'],
-        ['url' => '/terms-and-conditions', 'priority' => '0.7', 'freq' => 'monthly'],
-    ];
-
-    foreach ($static_pages as $sp) {
-        $xml .= "    <url>\n";
-        $xml .= "        <loc>" . htmlspecialchars($base_url . $sp['url']) . "</loc>\n";
-        $xml .= "        <lastmod>{$today}</lastmod>\n";
-        $xml .= "        <changefreq>{$sp['freq']}</changefreq>\n";
-        $xml .= "        <priority>{$sp['priority']}</priority>\n";
-        $xml .= "    </url>\n";
     }
 
     $xml .= '</urlset>';
@@ -379,7 +326,7 @@ function buildExtraSitemap($base_url, $path, $conn) {
 // -------------------------------------------------------------
 // POST Request Handlers
 // -------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
     // 1. Generate ALL Sitemaps
     if (isset($_POST['generate_all_sitemaps'])) {
@@ -456,7 +403,9 @@ $districtsCount = count(DataProvider::getDistricts());
 $constituenciesCount = count(DataProvider::getConstituencies());
 $candidatesCount = count(DataProvider::getCandidates());
 $loksabhaCount = count(DataProvider::getLokSabhaMps());
-$mlcCount = count(DataProvider::getMlcs());
+if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitemap.php') {
+    return;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

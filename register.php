@@ -12,7 +12,7 @@ if (isUserLoggedIn()) {
 
 $pageTitle = 'Join Bihar Election — Create Voter & Citizen Profile';
 $pageDescription = 'Register on BiharElection.com to track local constituency developments, receive election bulletins, and engage with elected representatives.';
-$pageCanonical = SITE_URL . '/register.php';
+$pageCanonical = SITE_URL . '/register';
 $activeNav = 'register';
 
 $districts = DataProvider::getDistricts();
@@ -110,7 +110,7 @@ require_once __DIR__ . '/header.php';
                     
                     <div class="p-4 text-center text-white" style="background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%);">
                         <a href="index.php" class="d-inline-block bg-white p-2 rounded-3 shadow-sm mb-3">
-                            <img src="assets/image/logo.png" alt="Bihar Election" height="46" class="d-block">
+                            <img src="assets/image/logo.png" alt="Bihar Election" width="46" height="46" class="d-block">
                         </a>
                         <h2 class="h4 fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">Create Free Account</h2>
                         <p class="small text-white-50 mb-0">Join 100,000+ Bihar citizens, voters & leaders</p>

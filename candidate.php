@@ -15,8 +15,7 @@ $pageTitle = $candidate
 $pageDescription = $candidate 
     ? "Official political biography of {$candidate['name']} ({$candidate['party_short']}) representing {$candidate['constituency']}."
     : "Verified candidate profiles, declared assets, educational backgrounds, and political records for Bihar Assembly Elections.";
-$pageKeywords = "Bihar Election Candidates, Bihar 2026 MLA Aspirants, Bihar Political Leaders Profile";
-$pageCanonical = SITE_URL . "/candidate.php" . ($candidate ? "?slug=" . $candidate['slug'] : '');
+$pageCanonical = $candidate ? SITE_URL . "/candidate/" . urlencode($candidate['slug']) : SITE_URL . "/candidate";
 $activeNav = 'candidates';
 
 require_once __DIR__ . '/header.php';
