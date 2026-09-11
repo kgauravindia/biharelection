@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/auth_check.php';
 if (php_sapi_name() !== 'cli' && isset($_SERVER['HTTP_HOST'])) {
     requireAdmin();
 }
