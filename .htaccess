@@ -215,7 +215,7 @@ AddDefaultCharset UTF-8
     RewriteRule ^404/?$ 404.php [L,QSA]
 
     # -------------------------------------------------------------
-    # 12. Unrecognized Root Slugs / Legacy WordPress URLs -> 301 Redirection
+    # 12. Unrecognized Root Slugs / Legacy Article URLs -> 301 Redirection
     # -------------------------------------------------------------
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

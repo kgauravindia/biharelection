@@ -27,7 +27,6 @@ if ($pdo) {
             $pdo->exec("
                 CREATE TABLE IF NOT EXISTS `posts` (
                   `id` INT AUTO_INCREMENT PRIMARY KEY,
-                  `wp_id` INT NULL UNIQUE,
                   `title` VARCHAR(500) NOT NULL,
                   `slug` VARCHAR(300) NOT NULL,
                   `excerpt` TEXT NULL,
@@ -53,7 +52,6 @@ if ($pdo) {
             $pdo->exec("
                 CREATE TABLE IF NOT EXISTS `categories` (
                   `id` INT AUTO_INCREMENT PRIMARY KEY,
-                  `wp_term_id` INT NULL UNIQUE,
                   `name` VARCHAR(150) NOT NULL,
                   `slug` VARCHAR(150) NOT NULL UNIQUE,
                   `description` TEXT NULL,

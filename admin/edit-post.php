@@ -11,7 +11,6 @@ $is_edit = ($post_id > 0);
 
 $post = [
     'id' => 0,
-    'wp_id' => null,
     'title' => '',
     'slug' => '',
     'excerpt' => '',

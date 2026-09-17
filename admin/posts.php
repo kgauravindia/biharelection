@@ -95,7 +95,7 @@ if ($conn) {
     $c_res = $conn->query("SELECT COUNT(*) as c FROM `posts` WHERE $where");
     if ($c_res) $total_rows = (int)$c_res->fetch_assoc()['c'];
 
-    $q_res = $conn->query("SELECT id, wp_id, title, slug, featured_image, categories, tags, author_name, status, views_count, published_at FROM `posts` WHERE $where ORDER BY `published_at` DESC, `id` DESC LIMIT $offset, $limit");
+    $q_res = $conn->query("SELECT id, title, slug, featured_image, categories, tags, author_name, status, views_count, published_at FROM `posts` WHERE $where ORDER BY `published_at` DESC, `id` DESC LIMIT $offset, $limit");
     if ($q_res) {
         while ($r = $q_res->fetch_assoc()) {
             $posts[] = $r;

@@ -757,7 +757,7 @@ if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitem
                                 <span class="badge bg-success">Active</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <span><i class="fas fa-check-circle text-success me-2"></i> 301 Redirection active for legacy WordPress sitemaps</span>
+                                <span><i class="fas fa-check-circle text-success me-2"></i> 301 Redirection active for legacy sitemaps</span>
                                 <span class="badge bg-success">Active</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">

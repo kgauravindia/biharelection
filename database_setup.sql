@@ -641,10 +641,9 @@ CREATE TABLE IF NOT EXISTS `panchayat_samiti_2016` (
   INDEX (`block`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 26. Blog & Editorial Articles (Migrated from WordPress / Content Platform)
+-- 26. Blog & Editorial Articles
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `wp_id` INT NULL UNIQUE,
   `title` VARCHAR(500) NOT NULL,
   `slug` VARCHAR(300) NOT NULL,
   `excerpt` TEXT NULL,
@@ -666,7 +665,6 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- 27. Categories Master Directory
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `wp_term_id` INT NULL UNIQUE,
   `name` VARCHAR(150) NOT NULL,
   `slug` VARCHAR(150) NOT NULL UNIQUE,
   `description` TEXT NULL,
