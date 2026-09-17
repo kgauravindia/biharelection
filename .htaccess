@@ -55,13 +55,14 @@ AddDefaultCharset UTF-8
     RewriteRule ^ - [L]
 
     # -------------------------------------------------------------
-    # Legacy Sitemaps -> 301 Redirect to Active Sitemaps
+    # Legacy Sitemaps & Media -> 301 Redirect to Active Sitemaps & Uploads
     # -------------------------------------------------------------
     RewriteRule ^sitemap_index\.xml$ sitemap.xml [L,R=301,NC]
     RewriteRule ^(post|page|category|post_tag|author|date)-sitemap\.xml$ sitemap-extra.xml [L,R=301,NC]
     RewriteRule ^sitemap/sitemap[-_]?index\.xml$ sitemap.xml [L,R=301,NC]
     RewriteRule ^sitemap/(.+)\.xml$ $1.xml [L,R=301,NC]
     RewriteRule ^sitemap/?$ sitemap.xml [L,R=301,NC]
+    RewriteRule ^wp-content/uploads/(.+)$ uploads/$1 [L,R=301,NC]
 
     # Catch any relative advertise.php or asset requests from sub-routes
     # -------------------------------------------------------------
