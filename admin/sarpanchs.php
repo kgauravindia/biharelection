@@ -15,13 +15,72 @@ $reservation_categories = [
     'अनुसूचित जनजाति' => 'अनुसूचित जनजाति (ST)'
 ];
 
+// AJAX Endpoint: Dynamic Blocks & Panchayats for Sarpanchs
+if (isset($_GET['ajax']) && $conn) {
+    header('Content-Type: application/json');
+    $ajaxAction = sanitize($_GET['ajax']);
+    $reqDistrict = sanitize($_GET['district'] ?? '');
+    $reqBlock = sanitize($_GET['block'] ?? '');
+    $dSlug = slugify($reqDistrict);
+
+    if ($ajaxAction === 'get_blocks') {
+        if (!empty($reqDistrict)) {
+            $stmt = $conn->prepare("
+                SELECT DISTINCT block FROM (
+                    SELECT block FROM panchayats WHERE (district = ? OR district_slug = ?) AND block != ''
+                    UNION
+                    SELECT block FROM sarpanchs WHERE (district = ? OR district_slug = ?) AND block != ''
+                ) as u_blocks ORDER BY block ASC
+            ");
+            if ($stmt) {
+                $stmt->bind_param("ssss", $reqDistrict, $dSlug, $reqDistrict, $dSlug);
+                $stmt->execute();
+                $res = $stmt->get_result();
+                $blocks = [];
+                while ($r = $res->fetch_assoc()) {
+                    $blocks[] = $r['block'];
+                }
+                echo json_encode(['success' => true, 'blocks' => $blocks]);
+                exit;
+            }
+        }
+        echo json_encode(['success' => true, 'blocks' => []]);
+        exit;
+    }
+
+    if ($ajaxAction === 'get_panchayats') {
+        if (!empty($reqDistrict) && !empty($reqBlock)) {
+            $stmt = $conn->prepare("
+                SELECT DISTINCT panchayat FROM (
+                    SELECT panchayat_name as panchayat FROM panchayats WHERE (district = ? OR district_slug = ?) AND block = ? AND panchayat_name != ''
+                    UNION
+                    SELECT panchayat FROM sarpanchs WHERE (district = ? OR district_slug = ?) AND block = ? AND panchayat != ''
+                ) as u_panchayats ORDER BY panchayat ASC
+            ");
+            if ($stmt) {
+                $stmt->bind_param("ssssss", $reqDistrict, $dSlug, $reqBlock, $reqDistrict, $dSlug, $reqBlock);
+                $stmt->execute();
+                $res = $stmt->get_result();
+                $panchayats = [];
+                while ($r = $res->fetch_assoc()) {
+                    $panchayats[] = $r['panchayat'];
+                }
+                echo json_encode(['success' => true, 'panchayats' => $panchayats]);
+                exit;
+            }
+        }
+        echo json_encode(['success' => true, 'panchayats' => []]);
+        exit;
+    }
+}
+
 // Handle Add POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_sarpanch' && $conn) {
     $c_name = sanitize($_POST['candidate_name'] ?? '');
     $mobile = sanitize($_POST['mobile'] ?? '');
     $category = sanitize($_POST['category'] ?? 'सामान्य वर्ग');
     $gender = sanitize($_POST['gender'] ?? 'Male');
-    $age = (int)($_POST['age'] ?? 0);
+    $tenure = sanitize($_POST['tenure'] ?? '2021-2026');
     $district = sanitize($_POST['district'] ?? '');
     $block = sanitize($_POST['block'] ?? '');
     $panchayat = sanitize($_POST['panchayat'] ?? '');
@@ -29,14 +88,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $d_slug = slugify($district);
 
     if (!empty($c_name) && !empty($district) && !empty($panchayat)) {
-        $stmt = $conn->prepare("INSERT INTO `sarpanchs` (`candidate_name`, `post`, `district`, `district_slug`, `block`, `panchayat`, `gender`, `category`, `mobile`, `address`, `age`) VALUES (?, 'सरपंच', ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO `sarpanchs` (`candidate_name`, `post`, `district`, `district_slug`, `block`, `panchayat`, `gender`, `category`, `mobile`, `address`, `tenure`) VALUES (?, 'सरपंच', ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         if ($stmt) {
-            $stmt->bind_param("ssssssssssi", $c_name, $district, $d_slug, $block, $panchayat, $gender, $category, $mobile, $address, $age);
+            $stmt->bind_param("ssssssssss", $c_name, $district, $d_slug, $block, $panchayat, $gender, $category, $mobile, $address, $tenure);
             if ($stmt->execute()) {
                 $message = "New Sarpanch record for '" . htmlspecialchars($c_name) . "' (" . htmlspecialchars($panchayat) . ") added successfully.";
             } else {
                 $error = "Error adding Sarpanch: " . $conn->error;
             }
+        } else {
+            $error = "Database prepare error: " . $conn->error;
         }
     } else {
         $error = "Please fill in all required fields (Candidate Name, District, and Panchayat).";
@@ -50,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $mobile = sanitize($_POST['mobile'] ?? '');
     $category = sanitize($_POST['category'] ?? 'सामान्य वर्ग');
     $gender = sanitize($_POST['gender'] ?? 'Male');
-    $age = (int)($_POST['age'] ?? 0);
+    $tenure = sanitize($_POST['tenure'] ?? '2021-2026');
     $district = sanitize($_POST['district'] ?? '');
     $block = sanitize($_POST['block'] ?? '');
     $panchayat = sanitize($_POST['panchayat'] ?? '');
@@ -58,14 +119,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $d_slug = slugify($district);
 
     if ($edit_id > 0 && !empty($c_name)) {
-        $stmt = $conn->prepare("UPDATE `sarpanchs` SET `candidate_name` = ?, `mobile` = ?, `category` = ?, `gender` = ?, `age` = ?, `district` = ?, `district_slug` = ?, `block` = ?, `panchayat` = ?, `address` = ? WHERE `id` = ?");
+        $stmt = $conn->prepare("UPDATE `sarpanchs` SET `candidate_name` = ?, `mobile` = ?, `category` = ?, `gender` = ?, `tenure` = ?, `district` = ?, `district_slug` = ?, `block` = ?, `panchayat` = ?, `address` = ? WHERE `id` = ?");
         if ($stmt) {
-            $stmt->bind_param("ssssisssssi", $c_name, $mobile, $category, $gender, $age, $district, $d_slug, $block, $panchayat, $address, $edit_id);
+            $stmt->bind_param("ssssssssssi", $c_name, $mobile, $category, $gender, $tenure, $district, $d_slug, $block, $panchayat, $address, $edit_id);
             if ($stmt->execute()) {
                 $message = "Sarpanch record for '" . htmlspecialchars($c_name) . "' (" . htmlspecialchars($panchayat) . ") updated successfully.";
             } else {
                 $error = "Error updating Sarpanch: " . $conn->error;
             }
+        } else {
+            $error = "Database prepare error: " . $conn->error;
         }
     } else {
         $error = "Please enter a valid candidate name.";
@@ -607,7 +670,7 @@ if (!empty($districts)) {
                                                 data-mobile="<?php echo htmlspecialchars($s['mobile'] ?? ''); ?>"
                                                 data-category="<?php echo htmlspecialchars($s['category'] ?? 'सामान्य वर्ग'); ?>"
                                                 data-gender="<?php echo htmlspecialchars($s['gender'] ?? 'Male'); ?>"
-                                                data-age="<?php echo htmlspecialchars($s['age'] ?? ''); ?>"
+                                                data-tenure="<?php echo htmlspecialchars($s['tenure'] ?? '2021-2026'); ?>"
                                                 data-district="<?php echo htmlspecialchars($s['district'] ?? ''); ?>"
                                                 data-block="<?php echo htmlspecialchars($s['block'] ?? ''); ?>"
                                                 data-panchayat="<?php echo htmlspecialchars($s['panchayat'] ?? ''); ?>"
@@ -734,8 +797,8 @@ if (!empty($districts)) {
                             <input type="text" name="panchayat" class="form-control" required placeholder="Gram Panchayat name">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small fw-bold text-dark">Age (Years)</label>
-                            <input type="number" name="age" class="form-control" placeholder="e.g. 42">
+                            <label class="form-label small fw-bold text-dark">Tenure (कार्यकाल)</label>
+                            <input type="text" name="tenure" class="form-control" value="2021-2026" placeholder="2021-2026">
                         </div>
                         <div class="col-md-8">
                             <label class="form-label small fw-bold text-dark">Address / Village</label>
@@ -813,8 +876,8 @@ if (!empty($districts)) {
                             <input type="text" name="panchayat" id="edit_s_panchayat" class="form-control" required placeholder="Gram Panchayat name">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small fw-bold text-dark">Age (Years)</label>
-                            <input type="number" name="age" id="edit_s_age" class="form-control" placeholder="e.g. 42">
+                            <label class="form-label small fw-bold text-dark">Tenure (कार्यकाल)</label>
+                            <input type="text" name="tenure" id="edit_s_tenure" class="form-control" placeholder="2021-2026" value="2021-2026">
                         </div>
                         <div class="col-md-8">
                             <label class="form-label small fw-bold text-dark">Address / Village</label>
@@ -915,7 +978,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('edit_s_district').value = this.dataset.district || '';
             document.getElementById('edit_s_block').value = this.dataset.block || '';
             document.getElementById('edit_s_panchayat').value = this.dataset.panchayat || '';
-            document.getElementById('edit_s_age').value = this.dataset.age || '';
+            document.getElementById('edit_s_tenure').value = this.dataset.tenure || '2021-2026';
             document.getElementById('edit_s_address').value = this.dataset.address || '';
             
             editModal.show();

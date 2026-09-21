@@ -105,23 +105,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($id > 0) {
             $stmt = $conn->prepare("UPDATE `candidates` SET `name`=?, `name_hi`=?, `slug`=?, `party`=?, `party_short`=?, `constituency`=?, `district`=?, `age`=?, `education`=?, `profession`=?, `assets_declared`=?, `liabilities`=?, `criminal_cases`=?, `verified`=?, `promoted_tier`=?, `photo`=?, `bio`=?, `social_links`=? WHERE `id`=?");
             if ($stmt) {
-                $stmt->bind_param("ssssssisssssisssssi", $name, $name_hi, $post_slug, $party, $party_short, $constituency, $district, $age, $education, $profession, $assets, $liabilities, $criminal_cases, $verified, $tier, $photo, $bio, $social_json, $id);
+                $stmt->bind_param("sssssssissssiissssi", $name, $name_hi, $post_slug, $party, $party_short, $constituency, $district, $age, $education, $profession, $assets, $liabilities, $criminal_cases, $verified, $tier, $photo, $bio, $social_json, $id);
                 if ($stmt->execute()) {
                     $message = "Candidate profile updated successfully!";
                 } else {
                     $error = "Error updating candidate: " . $conn->error;
                 }
+            } else {
+                $error = "Database prepare error: " . $conn->error;
             }
         } else {
             $stmt = $conn->prepare("INSERT INTO `candidates` (`name`, `name_hi`, `slug`, `party`, `party_short`, `constituency`, `district`, `age`, `education`, `profession`, `assets_declared`, `liabilities`, `criminal_cases`, `verified`, `promoted_tier`, `photo`, `bio`, `social_links`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             if ($stmt) {
-                $stmt->bind_param("ssssssisssssisssss", $name, $name_hi, $post_slug, $party, $party_short, $constituency, $district, $age, $education, $profession, $assets, $liabilities, $criminal_cases, $verified, $tier, $photo, $bio, $social_json);
+                $stmt->bind_param("sssssssissssiissss", $name, $name_hi, $post_slug, $party, $party_short, $constituency, $district, $age, $education, $profession, $assets, $liabilities, $criminal_cases, $verified, $tier, $photo, $bio, $social_json);
                 if ($stmt->execute()) {
                     $id = $stmt->insert_id;
                     $message = "Candidate profile created successfully!";
                 } else {
                     $error = "Error adding candidate: " . $conn->error;
                 }
+            } else {
+                $error = "Database prepare error: " . $conn->error;
             }
         }
     } else {
