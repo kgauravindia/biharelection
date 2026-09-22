@@ -94,6 +94,8 @@ if (!defined('SMS_TEMPLATE_NAME')) define('SMS_TEMPLATE_NAME', getenv('SMS_TEMPL
 if (!defined('SMS_API_URL')) define('SMS_API_URL', getenv('SMS_API_URL') ?: 'http://msg.morg.in/rest/services/sendSMS/sendGroupSms');
 if (!defined('SMS_OTP_TEMPLATE')) define('SMS_OTP_TEMPLATE', getenv('SMS_OTP_TEMPLATE') ?: "Dear {#var#},\nYour OTP / EVC / Password is: {#var#}\nVisit https://biharelection.com\n  \nRegards\nBIHELE\nOfferPlant");
 
+if (!defined('DEFAULT_ADMIN_PASS')) define('DEFAULT_ADMIN_PASS', getenv('DEFAULT_ADMIN_PASS') ?: 'Admin@ChangeMe2026');
+
 // Database Credentials
 if (!defined('IS_LOCAL') || !IS_LOCAL) {
     if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: 'localhost');

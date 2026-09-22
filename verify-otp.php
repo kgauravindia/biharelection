@@ -103,6 +103,12 @@ require_once __DIR__ . '/header.php';
                             </div>
                         </div>
 
+                        <?php if (defined('IS_LOCAL') && IS_LOCAL && !empty($_SESSION['pending_otp']['otp'])): ?>
+                            <div class="alert alert-info py-2 px-3 small rounded-3 mb-3 text-center">
+                                <i class="bi bi-info-circle me-1"></i> Local Dev OTP: <strong class="user-select-all font-monospace fs-6"><?php echo htmlspecialchars($_SESSION['pending_otp']['otp']); ?></strong> (or use <strong>123456</strong>)
+                            </div>
+                        <?php endif; ?>
+
                         <?php if (!empty($error)): ?>
                             <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center gap-2 rounded-3 small py-2 px-3 mb-4" role="alert">
                                 <i class="bi bi-exclamation-triangle-fill flex-shrink-0 text-danger fs-5"></i>
