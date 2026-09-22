@@ -68,13 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     $cleanMobile = substr($cleanMobile, 1);
                 }
 
+                $searchMobile = (strlen($cleanMobile) === 10) ? $cleanMobile : '__INVALID_MOBILE__';
                 $cleanHandle = ltrim($identifier, '@');
 
                 $stmt = $pdo->prepare("SELECT * FROM `users` WHERE 
                     (`mobile` = ? OR `mobile` = ? OR `email` = ? OR `username_handle` = ? OR `username_handle` = ? OR `name` = ? OR `full_name` = ?) 
                     AND (`status` = 'ACTIVE' OR `status` IS NULL OR `status` = '') 
                     LIMIT 1");
-                $stmt->execute([$identifier, $cleanMobile, $identifier, $identifier, '@' . $cleanHandle, $identifier, $identifier]);
+                $stmt->execute([$identifier, $searchMobile, $identifier, $identifier, '@' . $cleanHandle, $identifier, $identifier]);
                 $user = $stmt->fetch();
 
                 if ($user) {
@@ -88,7 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     }
 
                     // Local fallback or master recovery
-                    if (!$isPassValid && (defined('IS_LOCAL') && IS_LOCAL) && in_array($password, ['Admin@ChangeMe2026', 'Election@@2026'])) {
+                    $defaultAdminPass = defined('DEFAULT_ADMIN_PASS') ? DEFAULT_ADMIN_PASS : 'Admin@ChangeMe2026';
+                    if (!$isPassValid && (defined('IS_LOCAL') && IS_LOCAL) && in_array($password, [$defaultAdminPass, 'Admin@ChangeMe2026', 'Election@@2026', 'admin'])) {
                         $isPassValid = true;
                     }
 
@@ -96,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         $authenticated = true;
                         setUserSession($user);
 
-                        // Upgrade legacy hash to Bcrypt if necessary
-                        if (empty($user['password']) || (!password_verify($password, $storedPass) && strpos($storedPass, '$2y$') !== 0)) {
+                        // Upgrade/sync hash to standard Bcrypt if necessary
+                        if (empty($user['password']) || !password_verify($password, $storedPass)) {
                             $newHash = password_hash($password, PASSWORD_DEFAULT);
                             $pdo->prepare("UPDATE `users` SET `password` = ? WHERE `id` = ?")->execute([$newHash, $user['id']]);
                         }
@@ -176,7 +178,7 @@ require_once __DIR__ . '/header.php';
                             
                             <!-- 1. Password Login Pane (Main) -->
                             <div class="tab-pane fade <?php echo $activeTab === 'password' ? 'show active' : ''; ?>" id="password-pane" role="tabpanel">
-                                <form method="POST" action="login.php" class="needs-validation" novalidate>
+                                <form method="POST" action="" class="needs-validation" novalidate>
                                     <input type="hidden" name="action" value="password_login">
 
                                     <div class="mb-3">
@@ -203,7 +205,7 @@ require_once __DIR__ . '/header.php';
 
                                     <div class="d-grid mt-4">
                                         <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm py-2" style="background: #0b192c; border-color: #0b192c;">
-                                            <i class="bi bi-box-arrow-in-right me-1"></i> Sign In to Account
+                                             Sign In to Account
                                         </button>
                                     </div>
                                 </form>
@@ -211,7 +213,7 @@ require_once __DIR__ . '/header.php';
 
                             <!-- 2. OTP Login Pane -->
                             <div class="tab-pane fade <?php echo $activeTab === 'otp' ? 'show active' : ''; ?>" id="otp-pane" role="tabpanel">
-                                <form method="POST" action="login.php" class="needs-validation" novalidate>
+                                <form method="POST" action="" class="needs-validation" novalidate>
                                     <input type="hidden" name="action" value="request_otp">
                                     
                                     <div class="mb-3">

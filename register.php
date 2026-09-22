@@ -126,7 +126,7 @@ require_once __DIR__ . '/header.php';
                             </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="register.php" class="needs-validation" novalidate>
+                        <form method="POST" action="" class="needs-validation" novalidate>
                             <input type="hidden" name="action" value="register">
 
                             <div class="row g-3">

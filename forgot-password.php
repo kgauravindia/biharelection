@@ -123,7 +123,7 @@ require_once __DIR__ . '/header.php';
                         <?php if ($step === 'new_password'): ?>
                             
                             <!-- Set New Password Form -->
-                            <form method="POST" action="forgot-password.php" class="needs-validation" novalidate>
+                            <form method="POST" action="" class="needs-validation" novalidate>
                                 <input type="hidden" name="action" value="set_new_password">
 
                                 <div class="mb-3">
@@ -154,7 +154,7 @@ require_once __DIR__ . '/header.php';
                         <?php else: ?>
                             
                             <!-- Request OTP Form -->
-                            <form method="POST" action="forgot-password.php" class="needs-validation" novalidate>
+                            <form method="POST" action="" class="needs-validation" novalidate>
                                 <input type="hidden" name="action" value="request_reset_otp">
 
                                 <div class="mb-4">

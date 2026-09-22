@@ -49,8 +49,8 @@ require_once __DIR__ . '/header.php';
                             <i class="bi bi-eye-fill"></i> <?php echo number_format($user['counter'] ?? 0); ?> Profile Views
                         </span>
                     </div>
-                    <h1 class="display-6 fw-bold mb-1 font-heading">
-                        Welcome, <?php echo htmlspecialchars($displayName); ?>!
+                    <h1 class="display-6 fw-bold mb-1 font-heading text-white">
+                        Welcome, <span class="text-warning" style="background: linear-gradient(135deg, #ffd166 0%, #ff9933 50%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 10px rgba(255, 153, 51, 0.2);"><?php echo htmlspecialchars($displayName); ?></span>!
                     </h1>
                     <p class="text-white-50 mb-0">
                         📱 +91 <?php echo htmlspecialchars(maskMobileNumber($user['mobile'] ?? '')); ?>

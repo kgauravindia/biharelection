@@ -35,13 +35,15 @@ AddDefaultCharset UTF-8
     # Canonical 301 Redirects: Direct .php requests -> Clean URLs
     # -------------------------------------------------------------
     # 1. Root index.php -> /
+    RewriteCond %{REQUEST_METHOD} !POST
     RewriteCond %{THE_REQUEST} \s/index\.php[/?\s] [NC]
     RewriteRule ^index\.php$ ./ [R=301,L]
 
     # 2. Known physical root PHP pages -> clean slug URLs
+    RewriteCond %{REQUEST_METHOD} !POST
     RewriteCond %{THE_REQUEST} \s/([a-zA-Z0-9_-]+)\.php[/?\s] [NC]
-    RewriteCond %{REQUEST_URI} !^/admin/
-    RewriteCond %{REQUEST_URI} !^/api/
+    RewriteCond %{REQUEST_URI} !/admin/ [NC]
+    RewriteCond %{REQUEST_URI} !/api/ [NC]
     RewriteCond %{REQUEST_URI} !^/install\.php
     RewriteRule ^([a-zA-Z0-9_-]+)\.php$ $1 [R=301,L]
 

@@ -125,7 +125,7 @@ require_once __DIR__ . '/header.php';
                             </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="verify-otp.php" class="needs-validation" novalidate>
+                        <form method="POST" action="" class="needs-validation" novalidate>
                             <input type="hidden" name="action" value="verify_otp">
                             <input type="hidden" name="mobile" value="<?php echo htmlspecialchars($mobile); ?>">
                             <input type="hidden" name="purpose" value="<?php echo htmlspecialchars($purpose); ?>">
