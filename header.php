@@ -14,47 +14,15 @@ $activeNav = $activeNav ?? 'home';
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
-    <!-- Google Consent Mode v2 & Google tag (gtag.js) -->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z71DH969QS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-      // Initialize default Google Consent Mode v2 state
-      (function() {
-        var consent = null;
-        try {
-          var raw = localStorage.getItem('be_cookie_consent');
-          if (raw) consent = JSON.parse(raw);
-        } catch(e) {}
-
-        if (consent && typeof consent === 'object') {
-          gtag('consent', 'default', {
-            'ad_storage': consent.ads ? 'granted' : 'denied',
-            'ad_user_data': consent.ads ? 'granted' : 'denied',
-            'ad_personalization': consent.ads ? 'granted' : 'denied',
-            'analytics_storage': consent.analytics ? 'granted' : 'denied',
-            'functionality_storage': 'granted',
-            'personalization_storage': consent.analytics ? 'granted' : 'denied',
-            'security_storage': 'granted'
-          });
-        } else {
-          gtag('consent', 'default', {
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
-            'analytics_storage': 'denied',
-            'functionality_storage': 'granted',
-            'personalization_storage': 'denied',
-            'security_storage': 'granted',
-            'wait_for_update': 500
-          });
-        }
-      })();
-
-      gtag('js', new Date());
-      gtag('config', 'G-Z71DH969QS');
-    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z71DH969QS"></script>
+  gtag('config', 'G-Z71DH969QS');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#0b192c">
