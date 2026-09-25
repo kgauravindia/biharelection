@@ -186,6 +186,29 @@ AddDefaultCharset UTF-8
     RewriteRule ^census/([a-zA-Z0-9_-]+)/?$ census.php?district=$1 [L,QSA]
 
     # -------------------------------------------------------------
+    # 11b. Caste Survey & Caste Code Directory (2022 Bihar Caste Census)
+    # -------------------------------------------------------------
+    RewriteRule ^caste-survey/?$ caste-survey.php [L,QSA]
+    RewriteRule ^caste-survey/([0-9]+)/?$ caste-survey.php?code=$1 [L,QSA]
+    RewriteRule ^caste-survey/([a-zA-Z0-9_-]+)/?$ caste-survey.php?slug=$1 [L,QSA]
+    RewriteRule ^caste-code/?$ caste-survey.php [L,QSA]
+    RewriteRule ^caste-codes/?$ caste-survey.php [L,QSA]
+    RewriteRule ^bihar-caste-survey/?$ caste-survey.php [L,QSA]
+    RewriteRule ^jati-code/?$ caste-survey.php [L,QSA]
+    RewriteRule ^jatigat-janganana/?$ caste-survey.php [L,QSA]
+
+    # -------------------------------------------------------------
+    # 11c. Bihar Legislative Assembly Acts (1937 to 2026 Enacted Bills Directory)
+    # -------------------------------------------------------------
+    RewriteRule ^bihar-acts/?$ bihar-acts.php [L,QSA]
+    RewriteRule ^bihar-acts/([0-9]{4})/?$ bihar-acts.php?year=$1 [L,QSA]
+    RewriteRule ^acts-list/?$ bihar-acts.php [L,QSA]
+    RewriteRule ^vidhan-sabha-acts/?$ bihar-acts.php [L,QSA]
+    RewriteRule ^bihar-enacted-bills/?$ bihar-acts.php [L,QSA]
+    RewriteRule ^enacted-bills/?$ bihar-acts.php [L,QSA]
+    RewriteRule ^bihar-laws/?$ bihar-acts.php [L,QSA]
+
+    # -------------------------------------------------------------
     # 12. Candidates, Auth & Other Pages
     # -------------------------------------------------------------
     RewriteRule ^candidate/([a-zA-Z0-9_-]+)/?$ candidate.php?slug=$1 [L,QSA]

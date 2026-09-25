@@ -59,6 +59,8 @@ require_once __DIR__ . '/header.php';
             <div class="d-flex flex-wrap justify-content-center align-items-center gap-1.5 gap-sm-2 mt-3 pt-1 hero-quick-pills">
                 <span class="small text-white-50 me-1 fw-semibold"><i class="bi bi-fire text-warning"></i> Popular:</span>
                 <a href="<?php echo getDistrictUrl('patna'); ?>" class="pill-link fw-bold text-warning">👑 Patna Hub</a>
+                <a href="<?php echo getCasteSurveyUrl(); ?>" class="pill-link fw-bold text-warning">📋 2022 Caste Survey</a>
+                <a href="<?php echo getBiharActsUrl(); ?>" class="pill-link fw-bold text-success">⚖️ Bihar Acts (1937–2026)</a>
                 <a href="<?php echo SITE_URL; ?>/mla" class="pill-link">🗳️ 243 MLAs</a>
                 <a href="<?php echo SITE_URL; ?>/mp" class="pill-link">🏛️ 40 MPs</a>
                 <a href="<?php echo SITE_URL; ?>/mlc" class="pill-link">📜 75 MLCs</a>

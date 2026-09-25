@@ -128,7 +128,12 @@ require_once __DIR__ . '/header.php';
                 </li>
                 <li class="nav-item" role="presentation">
                     <a href="census.php?tab=social" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'social' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
-                        <i class="bi bi-pie-chart-fill me-1 text-success"></i> State Social & Workforce Matrix
+                        <i class="bi bi-pie-chart-fill me-1 text-success"></i> State Social &amp; Workforce Matrix
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a href="<?php echo getCasteSurveyUrl(); ?>" class="nav-link rounded-3 py-2 fw-bold text-dark bg-warning bg-opacity-25 border border-warning">
+                        <i class="bi bi-card-checklist me-1 text-dark"></i> 2022 Caste Survey &amp; 215+ Codes <span class="badge bg-danger ms-1">New</span>
                     </a>
                 </li>
             </ul>

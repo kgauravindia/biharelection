@@ -109,7 +109,7 @@ $activeNav = $activeNav ?? 'home';
 
                     <!-- District & Block Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['districts', 'district', 'blocks', 'block', 'census']) ? 'active text-warning' : ''; ?>" href="#" id="districtBlockDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['districts', 'district', 'blocks', 'block', 'census', 'caste']) ? 'active text-warning' : ''; ?>" href="#" id="districtBlockDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             District &amp; Block
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="districtBlockDropdown">
@@ -151,6 +151,15 @@ $activeNav = $activeNav ?? 'home';
                                     </div>
                                 </a>
                             </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getCasteSurveyUrl(); ?>">
+                                    <span>📋</span>
+                                    <div>
+                                        <div class="fw-bold text-warning">2022 Caste Survey &amp; Codes</div>
+                                        <small class="text-muted">215+ Official Caste Codes Directory</small>
+                                    </div>
+                                </a>
+                            </li>
                             <li><hr class="dropdown-divider my-1"></li>
                             <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getZilaParishadUrl(); ?>">
@@ -186,6 +195,16 @@ $activeNav = $activeNav ?? 'home';
                                     <div>
                                         <div class="fw-bold">Historical 2015–2020 MLAs</div>
                                         <small class="text-muted">All 243 Ex-MLAs &amp; contact roster</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider my-1"></li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getBiharActsUrl(); ?>">
+                                    <span>⚖️</span>
+                                    <div>
+                                        <div class="fw-bold text-success">Bihar Acts (1937–2026)</div>
+                                        <small class="text-muted">1,723+ Enacted Vidhan Sabha Laws</small>
                                     </div>
                                 </a>
                             </li>

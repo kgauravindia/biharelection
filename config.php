@@ -116,6 +116,16 @@ if (file_exists(__DIR__ . '/includes/sms_helper.php')) {
     require_once __DIR__ . '/includes/sms_helper.php';
 }
 
+// Load Caste Census Data Provider
+if (file_exists(__DIR__ . '/includes/caste_data.php')) {
+    require_once __DIR__ . '/includes/caste_data.php';
+}
+
+// Load Bihar Acts Data Provider (1937 - 2026)
+if (file_exists(__DIR__ . '/includes/acts_data.php')) {
+    require_once __DIR__ . '/includes/acts_data.php';
+}
+
 class Database {
     private static $pdo = null;
     private static $connectionAttempted = false;
@@ -1377,6 +1387,27 @@ function getCensusUrl($districtSlug = '', $subdistrictSlug = '') {
         return SITE_URL . "/census/{$districtSlug}";
     }
     return SITE_URL . "/census";
+}
+
+function getCasteSurveyUrl($codeOrSlug = '') {
+    if ($codeOrSlug !== '') {
+        return SITE_URL . "/caste-survey/" . urlencode((string)$codeOrSlug);
+    }
+    return SITE_URL . "/caste-survey";
+}
+
+function getBiharActsUrl($year = null, $category = null) {
+    $params = [];
+    if ($year !== null && $year !== '') {
+        $params['year'] = $year;
+    }
+    if ($category !== null && $category !== '') {
+        $params['category'] = $category;
+    }
+    if (!empty($params)) {
+        return SITE_URL . "/bihar-acts?" . http_build_query($params);
+    }
+    return SITE_URL . "/bihar-acts";
 }
 
 function getAdvertiseUrl($params = []) {

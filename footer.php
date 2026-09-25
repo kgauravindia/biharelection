@@ -41,6 +41,8 @@ require_once __DIR__ . '/config.php';
                         <li class="mb-2"><a href="<?php echo getDistrictUrl('saran'); ?>" class="footer-link">Saran (Chhapra)</a></li>
                         <li class="mb-2"><a href="<?php echo getDistrictUrl('muzaffarpur'); ?>" class="footer-link">Tirhut (Muzaffarpur)</a></li>
                         <li class="mb-2"><a href="<?php echo getCensusUrl(); ?>" class="footer-link text-warning fw-bold">📊 Census 2011 Hub &rarr;</a></li>
+                        <li class="mb-2"><a href="<?php echo getCasteSurveyUrl(); ?>" class="footer-link text-warning fw-bold">📋 2022 Caste Survey &amp; Codes &rarr;</a></li>
+                        <li class="mb-2"><a href="<?php echo getBiharActsUrl(); ?>" class="footer-link text-success fw-bold">⚖️ Bihar Acts (1937–2026) &rarr;</a></li>
                     </ul>
                 </div>
 
