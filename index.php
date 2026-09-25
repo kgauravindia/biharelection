@@ -59,6 +59,8 @@ require_once __DIR__ . '/header.php';
             <div class="d-flex flex-wrap justify-content-center align-items-center gap-1.5 gap-sm-2 mt-3 pt-1 hero-quick-pills">
                 <span class="small text-white-50 me-1 fw-semibold"><i class="bi bi-fire text-warning"></i> Popular:</span>
                 <a href="<?php echo getDistrictUrl('patna'); ?>" class="pill-link fw-bold text-warning">👑 Patna Hub</a>
+                <a href="<?php echo getVillageUrl(); ?>" class="pill-link fw-bold text-info">🏘️ 44,874 Villages</a>
+                <a href="<?php echo getTownUrl(); ?>" class="pill-link fw-bold text-primary">🏙️ 199 Towns &amp; Slums</a>
                 <a href="<?php echo getCasteSurveyUrl(); ?>" class="pill-link fw-bold text-warning">📋 2022 Caste Survey</a>
                 <a href="<?php echo getBiharActsUrl(); ?>" class="pill-link fw-bold text-success">⚖️ Bihar Acts (1937–2026)</a>
                 <a href="<?php echo SITE_URL; ?>/mla" class="pill-link">🗳️ 243 MLAs</a>
@@ -362,7 +364,72 @@ require_once __DIR__ . '/header.php';
             </div>
         </section>
 
+        <!-- Bihar Census 2011 Urban & Rural Administrative Matrix -->
+        <section class="mb-5">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff;">
+                <div class="p-4 p-lg-5">
+                    <div class="row align-items-center g-4">
+                        <div class="col-12 col-lg-7">
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge bg-success text-white fw-bold px-3 py-1.5 rounded-pill">
+                                    <i class="bi bi-patch-check-fill me-1"></i> Census 2011 Data Release 1000
+                                </span>
+                                <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill">
+                                    Full 38 Districts Matrix
+                                </span>
+                            </div>
+                            <h2 class="h3 fw-bold mb-2 text-white" style="font-family: 'Outfit', sans-serif;">
+                                Bihar Urban &amp; Rural Demographic Directories
+                            </h2>
+                            <p class="text-white-50 mb-4" style="line-height: 1.6;">
+                                Search, explore, and analyze micro-demographic statistics, sex ratios, literacy, civic amenities, commodities, and slums across all statutory towns and rural census villages in Bihar.
+                            </p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <a href="<?php echo getVillageUrl(); ?>" class="btn btn-success fw-bold px-4 py-2.5 rounded-pill shadow-sm d-flex align-items-center gap-2">
+                                    <i class="bi bi-tree-fill"></i> 44,874 Census Villages &rarr;
+                                </a>
+                                <a href="<?php echo getTownUrl(); ?>" class="btn btn-outline-light fw-bold px-4 py-2.5 rounded-pill shadow-sm d-flex align-items-center gap-2">
+                                    <i class="bi bi-buildings-fill"></i> 199 Towns &amp; 670 Slums &rarr;
+                                </a>
+                            </div>
+                        </div>
 
+                        <div class="col-12 col-lg-5">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <a href="<?php echo getVillageUrl(); ?>" class="p-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-3 text-decoration-none text-white d-block h-100 hover-lift">
+                                        <div class="fs-4 fw-extrabold text-success">44,874</div>
+                                        <div class="small fw-bold">Census Villages</div>
+                                        <div class="extra-small text-white-50">534 CD Blocks covered</div>
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="<?php echo getTownUrl(); ?>" class="p-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-3 text-decoration-none text-white d-block h-100 hover-lift">
+                                        <div class="fs-4 fw-extrabold text-info">199</div>
+                                        <div class="small fw-bold">Statutory &amp; CT Towns</div>
+                                        <div class="extra-small text-white-50">M.Corp / NP / CT</div>
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="<?php echo getTownUrl(); ?>" class="p-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-3 text-decoration-none text-white d-block h-100 hover-lift">
+                                        <div class="fs-4 fw-extrabold text-warning">670</div>
+                                        <div class="small fw-bold">Slum Settlements</div>
+                                        <div class="extra-small text-white-50">Micro-ward demographics</div>
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="<?php echo SITE_URL; ?>/census" class="p-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-3 text-decoration-none text-white d-block h-100 hover-lift">
+                                        <div class="fs-4 fw-extrabold text-primary" style="color: #93c5fd !important;">10.41 Cr</div>
+                                        <div class="small fw-bold">Bihar Census Pop.</div>
+                                        <div class="extra-small text-white-50">Complete demographic breakdown</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- 38 District Hubs Section (Alphabetical A-Z Order with Patna Highlight) -->
         <section class="mb-5">

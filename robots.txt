@@ -3,5 +3,7 @@ Allow: /
 
 Sitemap: https://biharelection.com/sitemap.xml
 Sitemap: https://biharelection.com/sitemap-panchayats.xml
+Sitemap: https://biharelection.com/sitemap-villages.xml
+Sitemap: https://biharelection.com/sitemap-towns.xml
 Sitemap: https://biharelection.com/sitemap-census.xml
 Sitemap: https://biharelection.com/sitemap-extra.xml

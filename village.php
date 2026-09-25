@@ -702,12 +702,12 @@ require_once __DIR__ . '/header.php';
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="small text-muted text-uppercase fw-bold"><i class="bi bi-geo-alt text-primary me-1"></i> Quick Filter by District:</span>
                 <?php if (!empty($districtParam)): ?>
-                    <a href="village.php" class="small text-danger text-decoration-none fw-bold"><i class="bi bi-x-circle"></i> Clear District</a>
+                    <a href="<?php echo getVillageUrl(); ?>" class="small text-danger text-decoration-none fw-bold"><i class="bi bi-x-circle"></i> Clear District</a>
                 <?php endif; ?>
             </div>
             <div class="d-flex flex-wrap gap-1" style="max-height: 120px; overflow-y: auto;">
                 <?php foreach ($districtsList as $d): ?>
-                    <a href="village.php?district=<?php echo urlencode($d['slug']); ?>" class="btn btn-sm rounded-pill px-2 py-1 <?php echo $districtParam === $d['slug'] ? 'btn-primary fw-bold' : 'btn-outline-secondary'; ?>" style="font-size: 0.78rem;">
+                    <a href="<?php echo getVillageUrl($d['slug']); ?>" class="btn btn-sm rounded-pill px-2 py-1 <?php echo $districtParam === $d['slug'] ? 'btn-primary fw-bold' : 'btn-outline-secondary'; ?>" style="font-size: 0.78rem;">
                         <?php echo htmlspecialchars($d['name']); ?>
                     </a>
                 <?php endforeach; ?>
@@ -722,18 +722,18 @@ require_once __DIR__ . '/header.php';
                     <i class="bi bi-diagram-3 text-success me-1"></i> CD Blocks in <?php echo htmlspecialchars(ucfirst($districtParam)); ?> District (<?php echo count($districtBlocks); ?> Blocks):
                 </span>
                 <?php if (!empty($blockParam)): ?>
-                    <a href="village.php?district=<?php echo urlencode($districtParam); ?>" class="small text-danger text-decoration-none fw-bold"><i class="bi bi-x-circle"></i> All Blocks</a>
+                    <a href="<?php echo getVillageUrl($districtParam); ?>" class="small text-danger text-decoration-none fw-bold"><i class="bi bi-x-circle"></i> All Blocks</a>
                 <?php endif; ?>
             </div>
             <div class="d-flex flex-wrap gap-2">
-                <a href="village.php?district=<?php echo urlencode($districtParam); ?>" class="block-pill-btn <?php echo empty($blockParam) ? 'active' : ''; ?>">
+                <a href="<?php echo getVillageUrl($districtParam); ?>" class="block-pill-btn <?php echo empty($blockParam) ? 'active' : ''; ?>">
                     All Blocks
                 </a>
                 <?php foreach ($districtBlocks as $db): ?>
                     <?php 
                     $isBlkActive = (strtolower($blockParam) === strtolower($db['sub_district_slug']) || strtolower($blockParam) === strtolower($db['sub_district_name']));
                     ?>
-                    <a href="village.php?district=<?php echo urlencode($districtParam); ?>&block=<?php echo urlencode($db['sub_district_slug']); ?>" class="block-pill-btn <?php echo $isBlkActive ? 'active' : ''; ?>">
+                    <a href="<?php echo getVillageUrl($districtParam, $db['sub_district_slug']); ?>" class="block-pill-btn <?php echo $isBlkActive ? 'active' : ''; ?>">
                         <?php echo htmlspecialchars($db['sub_district_name']); ?>
                         <span class="block-badge-count"><?php echo number_format($db['village_count']); ?></span>
                     </a>
@@ -748,7 +748,7 @@ require_once __DIR__ . '/header.php';
                 <i class="bi bi-funnel-fill text-primary me-2"></i> Search &amp; Filter Bihar Villages
             </h2>
 
-            <form method="GET" action="village.php" class="row g-2">
+            <form method="GET" action="<?php echo getVillageUrl($districtParam, $blockParam); ?>" class="row g-2">
                 <div class="col-12 col-md-3">
                     <label class="form-label small fw-bold text-muted mb-1">1. District:</label>
                     <select name="district" class="form-select form-select-sm" onchange="if(this.form.block) this.form.block.value=''; this.form.submit()">
@@ -805,7 +805,7 @@ require_once __DIR__ . '/header.php';
                         <i class="bi bi-search"></i>
                     </button>
                     <?php if (!empty($districtParam) || !empty($blockParam) || !empty($searchParam) || !empty($gpParam)): ?>
-                        <a href="village.php" class="btn btn-outline-secondary btn-sm" title="Reset Filters">
+                        <a href="<?php echo getVillageUrl(); ?>" class="btn btn-outline-secondary btn-sm" title="Reset Filters">
                             <i class="bi bi-arrow-counterclockwise"></i>
                         </a>
                     <?php endif; ?>
@@ -914,9 +914,12 @@ require_once __DIR__ . '/header.php';
             <?php 
             $totalPages = max(1, ceil($totalCount / $perPage));
             if ($totalPages > 1): 
+                $pageBaseUrl = getVillageUrl($districtParam, $blockParam);
                 $queryParams = $_GET;
-                unset($queryParams['page']);
-                $baseUrl = 'village.php?' . http_build_query($queryParams);
+                unset($queryParams['page'], $queryParams['district'], $queryParams['block'], $queryParams['slug'], $queryParams['vslug'], $queryParams['subdistrict']);
+                $qs = http_build_query($queryParams);
+                $baseUrl = $pageBaseUrl . ($qs ? '?' . $qs : '');
+                $pageDelim = (strpos($baseUrl, '?') !== false) ? '&page=' : '?page=';
             ?>
             <nav class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-4 pt-3 border-top">
                 <div class="small text-muted">
@@ -925,7 +928,7 @@ require_once __DIR__ . '/header.php';
                 <ul class="pagination pagination-sm mb-0">
                     <?php if ($currentPage > 1): ?>
                         <li class="page-item">
-                            <a class="page-link" href="<?php echo $baseUrl . '&page=' . ($currentPage - 1); ?>" aria-label="Previous">
+                            <a class="page-link" href="<?php echo $baseUrl . $pageDelim . ($currentPage - 1); ?>" aria-label="Previous">
                                 &laquo; Prev
                             </a>
                         </li>
@@ -935,24 +938,24 @@ require_once __DIR__ . '/header.php';
                     $startP = max(1, $currentPage - 2);
                     $endP = min($totalPages, $currentPage + 2);
                     if ($startP > 1) {
-                        echo '<li class="page-item"><a class="page-link" href="' . $baseUrl . '&page=1">1</a></li>';
+                        echo '<li class="page-item"><a class="page-link" href="' . $baseUrl . $pageDelim . '1">1</a></li>';
                         if ($startP > 2) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
                     }
                     for ($p = $startP; $p <= $endP; $p++):
                     ?>
                         <li class="page-item <?php echo $p === $currentPage ? 'active' : ''; ?>">
-                            <a class="page-link" href="<?php echo $baseUrl . '&page=' . $p; ?>"><?php echo $p; ?></a>
+                            <a class="page-link" href="<?php echo $baseUrl . $pageDelim . $p; ?>"><?php echo $p; ?></a>
                         </li>
                     <?php endfor; 
                     if ($endP < $totalPages) {
                         if ($endP < $totalPages - 1) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-                        echo '<li class="page-item"><a class="page-link" href="' . $baseUrl . '&page=' . $totalPages . '">' . $totalPages . '</a></li>';
+                        echo '<li class="page-item"><a class="page-link" href="' . $baseUrl . $pageDelim . $totalPages . '">' . $totalPages . '</a></li>';
                     }
                     ?>
 
                     <?php if ($currentPage < $totalPages): ?>
                         <li class="page-item">
-                            <a class="page-link" href="<?php echo $baseUrl . '&page=' . ($currentPage + 1); ?>" aria-label="Next">
+                            <a class="page-link" href="<?php echo $baseUrl . $pageDelim . ($currentPage + 1); ?>" aria-label="Next">
                                 Next &raquo;
                             </a>
                         </li>

@@ -33,12 +33,30 @@ $sitemap_files = [
         'desc' => 'Core Hubs, 38 Districts, Vidhan Sabha (243 ACs), Lok Sabha (40 MPs), MLCs & Candidates.',
         'action' => 'generate_sitemap'
     ],
+    'villages' => [
+        'name' => 'Census 2011 Villages Sitemap',
+        'file' => 'sitemap-villages.xml',
+        'path' => __DIR__ . '/../sitemap-villages.xml',
+        'icon' => 'fas fa-tree',
+        'color' => 'success',
+        'desc' => 'All 44,874 Census Villages, 534 Block hubs & 38 District rural directories.',
+        'action' => 'generate_villages_sitemap'
+    ],
+    'towns' => [
+        'name' => 'Towns & Slums Sitemap',
+        'file' => 'sitemap-towns.xml',
+        'path' => __DIR__ . '/../sitemap-towns.xml',
+        'icon' => 'fas fa-city',
+        'color' => 'primary',
+        'desc' => 'All 199 Statutory & Census Towns, 670 Slum Settlements / Town Wards across Bihar.',
+        'action' => 'generate_towns_sitemap'
+    ],
     'panchayats' => [
         'name' => 'Gram Panchayats Sitemap',
         'file' => 'sitemap-panchayats.xml',
         'path' => __DIR__ . '/../sitemap-panchayats.xml',
         'icon' => 'fas fa-users',
-        'color' => 'success',
+        'color' => 'warning',
         'desc' => 'Individual Gram Panchayat profiles & District Panchayat/Samiti/ZP hubs across 38 districts.',
         'action' => 'generate_panchayats_sitemap'
     ],
@@ -56,7 +74,7 @@ $sitemap_files = [
         'file' => 'sitemap-extra.xml',
         'path' => __DIR__ . '/../sitemap-extra.xml',
         'icon' => 'fas fa-newspaper',
-        'color' => 'warning',
+        'color' => 'secondary',
         'desc' => 'Published blog news, categories, tags & media image extensions.',
         'action' => 'generate_extra_sitemap'
     ],
@@ -94,6 +112,8 @@ function buildPrimarySitemap($base_url, $path) {
         ['url' => '/mlc', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/representatives', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/panchayat', 'priority' => '0.90', 'changefreq' => 'daily'],
+        ['url' => '/village', 'priority' => '0.90', 'changefreq' => 'daily'],
+        ['url' => '/town', 'priority' => '0.90', 'changefreq' => 'daily'],
         ['url' => '/zila-parishad', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/panchayat-samiti', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/blocks', 'priority' => '0.85', 'changefreq' => 'weekly'],
@@ -333,6 +353,16 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     if (isset($_POST['generate_all_sitemaps'])) {
         buildPrimarySitemap($base_url, $sitemap_files['primary']['path']);
         
+        require_once __DIR__ . '/../generate_village_sitemap.php';
+        ob_start();
+        generateVillageSitemap($base_url);
+        ob_get_clean();
+
+        require_once __DIR__ . '/../generate_town_sitemap.php';
+        ob_start();
+        generateTownSitemap($base_url);
+        ob_get_clean();
+
         require_once __DIR__ . '/../generate_panchayat_sitemap.php';
         ob_start();
         generatePanchayatSitemap();
@@ -341,7 +371,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         buildCensusSitemap($base_url, $sitemap_files['census']['path']);
         buildExtraSitemap($base_url, $sitemap_files['extra']['path'], $conn);
 
-        $message = "🎉 All 4 Sitemaps (Primary, Panchayats, Census, and Extra) successfully generated and updated!";
+        $message = "🎉 All 6 Sitemaps (Primary, Villages, Towns, Panchayats, Census, and Extra) successfully generated and updated!";
     }
 
     // 2. Primary Sitemap
@@ -354,7 +384,25 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         }
     }
 
-    // 3. Panchayats Sitemap
+    // 3. Villages Sitemap
+    elseif (isset($_POST['generate_villages_sitemap'])) {
+        require_once __DIR__ . '/../generate_village_sitemap.php';
+        ob_start();
+        $count = generateVillageSitemap($base_url);
+        ob_get_clean();
+        $message = "Villages Sitemap (sitemap-villages.xml) generated successfully with {$count} URLs!";
+    }
+
+    // 4. Towns Sitemap
+    elseif (isset($_POST['generate_towns_sitemap'])) {
+        require_once __DIR__ . '/../generate_town_sitemap.php';
+        ob_start();
+        $count = generateTownSitemap($base_url);
+        ob_get_clean();
+        $message = "Towns & Slums Sitemap (sitemap-towns.xml) generated successfully with {$count} URLs!";
+    }
+
+    // 5. Panchayats Sitemap
     elseif (isset($_POST['generate_panchayats_sitemap'])) {
         require_once __DIR__ . '/../generate_panchayat_sitemap.php';
         ob_start();
@@ -364,7 +412,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         $message = "Panchayats Sitemap (sitemap-panchayats.xml) generated successfully with {$count} URLs!";
     }
 
-    // 4. Census Sitemap
+    // 6. Census Sitemap
     elseif (isset($_POST['generate_census_sitemap'])) {
         if (buildCensusSitemap($base_url, $sitemap_files['census']['path'])) {
             $count = countSitemapUrls($sitemap_files['census']['path']);
@@ -374,7 +422,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         }
     }
 
-    // 5. Extra Sitemap
+    // 7. Extra Sitemap
     elseif (isset($_POST['generate_extra_sitemap'])) {
         if (buildExtraSitemap($base_url, $sitemap_files['extra']['path'], $conn)) {
             $count = countSitemapUrls($sitemap_files['extra']['path']);
@@ -404,6 +452,7 @@ $districtsCount = count(DataProvider::getDistricts());
 $constituenciesCount = count(DataProvider::getConstituencies());
 $candidatesCount = count(DataProvider::getCandidates());
 $loksabhaCount = count(DataProvider::getLokSabhaMps());
+$mlcCount = count(DataProvider::getMlcs());
 if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitemap.php') {
     return;
 }
@@ -470,7 +519,7 @@ if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitem
                 <p class="text-muted mb-0">Manage search engine crawl indices, dynamic XML generation, and Google/Bing indexing.</p>
             </div>
             <div class="d-flex flex-wrap gap-2">
-                <form method="POST" action="" onsubmit="return confirm('Regenerate ALL 4 platform sitemaps?');">
+                <form method="POST" action="" onsubmit="return confirm('Regenerate ALL 6 platform sitemaps?');">
                     <input type="hidden" name="generate_all_sitemaps" value="1">
                     <button type="submit" class="btn btn-danger fw-bold px-3 py-2 rounded-3 shadow-sm">
                         <i class="fas fa-bolt me-1"></i> Regenerate ALL Sitemaps
@@ -503,7 +552,7 @@ if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitem
                     <div>
                         <small class="text-muted text-uppercase fw-bold" style="font-size:0.75rem;">Total Indexed URLs</small>
                         <h3 class="fw-extrabold mb-0 mt-1 text-dark" style="font-family: 'Outfit', sans-serif;"><?php echo number_format($total_indexed_urls); ?></h3>
-                        <small class="text-success fw-semibold"><i class="fas fa-check me-1"></i>Live from 4 Sitemaps</small>
+                        <small class="text-success fw-semibold"><i class="fas fa-check me-1"></i>Live from 6 Sitemaps</small>
                     </div>
                     <div class="stat-card-icon bg-primary bg-opacity-10 text-primary">
                         <i class="fas fa-link"></i>
@@ -527,12 +576,12 @@ if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitem
             <div class="col-sm-6 col-lg-3">
                 <div class="stat-card-custom d-flex align-items-center justify-content-between">
                     <div>
-                        <small class="text-muted text-uppercase fw-bold" style="font-size:0.75rem;">Panchayats Indexed</small>
-                        <h3 class="fw-extrabold mb-0 mt-1 text-dark" style="font-family: 'Outfit', sans-serif;"><?php echo number_format($sitemap_files['panchayats']['urls']); ?></h3>
-                        <small class="text-muted fw-semibold">38 Districts Full Matrix</small>
+                        <small class="text-muted text-uppercase fw-bold" style="font-size:0.75rem;">Villages Indexed</small>
+                        <h3 class="fw-extrabold mb-0 mt-1 text-dark" style="font-family: 'Outfit', sans-serif;"><?php echo number_format($sitemap_files['villages']['urls']); ?></h3>
+                        <small class="text-muted fw-semibold">44,874 Census Villages</small>
                     </div>
-                    <div class="stat-card-icon bg-warning bg-opacity-10 text-warning">
-                        <i class="fas fa-people-roof"></i>
+                    <div class="stat-card-icon bg-success bg-opacity-10 text-success">
+                        <i class="fas fa-tree"></i>
                     </div>
                 </div>
             </div>
@@ -540,12 +589,12 @@ if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitem
             <div class="col-sm-6 col-lg-3">
                 <div class="stat-card-custom d-flex align-items-center justify-content-between">
                     <div>
-                        <small class="text-muted text-uppercase fw-bold" style="font-size:0.75rem;">Platform Scope</small>
-                        <h3 class="fw-extrabold mb-0 mt-1 text-dark" style="font-family: 'Outfit', sans-serif;">38 Dist. / 243 AC</h3>
-                        <small class="text-primary fw-semibold">534 CD Blocks Census</small>
+                        <small class="text-muted text-uppercase fw-bold" style="font-size:0.75rem;">Towns &amp; Slums</small>
+                        <h3 class="fw-extrabold mb-0 mt-1 text-dark" style="font-family: 'Outfit', sans-serif;"><?php echo number_format($sitemap_files['towns']['urls']); ?></h3>
+                        <small class="text-primary fw-semibold">199 Towns + 670 Slums</small>
                     </div>
                     <div class="stat-card-icon bg-info bg-opacity-10 text-info">
-                        <i class="fas fa-layer-group"></i>
+                        <i class="fas fa-city"></i>
                     </div>
                 </div>
             </div>
@@ -652,6 +701,22 @@ if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitem
 
                             <div class="d-flex justify-content-between align-items-center p-2.5 bg-light rounded-3">
                                 <div class="d-flex align-items-center gap-2">
+                                    <i class="fas fa-tree text-success"></i>
+                                    <span>Census 2011 Villages (44,874 Vil. + 534 Blocks)</span>
+                                </div>
+                                <span class="badge bg-success rounded-pill px-2.5"><?php echo number_format($sitemap_files['villages']['urls']); ?> Villages</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center p-2.5 bg-light rounded-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="fas fa-city text-primary"></i>
+                                    <span>Towns, Municipalities &amp; Slum Wards</span>
+                                </div>
+                                <span class="badge bg-primary rounded-pill px-2.5"><?php echo number_format($sitemap_files['towns']['urls']); ?> Towns/Slums</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center p-2.5 bg-light rounded-3">
+                                <div class="d-flex align-items-center gap-2">
                                     <i class="fas fa-map-location-dot text-danger"></i>
                                     <span>Bihar District Overview & Hub Pages</span>
                                 </div>
@@ -687,7 +752,7 @@ if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitem
                                     <i class="fas fa-users text-success"></i>
                                     <span>Gram Panchayats (Mukhiya & Sarpanch)</span>
                                 </div>
-                                <span class="badge bg-success rounded-pill px-2.5">13,370+ Panchayats</span>
+                                <span class="badge bg-success rounded-pill px-2.5"><?php echo number_format($sitemap_files['panchayats']['urls']); ?> Panchayats</span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center p-2.5 bg-light rounded-3">
