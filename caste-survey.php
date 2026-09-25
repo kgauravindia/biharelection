@@ -1559,33 +1559,164 @@ require_once __DIR__ . '/header.php';
     </div>
 </div>
 
-<!-- Structured Data: JSON-LD Schema -->
+<!-- Structured Data: JSON-LD Schema (Multi-Entity: Dataset, BreadcrumbList, FAQPage, WebPage, ItemList) -->
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Dataset",
-  "name": "2022 Bihar Caste-Based Survey Master Caste Codes Directory",
-  "description": "Comprehensive list of all 215+ caste codes, socioeconomic indicators, poverty rates, and social category demographics published by the General Administration Department (GAD), Government of Bihar for the 2022-2023 Caste-Based Survey.",
-  "url": "<?php echo getCasteSurveyUrl(); ?>",
-  "keywords": [
-    "Bihar Caste Census",
-    "Bihar Caste Codes",
-    "Jati Code List Bihar",
-    "EBC BC SC ST Demographics Bihar",
-    "2022 Bihar Caste Survey",
-    "Patna High Court Caste Reservation Verdict"
-  ],
-  "creator": {
-    "@type": "Organization",
-    "name": "Bihar Election Data Platform",
-    "url": "<?php echo SITE_URL; ?>"
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "2022 Bihar Caste-Based Survey Master Caste Codes & Demographics Directory",
+    "alternateName": "बिहार जाति आधारित गणना 2022-2023: जाति कोड सूची एवं जनसांख्यिकी",
+    "description": "Comprehensive list of all 215+ official caste codes, socioeconomic indicators, monthly family income distribution, category-wise poverty rates, and social category demographics published by the General Administration Department (GAD), Government of Bihar.",
+    "url": "<?php echo getCasteSurveyUrl(); ?>",
+    "keywords": [
+      "Bihar Caste Census",
+      "Bihar Caste Codes",
+      "Jati Code List Bihar",
+      "EBC BC SC ST Demographics Bihar",
+      "2022 Bihar Caste Survey",
+      "Patna High Court Caste Reservation Verdict",
+      "Yadav Caste Code",
+      "Brahmin Caste Code",
+      "Rajput Caste Code",
+      "Kushwaha Caste Code"
+    ],
+    "creator": {
+      "@type": "Organization",
+      "name": "Bihar Election Data Platform",
+      "url": "<?php echo SITE_URL; ?>"
+    },
+    "publisher": {
+      "@type": "GovernmentOrganization",
+      "name": "General Administration Department (GAD), Government of Bihar (सामान्य प्रशासन विभाग, बिहार सरकार)",
+      "url": "https://gad.bihar.gov.in/"
+    },
+    "temporalCoverage": "2022/2024",
+    "spatialCoverage": {
+      "@type": "Place",
+      "name": "Bihar, India",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 25.0961,
+        "longitude": 85.3131
+      }
+    },
+    "distribution": [
+      {
+        "@type": "DataDownload",
+        "encodingFormat": "text/csv",
+        "contentUrl": "<?php echo getCasteSurveyUrl(); ?>"
+      }
+    ]
   },
-  "temporalCoverage": "2022/2024",
-  "spatialCoverage": {
-    "@type": "Place",
-    "name": "Bihar, India"
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "<?php echo SITE_URL; ?>/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Census & Demographics",
+        "item": "<?php echo getCensusUrl(); ?>"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Bihar Caste Survey 2022 (215+ Caste Codes)",
+        "item": "<?php echo getCasteSurveyUrl(); ?>"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "बिहार जाति आधारित गणना में जातियों के लिए कोड क्यों निर्धारित किए गए थे?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "सामान्य प्रशासन विभाग (GAD), बिहार सरकार द्वारा दूसरे चरण की डिजिटल गणना में सभी 215 अधिसूचित जातियों और अन्य राज्यों के निवासियों (कोड 216) के लिए विशिष्ट संख्यात्मक कोड (1 से 216) निर्धारित किए गए थे ताकि BIJAGA मोबाइल ऐप और सर्वर प्रविष्टि में कोई मानवीय त्रुटि न हो।"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "प्रमुख जातियों के आधिकारिक कोड क्या हैं?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "प्रमुख जातियों के आधिकारिक कोड: यादव (165), ब्राह्मण (126), राजपूत (169), भूमिहार (142), कुशवाहा/कोइरी (26), कुर्मी (24), बनिया (122), तेली (83), मल्लाह/निषाद (148), रविदास/चमार (60), दुसाध/पासवान (87), मुसहर (158), अंसारी/मोमिन (161), शेख (181), पठान (105), कायस्थ (21), सुरजापुरी मुस्लिम (187) और अन्य राज्य निवासी (216)।"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "बिहार जाति गणना 2022-2023 के अनुसार राज्य में सर्वाधिक आबादी किस सामाजिक वर्ग की है?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2 अक्टूबर 2023 को जारी आधिकारिक रिपोर्ट के अनुसार, अत्यंत पिछड़ा वर्ग (EBC) 36.01% के साथ सबसे बड़ा समूह है। इसके बाद पिछड़ा वर्ग (BC) 27.13%, अनुसूचित जाति (SC) 19.65%, सामान्य वर्ग 15.52%, और अनुसूचित जनजाति (ST) 1.68% है। व्यक्तिगत जातियों में यादव (14.27%) सबसे बड़ी जाति है।"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "पटना उच्च न्यायालय (Patna High Court) ने 65% आरक्षण कानून पर क्या फैसला दिया है?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "माननीय पटना उच्च न्यायालय की खंडपीठ ने 20 जून 2024 को CWJC संख्या 16760/2023 (गौरव कुमार बनाम बिहार राज्य) में ऐतिहासिक निर्णय देते हुए 65% राज्य आरक्षण अधिनियम 2023 को असंवैधानिक घोषित कर रद्द कर दिया। उच्चतम न्यायालय ने 29 जुलाई 2024 को अंतरिम रोक से इनकार किया। वर्तमान में 50% राज्य आरक्षण + 10% EWS = 60% आरक्षण ही प्रभावी है।"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "बिहार जाति गणना के सामाजिक-आर्थिक और गरीबी आंकड़े क्या दर्शाते हैं?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "7 नवंबर 2023 को विधानसभा में पेश रिपोर्ट के अनुसार, बिहार के 34.13% परिवार (94.42 लाख परिवार) ₹6,000 प्रति माह से कम कमाते हैं। अनुसूचित जाति में गरीबी दर सर्वाधिक 42.93% और अनुसूचित जनजाति में 42.70% है। राज्य की कुल आबादी का मात्र 1.57% (20.49 लाख लोग) सरकारी नौकरी में हैं।"
+        }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Bihar Social Category Population Distribution (2022-2023 Survey)",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Extremely Backward Classes (EBC / BC-1)",
+        "description": "36.01% Share, 4,70,80,514 Population (112 Castes)"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Backward Classes (BC / BC-2 / OBC)",
+        "description": "27.13% Share, 3,54,63,936 Population (29 Castes)"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Scheduled Castes (SC)",
+        "description": "19.65% Share, 2,56,89,820 Population (22 Castes)"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "General / Unreserved (GEN)",
+        "description": "15.52% Share, 2,02,91,079 Population (16 Castes)"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Scheduled Tribes (ST)",
+        "description": "1.68% Share, 21,99,361 Population (32 Castes)"
+      }
+    ]
   }
-}
+]
 </script>
 
 <!-- Client-side Interactive Search, Filter & Nav Highlighting Logic -->

@@ -11,14 +11,54 @@ require_once __DIR__ . '/includes/acts_data.php';
 $summary = BiharActsDataProvider::getSummary();
 $allActs = BiharActsDataProvider::getAllActs();
 
+// Dynamic Act Counts by Decade and Year
+$decadeCounts = [
+    'ALL' => count($allActs),
+    '2020s' => 0,
+    '2010s' => 0,
+    '2000s' => 0,
+    '1990s' => 0,
+    '1980s' => 0,
+    '1970s' => 0,
+    '1960s' => 0,
+    '1950s' => 0,
+    '1930-40s' => 0,
+];
+$yearCounts = [];
+
+foreach ($allActs as $act) {
+    $yr = intval($act['year']);
+    $yearCounts[$yr] = ($yearCounts[$yr] ?? 0) + 1;
+
+    if ($yr >= 2020) {
+        $decadeCounts['2020s']++;
+    } elseif ($yr >= 2010) {
+        $decadeCounts['2010s']++;
+    } elseif ($yr >= 2000) {
+        $decadeCounts['2000s']++;
+    } elseif ($yr >= 1990) {
+        $decadeCounts['1990s']++;
+    } elseif ($yr >= 1980) {
+        $decadeCounts['1980s']++;
+    } elseif ($yr >= 1970) {
+        $decadeCounts['1970s']++;
+    } elseif ($yr >= 1960) {
+        $decadeCounts['1960s']++;
+    } elseif ($yr >= 1950) {
+        $decadeCounts['1950s']++;
+    } else {
+        $decadeCounts['1930-40s']++;
+    }
+}
+
 // Query param filters
 $selectedYear = isset($_GET['year']) ? intval($_GET['year']) : null;
 $selectedCategory = isset($_GET['category']) ? trim($_GET['category']) : '';
 $searchQuery = isset($_GET['q']) ? trim($_GET['q']) : '';
 
-$pageTitle = 'Bihar Acts & Enacted Laws (1937–2026): 1,723+ Vidhan Sabha Acts Directory (बिहार अधिनियम सूची)';
-$pageDescription = 'Official Bihar Legislative Assembly (विधान सभा) complete directory of 1,723+ enacted Acts and Laws passed from 1937 to 2026. Search by year, category, landmark acts, and download official PDF.';
-$pageKeywords = 'Bihar Acts, Bihar Vidhan Sabha Acts, Bihar Legislative Assembly Laws, Bihar Enacted Bills, Bihar Acts 1937 to 2026, Bihar Land Reforms Act, Bihar Panchayati Raj Act, Bihar Prohibition Act, Bihar Reservation Act, Vidhan Sabha Act List';
+$pageTitle = 'Bihar Acts & Enacted Laws (1937–2026): 1,723+ Vidhan Sabha Acts Directory (बिहार विधान सभा अधिनियम)';
+$pageDescription = 'Official and complete directory of all 1,723+ Acts & statutory laws enacted by Bihar Legislative Assembly (विधान सभा) from 1937 to 2026. Search by year, category, landmark acts, and download official Gazette PDF.';
+$pageKeywords = 'Bihar Acts, Bihar Vidhan Sabha Acts, Bihar Legislative Assembly Laws, Bihar Enacted Bills, Bihar Acts 1937 to 2026, Bihar Land Reforms Act 1950, Bihar Panchayati Raj Act 2006, Bihar Prohibition Act 2016, Bihar Right to Public Services Act 2011, Bihar Reservation Act, Bihar Vidhan Sabha PDF';
 $pageCanonical = getBiharActsUrl($selectedYear, $selectedCategory);
 $activeNav = 'assembly';
 
@@ -259,13 +299,14 @@ require_once __DIR__ . '/header.php';
                         <div class="input-group">
                             <span class="input-group-text bg-white text-muted border-end-0"><i class="bi bi-calendar3"></i></span>
                             <select id="actsYearSelect" class="form-select border-start-0 py-2">
-                                <option value="ALL">All Years (1937–2026)</option>
+                                <option value="ALL">All Years (1937–2026) — <?php echo number_format($summary['total_acts']); ?> Acts</option>
                                 <?php 
                                 $revYears = array_reverse($summary['years_list']);
                                 foreach ($revYears as $yr): 
+                                    $cnt = $yearCounts[$yr] ?? 0;
                                 ?>
                                 <option value="<?php echo $yr; ?>" <?php echo $selectedYear == $yr ? 'selected' : ''; ?>>
-                                    Year <?php echo $yr; ?>
+                                    Year <?php echo $yr; ?> (<?php echo $cnt; ?> <?php echo $cnt === 1 ? 'Act' : 'Acts'; ?>)
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -277,10 +318,10 @@ require_once __DIR__ . '/header.php';
                         <div class="input-group">
                             <span class="input-group-text bg-white text-muted border-end-0"><i class="bi bi-funnel"></i></span>
                             <select id="actsCategorySelect" class="form-select border-start-0 py-2">
-                                <option value="ALL">All Categories</option>
+                                <option value="ALL">All Categories (<?php echo number_format($summary['total_acts']); ?> Acts)</option>
                                 <?php foreach ($summary['categories'] as $catName => $catCount): ?>
                                 <option value="<?php echo htmlspecialchars($catName); ?>" <?php echo $selectedCategory === $catName ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($catName); ?> (<?php echo $catCount; ?>)
+                                    <?php echo htmlspecialchars($catName); ?> (<?php echo number_format($catCount); ?>)
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -289,19 +330,19 @@ require_once __DIR__ . '/header.php';
 
                 </div>
 
-                <!-- Decade Fast Navigation Filter Chips -->
+                <!-- Decade Fast Navigation Filter Chips with Exact Act Counts -->
                 <div class="d-flex flex-wrap align-items-center gap-1.5 mt-3 pt-3 border-top">
-                    <span class="small fw-bold text-muted text-uppercase me-1" style="font-size: 0.75rem;">Decade:</span>
-                    <span class="decade-chip active" data-decade="ALL">All Eras</span>
-                    <span class="decade-chip" data-decade="2020s">2020–2026 (Recent)</span>
-                    <span class="decade-chip" data-decade="2010s">2010–2019</span>
-                    <span class="decade-chip" data-decade="2000s">2000–2009</span>
-                    <span class="decade-chip" data-decade="1990s">1990–1999</span>
-                    <span class="decade-chip" data-decade="1980s">1980–1989</span>
-                    <span class="decade-chip" data-decade="1970s">1970–1979</span>
-                    <span class="decade-chip" data-decade="1960s">1960–1969</span>
-                    <span class="decade-chip" data-decade="1950s">1950–1959</span>
-                    <span class="decade-chip" data-decade="1930-40s">1937–1949 (Early)</span>
+                    <span class="small fw-bold text-muted text-uppercase me-1" style="font-size: 0.75rem;"><i class="bi bi-hourglass-split"></i> Decade Count:</span>
+                    <span class="decade-chip active" data-decade="ALL">All Eras <span class="badge bg-secondary ms-1"><?php echo number_format($decadeCounts['ALL']); ?></span></span>
+                    <span class="decade-chip" data-decade="2020s">2020–2026 <span class="badge bg-success ms-1"><?php echo $decadeCounts['2020s']; ?></span></span>
+                    <span class="decade-chip" data-decade="2010s">2010–2019 <span class="badge bg-primary ms-1"><?php echo $decadeCounts['2010s']; ?></span></span>
+                    <span class="decade-chip" data-decade="2000s">2000–2009 <span class="badge bg-info text-dark ms-1"><?php echo $decadeCounts['2000s']; ?></span></span>
+                    <span class="decade-chip" data-decade="1990s">1990–1999 <span class="badge bg-secondary ms-1"><?php echo $decadeCounts['1990s']; ?></span></span>
+                    <span class="decade-chip" data-decade="1980s">1980–1989 <span class="badge bg-secondary ms-1"><?php echo $decadeCounts['1980s']; ?></span></span>
+                    <span class="decade-chip" data-decade="1970s">1970–1979 <span class="badge bg-secondary ms-1"><?php echo $decadeCounts['1970s']; ?></span></span>
+                    <span class="decade-chip" data-decade="1960s">1960–1969 <span class="badge bg-secondary ms-1"><?php echo $decadeCounts['1960s']; ?></span></span>
+                    <span class="decade-chip" data-decade="1950s">1950–1959 <span class="badge bg-secondary ms-1"><?php echo $decadeCounts['1950s']; ?></span></span>
+                    <span class="decade-chip" data-decade="1930-40s">1937–1949 <span class="badge bg-secondary ms-1"><?php echo $decadeCounts['1930-40s']; ?></span></span>
                 </div>
 
                 <!-- Quick Filter Chips for Major Famous Acts -->
@@ -619,22 +660,112 @@ require_once __DIR__ . '/header.php';
     </div>
 </div>
 
-<!-- Structured Data: JSON-LD Schema -->
+<!-- Structured Data: JSON-LD Schema (Multi-Entity: Legislation, Dataset, BreadcrumbList, FAQPage) -->
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Legislation",
-  "name": "Bihar Legislative Assembly Enacted Acts (1937–2026)",
-  "description": "Complete official repository of 1,723+ statutory Acts passed by the Bihar Legislative Assembly from 1937 to 2026 across 89 years.",
-  "legislationType": "Statute / Enacted Act",
-  "legislationJurisdiction": "Bihar, India",
-  "url": "<?php echo getBiharActsUrl(); ?>",
-  "publisher": {
-    "@type": "GovernmentOrganization",
-    "name": "Bihar Legislative Assembly (बिहार विधान सभा)",
-    "url": "https://vidhansabha.bihar.gov.in/"
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Legislation",
+    "name": "Bihar Legislative Assembly Enacted Acts (1937–2026)",
+    "alternateName": "बिहार विधान सभा अधिनियम सूची (1937–2026)",
+    "description": "Complete official repository of 1,723+ statutory Acts passed by the Bihar Legislative Assembly from 1937 to 2026 across 89 years.",
+    "legislationType": "Statute / Enacted Act",
+    "legislationJurisdiction": "Bihar, India",
+    "url": "<?php echo getBiharActsUrl(); ?>",
+    "publisher": {
+      "@type": "GovernmentOrganization",
+      "name": "Bihar Legislative Assembly (बिहार विधान सभा)",
+      "url": "https://vidhansabha.bihar.gov.in/"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "1,723+ Bihar Legislative Assembly Enacted Acts Dataset (1937-2026)",
+    "description": "Historical and contemporary legal repository containing 1,723 enactments categorized by year, subject, and act number.",
+    "url": "<?php echo getBiharActsUrl(); ?>",
+    "keywords": [
+      "Bihar Acts",
+      "Bihar Vidhan Sabha Acts",
+      "Bihar Laws 1937 to 2026",
+      "Bihar Land Reforms Act",
+      "Bihar Panchayati Raj Act",
+      "Bihar Prohibition Act"
+    ],
+    "creator": {
+      "@type": "Organization",
+      "name": "Bihar Election Data Platform",
+      "url": "<?php echo SITE_URL; ?>"
+    },
+    "temporalCoverage": "1937/2026",
+    "spatialCoverage": {
+      "@type": "Place",
+      "name": "Bihar, India"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "<?php echo SITE_URL; ?>/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Vidhan Sabha",
+        "item": "<?php echo SITE_URL; ?>/mla"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Bihar Acts (1937–2026)",
+        "item": "<?php echo getBiharActsUrl(); ?>"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "बिहार विधान सभा द्वारा वर्ष 1937 से अब तक कुल कितने अधिनियम पारित किए गए हैं?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "बिहार विधान सभा सचिवालय द्वारा प्रकाशित आधिकारिक दस्तावेज के अनुसार, वर्ष 1937 में प्रथम विधानमंडल से लेकर वर्ष 2026 तक 89 वर्षों में कुल 1,723 से अधिक अधिनियम (Acts) पारित किए गए हैं। इनमें वित्त, भूमि सुधार, शिक्षा, पंचायती राज, आरक्षण और मद्यनिषेध जैसे कानून शामिल हैं।"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "वर्ष 1937 में बिहार विधानमंडल द्वारा पारित पहला अधिनियम कौन सा था?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "वर्ष 1937 का पहला अधिनियम 'बिहार मंत्रियों का वेतन अधिनियम, 1937' (Bihar Ministers' Salaries Act, 1937) था। इसके बाद बिहार विधानमंडल अधिकारियों का वेतन अधिनियम और दुर्भिक्ष राहत कोष अधिनियम पारित किए गए थे।"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "क्या इस सूची में भूमि सुधार, शराबबंदी और आरक्षण जैसे प्रमुख कानून शामिल हैं?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "हाँ, इस सूची में बिहार भूमि सुधार अधिनियम 1950 (जमींदारी उन्मूलन), बिहार पंचायती राज अधिनियम 2006 (महिलाओं को 50% आरक्षण), बिहार मद्यनिषेध और उत्पाद अधिनियम 2016 (शराबबंदी), और बिहार आरक्षण संशोधन अधिनियम 2023 जैसे ऐतिहासिक कानून शामिल हैं।"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "क्या इस आधिकारिक सूची का मूल सरकारी पीडीएफ दस्तावेज डाउनलोड किया जा सकता है?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "हाँ, बिहार विधान सभा की आधिकारिक वेबसाइट पर उपलब्ध 43 पृष्ठों की मूल पीडीएफ फाइल को इस पृष्ठ पर दिए गए 'Download Official Vidhan Sabha PDF' बटन पर क्लिक करके सीधे डाउनलोड किया जा सकता है।"
+        }
+      }
+    ]
   }
-}
+]
 </script>
 
 <!-- Client-side Interactive Search & Filtering Logic -->
