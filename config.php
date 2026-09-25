@@ -1133,24 +1133,46 @@ class DataProvider {
         }
     }
 
-    public static function getTownBySlug($districtSlug, $townSlug) {
+    public static function getTownBySlug($districtSlug, $townSlug = '') {
         $pdo = Database::getConnection();
         if (!$pdo) return null;
         try {
-            if (!empty($districtSlug)) {
+            $dSlug = strtolower(trim($districtSlug ?? ''));
+            $tSlug = strtolower(trim($townSlug ?? ''));
+
+            if (!empty($dSlug) && !empty($tSlug)) {
                 $stmt = $pdo->prepare("SELECT * FROM census_towns_2011 WHERE district_slug = :dslug AND town_slug = :tslug LIMIT 1");
                 $stmt->execute([
-                    ':dslug' => strtolower(trim($districtSlug)),
-                    ':tslug' => strtolower(trim($townSlug))
+                    ':dslug' => $dSlug,
+                    ':tslug' => $tSlug
                 ]);
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($row) return $row;
             }
 
-            // Fallback: search by town_slug across all districts
-            $stmt2 = $pdo->prepare("SELECT * FROM census_towns_2011 WHERE town_slug = :tslug LIMIT 1");
-            $stmt2->execute([':tslug' => strtolower(trim($townSlug))]);
-            return $stmt2->fetch(PDO::FETCH_ASSOC) ?: null;
+            $searchSlug = !empty($tSlug) ? $tSlug : $dSlug;
+            if (!empty($searchSlug)) {
+                if (is_numeric($searchSlug) && strlen($searchSlug) >= 5) {
+                    $stmtCode = $pdo->prepare("SELECT * FROM census_towns_2011 WHERE town_code = :code LIMIT 1");
+                    $stmtCode->execute([':code' => $searchSlug]);
+                    $row = $stmtCode->fetch(PDO::FETCH_ASSOC);
+                    if ($row) return $row;
+                }
+
+                // Fallback: search by town_slug across all districts
+                $stmt2 = $pdo->prepare("SELECT * FROM census_towns_2011 WHERE town_slug = :tslug LIMIT 1");
+                $stmt2->execute([':tslug' => $searchSlug]);
+                $row = $stmt2->fetch(PDO::FETCH_ASSOC);
+                if ($row) return $row;
+
+                // Fallback: search by town_name slugified
+                $stmt3 = $pdo->prepare("SELECT * FROM census_towns_2011 WHERE LOWER(REPLACE(REPLACE(REPLACE(REPLACE(town_name, '(', ''), ')', ''), '.', ''), ' ', '-')) LIKE :tslug LIMIT 1");
+                $stmt3->execute([':tslug' => '%' . $searchSlug . '%']);
+                $row = $stmt3->fetch(PDO::FETCH_ASSOC);
+                if ($row) return $row;
+            }
+
+            return null;
         } catch (Throwable $e) {
             return null;
         }

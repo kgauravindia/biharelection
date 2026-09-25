@@ -24,7 +24,7 @@ $perPage = 30;
 
 $districtsList = DataProvider::getDistricts();
 
-// Handle generic slug routing
+// Handle generic slug routing and parameter normalization
 if (empty($codeParam) && empty($townParam) && empty($slumIdParam) && !empty($slugParam)) {
     if (is_numeric($slugParam) && strlen($slugParam) >= 5) {
         $codeParam = $slugParam;
@@ -39,8 +39,26 @@ if (empty($codeParam) && empty($townParam) && empty($slumIdParam) && !empty($slu
     }
 }
 
+// When a single parameter is passed as district (e.g. /town/patna-m-corp-og or /town/801373)
+if (empty($codeParam) && empty($townParam) && empty($slumIdParam) && !empty($districtParam)) {
+    if (is_numeric($districtParam) && strlen($districtParam) >= 5) {
+        $codeParam = $districtParam;
+        $districtParam = '';
+    } else {
+        $matchedDist = DataProvider::getDistrictBySlug($districtParam);
+        if (!$matchedDist) {
+            // It's not a district; check if it matches a town
+            $potentialTown = DataProvider::getTownBySlug('', $districtParam);
+            if ($potentialTown) {
+                $town = $potentialTown;
+                $districtParam = $potentialTown['district_slug'];
+                $townParam = $potentialTown['town_slug'];
+            }
+        }
+    }
+}
+
 $slumObj = null;
-$town = null;
 
 // 1. Try to find a specific Slum / Ward Profile
 if ($slumIdParam > 0) {
@@ -48,7 +66,7 @@ if ($slumIdParam > 0) {
     if ($slumObj) {
         $town = DataProvider::getTownByCode($slumObj['town_code']);
     }
-} elseif (!empty($slumParam) && !empty($townParam)) {
+} elseif (!empty($slumParam) && (!empty($townParam) || !empty($districtParam))) {
     $slumObj = DataProvider::getSlumBySlug($districtParam, $townParam, $slumParam);
     if ($slumObj) {
         $town = DataProvider::getTownByCode($slumObj['town_code']);
@@ -56,7 +74,7 @@ if ($slumIdParam > 0) {
 }
 
 // 2. If not a slum profile, try to find a specific Town
-if (!$slumObj) {
+if (!$slumObj && !$town) {
     if (!empty($codeParam)) {
         $town = DataProvider::getTownByCode($codeParam);
     } elseif (!empty($townParam)) {
@@ -65,6 +83,8 @@ if (!$slumObj) {
         } else {
             $town = DataProvider::getTownBySlug($districtParam, $townParam);
         }
+    } elseif (!empty($districtParam) && !DataProvider::getDistrictBySlug($districtParam)) {
+        $town = DataProvider::getTownBySlug('', $districtParam);
     }
 }
 
@@ -75,11 +95,11 @@ if ($slumObj) {
     // =========================================================================
     $sName = $slumObj['slum_name'];
     $sId = $slumObj['id'];
-    $tName = $slumObj['town_name'];
-    $tCode = $slumObj['town_code'];
-    $tSlug = $slumObj['town_slug'];
-    $dName = $slumObj['district_name'];
-    $dSlug = $slumObj['district_slug'];
+    $tName = $slumObj['town_name'] ?: ($town['town_name'] ?? '');
+    $tCode = $slumObj['town_code'] ?: ($town['town_code'] ?? '');
+    $tSlug = $town['town_slug'] ?? ($slumObj['town_slug'] ?: slugify($tName));
+    $dName = $slumObj['district_name'] ?: ($town['district_name'] ?? '');
+    $dSlug = $town['district_slug'] ?? ($slumObj['district_slug'] ?: slugify($dName));
     $bName = $slumObj['sub_district_name'] ?: ($town['cd_block_name'] ?? 'Block');
     $bSlug = $slumObj['sub_district_slug'];
     $isNotified = ((int)$slumObj['is_notified'] === 1);
