@@ -109,11 +109,11 @@ $activeNav = $activeNav ?? 'home';
 
                     <!-- District & Block Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['districts', 'district', 'blocks', 'block', 'census', 'caste']) ? 'active text-warning' : ''; ?>" href="#" id="districtBlockDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['districts', 'district', 'blocks', 'block', 'census', 'caste', 'village', 'town']) ? 'active text-warning' : ''; ?>" href="#" id="districtBlockDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             District &amp; Block
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="districtBlockDropdown">
-                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Administrative Units</h6></li>
+                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Administrative &amp; Census</h6></li>
                             <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/district">
                                     <span>🏢</span>
@@ -128,16 +128,25 @@ $activeNav = $activeNav ?? 'home';
                                     <span>📍</span>
                                     <div>
                                         <div class="fw-bold text-primary">534 CD Blocks Directory</div>
-                                        <small class="text-muted">Sub-districts, Samitis &amp; Panchayats</small>
+                                        <small class="text-muted">Sub-districts &amp; Block Administration</small>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatSamitiUrl(); ?>">
-                                    <span>🌾</span>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getVillageUrl(); ?>">
+                                    <span>🏡</span>
                                     <div>
-                                        <div class="fw-bold">Block Samiti &amp; Pramukh</div>
-                                        <small class="text-muted">389 Blocks &amp; Samiti leadership</small>
+                                        <div class="fw-bold text-success">44,874 Villages Directory</div>
+                                        <small class="text-muted">Census 2011 Rural Profiles &amp; Demographics</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getTownUrl(); ?>">
+                                    <span>🏙️</span>
+                                    <div>
+                                        <div class="fw-bold text-info">198 Towns &amp; Slums Directory</div>
+                                        <small class="text-muted">Urban Census 2011 &amp; Slum Profiles</small>
                                     </div>
                                 </a>
                             </li>
@@ -152,39 +161,11 @@ $activeNav = $activeNav ?? 'home';
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getVillageUrl(); ?>">
-                                    <span>🏡</span>
-                                    <div>
-                                        <div class="fw-bold text-success">44,874 Villages Directory</div>
-                                        <small class="text-muted">Population, GP &amp; Census 2011 Data</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getTownUrl(); ?>">
-                                    <span>🏙️</span>
-                                    <div>
-                                        <div class="fw-bold text-info">198 Towns &amp; Slums Directory</div>
-                                        <small class="text-muted">Urban Census 2011 &amp; Slum Profiles</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getCasteSurveyUrl(); ?>">
                                     <span>📋</span>
                                     <div>
                                         <div class="fw-bold text-warning">2022 Caste Survey &amp; Codes</div>
                                         <small class="text-muted">215+ Official Caste Codes Directory</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider my-1"></li>
-                            <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getZilaParishadUrl(); ?>">
-                                    <span>🏛️</span>
-                                    <div>
-                                        <div class="fw-bold">Zila Parishad Boards</div>
-                                        <small class="text-muted">38 District Boards &amp; Ward Members</small>
                                     </div>
                                 </a>
                             </li>
@@ -267,47 +248,37 @@ $activeNav = $activeNav ?? 'home';
                         </ul>
                     </li>
 
-                    <!-- Panchayat Dropdown -->
+                    <!-- Panchayat (3-Tier Local Bodies) Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['panchayat', 'mukhiya', 'sarpanch', 'zila-parishad', 'samiti', 'panchayat-samiti']) ? 'active text-warning' : ''; ?>" href="#" id="panchayatDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Panchayat
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="panchayatDropdown">
-                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Panchayati Raj Directory</h6></li>
-                            <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatUrl(); ?>">
-                                    <span>🏡</span>
-                                    <div>
-                                        <div class="fw-bold text-primary">Gram Panchayat Directory</div>
-                                        <small class="text-muted">8,400+ Gram Panchayats (Mukhiya &amp; Sarpanch)</small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/blocks">
-                                    <span>🏢</span>
-                                    <div>
-                                        <div class="fw-bold">534 CD Blocks Directory</div>
-                                        <small class="text-muted">All Bihar Blocks &amp; Sub-districts</small>
-                                    </div>
-                                </a>
-                            </li>
+                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Panchayati Raj (3 Tiers)</h6></li>
                             <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getZilaParishadUrl(); ?>">
                                     <span>🏛️</span>
                                     <div>
-                                        <div class="fw-bold">Zila Parishad Ward Members</div>
+                                        <div class="fw-bold text-dark">District: Zila Parishad Boards</div>
                                         <small class="text-muted">38 District Boards &amp; 1,099+ Wards</small>
                                     </div>
                                 </a>
                             </li>
-                            <li><hr class="dropdown-divider my-1"></li>
                             <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatSamitiUrl(); ?>">
-                                    <span>⏳</span>
+                                    <span>🌾</span>
                                     <div>
-                                        <div class="fw-bold">Block Samiti &amp; Pramukh</div>
-                                        <small class="text-muted">389 Block Pramukhs &amp; Up-Pramukhs</small>
+                                        <div class="fw-bold text-primary">Block: Panchayat Samiti &amp; Pramukh</div>
+                                        <small class="text-muted">389 Blocks &amp; Samiti Leadership</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatUrl(); ?>">
+                                    <span>🏡</span>
+                                    <div>
+                                        <div class="fw-bold text-success">Village: Gram Panchayats</div>
+                                        <small class="text-muted">8,400+ Gram Panchayats (Mukhiya &amp; Sarpanch)</small>
                                     </div>
                                 </a>
                             </li>
