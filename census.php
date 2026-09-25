@@ -521,8 +521,13 @@ require_once __DIR__ . '/header.php';
                                 <td class="text-end font-monospace"><?php echo number_format($v['area_hectares'] ?? 0, 1); ?></td>
                                 <td class="text-start small">
                                     <?php if (!empty($v['nearest_town_name'])): ?>
-                                        <div><i class="bi bi-geo-alt text-danger"></i> <?php echo htmlspecialchars($v['nearest_town_name']); ?></div>
-                                        <small class="text-muted"><?php echo htmlspecialchars($v['nearest_town_dist_km']); ?> km away</small>
+                                        <div><i class="bi bi-geo-alt text-danger"></i> <?php echo htmlspecialchars((string)$v['nearest_town_name']); ?></div>
+                                        <?php 
+                                        $dist = $v['nearest_town_distance'] ?? null;
+                                        if ($dist !== null && $dist !== ''): 
+                                        ?>
+                                            <small class="text-muted"><?php echo htmlspecialchars((string)$dist); ?> km away</small>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <span class="text-muted">-</span>
                                     <?php endif; ?>
