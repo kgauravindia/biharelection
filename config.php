@@ -1053,6 +1053,73 @@ class DataProvider {
             return [];
         }
     }
+
+    public static function getVillageByCode($code) {
+        $pdo = Database::getConnection();
+        if (!$pdo || empty($code)) return null;
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE village_code = :code LIMIT 1");
+            $stmt->execute([':code' => trim($code)]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (Throwable $e) {
+            return null;
+        }
+    }
+
+    public static function getVillageBySlug($districtSlug, $blockSlug, $villageSlug) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return null;
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE district_slug = :dslug AND (sub_district_slug = :bslug OR cd_block_name LIKE :bslug_like) AND village_slug = :vslug LIMIT 1");
+            $stmt->execute([
+                ':dslug' => strtolower(trim($districtSlug)),
+                ':bslug' => strtolower(trim($blockSlug)),
+                ':bslug_like' => '%' . trim($blockSlug) . '%',
+                ':vslug' => strtolower(trim($villageSlug))
+            ]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row) return $row;
+
+            // Fallback: match village_slug across district
+            $stmt2 = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE district_slug = :dslug AND village_slug = :vslug LIMIT 1");
+            $stmt2->execute([
+                ':dslug' => strtolower(trim($districtSlug)),
+                ':vslug' => strtolower(trim($villageSlug))
+            ]);
+            return $stmt2->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (Throwable $e) {
+            return null;
+        }
+    }
+
+    public static function getNearbyVillages($districtSlug, $blockSlug = null, $gpSlug = null, $excludeId = 0, $limit = 8) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $where = ["id != :exId", "district_slug = :dslug"];
+            $params = [':exId' => (int)$excludeId, ':dslug' => strtolower(trim($districtSlug))];
+            
+            if (!empty($gpSlug)) {
+                $where[] = "gram_panchayat_slug = :gpslug";
+                $params[':gpslug'] = strtolower(trim($gpSlug));
+            } elseif (!empty($blockSlug)) {
+                $where[] = "(sub_district_slug = :bslug OR cd_block_name LIKE :bslug_like)";
+                $params[':bslug'] = strtolower(trim($blockSlug));
+                $params[':bslug_like'] = '%' . trim($blockSlug) . '%';
+            }
+            
+            $whereSql = implode(' AND ', $where);
+            $stmt = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE $whereSql ORDER BY population DESC LIMIT :limit");
+            foreach ($params as $k => $v) {
+                $stmt->bindValue($k, $v);
+            }
+            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        } catch (Throwable $e) {
+            return [];
+        }
+    }
 }
 
 // Meta helper for SEO
@@ -1481,6 +1548,24 @@ function getCensusUrl($districtSlug = '', $subdistrictSlug = '') {
         return SITE_URL . "/census/{$districtSlug}";
     }
     return SITE_URL . "/census";
+}
+
+function getVillageUrl($districtSlug = '', $blockSlug = '', $villageSlugOrCode = '') {
+    $d = slugify($districtSlug);
+    $b = slugify($blockSlug);
+    $v = is_numeric($villageSlugOrCode) ? (string)$villageSlugOrCode : slugify($villageSlugOrCode);
+    
+    if (is_numeric($villageSlugOrCode) && empty($d)) {
+        return SITE_URL . "/village/{$villageSlugOrCode}";
+    }
+    if ($d && $b && $v) {
+        return SITE_URL . "/village/{$d}/{$b}/{$v}";
+    } elseif ($d && $b) {
+        return SITE_URL . "/village/{$d}/{$b}";
+    } elseif ($d) {
+        return SITE_URL . "/village/{$d}";
+    }
+    return SITE_URL . "/village";
 }
 
 function getCasteSurveyUrl($codeOrSlug = '') {

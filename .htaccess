@@ -209,6 +209,16 @@ AddDefaultCharset UTF-8
     RewriteRule ^bihar-laws/?$ bihar-acts.php [L,QSA]
 
     # -------------------------------------------------------------
+    # 11d. Census Villages Directory & Profile (44,874 Villages)
+    # -------------------------------------------------------------
+    RewriteRule ^villages/?$ village.php [L,QSA]
+    RewriteRule ^village/?$ village.php [L,QSA]
+    RewriteRule ^village/([0-9]{5,8})/?$ village.php?code=$1 [L,QSA]
+    RewriteRule ^village/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ village.php?district=$1&block=$2&village=$3 [L,QSA]
+    RewriteRule ^village/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ village.php?district=$1&block=$2 [L,QSA]
+    RewriteRule ^village/([a-zA-Z0-9_-]+)/?$ village.php?district=$1 [L,QSA]
+
+    # -------------------------------------------------------------
     # 12. Candidates, Auth & Other Pages
     # -------------------------------------------------------------
     RewriteRule ^candidate/([a-zA-Z0-9_-]+)/?$ candidate.php?slug=$1 [L,QSA]

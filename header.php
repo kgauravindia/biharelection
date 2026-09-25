@@ -152,6 +152,15 @@ $activeNav = $activeNav ?? 'home';
                                 </a>
                             </li>
                             <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getVillageUrl(); ?>">
+                                    <span>🏡</span>
+                                    <div>
+                                        <div class="fw-bold text-success">44,874 Villages Directory</div>
+                                        <small class="text-muted">Population, GP &amp; Census 2011 Data</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getCasteSurveyUrl(); ?>">
                                     <span>📋</span>
                                     <div>
