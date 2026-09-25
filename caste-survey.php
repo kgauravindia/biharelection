@@ -14,9 +14,58 @@ $reservationEvolution = CasteDataProvider::getReservationEvolution();
 $surveyTimeline = CasteDataProvider::getTimeline();
 $govtLinks = CasteDataProvider::getGovtLinks();
 
-// Query param handling for direct search / filter
+// Dynamic Category & Religion Counts
+$categoryCounts = [
+    'ALL' => count($castes),
+    'EBC' => 0,
+    'BC' => 0,
+    'SC' => 0,
+    'ST' => 0,
+    'GEN' => 0,
+    'OTHER' => 0,
+];
+$religionCounts = [
+    'ALL' => count($castes),
+    'HINDU' => 0,
+    'MUSLIM' => 0,
+    'CHRISTIAN' => 0,
+    'SIKH' => 0,
+    'JAIN' => 0,
+    'BUDDHIST' => 0,
+    'OTHER' => 0,
+];
+
+foreach ($castes as $c) {
+    $cat = strtoupper($c['category'] ?? 'OTHER');
+    if (isset($categoryCounts[$cat])) {
+        $categoryCounts[$cat]++;
+    } else {
+        $categoryCounts['OTHER']++;
+    }
+
+    $rel = strtoupper($c['religion'] ?? 'OTHER');
+    if (strpos($rel, 'HINDU') !== false) {
+        $religionCounts['HINDU']++;
+    } elseif (strpos($rel, 'MUSLIM') !== false || strpos($rel, 'ISLAM') !== false) {
+        $religionCounts['MUSLIM']++;
+    } elseif (strpos($rel, 'CHRISTIAN') !== false) {
+        $religionCounts['CHRISTIAN']++;
+    } elseif (strpos($rel, 'SIKH') !== false) {
+        $religionCounts['SIKH']++;
+    } elseif (strpos($rel, 'JAIN') !== false) {
+        $religionCounts['JAIN']++;
+    } elseif (strpos($rel, 'BUDDHIST') !== false) {
+        $religionCounts['BUDDHIST']++;
+    } else {
+        $religionCounts['OTHER']++;
+    }
+}
+
+// Query param handling for direct search / filter / sort
 $selectedCode = isset($_GET['code']) ? intval($_GET['code']) : null;
-$selectedCategory = isset($_GET['category']) ? strtoupper(trim($_GET['category'])) : '';
+$selectedCategory = isset($_GET['category']) ? strtoupper(trim($_GET['category'])) : 'ALL';
+$selectedReligion = isset($_GET['religion']) ? strtoupper(trim($_GET['religion'])) : 'ALL';
+$selectedSort = isset($_GET['sort']) ? trim($_GET['sort']) : 'code_asc';
 $searchQuery = isset($_GET['q']) ? trim($_GET['q']) : (isset($_GET['caste']) ? trim($_GET['caste']) : '');
 
 $pageTitle = '2022 Bihar Caste-Based Survey: Complete 215+ Caste Code List & Demographics (बिहार जाति कोड)';
@@ -196,6 +245,19 @@ require_once __DIR__ . '/header.php';
     font-weight: 700;
     transition: all 0.18s ease;
 }
+.filter-rel-btn {
+    border-radius: 24px;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.18s ease;
+}
+.filter-rel-btn.active {
+    background: #0f172a !important;
+    color: #f59e0b !important;
+    border-color: #0f172a !important;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+}
 .quick-chip {
     cursor: pointer;
     border-radius: 20px;
@@ -213,6 +275,47 @@ require_once __DIR__ . '/header.php';
     border-color: #f59e0b;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(245, 158, 11, 0.25);
+}
+
+.sort-quick-btn {
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    transition: all 0.18s ease;
+}
+.sort-quick-btn.active {
+    background: #0f172a !important;
+    color: #f59e0b !important;
+    border-color: #0f172a !important;
+}
+
+/* Sortable Table Columns */
+.sortable-th {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+.sortable-th:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+.sortable-th .sort-icon {
+    font-size: 0.82rem;
+    opacity: 0.45;
+    margin-left: 4px;
+    transition: all 0.15s ease;
+}
+.sortable-th:hover .sort-icon {
+    opacity: 0.85;
+}
+.sortable-th.active-sort {
+    color: #0f172a !important;
+    background-color: #e2e8f0 !important;
+}
+.sortable-th.active-sort .sort-icon {
+    opacity: 1;
+    color: #d97706 !important;
 }
 
 .copy-btn {
@@ -435,12 +538,18 @@ require_once __DIR__ . '/header.php';
                     <!-- Sort / Options Dropdown -->
                     <div class="col-md-6 col-lg-3">
                         <div class="input-group">
-                            <span class="input-group-text bg-white text-muted border-end-0"><i class="bi bi-sort-numeric-down"></i></span>
+                            <span class="input-group-text bg-white text-muted border-end-0"><i class="bi bi-arrow-down-up text-warning"></i></span>
                             <select id="casteSortSelect" class="form-select border-start-0 py-2">
-                                <option value="code_asc">Sort by Code (1 to 216)</option>
-                                <option value="code_desc">Sort by Code (216 to 1)</option>
-                                <option value="name_asc">Sort by Name (A to Z)</option>
-                                <option value="pop_desc">Sort by Population Share (Highest first)</option>
+                                <option value="code_asc" <?php echo $selectedSort === 'code_asc' ? 'selected' : ''; ?>>🔢 Sort by Code (1 to 216)</option>
+                                <option value="code_desc" <?php echo $selectedSort === 'code_desc' ? 'selected' : ''; ?>>🔢 Sort by Code (216 to 1)</option>
+                                <option value="cat_asc" <?php echo $selectedSort === 'cat_asc' ? 'selected' : ''; ?>>🏷️ Sort by Category (EBC → BC → SC → ST → GEN)</option>
+                                <option value="cat_desc" <?php echo $selectedSort === 'cat_desc' ? 'selected' : ''; ?>>🏷️ Sort by Category (GEN → ST → SC → BC → EBC)</option>
+                                <option value="rel_asc" <?php echo $selectedSort === 'rel_asc' ? 'selected' : ''; ?>>🕉️ Sort by Religion (Hindu → Muslim → Others)</option>
+                                <option value="rel_alpha" <?php echo $selectedSort === 'rel_alpha' ? 'selected' : ''; ?>>🕉️ Sort by Religion (A to Z)</option>
+                                <option value="name_asc" <?php echo $selectedSort === 'name_asc' ? 'selected' : ''; ?>>🔤 Sort by Name (A to Z)</option>
+                                <option value="name_desc" <?php echo $selectedSort === 'name_desc' ? 'selected' : ''; ?>>🔤 Sort by Name (Z to A)</option>
+                                <option value="pop_desc" <?php echo $selectedSort === 'pop_desc' ? 'selected' : ''; ?>>📊 Sort by Pop. Share (Highest first)</option>
+                                <option value="pop_asc" <?php echo $selectedSort === 'pop_asc' ? 'selected' : ''; ?>>📊 Sort by Pop. Share (Lowest first)</option>
                             </select>
                         </div>
                     </div>
@@ -456,30 +565,81 @@ require_once __DIR__ . '/header.php';
                     </div>
                 </div>
 
+                <!-- Quick Sort Button Bar -->
+                <div class="d-flex flex-wrap align-items-center gap-1.5 mt-3 pt-3 border-top">
+                    <span class="small fw-bold text-muted text-uppercase me-1" style="font-size: 0.75rem;"><i class="bi bi-arrow-down-up"></i> Quick Sort:</span>
+                    <button type="button" class="btn btn-sm btn-outline-dark sort-quick-btn" data-sort="cat_asc">
+                        <i class="bi bi-layers-fill text-warning me-1"></i> Sort by Cat (कोटि)
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-dark sort-quick-btn" data-sort="rel_asc">
+                        <i class="bi bi-moon-stars-fill text-info me-1"></i> Sort by Religion (धर्म)
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-dark sort-quick-btn active" data-sort="code_asc">
+                        <i class="bi bi-sort-numeric-down me-1"></i> Sort by Code (1-216)
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-dark sort-quick-btn" data-sort="pop_desc">
+                        <i class="bi bi-graph-up-arrow text-success me-1"></i> Sort by Pop Share
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-dark sort-quick-btn" data-sort="name_asc">
+                        <i class="bi bi-sort-alpha-down me-1"></i> Sort by Name (A-Z)
+                    </button>
+                </div>
+
                 <!-- Category Filters Bar -->
-                <div class="d-flex flex-wrap align-items-center gap-2 mt-3 pt-3 border-top">
-                    <span class="small fw-bold text-muted text-uppercase me-1" style="font-size: 0.75rem;">Category Filter:</span>
+                <div class="d-flex flex-wrap align-items-center gap-2 mt-2 pt-2 border-top">
+                    <span class="small fw-bold text-muted text-uppercase me-1" style="font-size: 0.75rem;"><i class="bi bi-tag-fill text-primary"></i> Category Filter:</span>
                     <div class="filter-btn-group d-flex flex-wrap gap-1">
                         <button class="btn btn-dark active filter-cat-btn" data-category="ALL">
-                            All Castes <span class="badge bg-secondary ms-1" id="countAll">216</span>
+                            All Castes <span class="badge bg-secondary ms-1" id="countAll"><?php echo $categoryCounts['ALL']; ?></span>
                         </button>
                         <button class="btn btn-outline-warning text-dark filter-cat-btn" data-category="EBC">
-                            अत्यंत पिछड़ा (EBC) <span class="badge bg-warning text-dark ms-1" id="countEbc">112</span>
+                            अत्यंत पिछड़ा (EBC) <span class="badge bg-warning text-dark ms-1" id="countEbc"><?php echo $categoryCounts['EBC']; ?></span>
                         </button>
                         <button class="btn btn-outline-primary filter-cat-btn" data-category="BC">
-                            पिछड़ा वर्ग (BC) <span class="badge bg-primary ms-1" id="countBc">29</span>
+                            पिछड़ा वर्ग (BC) <span class="badge bg-primary ms-1" id="countBc"><?php echo $categoryCounts['BC']; ?></span>
                         </button>
                         <button class="btn btn-outline-success filter-cat-btn" data-category="SC">
-                            अनुसूचित जाति (SC) <span class="badge bg-success ms-1" id="countSc">22</span>
+                            अनुसूचित जाति (SC) <span class="badge bg-success ms-1" id="countSc"><?php echo $categoryCounts['SC']; ?></span>
                         </button>
                         <button class="btn btn-outline-info text-dark filter-cat-btn" data-category="ST">
-                            अनुसूचित जनजाति (ST) <span class="badge bg-info text-dark ms-1" id="countSt">32</span>
+                            अनुसूचित जनजाति (ST) <span class="badge bg-info text-dark ms-1" id="countSt"><?php echo $categoryCounts['ST']; ?></span>
                         </button>
                         <button class="btn btn-outline-danger filter-cat-btn" data-category="GEN">
-                            सामान्य / अनारक्षित (GEN) <span class="badge bg-danger ms-1" id="countGen">16</span>
+                            सामान्य / अनारक्षित (GEN) <span class="badge bg-danger ms-1" id="countGen"><?php echo $categoryCounts['GEN']; ?></span>
                         </button>
-                        <button class="btn btn-outline-secondary filter-cat-btn" data-category="MUSLIM">
-                            मुस्लिम समुदाय (Muslim) <span class="badge bg-secondary ms-1" id="countMuslim">~35</span>
+                        <button class="btn btn-outline-secondary filter-cat-btn" data-category="OTHER">
+                            अन्य (Other) <span class="badge bg-secondary ms-1" id="countOth"><?php echo $categoryCounts['OTHER']; ?></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Religion Filters Bar -->
+                <div class="d-flex flex-wrap align-items-center gap-1.5 mt-2 pt-2 border-top">
+                    <span class="small fw-bold text-muted text-uppercase me-1" style="font-size: 0.75rem;"><i class="bi bi-bank text-warning"></i> Religion Filter:</span>
+                    <div class="filter-rel-group d-flex flex-wrap gap-1">
+                        <button class="btn btn-sm btn-outline-dark filter-rel-btn active" data-religion="ALL">
+                            All Religions <span class="badge bg-secondary ms-1"><?php echo $religionCounts['ALL']; ?></span>
+                        </button>
+                        <button class="btn btn-sm btn-outline-warning text-dark filter-rel-btn" data-religion="HINDU">
+                            हिंदू (Hindu) <span class="badge bg-warning text-dark ms-1"><?php echo $religionCounts['HINDU']; ?></span>
+                        </button>
+                        <button class="btn btn-sm btn-outline-success text-dark filter-rel-btn" data-religion="MUSLIM">
+                            मुस्लिम (Muslim / Islam) <span class="badge bg-success text-white ms-1"><?php echo $religionCounts['MUSLIM']; ?></span>
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary filter-rel-btn" data-religion="CHRISTIAN">
+                            ईसाई (Christian) <span class="badge bg-primary text-white ms-1"><?php echo $religionCounts['CHRISTIAN']; ?></span>
+                        </button>
+                        <button class="btn btn-sm btn-outline-info text-dark filter-rel-btn" data-religion="SIKH">
+                            सिख (Sikh) <span class="badge bg-info text-dark ms-1"><?php echo $religionCounts['SIKH']; ?></span>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger filter-rel-btn" data-religion="JAIN">
+                            जैन (Jain) <span class="badge bg-danger text-white ms-1"><?php echo $religionCounts['JAIN']; ?></span>
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary filter-rel-btn" data-religion="BUDDHIST">
+                            बौद्ध (Buddhist) <span class="badge bg-secondary text-white ms-1"><?php echo $religionCounts['BUDDHIST']; ?></span>
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary filter-rel-btn" data-religion="OTHER">
+                            अन्य / सर्वधर्म <span class="badge bg-light text-dark ms-1"><?php echo $religionCounts['OTHER']; ?></span>
                         </button>
                     </div>
                 </div>
@@ -519,7 +679,7 @@ require_once __DIR__ . '/header.php';
                     <span class="badge bg-dark rounded-pill px-3" id="resultsCountBadge">216 Castes Listed</span>
                 </div>
                 <div class="small text-muted">
-                    <i class="bi bi-info-circle text-primary"></i> Click any row or code to copy &amp; view complete details
+                    <i class="bi bi-info-circle text-primary"></i> Click column headers or use sort buttons to order by Category, Religion, Code, or Name
                 </div>
             </div>
 
@@ -528,12 +688,22 @@ require_once __DIR__ . '/header.php';
                 <table class="table table-hover align-middle mb-0" id="casteMasterTable">
                     <thead class="table-light text-uppercase small text-muted">
                         <tr>
-                            <th class="ps-4 py-3" style="width: 100px;">Code (कोड)</th>
-                            <th class="py-3" style="min-width: 220px;">Caste Name (जाति का नाम)</th>
+                            <th class="ps-4 py-3 sortable-th active-sort" data-sort-key="code" style="width: 110px;" title="Click to sort by Code">
+                                Code (कोड) <i class="bi bi-arrow-down-up sort-icon"></i>
+                            </th>
+                            <th class="py-3 sortable-th" data-sort-key="name" style="min-width: 220px;" title="Click to sort by Caste Name">
+                                Caste Name (जाति का नाम) <i class="bi bi-arrow-down-up sort-icon"></i>
+                            </th>
                             <th class="py-3" style="min-width: 260px;">Sub-Castes &amp; Synonyms (उपजातियां / उपनाम)</th>
-                            <th class="py-3" style="width: 160px;">Category (कोटि)</th>
-                            <th class="py-3" style="width: 130px;">Religion (धर्म)</th>
-                            <th class="py-3 text-end" style="width: 150px;">Survey Pop. Share</th>
+                            <th class="py-3 sortable-th" data-sort-key="cat" style="width: 170px;" title="Click to sort by Category">
+                                Category (कोटि) <i class="bi bi-arrow-down-up sort-icon"></i>
+                            </th>
+                            <th class="py-3 sortable-th" data-sort-key="rel" style="width: 140px;" title="Click to sort by Religion">
+                                Religion (धर्म) <i class="bi bi-arrow-down-up sort-icon"></i>
+                            </th>
+                            <th class="py-3 text-end sortable-th" data-sort-key="pop" style="width: 160px;" title="Click to sort by Population Share">
+                                Survey Pop. Share <i class="bi bi-arrow-down-up sort-icon"></i>
+                            </th>
                             <th class="pe-4 py-3 text-center" style="width: 100px;">Action</th>
                         </tr>
                     </thead>
@@ -1425,6 +1595,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const clearSearchBtn = document.getElementById('clearSearchBtn');
     const sortSelect = document.getElementById('casteSortSelect');
     const catButtons = document.querySelectorAll('.filter-cat-btn');
+    const relButtons = document.querySelectorAll('.filter-rel-btn');
+    const sortQuickButtons = document.querySelectorAll('.sort-quick-btn');
     const quickChips = document.querySelectorAll('.quick-chip');
     const tableBody = document.getElementById('casteTableBody');
     const rows = Array.from(document.querySelectorAll('.caste-row'));
@@ -1432,9 +1604,32 @@ document.addEventListener('DOMContentLoaded', function() {
     const noResultsState = document.getElementById('noResultsState');
     const masterTable = document.getElementById('casteMasterTable');
     const exportCsvBtn = document.getElementById('exportCsvBtn');
+    const sortableHeaders = document.querySelectorAll('.sortable-th');
 
-    let currentCategory = 'ALL';
+    let currentCategory = '<?php echo $selectedCategory; ?>' || 'ALL';
+    let currentReligion = '<?php echo $selectedReligion; ?>' || 'ALL';
     let currentSearch = (searchInput.value || '').trim().toLowerCase();
+    let currentSort = '<?php echo $selectedSort; ?>' || 'code_asc';
+
+    const categoryHierarchy = {
+        'EBC': 1,
+        'BC': 2,
+        'SC': 3,
+        'ST': 4,
+        'GEN': 5,
+        'OTHER': 6
+    };
+
+    const religionHierarchy = {
+        'hindu': 1,
+        'muslim': 2,
+        'islam': 2,
+        'christian': 3,
+        'sikh': 4,
+        'jain': 5,
+        'buddhist': 6,
+        'other': 7
+    };
 
     function updateClearBtn() {
         if (searchInput.value.trim().length > 0) {
@@ -1453,17 +1648,37 @@ document.addEventListener('DOMContentLoaded', function() {
             const nameHi = (row.dataset.nameHi || '').toLowerCase();
             const nameEn = (row.dataset.nameEn || '').toLowerCase();
             const subcastes = (row.dataset.subcastes || '').toLowerCase();
-            const category = row.dataset.category || '';
+            const category = (row.dataset.category || '').toUpperCase();
             const religion = (row.dataset.religion || '').toLowerCase();
 
             // Category match
             let catMatch = false;
             if (currentCategory === 'ALL') {
                 catMatch = true;
-            } else if (currentCategory === 'MUSLIM') {
-                catMatch = religion.includes('muslim');
+            } else if (currentCategory === 'OTHER') {
+                catMatch = (category === 'OTHER' || !['EBC', 'BC', 'SC', 'ST', 'GEN'].includes(category));
             } else {
                 catMatch = (category === currentCategory);
+            }
+
+            // Religion match
+            let relMatch = false;
+            if (currentReligion === 'ALL') {
+                relMatch = true;
+            } else if (currentReligion === 'HINDU') {
+                relMatch = religion.includes('hindu');
+            } else if (currentReligion === 'MUSLIM') {
+                relMatch = religion.includes('muslim') || religion.includes('islam');
+            } else if (currentReligion === 'CHRISTIAN') {
+                relMatch = religion.includes('christian');
+            } else if (currentReligion === 'SIKH') {
+                relMatch = religion.includes('sikh');
+            } else if (currentReligion === 'JAIN') {
+                relMatch = religion.includes('jain');
+            } else if (currentReligion === 'BUDDHIST') {
+                relMatch = religion.includes('buddhist');
+            } else if (currentReligion === 'OTHER') {
+                relMatch = !religion.includes('hindu') && !religion.includes('muslim') && !religion.includes('islam');
             }
 
             // Search query match
@@ -1472,10 +1687,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 searchMatch = code.includes(currentSearch) ||
                               nameHi.includes(currentSearch) ||
                               nameEn.includes(currentSearch) ||
-                              subcastes.includes(currentSearch);
+                              subcastes.includes(currentSearch) ||
+                              category.toLowerCase().includes(currentSearch) ||
+                              religion.includes(currentSearch);
             }
 
-            if (catMatch && searchMatch) {
+            if (catMatch && relMatch && searchMatch) {
                 row.style.display = '';
                 visibleCount++;
             } else {
@@ -1483,7 +1700,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Update badge
+        // Update count badge
         resultsCountBadge.textContent = `${visibleCount} Castes Listed`;
 
         // Handle empty state
@@ -1496,19 +1713,101 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Sort Handler
+    // Comprehensive Sorting Function
     function sortTable(criteria) {
-        const sorted = rows.slice().sort((a, b) => {
-            if (criteria === 'code_asc') {
-                return parseInt(a.dataset.code) - parseInt(b.dataset.code);
-            } else if (criteria === 'code_desc') {
-                return parseInt(b.dataset.code) - parseInt(a.dataset.code);
-            } else if (criteria === 'name_asc') {
-                return (a.dataset.nameEn || '').localeCompare(b.dataset.nameEn || '');
-            } else if (criteria === 'pop_desc') {
-                return parseFloat(b.dataset.percentage || 0) - parseFloat(a.dataset.percentage || 0);
+        currentSort = criteria;
+        if (sortSelect.value !== criteria) {
+            sortSelect.value = criteria;
+        }
+
+        // Update quick sort button active styles
+        sortQuickButtons.forEach(btn => {
+            if (btn.dataset.sort === criteria) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
             }
-            return 0;
+        });
+
+        // Update header active states
+        sortableHeaders.forEach(th => {
+            const sortKey = th.dataset.sortKey;
+            const icon = th.querySelector('.sort-icon');
+            if (!icon) return;
+
+            th.classList.remove('active-sort');
+            icon.className = 'bi bi-arrow-down-up sort-icon';
+
+            if ((sortKey === 'code' && (criteria === 'code_asc' || criteria === 'code_desc')) ||
+                (sortKey === 'name' && (criteria === 'name_asc' || criteria === 'name_desc')) ||
+                (sortKey === 'cat' && (criteria === 'cat_asc' || criteria === 'cat_desc')) ||
+                (sortKey === 'rel' && (criteria === 'rel_asc' || criteria === 'rel_alpha' || criteria === 'rel_desc')) ||
+                (sortKey === 'pop' && (criteria === 'pop_desc' || criteria === 'pop_asc'))) {
+                
+                th.classList.add('active-sort');
+                if (criteria.endsWith('_desc')) {
+                    icon.className = 'bi bi-sort-down-alt sort-icon text-warning';
+                } else {
+                    icon.className = 'bi bi-sort-up sort-icon text-warning';
+                }
+            }
+        });
+
+        const sorted = rows.slice().sort((a, b) => {
+            const codeA = parseInt(a.dataset.code) || 0;
+            const codeB = parseInt(b.dataset.code) || 0;
+            const nameEnA = (a.dataset.nameEn || '').toLowerCase();
+            const nameEnB = (b.dataset.nameEn || '').toLowerCase();
+            const nameHiA = (a.dataset.nameHi || '').toLowerCase();
+            const nameHiB = (b.dataset.nameHi || '').toLowerCase();
+            const catA = (a.dataset.category || '').toUpperCase();
+            const catB = (b.dataset.category || '').toUpperCase();
+            const relA = (a.dataset.religion || '').toLowerCase();
+            const relB = (b.dataset.religion || '').toLowerCase();
+            const popA = parseFloat(a.dataset.percentage || 0);
+            const popB = parseFloat(b.dataset.percentage || 0);
+
+            if (criteria === 'code_asc') {
+                return codeA - codeB;
+            } else if (criteria === 'code_desc') {
+                return codeB - codeA;
+            } else if (criteria === 'name_asc') {
+                return nameEnA.localeCompare(nameEnB) || nameHiA.localeCompare(nameHiB);
+            } else if (criteria === 'name_desc') {
+                return nameEnB.localeCompare(nameEnA) || nameHiB.localeCompare(nameHiA);
+            } else if (criteria === 'cat_asc') {
+                const rankA = categoryHierarchy[catA] || 99;
+                const rankB = categoryHierarchy[catB] || 99;
+                if (rankA !== rankB) return rankA - rankB;
+                return codeA - codeB;
+            } else if (criteria === 'cat_desc') {
+                const rankA = categoryHierarchy[catA] || 99;
+                const rankB = categoryHierarchy[catB] || 99;
+                if (rankA !== rankB) return rankB - rankA;
+                return codeA - codeB;
+            } else if (criteria === 'rel_asc') {
+                const getRelRank = (r) => {
+                    for (const k in religionHierarchy) {
+                        if (r.includes(k)) return religionHierarchy[k];
+                    }
+                    return 99;
+                };
+                const rA = getRelRank(relA);
+                const rB = getRelRank(relB);
+                if (rA !== rB) return rA - rB;
+                return codeA - codeB;
+            } else if (criteria === 'rel_alpha') {
+                return relA.localeCompare(relB) || codeA - codeB;
+            } else if (criteria === 'rel_desc') {
+                return relB.localeCompare(relA) || codeA - codeB;
+            } else if (criteria === 'pop_desc') {
+                if (popB !== popA) return popB - popA;
+                return codeA - codeB;
+            } else if (criteria === 'pop_asc') {
+                if (popA !== popB) return popA - popB;
+                return codeA - codeB;
+            }
+            return codeA - codeB;
         });
 
         sorted.forEach(row => tableBody.appendChild(row));
@@ -1529,13 +1828,53 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.focus();
     });
 
-    // Category Buttons
+    // Category Filter Buttons
     catButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             catButtons.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             currentCategory = this.dataset.category;
             filterAndSortRows();
+        });
+    });
+
+    // Religion Filter Buttons
+    relButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            relButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentReligion = this.dataset.religion;
+            filterAndSortRows();
+        });
+    });
+
+    // Quick Sort Buttons
+    sortQuickButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetSort = this.dataset.sort;
+            sortTable(targetSort);
+        });
+    });
+
+    // Sortable Table Column Headers
+    sortableHeaders.forEach(th => {
+        th.addEventListener('click', function() {
+            const sortKey = this.dataset.sortKey;
+            let nextSort = 'code_asc';
+
+            if (sortKey === 'code') {
+                nextSort = (currentSort === 'code_asc') ? 'code_desc' : 'code_asc';
+            } else if (sortKey === 'name') {
+                nextSort = (currentSort === 'name_asc') ? 'name_desc' : 'name_asc';
+            } else if (sortKey === 'cat') {
+                nextSort = (currentSort === 'cat_asc') ? 'cat_desc' : 'cat_asc';
+            } else if (sortKey === 'rel') {
+                nextSort = (currentSort === 'rel_asc') ? 'rel_desc' : 'rel_asc';
+            } else if (sortKey === 'pop') {
+                nextSort = (currentSort === 'pop_desc') ? 'pop_asc' : 'pop_desc';
+            }
+
+            sortTable(nextSort);
         });
     });
 
@@ -1553,7 +1892,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Sort select
+    // Sort select change event
     sortSelect.addEventListener('change', function() {
         sortTable(this.value);
     });
@@ -1563,9 +1902,13 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.value = '';
         currentSearch = '';
         currentCategory = 'ALL';
+        currentReligion = 'ALL';
         catButtons.forEach(b => b.classList.remove('active'));
         document.querySelector('.filter-cat-btn[data-category="ALL"]').classList.add('active');
+        relButtons.forEach(b => b.classList.remove('active'));
+        document.querySelector('.filter-rel-btn[data-religion="ALL"]').classList.add('active');
         quickChips.forEach(c => c.classList.remove('active'));
+        sortTable('code_asc');
         filterAndSortRows();
     };
 
@@ -1598,9 +1941,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.removeChild(link);
     });
 
-    // Initial run if search pre-filled
+    // Initial run
     updateClearBtn();
-    if (currentSearch) {
+    sortTable(currentSort);
+    if (currentSearch || currentCategory !== 'ALL' || currentReligion !== 'ALL') {
         filterAndSortRows();
     }
 
