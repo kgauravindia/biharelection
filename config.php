@@ -959,6 +959,100 @@ class DataProvider {
         $needle = strtolower(trim((string)$districtSlugOrName));
         return self::$censusSubDistricts[$needle] ?? [];
     }
+
+    public static function getCensusTownsList($districtSlug = null, $civicStatus = null, $search = null, $page = 1, $limit = 50) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return ['total' => 0, 'data' => []];
+
+        $where = [];
+        $params = [];
+
+        if (!empty($districtSlug)) {
+            $where[] = "district_slug = :dslug";
+            $params[':dslug'] = strtolower(trim($districtSlug));
+        }
+        if (!empty($civicStatus)) {
+            $where[] = "civic_status = :civic";
+            $params[':civic'] = trim($civicStatus);
+        }
+        if (!empty($search)) {
+            $where[] = "(town_name LIKE :q OR district_name LIKE :q OR cd_block_name LIKE :q OR town_code LIKE :q)";
+            $params[':q'] = '%' . trim($search) . '%';
+        }
+
+        $whereSql = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+        
+        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM census_towns_2011 $whereSql");
+        $countStmt->execute($params);
+        $total = (int)$countStmt->fetchColumn();
+
+        $offset = max(0, ($page - 1) * $limit);
+        $stmt = $pdo->prepare("SELECT * FROM census_towns_2011 $whereSql ORDER BY district_name ASC, town_name ASC LIMIT :limit OFFSET :offset");
+        foreach ($params as $k => $v) {
+            $stmt->bindValue($k, $v);
+        }
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return ['total' => $total, 'data' => $rows];
+    }
+
+    public static function getCensusVillagesList($districtSlug = null, $subDistrictSlug = null, $gpSlug = null, $search = null, $page = 1, $limit = 50) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return ['total' => 0, 'data' => []];
+
+        $where = [];
+        $params = [];
+
+        if (!empty($districtSlug)) {
+            $where[] = "district_slug = :dslug";
+            $params[':dslug'] = strtolower(trim($districtSlug));
+        }
+        if (!empty($subDistrictSlug)) {
+            $where[] = "(sub_district_slug = :sbslug OR cd_block_name LIKE :sbslug_like)";
+            $params[':sbslug'] = strtolower(trim($subDistrictSlug));
+            $params[':sbslug_like'] = '%' . trim($subDistrictSlug) . '%';
+        }
+        if (!empty($gpSlug)) {
+            $where[] = "gram_panchayat_slug = :gpslug";
+            $params[':gpslug'] = strtolower(trim($gpSlug));
+        }
+        if (!empty($search)) {
+            $where[] = "(village_name LIKE :q OR village_code LIKE :q OR gram_panchayat_name LIKE :q OR cd_block_name LIKE :q OR district_name LIKE :q)";
+            $params[':q'] = '%' . trim($search) . '%';
+        }
+
+        $whereSql = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+        
+        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM census_villages_2011 $whereSql");
+        $countStmt->execute($params);
+        $total = (int)$countStmt->fetchColumn();
+
+        $offset = max(0, ($page - 1) * $limit);
+        $stmt = $pdo->prepare("SELECT * FROM census_villages_2011 $whereSql ORDER BY district_name ASC, sub_district_name ASC, village_name ASC LIMIT :limit OFFSET :offset");
+        foreach ($params as $k => $v) {
+            $stmt->bindValue($k, $v);
+        }
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return ['total' => $total, 'data' => $rows];
+    }
+
+    public static function getCensusTownCivicStatuses() {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $stmt = $pdo->query("SELECT civic_status, COUNT(*) as count FROM census_towns_2011 GROUP BY civic_status ORDER BY count DESC");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Throwable $e) {
+            return [];
+        }
+    }
 }
 
 // Meta helper for SEO
