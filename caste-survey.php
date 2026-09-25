@@ -20,8 +20,8 @@ $selectedCategory = isset($_GET['category']) ? strtoupper(trim($_GET['category']
 $searchQuery = isset($_GET['q']) ? trim($_GET['q']) : (isset($_GET['caste']) ? trim($_GET['caste']) : '');
 
 $pageTitle = '2022 Bihar Caste-Based Survey: Complete 215+ Caste Code List & Demographics (बिहार जाति कोड)';
-$pageDescription = 'Official Bihar Caste-Based Survey (जाति आधारित गणना) complete 215+ Caste Codes list with category classification (EBC, BC, SC, ST, General), population percentage, sub-castes, and demographics.';
-$pageKeywords = 'Bihar Caste Code, Bihar Caste Survey 2022, Bihar Jati Code List, Bihar Jatigat Janganana, EBC BC SC ST Caste Code Bihar, Yadav Caste Code, Brahmin Caste Code, Rajput Caste Code, Kushwaha Caste Code, Bania Caste Code Bihar, Prabhat Khabar Caste Code';
+$pageDescription = 'Official Bihar Caste-Based Survey (जाति आधारित गणना) complete 215+ Caste Codes list with category classification (EBC, BC, SC, ST, General), population percentage, sub-castes, socio-economic profile, and Patna High Court ruling status.';
+$pageKeywords = 'Bihar Caste Code, Bihar Caste Survey 2022, Bihar Jati Code List, Bihar Jatigat Janganana, EBC BC SC ST Caste Code Bihar, Yadav Caste Code, Brahmin Caste Code, Rajput Caste Code, Kushwaha Caste Code, Bania Caste Code Bihar, Prabhat Khabar Caste Code, Patna High Court Caste Reservation';
 $pageCanonical = getCasteSurveyUrl();
 $activeNav = 'census';
 
@@ -29,98 +29,172 @@ require_once __DIR__ . '/header.php';
 ?>
 
 <style>
-/* Custom Styling for Caste Survey Hub */
+/* Modern Styling for Bihar Caste Survey Intelligence Hub */
+:root {
+    --brand-navy: #0b192c;
+    --brand-blue: #1e3a8a;
+    --brand-amber: #f59e0b;
+    --brand-emerald: #10b981;
+    --brand-ruby: #ef4444;
+    --brand-purple: #8b5cf6;
+    --brand-slate: #0f172a;
+}
+
 .caste-hero {
-    background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 50%, #0f172a 100%);
+    background: radial-gradient(circle at 10% 20%, rgba(30, 58, 138, 0.9) 0%, rgba(11, 25, 44, 1) 90%);
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .caste-hero::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15), transparent 40%),
-                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15), transparent 40%);
+    background: radial-gradient(circle at 85% 15%, rgba(245, 158, 11, 0.18), transparent 45%),
+                radial-gradient(circle at 15% 85%, rgba(16, 185, 129, 0.15), transparent 45%);
     pointer-events: none;
 }
-.kpi-card {
-    background: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+/* Glassmorphic KPI Cards */
+.hero-kpi-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    padding: 16px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.kpi-card:hover {
+.hero-kpi-card:hover {
     transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.12);
     border-color: rgba(245, 158, 11, 0.5);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.35);
 }
+
+/* Sticky Section Navigation Bar */
+.caste-sticky-nav {
+    position: sticky;
+    top: 70px;
+    z-index: 1020;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+.caste-nav-pills .nav-link {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #475569;
+    padding: 10px 16px;
+    border-radius: 30px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+.caste-nav-pills .nav-link:hover {
+    color: #0f172a;
+    background: #f1f5f9;
+}
+.caste-nav-pills .nav-link.active {
+    background: #0f172a;
+    color: #f59e0b;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+}
+
+/* Caste Code Badges */
 .code-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 46px;
-    height: 38px;
-    font-size: 1.05rem;
+    width: 48px;
+    height: 40px;
+    font-size: 1.08rem;
     font-weight: 800;
     font-family: 'Outfit', sans-serif;
-    border-radius: 8px;
+    border-radius: 10px;
     background: #0f172a;
     color: #f59e0b;
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
 }
-.cat-pill-ebc { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-.cat-pill-bc { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-.cat-pill-sc { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
-.cat-pill-st { background: #ede9fe; color: #5b21b6; border: 1px solid #ddd6fe; }
-.cat-pill-gen { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
-.cat-pill-oth { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+/* Social Category Pills */
+.cat-pill-ebc { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; font-weight: 700; }
+.cat-pill-bc  { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; font-weight: 700; }
+.cat-pill-sc  { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; font-weight: 700; }
+.cat-pill-st  { background: #ede9fe; color: #5b21b6; border: 1px solid #ddd6fe; font-weight: 700; }
+.cat-pill-gen { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; font-weight: 700; }
+.cat-pill-oth { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; font-weight: 700; }
 
 .caste-row {
-    transition: background-color 0.15s ease;
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
 .caste-row:hover {
     background-color: #f8fafc;
 }
 .subcaste-badge {
     font-size: 0.76rem;
-    background: #f1f5f9;
+    background: #f8fafc;
     color: #334155;
-    padding: 2px 8px;
-    border-radius: 4px;
+    padding: 3px 8px;
+    border-radius: 6px;
     display: inline-block;
-    margin: 2px 2px 2px 0;
+    margin: 2px 3px 2px 0;
     border: 1px solid #e2e8f0;
 }
+
+/* Live Search Bar */
 .search-box-wrap {
     position: relative;
 }
-.search-box-wrap i {
+.search-box-wrap i.search-icon {
     position: absolute;
-    left: 16px;
+    left: 18px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.25rem;
     color: #64748b;
+    pointer-events: none;
 }
 .search-box-input {
-    padding-left: 48px;
-    height: 52px;
-    border-radius: 12px;
+    padding-left: 50px;
+    padding-right: 40px;
+    height: 54px;
+    border-radius: 14px;
     font-size: 1.05rem;
     border: 2px solid #cbd5e1;
+    background-color: #ffffff;
     transition: all 0.2s ease;
 }
 .search-box-input:focus {
     border-color: #f59e0b;
-    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.18);
 }
+.clear-search-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: none;
+}
+.clear-search-btn:hover {
+    color: #0f172a;
+}
+
+/* Filter Buttons & Chips */
 .filter-btn-group .btn {
     border-radius: 30px;
     padding: 6px 14px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.15s ease;
+    font-size: 0.84rem;
+    font-weight: 700;
+    transition: all 0.18s ease;
 }
 .quick-chip {
     cursor: pointer;
@@ -130,6 +204,7 @@ require_once __DIR__ . '/header.php';
     background: #ffffff;
     border: 1px solid #cbd5e1;
     color: #1e293b;
+    font-weight: 600;
     transition: all 0.15s ease;
 }
 .quick-chip:hover, .quick-chip.active {
@@ -137,41 +212,79 @@ require_once __DIR__ . '/header.php';
     color: #ffffff;
     border-color: #f59e0b;
     transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.25);
 }
+
 .copy-btn {
     cursor: pointer;
     font-size: 0.78rem;
-    padding: 3px 8px;
-    border-radius: 6px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 600;
     transition: all 0.2s ease;
 }
 .copy-btn:hover {
     background: #0f172a;
     color: #f59e0b;
+    border-color: #0f172a;
 }
-.progress-bar-custom {
-    height: 10px;
-    border-radius: 6px;
+
+/* Visual Representation Bar */
+.demographic-segment-bar {
+    display: flex;
+    height: 18px;
+    border-radius: 9px;
     overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.segment-item {
+    transition: opacity 0.2s ease;
+}
+.segment-item:hover {
+    opacity: 0.85;
+}
+
+/* Official Scanned Image Cards */
 .official-img-card {
     border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
-    transition: all 0.2s ease;
+    background: #ffffff;
+    transition: all 0.25s ease;
 }
 .official-img-card:hover {
     border-color: #f59e0b;
-    box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.12);
+}
+
+/* Judicial Alert Box */
+.hc-judgment-box {
+    background: linear-gradient(135deg, #fff5f5 0%, #fee2e2 100%);
+    border: 1px solid #fca5a5;
+    border-left: 6px solid #dc2626 !important;
+    border-radius: 14px;
+}
+
+/* Top 10 Caste Ranking Cards */
+.top-caste-rank-badge {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 0.85rem;
 }
 </style>
 
-<!-- Main Caste Survey Container -->
 <main class="bg-light pb-5">
 
     <!-- Hero Header -->
     <section class="caste-hero text-white py-4 py-lg-5">
         <div class="container text-start">
+            
             <!-- Breadcrumbs -->
             <nav aria-label="breadcrumb" class="mb-3">
                 <ol class="breadcrumb mb-0 small text-white-50">
@@ -194,24 +307,27 @@ require_once __DIR__ . '/header.php';
                 <span class="badge bg-info bg-opacity-25 text-white fw-bold px-3 py-2">
                     <i class="bi bi-patch-check-fill"></i> Phase-2 Digital Coding
                 </span>
+                <span class="badge bg-danger bg-opacity-25 text-white fw-bold px-3 py-2">
+                    <i class="bi bi-shield-shaded"></i> High Court Verdict Updated
+                </span>
             </div>
 
             <h1 class="display-5 fw-extrabold text-white mb-2" style="font-family: 'Outfit', sans-serif;">
-                2022 Bihar Caste-Based Survey: Complete Caste Code List
+                2022 Bihar Caste-Based Survey: Complete 215+ Caste Codes &amp; Demographics
             </h1>
-            <p class="h6 text-warning mb-2 fw-semibold" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                बिहार जाति आधारित गणना (जाति कोड सूची): सभी 215 जातियों के आधिकारिक कोड व सामाजिक आरक्षण कोटि
+            <p class="h6 text-warning mb-3 fw-semibold" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                बिहार जाति आधारित गणना (जाति कोड सूची): सभी 215 जातियों के आधिकारिक कोड, सामाजिक-आर्थिक स्थिति एवं कोर्ट निर्णय
             </p>
             <p class="text-white-50 mb-4" style="font-size: 1.05rem; max-width: 960px;">
-                Complete and verified caste directory issued by the General Administration Department (GAD), Government of Bihar for the second phase of the Caste-Based Survey (जातिगत जनगणना). Search any caste, sub-caste, or code number instantly with category breakdowns (EBC, BC, SC, ST, General) and survey demographics.
+                Complete and authentic directory issued by the General Administration Department (GAD), Government of Bihar for the Caste-Based Survey (जातिगत जनगणना). Search any caste, sub-caste, or code number instantly with category breakdowns (EBC, BC, SC, ST, General), poverty indicators, and verified judicial status.
             </p>
 
             <!-- State Category Breakdown KPI Grid -->
             <div class="row g-2 g-md-3">
                 <!-- EBC -->
                 <div class="col-6 col-md-4 col-lg">
-                    <div class="kpi-card p-3 text-center text-white h-100">
-                        <small class="text-warning text-uppercase fw-bold d-block" style="font-size: 0.72rem;">अत्यंत पिछड़ा वर्ग (EBC)</small>
+                    <div class="hero-kpi-card text-center text-white h-100">
+                        <small class="text-warning text-uppercase fw-bold d-block" style="font-size: 0.72rem;">अत्यंत पिछड़ा (EBC)</small>
                         <span class="fs-4 fw-extrabold text-warning">36.01%</span>
                         <small class="text-white-50 d-block" style="font-size: 0.75rem;">4.70 Cr (112 Castes)</small>
                     </div>
@@ -219,8 +335,8 @@ require_once __DIR__ . '/header.php';
 
                 <!-- BC / OBC -->
                 <div class="col-6 col-md-4 col-lg">
-                    <div class="kpi-card p-3 text-center text-white h-100">
-                        <small class="text-info text-uppercase fw-bold d-block" style="font-size: 0.72rem;">पिछड़ा वर्ग (BC / OBC)</small>
+                    <div class="hero-kpi-card text-center text-white h-100">
+                        <small class="text-info text-uppercase fw-bold d-block" style="font-size: 0.72rem;">पिछड़ा वर्ग (BC)</small>
                         <span class="fs-4 fw-extrabold text-info">27.13%</span>
                         <small class="text-white-50 d-block" style="font-size: 0.75rem;">3.54 Cr (29 Castes)</small>
                     </div>
@@ -228,7 +344,7 @@ require_once __DIR__ . '/header.php';
 
                 <!-- SC -->
                 <div class="col-6 col-md-4 col-lg">
-                    <div class="kpi-card p-3 text-center text-white h-100">
+                    <div class="hero-kpi-card text-center text-white h-100">
                         <small class="text-success text-uppercase fw-bold d-block" style="font-size: 0.72rem;">अनुसूचित जाति (SC)</small>
                         <span class="fs-4 fw-extrabold text-success">19.65%</span>
                         <small class="text-white-50 d-block" style="font-size: 0.75rem;">2.56 Cr (22 Castes)</small>
@@ -237,8 +353,8 @@ require_once __DIR__ . '/header.php';
 
                 <!-- General / Unreserved -->
                 <div class="col-6 col-md-4 col-lg">
-                    <div class="kpi-card p-3 text-center text-white h-100">
-                        <small class="text-danger text-uppercase fw-bold d-block" style="font-size: 0.72rem;">अनारक्षित / सामान्य (GEN)</small>
+                    <div class="hero-kpi-card text-center text-white h-100">
+                        <small class="text-danger text-uppercase fw-bold d-block" style="font-size: 0.72rem;">अनारक्षित (GEN)</small>
                         <span class="fs-4 fw-extrabold text-danger">15.52%</span>
                         <small class="text-white-50 d-block" style="font-size: 0.75rem;">2.02 Cr (16 Castes)</small>
                     </div>
@@ -246,7 +362,7 @@ require_once __DIR__ . '/header.php';
 
                 <!-- ST -->
                 <div class="col-6 col-md-4 col-lg">
-                    <div class="kpi-card p-3 text-center text-white h-100">
+                    <div class="hero-kpi-card text-center text-white h-100">
                         <small class="text-primary text-uppercase fw-bold d-block" style="font-size: 0.72rem;">अनुसूचित जनजाति (ST)</small>
                         <span class="fs-4 fw-extrabold text-primary">1.68%</span>
                         <small class="text-white-50 d-block" style="font-size: 0.75rem;">21.99 Lakh (32 Castes)</small>
@@ -255,18 +371,49 @@ require_once __DIR__ . '/header.php';
 
                 <!-- Total Population -->
                 <div class="col-6 col-md-4 col-lg">
-                    <div class="kpi-card p-3 text-center text-white h-100" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4);">
+                    <div class="hero-kpi-card text-center text-white h-100" style="background: rgba(245, 158, 11, 0.18); border-color: rgba(245, 158, 11, 0.5);">
                         <small class="text-warning text-uppercase fw-bold d-block" style="font-size: 0.72rem;">कुल जनसंख्या (Total)</small>
                         <span class="fs-4 fw-extrabold text-white">13.07 Cr</span>
                         <small class="text-warning d-block" style="font-size: 0.75rem;">2.76 Cr Families</small>
                     </div>
                 </div>
             </div>
+
+            <!-- Segmented Color Bar -->
+            <div class="mt-4">
+                <div class="d-flex justify-content-between align-items-center text-white-50 small mb-1">
+                    <span><i class="bi bi-pie-chart-fill text-warning me-1"></i> State Social Category Demographic Spectrum:</span>
+                    <span class="fw-bold text-white">84.48% Combined Reserved Share</span>
+                </div>
+                <div class="demographic-segment-bar">
+                    <div class="segment-item" style="width: 36.01%; background-color: #f59e0b;" title="EBC: 36.01%"></div>
+                    <div class="segment-item" style="width: 27.13%; background-color: #3b82f6;" title="BC: 27.13%"></div>
+                    <div class="segment-item" style="width: 19.65%; background-color: #10b981;" title="SC: 19.65%"></div>
+                    <div class="segment-item" style="width: 15.52%; background-color: #ef4444;" title="GEN: 15.52%"></div>
+                    <div class="segment-item" style="width: 1.68%; background-color: #8b5cf6;" title="ST: 1.68%"></div>
+                </div>
+            </div>
+
         </div>
     </section>
 
+    <!-- Sticky Section Navigation Bar -->
+    <div class="caste-sticky-nav py-2">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between overflow-x-auto gap-2 caste-nav-pills py-1">
+                <a href="#caste-directory" class="nav-link active">📋 216 Caste Directory</a>
+                <a href="#demographics-matrix" class="nav-link">📊 Demographics &amp; Religion</a>
+                <a href="#socio-economic-report" class="nav-link">💼 Socio-Economic &amp; Poverty</a>
+                <a href="#reservation-quota-status" class="nav-link">⚖️ Reservation &amp; HC Ruling</a>
+                <a href="#scanned-documents" class="nav-link">📜 Official Scans</a>
+                <a href="#govt-data-links" class="nav-link">🔗 Govt Portals &amp; Citations</a>
+                <a href="#caste-faqs" class="nav-link">❓ FAQs</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Interactive Search, Filter & Master Table Section -->
-    <section class="container mt-4">
+    <section class="container mt-4" id="caste-directory">
         
         <!-- Search & Control Header Card -->
         <div class="card shadow-sm border-0 rounded-4 mb-4">
@@ -275,10 +422,13 @@ require_once __DIR__ . '/header.php';
                     <!-- Live Search Input -->
                     <div class="col-lg-7">
                         <div class="search-box-wrap">
-                            <i class="bi bi-search"></i>
+                            <i class="bi bi-search search-icon"></i>
                             <input type="text" id="casteSearchInput" class="form-control search-box-input" 
                                    placeholder="Search by caste name (e.g. यादव, ब्राह्मण, Bania, 122, कुशवाहा, अंसारी, Paswan, Kurmi)..." 
                                    value="<?php echo htmlspecialchars($searchQuery ?: ($selectedCode ? (string)$selectedCode : '')); ?>">
+                            <button type="button" id="clearSearchBtn" class="clear-search-btn" title="Clear Search">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -297,10 +447,10 @@ require_once __DIR__ . '/header.php';
 
                     <!-- Export & Print Action Buttons -->
                     <div class="col-md-6 col-lg-2 d-flex gap-2">
-                        <button class="btn btn-outline-secondary w-50 py-2 d-flex align-items-center justify-center gap-1" onclick="window.print()" title="Print Caste Code Table">
+                        <button class="btn btn-outline-secondary w-50 py-2 d-flex align-items-center justify-content-center gap-1" onclick="window.print()" title="Print Caste Code Table">
                             <i class="bi bi-printer"></i> <span>Print</span>
                         </button>
-                        <button class="btn btn-warning w-50 py-2 d-flex align-items-center justify-center gap-1 text-dark fw-bold" id="exportCsvBtn" title="Download Caste Code List as CSV">
+                        <button class="btn btn-warning w-50 py-2 d-flex align-items-center justify-content-center gap-1 text-dark fw-bold" id="exportCsvBtn" title="Download Caste Code List as CSV">
                             <i class="bi bi-download"></i> <span>CSV</span>
                         </button>
                     </div>
@@ -335,8 +485,8 @@ require_once __DIR__ . '/header.php';
                 </div>
 
                 <!-- Quick Selection Tags for Major Castes -->
-                <div class="d-flex flex-wrap align-items-center gap-1 mt-2 pt-2">
-                    <span class="small text-muted me-1" style="font-size: 0.75rem;">Quick Lookup:</span>
+                <div class="d-flex flex-wrap align-items-center gap-1.5 mt-2 pt-2">
+                    <span class="small text-muted me-1 fw-semibold" style="font-size: 0.75rem;">Quick Lookup:</span>
                     <span class="quick-chip" data-term="165">यादव (#165)</span>
                     <span class="quick-chip" data-term="126">ब्राह्मण (#126)</span>
                     <span class="quick-chip" data-term="169">राजपूत (#169)</span>
@@ -360,7 +510,7 @@ require_once __DIR__ . '/header.php';
         </div>
 
         <!-- Caste Table & Results Grid -->
-        <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4">
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-5">
             <div class="card-header bg-white py-3 px-4 d-flex flex-wrap justify-content-between align-items-center gap-2 border-bottom">
                 <div class="d-flex align-items-center gap-2">
                     <h2 class="h5 mb-0 fw-bold text-dark" style="font-family: 'Outfit', sans-serif;">
@@ -505,8 +655,8 @@ require_once __DIR__ . '/header.php';
             </div>
         </div>
 
-        <!-- Two Column Informational & Demographic Section -->
-        <div class="row g-4 mb-5">
+        <!-- Demographics & Religion Matrix Section -->
+        <div class="row g-4 mb-5" id="demographics-matrix">
             
             <!-- Column 1: Social Category Demographic Analysis -->
             <div class="col-lg-6">
@@ -527,7 +677,7 @@ require_once __DIR__ . '/header.php';
                                 <span class="fw-bold text-dark">अत्यंत पिछड़ा वर्ग (EBC / BC-1)</span>
                                 <span class="fw-extrabold text-warning">36.01% <small class="text-muted fw-normal">(4,70,80,514)</small></span>
                             </div>
-                            <div class="progress progress-bar-custom bg-light">
+                            <div class="progress progress-bar-custom bg-light" style="height: 10px; border-radius: 6px;">
                                 <div class="progress-bar bg-warning" role="progressbar" style="width: 36.01%;" aria-valuenow="36.01" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
@@ -538,7 +688,7 @@ require_once __DIR__ . '/header.php';
                                 <span class="fw-bold text-dark">पिछड़ा वर्ग (BC / BC-2 / OBC)</span>
                                 <span class="fw-extrabold text-primary">27.13% <small class="text-muted fw-normal">(3,54,63,936)</small></span>
                             </div>
-                            <div class="progress progress-bar-custom bg-light">
+                            <div class="progress progress-bar-custom bg-light" style="height: 10px; border-radius: 6px;">
                                 <div class="progress-bar bg-primary" role="progressbar" style="width: 27.13%;" aria-valuenow="27.13" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
@@ -549,7 +699,7 @@ require_once __DIR__ . '/header.php';
                                 <span class="fw-bold text-dark">अनुसूचित जाति (SC / Scheduled Castes)</span>
                                 <span class="fw-extrabold text-success">19.65% <small class="text-muted fw-normal">(2,56,89,820)</small></span>
                             </div>
-                            <div class="progress progress-bar-custom bg-light">
+                            <div class="progress progress-bar-custom bg-light" style="height: 10px; border-radius: 6px;">
                                 <div class="progress-bar bg-success" role="progressbar" style="width: 19.65%;" aria-valuenow="19.65" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
@@ -560,7 +710,7 @@ require_once __DIR__ . '/header.php';
                                 <span class="fw-bold text-dark">अनारक्षित / सामान्य वर्ग (General / Unreserved)</span>
                                 <span class="fw-extrabold text-danger">15.52% <small class="text-muted fw-normal">(2,02,91,679)</small></span>
                             </div>
-                            <div class="progress progress-bar-custom bg-light">
+                            <div class="progress progress-bar-custom bg-light" style="height: 10px; border-radius: 6px;">
                                 <div class="progress-bar bg-danger" role="progressbar" style="width: 15.52%;" aria-valuenow="15.52" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
@@ -571,7 +721,7 @@ require_once __DIR__ . '/header.php';
                                 <span class="fw-bold text-dark">अनुसूचित जनजाति (ST / Scheduled Tribes)</span>
                                 <span class="fw-extrabold text-info">1.68% <small class="text-muted fw-normal">(21,99,361)</small></span>
                             </div>
-                            <div class="progress progress-bar-custom bg-light">
+                            <div class="progress progress-bar-custom bg-light" style="height: 10px; border-radius: 6px;">
                                 <div class="progress-bar bg-info" role="progressbar" style="width: 1.68%;" aria-valuenow="1.68" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
@@ -612,45 +762,45 @@ require_once __DIR__ . '/header.php';
                         </div>
 
                         <h6 class="fw-bold text-dark mb-2">Top 10 Most Populous Castes in Bihar</h6>
-                        <ul class="list-group list-group-flush border-top border-bottom mb-3">
+                        <ul class="list-group list-group-flush border-top border-bottom mb-0">
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#165</span> <strong>यादव (Yadav)</strong> <span class="badge cat-pill-bc">BC</span></div>
+                                <div><span class="top-caste-rank-badge bg-warning text-dark me-2">1</span> <span class="badge bg-dark me-1">#165</span> <strong>यादव (Yadav)</strong> <span class="badge cat-pill-bc">BC</span></div>
                                 <span class="fw-bold text-primary">14.27% (1.86 Cr)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#87</span> <strong>दुसाध / पासवान (Dusadh)</strong> <span class="badge cat-pill-sc">SC</span></div>
+                                <div><span class="top-caste-rank-badge bg-secondary text-white me-2">2</span> <span class="badge bg-dark me-1">#87</span> <strong>दुसाध / पासवान (Dusadh)</strong> <span class="badge cat-pill-sc">SC</span></div>
                                 <span class="fw-bold text-success">5.31% (69.43 Lakh)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#60</span> <strong>रविदास / चमार (Ravidas)</strong> <span class="badge cat-pill-sc">SC</span></div>
+                                <div><span class="top-caste-rank-badge bg-secondary text-white me-2">3</span> <span class="badge bg-dark me-1">#60</span> <strong>रविदास / चमार (Ravidas)</strong> <span class="badge cat-pill-sc">SC</span></div>
                                 <span class="fw-bold text-success">5.25% (68.70 Lakh)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#26</span> <strong>कुशवाहा / कोईरी (Kushwaha)</strong> <span class="badge cat-pill-bc">BC</span></div>
+                                <div><span class="top-caste-rank-badge bg-light text-dark border me-2">4</span> <span class="badge bg-dark me-1">#26</span> <strong>कुशवाहा / कोईरी (Kushwaha)</strong> <span class="badge cat-pill-bc">BC</span></div>
                                 <span class="fw-bold text-primary">4.21% (55.06 Lakh)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#181</span> <strong>शेख (Sheikh Muslim)</strong> <span class="badge cat-pill-gen">GEN</span></div>
+                                <div><span class="top-caste-rank-badge bg-light text-dark border me-2">5</span> <span class="badge bg-dark me-1">#181</span> <strong>शेख (Sheikh Muslim)</strong> <span class="badge cat-pill-gen">GEN</span></div>
                                 <span class="fw-bold text-danger">3.82% (49.92 Lakh)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#126</span> <strong>ब्राह्मण (Brahmin)</strong> <span class="badge cat-pill-gen">GEN</span></div>
+                                <div><span class="top-caste-rank-badge bg-light text-dark border me-2">6</span> <span class="badge bg-dark me-1">#126</span> <strong>ब्राह्मण (Brahmin)</strong> <span class="badge cat-pill-gen">GEN</span></div>
                                 <span class="fw-bold text-danger">3.66% (47.81 Lakh)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#161</span> <strong>मोमिन / अंसारी (Momin)</strong> <span class="badge cat-pill-ebc">EBC</span></div>
+                                <div><span class="top-caste-rank-badge bg-light text-dark border me-2">7</span> <span class="badge bg-dark me-1">#161</span> <strong>मोमिन / अंसारी (Momin)</strong> <span class="badge cat-pill-ebc">EBC</span></div>
                                 <span class="fw-bold text-warning">3.55% (46.35 Lakh)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#169</span> <strong>राजपूत (Rajput)</strong> <span class="badge cat-pill-gen">GEN</span></div>
+                                <div><span class="top-caste-rank-badge bg-light text-dark border me-2">8</span> <span class="badge bg-dark me-1">#169</span> <strong>राजपूत (Rajput)</strong> <span class="badge cat-pill-gen">GEN</span></div>
                                 <span class="fw-bold text-danger">3.45% (45.11 Lakh)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#158</span> <strong>मुसहर (Musahar)</strong> <span class="badge cat-pill-sc">SC</span></div>
+                                <div><span class="top-caste-rank-badge bg-light text-dark border me-2">9</span> <span class="badge bg-dark me-1">#158</span> <strong>मुसहर (Musahar)</strong> <span class="badge cat-pill-sc">SC</span></div>
                                 <span class="fw-bold text-success">3.09% (40.36 Lakh)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <div><span class="badge bg-dark me-2">#24</span> <strong>कुर्मी (Kurmi)</strong> <span class="badge cat-pill-bc">BC</span></div>
+                                <div><span class="top-caste-rank-badge bg-light text-dark border me-2">10</span> <span class="badge bg-dark me-1">#24</span> <strong>कुर्मी (Kurmi)</strong> <span class="badge cat-pill-bc">BC</span></div>
                                 <span class="fw-bold text-primary">2.87% (37.62 Lakh)</span>
                             </li>
                         </ul>
@@ -660,7 +810,7 @@ require_once __DIR__ . '/header.php';
         </div>
 
         <!-- Comprehensive Socio-Economic, Poverty & Employment Report Section (7 Nov 2023 Assembly Report) -->
-        <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card border-0 shadow-sm rounded-4 mb-5" id="socio-economic-report">
             <div class="card-header bg-white py-3 px-4 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
                 <div>
                     <h3 class="h5 mb-0 fw-bold text-dark" style="font-family: 'Outfit', sans-serif;">
@@ -999,7 +1149,7 @@ require_once __DIR__ . '/header.php';
         </div>
 
         <!-- Official Scanned Documents Reference Gallery -->
-        <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card border-0 shadow-sm rounded-4 mb-5" id="scanned-documents">
             <div class="card-header bg-white py-3 px-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div>
                     <h3 class="h5 mb-0 fw-bold text-dark" style="font-family: 'Outfit', sans-serif;">
@@ -1067,7 +1217,7 @@ require_once __DIR__ . '/header.php';
                     <h3 class="h5 mb-0 fw-bold text-dark" style="font-family: 'Outfit', sans-serif;">
                         <i class="bi bi-link-45deg text-primary me-2"></i> Official Government Portals &amp; Verified Data Links (आधिकारिक स्रोत एवं लिंक)
                     </h3>
-                    <small class="text-muted">Primary government repositories, assembly records, and authentic data sources for Bihar Caste-Based Survey 2022-2023</small>
+                    <small class="text-muted">Primary government repositories, court judgments, assembly records, and authentic data sources</small>
                 </div>
                 <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-1.5 fw-bold">
                     <i class="bi bi-patch-check-fill text-primary"></i> Verified References
@@ -1109,7 +1259,7 @@ require_once __DIR__ . '/header.php';
         </div>
 
         <!-- Frequently Asked Questions (FAQs) Accordion -->
-        <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card border-0 shadow-sm rounded-4 mb-5" id="caste-faqs">
             <div class="card-header bg-white py-3 px-4 border-bottom">
                 <h3 class="h5 mb-0 fw-bold text-dark" style="font-family: 'Outfit', sans-serif;">
                     <i class="bi bi-question-circle-fill text-warning me-2"></i> Frequently Asked Questions (अक्सर पूछे जाने वाले प्रश्न)
@@ -1245,21 +1395,22 @@ require_once __DIR__ . '/header.php';
   "@context": "https://schema.org",
   "@type": "Dataset",
   "name": "2022 Bihar Caste-Based Survey Master Caste Codes Directory",
-  "description": "Comprehensive list of all 215+ caste codes and social category demographics published by the General Administration Department (GAD), Government of Bihar for the 2022-2023 Caste-Based Survey.",
+  "description": "Comprehensive list of all 215+ caste codes, socioeconomic indicators, poverty rates, and social category demographics published by the General Administration Department (GAD), Government of Bihar for the 2022-2023 Caste-Based Survey.",
   "url": "<?php echo getCasteSurveyUrl(); ?>",
   "keywords": [
     "Bihar Caste Census",
     "Bihar Caste Codes",
     "Jati Code List Bihar",
     "EBC BC SC ST Demographics Bihar",
-    "2022 Bihar Caste Survey"
+    "2022 Bihar Caste Survey",
+    "Patna High Court Caste Reservation Verdict"
   ],
   "creator": {
     "@type": "Organization",
     "name": "Bihar Election Data Platform",
     "url": "<?php echo SITE_URL; ?>"
   },
-  "temporalCoverage": "2022/2023",
+  "temporalCoverage": "2022/2024",
   "spatialCoverage": {
     "@type": "Place",
     "name": "Bihar, India"
@@ -1267,10 +1418,11 @@ require_once __DIR__ . '/header.php';
 }
 </script>
 
-<!-- Client-side Interactive Search & Filtering Logic -->
+<!-- Client-side Interactive Search, Filter & Nav Highlighting Logic -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('casteSearchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
     const sortSelect = document.getElementById('casteSortSelect');
     const catButtons = document.querySelectorAll('.filter-cat-btn');
     const quickChips = document.querySelectorAll('.quick-chip');
@@ -1278,13 +1430,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const rows = Array.from(document.querySelectorAll('.caste-row'));
     const resultsCountBadge = document.getElementById('resultsCountBadge');
     const noResultsState = document.getElementById('noResultsState');
+    const masterTable = document.getElementById('casteMasterTable');
     const exportCsvBtn = document.getElementById('exportCsvBtn');
 
     let currentCategory = 'ALL';
     let currentSearch = (searchInput.value || '').trim().toLowerCase();
 
+    function updateClearBtn() {
+        if (searchInput.value.trim().length > 0) {
+            clearSearchBtn.style.display = 'block';
+        } else {
+            clearSearchBtn.style.display = 'none';
+        }
+    }
+
     function filterAndSortRows() {
         let visibleCount = 0;
+        updateClearBtn();
 
         rows.forEach(row => {
             const code = row.dataset.code || '';
@@ -1327,10 +1489,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Handle empty state
         if (visibleCount === 0) {
             noResultsState.classList.remove('d-none');
-            document.getElementById('casteMasterTable').classList.add('d-none');
+            masterTable.classList.add('d-none');
         } else {
             noResultsState.classList.add('d-none');
-            document.getElementById('casteMasterTable').classList.remove('d-none');
+            masterTable.classList.remove('d-none');
         }
     }
 
@@ -1355,9 +1517,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Search event
     searchInput.addEventListener('input', function() {
         currentSearch = this.value.trim().toLowerCase();
-        // Clear quick chips active
         quickChips.forEach(c => c.classList.remove('active'));
         filterAndSortRows();
+    });
+
+    // Clear Search button
+    clearSearchBtn.addEventListener('click', function() {
+        searchInput.value = '';
+        currentSearch = '';
+        filterAndSortRows();
+        searchInput.focus();
     });
 
     // Category Buttons
@@ -1380,7 +1549,7 @@ document.addEventListener('DOMContentLoaded', function() {
             filterAndSortRows();
             
             // Scroll table into view
-            document.getElementById('casteMasterTable').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            masterTable.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 
@@ -1430,9 +1599,38 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Initial run if search pre-filled
+    updateClearBtn();
     if (currentSearch) {
         filterAndSortRows();
     }
+
+    // Smooth active scrollspy for sticky nav pills
+    const navLinks = document.querySelectorAll('.caste-nav-pills .nav-link');
+    const sections = Array.from(navLinks).map(link => {
+        const targetId = link.getAttribute('href').replace('#', '');
+        return document.getElementById(targetId);
+    }).filter(Boolean);
+
+    window.addEventListener('scroll', () => {
+        let currentSectionId = '';
+        const scrollPosition = window.scrollY + 140;
+
+        sections.forEach(section => {
+            if (section.offsetTop <= scrollPosition && (section.offsetTop + section.offsetHeight) > scrollPosition) {
+                currentSectionId = section.id;
+            }
+        });
+
+        if (currentSectionId) {
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    }, { passive: true });
 });
 
 // Copy Caste Code Function
