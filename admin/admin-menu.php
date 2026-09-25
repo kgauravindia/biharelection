@@ -49,7 +49,7 @@ if ($db_menu) {
             <i class="fas fa-map-location-dot text-success"></i> <span>38 Districts</span>
         </a>
 
-        <div class="nav-section-title">Panchayat & Local Bodies</div>
+        <div class="nav-section-title">Panchayat & Rural Governance</div>
         <a href="mukhiyas.php" class="nav-link-custom <?php echo ($current_page == 'mukhiyas.php') ? 'active' : ''; ?>" title="Gram Panchayat Mukhiyas">
             <i class="fas fa-users-gear text-info"></i> <span>Mukhiya Directory</span>
         </a>
@@ -63,7 +63,19 @@ if ($db_menu) {
             <i class="fas fa-building-columns text-primary"></i> <span>Zila Parishad</span>
         </a>
         <a href="panchayats.php" class="nav-link-custom <?php echo ($current_page == 'panchayats.php') ? 'active' : ''; ?>" title="Panchayat Directory Overview">
-            <i class="fas fa-tree-city text-success"></i> <span>Panchayats</span>
+            <i class="fas fa-map-pin text-success"></i> <span>Panchayats</span>
+        </a>
+
+        <div class="nav-section-title">Census 2011 & Settlements</div>
+        <a href="towns.php" class="nav-link-custom <?php echo ($current_page == 'towns.php') ? 'active' : ''; ?>" title="199 Census Towns & 670 Slum Wards">
+            <i class="fas fa-city text-primary"></i> 
+            <span>199 Towns & Slums</span>
+            <span class="badge rounded-pill bg-light text-primary border">199</span>
+        </a>
+        <a href="villages.php" class="nav-link-custom <?php echo ($current_page == 'villages.php') ? 'active' : ''; ?>" title="44,874 Bihar Census 2011 Villages">
+            <i class="fas fa-tree-city text-success"></i> 
+            <span>44.8K Villages</span>
+            <span class="badge rounded-pill bg-success text-white">44.8K</span>
         </a>
         <a href="bulk-upload.php" class="nav-link-custom <?php echo ($current_page == 'bulk-upload.php') ? 'active' : ''; ?>" title="Bulk CSV Upload Hub">
             <i class="fas fa-cloud-arrow-up text-danger"></i> <span>Bulk Data Upload</span>

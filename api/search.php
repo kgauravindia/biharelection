@@ -170,5 +170,56 @@ if ($pdo) {
     }
 }
 
-// Return up to 25 results for full rich scrollable dropdown
-echo json_encode(array_slice($results, 0, 25));
+// 7. Search Towns & Slums
+if ($pdo) {
+    try {
+        $stmtT = $pdo->prepare("SELECT town_name, town_code, town_slug, district_name, district_slug, civic_status, population, slum_count 
+                                FROM census_towns_2011 
+                                WHERE town_name LIKE ? OR town_code LIKE ?
+                                LIMIT 6");
+        $stmtT->execute([$like, $like]);
+        while ($t = $stmtT->fetch(PDO::FETCH_ASSOC)) {
+            $tSlug = $t['town_slug'] ?: slugify($t['town_name']);
+            $dSlug = $t['district_slug'] ?: slugify($t['district_name']);
+            $results[] = [
+                'type' => 'town',
+                'title' => '🏙️ ' . $t['town_name'] . ' (' . ($t['civic_status'] ?: 'Town') . ')',
+                'subtitle' => 'District: ' . $t['district_name'] . ' | Pop: ' . number_format((int)$t['population']),
+                'extra' => 'Census Code: ' . ($t['town_code'] ?: '—') . ($t['slum_count'] > 0 ? ' | ' . $t['slum_count'] . ' Slum Wards' : ''),
+                'slug' => $tSlug,
+                'url' => getTownUrl($dSlug, $tSlug)
+            ];
+        }
+    } catch (Throwable $e) {
+        error_log("Town search error: " . $e->getMessage());
+    }
+}
+
+// 8. Search Census Villages
+if ($pdo) {
+    try {
+        $stmtV = $pdo->prepare("SELECT village_name, village_code, village_slug, district_name, district_slug, sub_district_name, cd_block_name, gram_panchayat_name, population 
+                                FROM census_villages_2011 
+                                WHERE village_name LIKE ? OR village_code LIKE ?
+                                LIMIT 6");
+        $stmtV->execute([$like, $like]);
+        while ($v = $stmtV->fetch(PDO::FETCH_ASSOC)) {
+            $dSlug = $v['district_slug'] ?: slugify($v['district_name']);
+            $bSlug = slugify($v['sub_district_name'] ?: $v['cd_block_name']);
+            $vSlug = $v['village_slug'] ?: ($v['village_code'] ?: slugify($v['village_name']));
+            $results[] = [
+                'type' => 'village',
+                'title' => '🏘️ ' . $v['village_name'] . ' (Village)',
+                'subtitle' => 'GP: ' . ($v['gram_panchayat_name'] ?: '—') . ' | Block: ' . ($v['sub_district_name'] ?: $v['cd_block_name']),
+                'extra' => 'District: ' . $v['district_name'] . ' | Code: ' . $v['village_code'] . ' | Pop: ' . number_format((int)$v['population']),
+                'slug' => $vSlug,
+                'url' => getVillageUrl($dSlug, $bSlug, $vSlug)
+            ];
+        }
+    } catch (Throwable $e) {
+        error_log("Village search error: " . $e->getMessage());
+    }
+}
+
+// Return up to 30 results for full rich scrollable dropdown
+echo json_encode(array_slice($results, 0, 30));

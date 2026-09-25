@@ -59,6 +59,13 @@ if ($conn) {
     // Blog Posts
     $r = $conn->query("SELECT COUNT(*) as c FROM `posts` WHERE `status` = 'published'");
     if ($r) $stats['posts_count'] = $r->fetch_assoc()['c'] ?? 0;
+
+    // Census Towns & Villages
+    $r = $conn->query("SELECT COUNT(*) as c FROM `census_towns_2011`");
+    $stats['towns_count'] = $r ? (int)$r->fetch_assoc()['c'] : 199;
+
+    $r = $conn->query("SELECT COUNT(*) as c FROM `census_villages_2011`");
+    $stats['villages_count'] = $r ? (int)$r->fetch_assoc()['c'] : 44874;
 }
 
 // Fallback counts from JSON if DB was empty for candidates/mukhiyas
@@ -232,39 +239,46 @@ if (empty($recent_candidates)) {
 
         <!-- Quick Access Navigation Cards -->
         <div class="row g-3 mb-4">
-            <div class="col-6 col-lg">
-                <a href="posts.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
-                    <div class="mb-2"><i class="fas fa-newspaper fa-2x text-danger"></i></div>
-                    <h6 class="fw-bold mb-1">Blog Articles</h6>
-                    <small class="text-muted"><?php echo number_format($stats['posts_count'] ?? 167); ?> Published</small>
+            <div class="col-6 col-md-4 col-xl-2">
+                <a href="towns.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
+                    <div class="mb-2"><i class="fas fa-city fa-2x text-primary"></i></div>
+                    <h6 class="fw-bold mb-1">199 Towns</h6>
+                    <small class="text-muted">Statutory & Slums</small>
                 </a>
             </div>
-            <div class="col-6 col-lg">
-                <a href="candidates.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
-                    <div class="mb-2"><i class="fas fa-id-card fa-2x text-primary"></i></div>
-                    <h6 class="fw-bold mb-1">Candidates</h6>
-                    <small class="text-muted">Edit & Verify</small>
+            <div class="col-6 col-md-4 col-xl-2">
+                <a href="villages.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
+                    <div class="mb-2"><i class="fas fa-tree-city fa-2x text-success"></i></div>
+                    <h6 class="fw-bold mb-1">44.8K Villages</h6>
+                    <small class="text-muted">Census 2011 Data</small>
                 </a>
             </div>
-            <div class="col-6 col-lg">
+            <div class="col-6 col-md-4 col-xl-2">
                 <a href="constituencies.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
-                    <div class="mb-2"><i class="fas fa-landmark-dome fa-2x text-info"></i></div>
+                    <div class="mb-2"><i class="fas fa-landmark-dome fa-2x text-danger"></i></div>
                     <h6 class="fw-bold mb-1">Constituencies</h6>
                     <small class="text-muted">243 Vidhan Sabha</small>
                 </a>
             </div>
-            <div class="col-6 col-lg">
+            <div class="col-6 col-md-4 col-xl-2">
                 <a href="mukhiyas.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
-                    <div class="mb-2"><i class="fas fa-address-book fa-2x text-success"></i></div>
+                    <div class="mb-2"><i class="fas fa-address-book fa-2x text-info"></i></div>
                     <h6 class="fw-bold mb-1">Panchayats</h6>
-                    <small class="text-muted">Local Bodies</small>
+                    <small class="text-muted">Mukhiya & Sarpanch</small>
                 </a>
             </div>
-            <div class="col-6 col-lg">
-                <a href="manage-ads.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
-                    <div class="mb-2"><i class="fas fa-bullhorn fa-2x text-warning"></i></div>
-                    <h6 class="fw-bold mb-1">Ad Campaigns</h6>
-                    <small class="text-muted">Monetization</small>
+            <div class="col-6 col-md-4 col-xl-2">
+                <a href="posts.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
+                    <div class="mb-2"><i class="fas fa-newspaper fa-2x text-warning"></i></div>
+                    <h6 class="fw-bold mb-1">Blog Articles</h6>
+                    <small class="text-muted"><?php echo number_format($stats['posts_count'] ?? 167); ?> Posts</small>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-xl-2">
+                <a href="candidates.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
+                    <div class="mb-2"><i class="fas fa-id-card fa-2x text-secondary"></i></div>
+                    <h6 class="fw-bold mb-1">Candidates</h6>
+                    <small class="text-muted">Edit & Verify</small>
                 </a>
             </div>
         </div>

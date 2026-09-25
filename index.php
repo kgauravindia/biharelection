@@ -74,9 +74,9 @@ require_once __DIR__ . '/header.php';
         </div>
     </section>
 
-    <!-- Live Governance & Electoral Stat Grid Bar (Mobile-first 2-col / 3-col / 6-col Grid) -->
+    <!-- Live Governance & Electoral Stat Grid Bar (Mobile-first 2-col / 4-col / 8-col Grid) -->
     <div class="container governance-stat-container" style="margin-top: -28px; position: relative; z-index: 10;">
-        <div class="row g-2 g-md-3 row-cols-2 row-cols-md-3 row-cols-xl-6">
+        <div class="row g-2 g-md-3 row-cols-2 row-cols-sm-4 row-cols-xl-4 row-cols-xxl-8">
             <!-- 1: Assembly MLAs -->
             <div class="col">
                 <a href="<?php echo SITE_URL; ?>/mla" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
@@ -96,7 +96,26 @@ require_once __DIR__ . '/header.php';
                 </a>
             </div>
 
-            <!-- 2: Adhyaksh / Upadhyaksh -->
+            <!-- 2: Lok Sabha MPs -->
+            <div class="col">
+                <a href="<?php echo SITE_URL; ?>/mp" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div class="stat-icon-wrapper stat-icon-mp">
+                            🏛️
+                        </div>
+                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 stat-badge fw-bold px-2 py-0.5 rounded-pill">
+                            Lok Sabha
+                        </span>
+                    </div>
+                    <div>
+                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">40</div>
+                        <div class="fw-bold text-dark stat-title mt-1">Parliament MPs</div>
+                        <div class="stat-subtitle text-muted">40 Parliamentary Seats</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 3: Zila Parishad Adhyaksh -->
             <div class="col">
                 <a href="<?php echo getZilaParishadUrl(); ?>" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
@@ -115,7 +134,7 @@ require_once __DIR__ . '/header.php';
                 </a>
             </div>
 
-            <!-- 3: Pramukh / Up-Pramukh -->
+            <!-- 4: Pramukh / Up-Pramukh -->
             <div class="col">
                 <a href="<?php echo getPanchayatSamitiUrl(); ?>" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
@@ -134,7 +153,7 @@ require_once __DIR__ . '/header.php';
                 </a>
             </div>
 
-            <!-- 4: Mukhiya & Up-Mukhiya -->
+            <!-- 5: Mukhiya & Sarpanch -->
             <div class="col">
                 <a href="<?php echo SITE_URL; ?>/mukhiya" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
@@ -147,32 +166,51 @@ require_once __DIR__ . '/header.php';
                     </div>
                     <div>
                         <div class="stat-number fw-extrabold text-navy mb-0 lh-1">8,053+</div>
-                        <div class="fw-bold text-dark stat-title mt-1">Gram Mukhiyas</div>
-                        <div class="stat-subtitle text-muted">Village Heads</div>
+                        <div class="fw-bold text-dark stat-title mt-1">Mukhiya &amp; Sarpanch</div>
+                        <div class="stat-subtitle text-muted">Village Council Heads</div>
                     </div>
                 </a>
             </div>
 
-            <!-- 5: Sarpanch & Up-Sarpanch -->
+            <!-- 6: Statutory Towns & Slums -->
             <div class="col">
-                <a href="<?php echo SITE_URL; ?>/sarpanch" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
+                <a href="<?php echo getTownUrl(); ?>" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
-                        <div class="stat-icon-wrapper stat-icon-gk">
-                            ⚖️
+                        <div class="stat-icon-wrapper stat-icon-town">
+                            🏙️
                         </div>
-                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 stat-badge fw-bold px-2 py-0.5 rounded-pill">
-                            Gram Katchahry
+                        <span class="badge bg-indigo bg-opacity-10 text-indigo border border-indigo border-opacity-25 stat-badge fw-bold px-2 py-0.5 rounded-pill" style="color: #4338ca; background: #e0e7ff;">
+                            Urban ULBs
                         </span>
                     </div>
                     <div>
-                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">8,053+</div>
-                        <div class="fw-bold text-dark stat-title mt-1">Sarpanch Heads</div>
-                        <div class="stat-subtitle text-muted">Judicial Village Heads</div>
+                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">199</div>
+                        <div class="fw-bold text-dark stat-title mt-1">Towns &amp; Slums</div>
+                        <div class="stat-subtitle text-muted">670 Slum Settlements</div>
                     </div>
                 </a>
             </div>
 
-            <!-- 6: Total Electors -->
+            <!-- 7: Census Villages -->
+            <div class="col">
+                <a href="<?php echo getVillageUrl(); ?>" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div class="stat-icon-wrapper stat-icon-village">
+                            🏘️
+                        </div>
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 stat-badge fw-bold px-2 py-0.5 rounded-pill">
+                            Census 2011
+                        </span>
+                    </div>
+                    <div>
+                        <div class="stat-number fw-extrabold text-navy mb-0 lh-1">44,874</div>
+                        <div class="fw-bold text-dark stat-title mt-1">Rural Villages</div>
+                        <div class="stat-subtitle text-muted">38 Districts Matrix</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 8: Total Electors -->
             <div class="col">
                 <a href="<?php echo SITE_URL; ?>/census" class="governance-stat-card p-2.5 p-sm-3 h-100 d-flex flex-column justify-content-between text-decoration-none text-reset">
                     <div class="d-flex justify-content-between align-items-start mb-2">
@@ -424,6 +462,171 @@ require_once __DIR__ . '/header.php';
                                         <div class="extra-small text-white-50">Complete demographic breakdown</div>
                                     </a>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bihar Caste-Based Survey (Jati Ganana 2022-23) Brief & Category Intelligence -->
+        <section class="mb-5">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white border border-light">
+                <div class="p-4 p-lg-5">
+                    <!-- Section Header -->
+                    <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4 pb-3 border-bottom">
+                        <div>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill small shadow-xs">
+                                    <i class="bi bi-pie-chart-fill me-1"></i> बिहार जाति आधारित गणना 2022-23
+                                </span>
+                                <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 fw-bold px-2.5 py-1 rounded-pill small">
+                                    215 Official Caste Codes (GAD)
+                                </span>
+                            </div>
+                            <h2 class="h3 fw-bold mb-1 text-navy" style="font-family: var(--font-heading);">
+                                Bihar Caste Survey Demographics &amp; Reservation Matrix
+                            </h2>
+                            <p class="text-muted mb-0 small lh-base" style="max-width: 820px;">
+                                Official Government of Bihar survey encompassing <strong>13.07 Crore surveyed citizens</strong>, <strong>2.76 Crore households</strong>, and <strong>215 recognized caste groups</strong> across all 38 districts.
+                            </p>
+                        </div>
+                        <a href="<?php echo getCasteSurveyUrl(); ?>" class="btn btn-warning text-dark fw-bold rounded-pill px-4 py-2 shadow-sm d-flex align-items-center gap-1.5">
+                            <i class="bi bi-search"></i> Explore All 215+ Caste Codes &rarr;
+                        </a>
+                    </div>
+
+                    <!-- 5 Major Category Cards Grid -->
+                    <div class="row g-3 mb-4">
+                        <!-- 1: EBC -->
+                        <div class="col-12 col-sm-6 col-lg">
+                            <a href="<?php echo getCasteSurveyUrl(); ?>?category=EBC" class="card p-3 h-100 border-0 rounded-3 text-decoration-none text-reset hover-lift" style="background: #f0fdf4; border: 1px solid #bbf7d0 !important;">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-success text-white fw-bold px-2.5 py-1 rounded-pill small">अत्यंत पिछड़ा वर्ग</span>
+                                    <span class="small fw-bold text-success">112 Castes</span>
+                                </div>
+                                <div class="fs-3 fw-extrabold text-success mb-0 lh-1">36.01%</div>
+                                <div class="fw-bold text-dark mt-1" style="font-size: 0.9rem;">EBC Category</div>
+                                <div class="small text-muted">4,70,80,514 Persons</div>
+                            </a>
+                        </div>
+
+                        <!-- 2: BC -->
+                        <div class="col-12 col-sm-6 col-lg">
+                            <a href="<?php echo getCasteSurveyUrl(); ?>?category=BC" class="card p-3 h-100 border-0 rounded-3 text-decoration-none text-reset hover-lift" style="background: #fffbeb; border: 1px solid #fde68a !important;">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill small">पिछड़ा वर्ग</span>
+                                    <span class="small fw-bold text-warning" style="color: #b45309 !important;">30 Castes</span>
+                                </div>
+                                <div class="fs-3 fw-extrabold text-warning mb-0 lh-1" style="color: #d97706 !important;">27.12%</div>
+                                <div class="fw-bold text-dark mt-1" style="font-size: 0.9rem;">BC Category</div>
+                                <div class="small text-muted">3,54,63,936 Persons</div>
+                            </a>
+                        </div>
+
+                        <!-- 3: SC -->
+                        <div class="col-12 col-sm-6 col-lg">
+                            <a href="<?php echo getCasteSurveyUrl(); ?>?category=SC" class="card p-3 h-100 border-0 rounded-3 text-decoration-none text-reset hover-lift" style="background: #fef2f2; border: 1px solid #fecaca !important;">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-danger text-white fw-bold px-2.5 py-1 rounded-pill small">अनुसूचित जाति</span>
+                                    <span class="small fw-bold text-danger">22 Castes</span>
+                                </div>
+                                <div class="fs-3 fw-extrabold text-danger mb-0 lh-1">19.65%</div>
+                                <div class="fw-bold text-dark mt-1" style="font-size: 0.9rem;">SC Category</div>
+                                <div class="small text-muted">2,56,89,820 Persons</div>
+                            </a>
+                        </div>
+
+                        <!-- 4: General / Unreserved -->
+                        <div class="col-12 col-sm-6 col-lg">
+                            <a href="<?php echo getCasteSurveyUrl(); ?>?category=GEN" class="card p-3 h-100 border-0 rounded-3 text-decoration-none text-reset hover-lift" style="background: #eff6ff; border: 1px solid #bfdbfe !important;">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-primary text-white fw-bold px-2.5 py-1 rounded-pill small">अनारक्षित / सामान्य</span>
+                                    <span class="small fw-bold text-primary">17 Castes</span>
+                                </div>
+                                <div class="fs-3 fw-extrabold text-primary mb-0 lh-1">15.52%</div>
+                                <div class="fw-bold text-dark mt-1" style="font-size: 0.9rem;">General / UC</div>
+                                <div class="small text-muted">2,02,91,679 Persons</div>
+                            </a>
+                        </div>
+
+                        <!-- 5: ST -->
+                        <div class="col-12 col-sm-6 col-lg">
+                            <a href="<?php echo getCasteSurveyUrl(); ?>?category=ST" class="card p-3 h-100 border-0 rounded-3 text-decoration-none text-reset hover-lift" style="background: #faf5ff; border: 1px solid #e9d5ff !important;">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge text-white fw-bold px-2.5 py-1 rounded-pill small" style="background: #9333ea;">अनुसूचित जनजाति</span>
+                                    <span class="small fw-bold" style="color: #7e22ce;">32 Castes</span>
+                                </div>
+                                <div class="fs-3 fw-extrabold mb-0 lh-1" style="color: #9333ea;">1.68%</div>
+                                <div class="fw-bold text-dark mt-1" style="font-size: 0.9rem;">ST Category</div>
+                                <div class="small text-muted">21,99,361 Persons</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Proportional Multi-Segment Progress Bar -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between small text-muted fw-semibold mb-1.5">
+                            <span>Population Proportions (Total: 13.07 Crore)</span>
+                            <span>EBC 36.01% | BC 27.12% | SC 19.65% | GEN 15.52% | ST 1.68%</span>
+                        </div>
+                        <div class="progress rounded-pill shadow-xs" style="height: 14px; background: #e2e8f0;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 36.01%" title="EBC: 36.01%"></div>
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 27.12%" title="BC: 27.12%"></div>
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 19.65%" title="SC: 19.65%"></div>
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 15.52%" title="General: 15.52%"></div>
+                            <div class="progress-bar" role="progressbar" style="width: 1.68%; background: #9333ea;" title="ST: 1.68%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Major Caste Demographics Quick Snapshot Tags & Religious Ratio -->
+                    <div class="row g-3 align-items-center pt-3 border-top">
+                        <div class="col-12 col-xl-8">
+                            <div class="small fw-bold text-dark mb-2">
+                                <i class="bi bi-tags-fill text-warning me-1"></i> Key Caste Groups &amp; Official Codes (बिहार प्रमुख जातियां):
+                            </div>
+                            <div class="d-flex flex-wrap gap-1.5">
+                                <a href="<?php echo getCasteSurveyUrl(167); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>यादव (Yadav)</strong>: 14.26% <span class="text-muted ms-1">(Code 167)</span>
+                                </a>
+                                <a href="<?php echo getCasteSurveyUrl(182); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>रविदास/चमार (Ravidas)</strong>: 5.25% <span class="text-muted ms-1">(Code 182)</span>
+                                </a>
+                                <a href="<?php echo getCasteSurveyUrl(27); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>कुशवाहा/कोइरी (Kushwaha)</strong>: 4.21% <span class="text-muted ms-1">(Code 027)</span>
+                                </a>
+                                <a href="<?php echo getCasteSurveyUrl(126); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>ब्राह्मण (Brahmin)</strong>: 3.65% <span class="text-muted ms-1">(Code 126)</span>
+                                </a>
+                                <a href="<?php echo getCasteSurveyUrl(169); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>राजपूत (Rajput)</strong>: 3.45% <span class="text-muted ms-1">(Code 169)</span>
+                                </a>
+                                <a href="<?php echo getCasteSurveyUrl(160); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>मुसहर (Musahar)</strong>: 3.08% <span class="text-muted ms-1">(Code 160)</span>
+                                </a>
+                                <a href="<?php echo getCasteSurveyUrl(24); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>कुर्मी (Kurmi)</strong>: 2.87% <span class="text-muted ms-1">(Code 024)</span>
+                                </a>
+                                <a href="<?php echo getCasteSurveyUrl(144); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>भूमिहार (Bhumihar)</strong>: 2.86% <span class="text-muted ms-1">(Code 144)</span>
+                                </a>
+                                <a href="<?php echo getCasteSurveyUrl(117); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>तेली (Teli)</strong>: 2.81% <span class="text-muted ms-1">(Code 117)</span>
+                                </a>
+                                <a href="<?php echo getCasteSurveyUrl(124); ?>" class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill text-decoration-none hover-shadow">
+                                    <strong>बनिया (Bania)</strong>: 2.31% <span class="text-muted ms-1">(Code 124)</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-4 text-xl-end">
+                            <div class="d-inline-flex align-items-center gap-2 p-2 bg-light rounded-3 border">
+                                <div class="text-start">
+                                    <div class="extra-small text-muted fw-semibold">Religious Breakdown:</div>
+                                    <div class="small fw-bold text-dark">Hindu: 81.99% | Muslim: 17.70%</div>
+                                </div>
+                                <a href="<?php echo getCasteSurveyUrl(); ?>" class="btn btn-outline-primary btn-sm rounded-pill fw-bold px-3">
+                                    Full Report &rarr;
+                                </a>
                             </div>
                         </div>
                     </div>

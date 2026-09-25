@@ -22,8 +22,8 @@ class CasteDataProvider {
                     'name_hi' => 'अत्यंत पिछड़ा वर्ग (BC-1)',
                     'percentage' => 36.0148,
                     'population' => 47080514,
-                    'color' => '#f59e0b',
-                    'badge_class' => 'warning',
+                    'color' => '#10b981',
+                    'badge_class' => 'success',
                     'icon' => 'bi-layers-fill'
                 ],
                 'BC' => [
@@ -32,8 +32,8 @@ class CasteDataProvider {
                     'name_hi' => 'पिछड़ा वर्ग (BC-2)',
                     'percentage' => 27.1286,
                     'population' => 35463936,
-                    'color' => '#3b82f6',
-                    'badge_class' => 'primary',
+                    'color' => '#f59e0b',
+                    'badge_class' => 'warning',
                     'icon' => 'bi-people-fill'
                 ],
                 'SC' => [
@@ -42,8 +42,8 @@ class CasteDataProvider {
                     'name_hi' => 'अनुसूचित जाति (SC)',
                     'percentage' => 19.6518,
                     'population' => 25689820,
-                    'color' => '#10b981',
-                    'badge_class' => 'success',
+                    'color' => '#ef4444',
+                    'badge_class' => 'danger',
                     'icon' => 'bi-shield-fill-check'
                 ],
                 'ST' => [
@@ -52,8 +52,8 @@ class CasteDataProvider {
                     'name_hi' => 'अनुसूचित जनजाति (ST)',
                     'percentage' => 1.6824,
                     'population' => 2199361,
-                    'color' => '#8b5cf6',
-                    'badge_class' => 'info',
+                    'color' => '#9333ea',
+                    'badge_class' => 'purple',
                     'icon' => 'bi-tree-fill'
                 ],
                 'GEN' => [
@@ -62,8 +62,8 @@ class CasteDataProvider {
                     'name_hi' => 'अनारक्षित / सामान्य वर्ग (General)',
                     'percentage' => 15.5224,
                     'population' => 20291679,
-                    'color' => '#ef4444',
-                    'badge_class' => 'danger',
+                    'color' => '#3b82f6',
+                    'badge_class' => 'primary',
                     'icon' => 'bi-award-fill'
                 ]
             ],
