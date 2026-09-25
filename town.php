@@ -275,47 +275,126 @@ $activeNav = 'census';
 require_once __DIR__ . '/header.php';
 ?>
 
-<link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/village.css">
 <style>
+/* Modern Premium Redesign Tokens for Town & Slums */
+:root {
+    --town-navy-dark: #081225;
+    --town-navy-card: #0f203c;
+    --town-cyan: #06b6d4;
+    --town-indigo: #6366f1;
+    --town-purple: #8b5cf6;
+    --town-amber: #f59e0b;
+    --town-emerald: #10b981;
+    --town-rose: #f43f5e;
+}
+
+/* Glassmorphism & Hero Mesh Gradients */
 .town-hero-gradient {
-    background: linear-gradient(135deg, #0d233a 0%, #173b6c 50%, #1e5799 100%);
+    background: radial-gradient(at 15% 15%, rgba(99, 102, 241, 0.28) 0px, transparent 60%),
+                radial-gradient(at 85% 85%, rgba(6, 182, 212, 0.22) 0px, transparent 60%),
+                linear-gradient(135deg, #091833 0%, #0d284f 50%, #15396b 100%);
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-.town-hero-gradient::before {
+.town-hero-gradient::after {
     content: "";
     position: absolute;
-    top: -50%;
-    left: -20%;
-    width: 140%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
-    pointer-events: none;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.5), rgba(245, 158, 11, 0.5), transparent);
 }
 .slum-hero-gradient {
-    background: linear-gradient(135deg, #2d1300 0%, #78350f 50%, #b45309 100%);
+    background: radial-gradient(at 15% 15%, rgba(245, 158, 11, 0.3) 0px, transparent 60%),
+                radial-gradient(at 85% 85%, rgba(244, 63, 94, 0.25) 0px, transparent 60%),
+                linear-gradient(135deg, #2a1104 0%, #52230a 50%, #7c330c 100%);
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-.table-slum th {
-    background-color: #f8fafc;
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+
+/* Cards & Shadows */
+.town-glass-card {
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.85);
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.hover-primary:hover {
-    color: var(--primary-navy, #0b1a30) !important;
-    text-decoration: underline !important;
+.town-glass-card:hover {
+    box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.12);
+    transform: translateY(-3px);
 }
-.slum-hover-card {
+.town-kpi-card {
+    background: #ffffff;
+    border-radius: 1.15rem;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.slum-hover-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+.town-kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08);
 }
+
+/* Pill Badges */
+.badge-glass-dark {
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+.badge-glass-accent {
+    background: rgba(245, 158, 11, 0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #fbbf24;
+}
+.badge-civic {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+}
+
+/* Table Styling */
+.table-slum th {
+    background-color: #f8fafc;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #475569;
+    font-weight: 700;
+    border-bottom: 2px solid #e2e8f0;
+}
+.table-slum tbody tr {
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.table-slum tbody tr:hover {
+    background-color: #f1f5f9 !important;
+}
+
+/* Filter Buttons */
+.slum-chip-btn {
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.9rem;
+    transition: all 0.2s ease;
+}
+.slum-chip-btn.active {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border-color: #0f172a !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
 @media print {
-    .town-hero-gradient, .slum-hero-gradient, nav, .btn, form, footer, .ad-container {
+    .town-hero-gradient, .slum-hero-gradient, nav, .btn, form, footer, .ad-container, #slumDetailModal {
         display: none !important;
     }
 }
@@ -346,7 +425,6 @@ require_once __DIR__ . '/header.php';
         <div class="container">
             <nav aria-label="breadcrumb" class="mb-3">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>" class="text-white-50 text-decoration-none"><i class="bi bi-house-door me-1"></i>Home</a></li>
                     <li class="breadcrumb-item"><a href="<?php echo getCensusUrl(); ?>" class="text-white-50 text-decoration-none">Census 2011</a></li>
                     <li class="breadcrumb-item"><a href="<?php echo getTownUrl(); ?>" class="text-white-50 text-decoration-none">Towns Directory</a></li>
                     <li class="breadcrumb-item"><a href="<?php echo getTownUrl($dSlug); ?>" class="text-white-50 text-decoration-none"><?php echo htmlspecialchars($dName); ?></a></li>
@@ -361,7 +439,7 @@ require_once __DIR__ . '/header.php';
                         <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
                             <i class="bi bi-geo-alt-fill me-1"></i> Slum ID: #<?php echo $sId; ?>
                         </span>
-                        <span class="badge bg-light text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                        <span class="badge badge-glass-dark px-3 py-1.5 rounded-pill shadow-sm">
                             Town Code: <?php echo htmlspecialchars($tCode); ?>
                         </span>
                         <?php if ($isNotified): ?>
@@ -408,42 +486,42 @@ require_once __DIR__ . '/header.php';
         <!-- Quick Slum KPI Tiles -->
         <div class="row g-3 mb-4">
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-warning">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-warning">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Slum Population</span>
                     <h3 class="fw-bold text-danger mb-0 fs-4"><?php echo number_format($sPop); ?></h3>
-                    <span class="text-xs text-muted">Approximate (2011)</span>
+                    <span class="text-xs text-muted">Persons (2011)</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-info">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-info">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Households</span>
                     <h3 class="fw-bold text-info mb-0 fs-4"><?php echo number_format($sHh); ?></h3>
                     <span class="text-xs text-muted">Families</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-success">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-success">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Paved Roads</span>
                     <h3 class="fw-bold text-success mb-0 fs-4"><?php echo $sPavedKm; ?></h3>
                     <span class="text-xs text-muted">Kilometers</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-primary">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-primary">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Total Latrines</span>
                     <h3 class="fw-bold text-primary mb-0 fs-4"><?php echo $totalLatrines; ?></h3>
                     <span class="text-xs text-muted">Sanitation Units</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-info">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-info">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Public Tap Water</span>
                     <h3 class="fw-bold text-info mb-0 fs-4"><?php echo $tapPoints; ?></h3>
                     <span class="text-xs text-muted">Hydrant / Taps</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-warning">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-warning">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Domestic Elec.</span>
                     <h3 class="fw-bold text-dark mb-0 fs-4"><?php echo $elecDom; ?></h3>
                     <span class="text-xs text-muted">Connections</span>
@@ -455,7 +533,7 @@ require_once __DIR__ . '/header.php';
             <!-- Left Column: Sanitation, Drainage & Electricity Infrastructure -->
             <div class="col-lg-7">
                 <!-- Sanitation & Latrines Card -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <div class="card town-glass-card p-4 mb-4">
                     <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
                         <span><i class="bi bi-droplet-fill text-primary me-2"></i>Sanitation &amp; Latrine Facilities</span>
                         <span class="badge bg-primary-subtle text-primary fw-semibold small">Census 2011</span>
@@ -512,7 +590,7 @@ require_once __DIR__ . '/header.php';
                 </div>
 
                 <!-- Water Supply & Power Grid -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <div class="card town-glass-card p-4 mb-4">
                     <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
                         <span><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Water Supply &amp; Electricity Grid</span>
                         <span class="badge bg-warning-subtle text-dark fw-semibold small">Civic Amenities</span>
@@ -557,7 +635,7 @@ require_once __DIR__ . '/header.php';
             <!-- Right Column: Parent Town Summary & Navigation -->
             <div class="col-lg-5">
                 <!-- Parent Town Summary Card -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 border-top border-4 border-primary">
+                <div class="card town-glass-card p-4 mb-4 border-top border-4 border-primary">
                     <h4 class="fw-bold text-navy font-heading fs-5 mb-3">
                         <i class="bi bi-buildings-fill text-primary me-2"></i>Parent Town Information
                     </h4>
@@ -591,15 +669,15 @@ require_once __DIR__ . '/header.php';
                         <a href="<?php echo getTownUrl($dSlug, $tSlug); ?>" class="btn btn-primary rounded-pill w-100 fw-bold shadow-sm">
                             🏙️ Full <?php echo htmlspecialchars($tName); ?> Profile &rarr;
                         </a>
-                        <a href="<?php echo getVillageUrl($dSlug, $bSlug); ?>" class="btn btn-outline-success rounded-pill w-100 fw-semibold">
-                            🏡 Go to <?php echo htmlspecialchars($bName); ?> Village Data &rarr;
+                        <a href="<?php echo getTownUrl($dSlug); ?>" class="btn btn-outline-primary rounded-pill w-100 fw-semibold">
+                            🏙️ All <?php echo htmlspecialchars($dName); ?> Urban Towns &rarr;
                         </a>
                     </div>
                 </div>
 
                 <!-- Sibling Slums in same town -->
                 <?php if (!empty($siblingSlums)): ?>
-                    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                    <div class="card town-glass-card p-4 mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="fw-bold text-navy font-heading fs-6 mb-0">
                                 🛖 Other Slums in <?php echo htmlspecialchars($tName); ?> (<?php echo count($siblingSlums); ?>)
@@ -626,9 +704,6 @@ require_once __DIR__ . '/header.php';
             </div>
         </div>
 
-        <!-- Bottom Ad Slot -->
-        <?php renderGoogleAd('footer_banner', GOOGLE_AD_SLOT_FOOTER, 'my-4'); ?>
-
     </main>
 
 <?php elseif ($town): ?>
@@ -636,30 +711,30 @@ require_once __DIR__ . '/header.php';
     <!-- 2. SINGLE TOWN PROFILE VIEW                                               -->
     <!-- ========================================================================= -->
 
-    <!-- Schema.org JSON-LD Structured Data for Urban Entity -->
+    <!-- Schema.org JSON-LD Structured Data for Town -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "City",
       "name": "<?php echo addslashes($tName); ?>",
-      "description": "Official 2011 Census urban demographic data for <?php echo addslashes($tName); ?>, <?php echo addslashes($dName); ?> District, Bihar.",
-      "containedInPlace": {
-        "@type": "AdministrativeArea",
-        "name": "<?php echo addslashes($dName); ?> District, Bihar"
+      "description": "Census 2011 demographic and infrastructure profile for <?php echo addslashes($tName); ?> (<?php echo addslashes($civicStatus); ?>), <?php echo addslashes($dName); ?> District, Bihar.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Bihar",
+        "addressCountry": "IN"
       },
       "identifier": "<?php echo $tCode; ?>"
     }
     </script>
 
-    <!-- Breadcrumb Header -->
+    <!-- Town Header Hero Banner -->
     <section class="town-hero-gradient text-white py-4 py-md-5">
         <div class="container">
             <nav aria-label="breadcrumb" class="mb-3">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>" class="text-white-50 text-decoration-none"><i class="bi bi-house-door me-1"></i>Home</a></li>
                     <li class="breadcrumb-item"><a href="<?php echo getCensusUrl(); ?>" class="text-white-50 text-decoration-none">Census 2011</a></li>
                     <li class="breadcrumb-item"><a href="<?php echo getTownUrl(); ?>" class="text-white-50 text-decoration-none">Towns Directory</a></li>
-                    <li class="breadcrumb-item"><a href="<?php echo getTownUrl($dSlug); ?>" class="text-white text-decoration-none"><?php echo htmlspecialchars($dName); ?></a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo getTownUrl($dSlug); ?>" class="text-white-50 text-decoration-none"><?php echo htmlspecialchars($dName); ?></a></li>
                     <li class="breadcrumb-item active text-warning fw-bold" aria-current="page"><?php echo htmlspecialchars($tName); ?></li>
                 </ol>
             </nav>
@@ -668,16 +743,16 @@ require_once __DIR__ . '/header.php';
                 <div class="col-lg-8">
                     <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
                         <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
-                            <i class="bi bi-buildings me-1"></i> Town Code: <?php echo htmlspecialchars($tCode); ?>
+                            <i class="bi bi-buildings-fill me-1"></i> Town Code: <?php echo htmlspecialchars($tCode); ?>
                         </span>
-                        <span class="badge bg-info text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
-                            Class <?php echo htmlspecialchars($townClass); ?>
-                        </span>
-                        <span class="badge bg-light text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                        <span class="badge badge-glass-dark px-3 py-1.5 rounded-pill shadow-sm">
                             <?php echo htmlspecialchars($civicStatus); ?>
                         </span>
+                        <span class="badge bg-primary text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            Class <?php echo htmlspecialchars($townClass); ?> Town
+                        </span>
                         <?php if ($totalSlums > 0): ?>
-                            <a href="#slums-section" class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm text-decoration-none hover-shadow animate-pulse">
+                            <a href="#slums-section" class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm text-decoration-none hover-shadow">
                                 🛖 <?php echo $totalSlums; ?> Slum Settlements &darr;
                             </a>
                         <?php endif; ?>
@@ -719,35 +794,35 @@ require_once __DIR__ . '/header.php';
         <!-- Quick Demographic KPI Tiles -->
         <div class="row g-3 mb-4">
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-primary">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-primary">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Total Population</span>
                     <h3 class="fw-bold text-navy mb-0 fs-4"><?php echo number_format($pop); ?></h3>
                     <span class="text-xs text-muted">Persons (2011)</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-info">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-info">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Households</span>
                     <h3 class="fw-bold text-info mb-0 fs-4"><?php echo number_format($hh); ?></h3>
                     <span class="text-xs text-muted">~<?php echo $avgFamilySize; ?> / Family</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-danger">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-danger">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Sex Ratio</span>
                     <h3 class="fw-bold text-danger mb-0 fs-4"><?php echo $sr; ?></h3>
                     <span class="text-xs text-muted">Females / 1k Males</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-success">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-success">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Urban Area</span>
                     <h3 class="fw-bold text-success mb-0 fs-4"><?php echo number_format($areaSqKm, 2); ?></h3>
                     <span class="text-xs text-muted">Sq. Kilometers</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-warning">
+                <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-warning">
                     <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Pop. Density</span>
                     <h3 class="fw-bold text-dark mb-0 fs-4"><?php echo $density > 0 ? number_format($density) : 'N/A'; ?></h3>
                     <span class="text-xs text-muted">Persons / Sq Km</span>
@@ -755,13 +830,13 @@ require_once __DIR__ . '/header.php';
             </div>
             <div class="col-6 col-md-4 col-lg-2">
                 <?php if ($totalSlums > 0): ?>
-                    <a href="#slums-section" class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 text-decoration-none hover-shadow" style="border-top-color: #7928ca !important;">
+                    <a href="#slums-section" class="card town-kpi-card p-3 h-100 text-center border-top border-4 text-decoration-none hover-shadow" style="border-top-color: #7928ca !important;">
                         <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Slums (<?php echo $totalSlums; ?>)</span>
                         <h3 class="fw-bold mb-0 fs-4" style="color: #7928ca;"><?php echo $slumPopPct; ?>%</h3>
                         <span class="text-xs text-primary fw-semibold"><?php echo number_format($totalSlumPop); ?> in Slums &darr;</span>
                     </a>
                 <?php else: ?>
-                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100 text-center border-top border-4 border-secondary">
+                    <div class="card town-kpi-card p-3 h-100 text-center border-top border-4 border-secondary">
                         <span class="text-muted small fw-semibold text-uppercase d-block mb-1">Slums</span>
                         <h3 class="fw-bold text-muted mb-0 fs-4">0</h3>
                         <span class="text-xs text-muted">No Slum Areas</span>
@@ -774,7 +849,7 @@ require_once __DIR__ . '/header.php';
             <!-- Left Column: Detailed Demographics -->
             <div class="col-lg-7">
                 <!-- Population & Gender Breakdown -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <div class="card town-glass-card p-4 mb-4">
                     <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
                         <span><i class="bi bi-pie-chart-fill text-primary me-2"></i>Population &amp; Gender Demographics</span>
                         <span class="badge bg-primary-subtle text-primary fw-semibold small">Census 2011</span>
@@ -801,22 +876,25 @@ require_once __DIR__ . '/header.php';
                         </div>
                     </div>
 
-                    <!-- Gender Ratio Visual Progress Bar -->
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between text-xs text-muted mb-1">
-                            <span>Male (<?php echo $pop > 0 ? round(($male/$pop)*100, 1) : 0; ?>%)</span>
-                            <span>Female (<?php echo $pop > 0 ? round(($female/$pop)*100, 1) : 0; ?>%)</span>
+                    <!-- Visual Progress Bar for Male/Female Balance -->
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between text-muted small mb-1">
+                            <span>Male Share (<?php echo $pop > 0 ? round(($male/$pop)*100, 1) : 0; ?>%)</span>
+                            <span>Female Share (<?php echo $pop > 0 ? round(($female/$pop)*100, 1) : 0; ?>%)</span>
                         </div>
-                        <div class="progress" style="height: 12px; border-radius: 6px;">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $pop > 0 ? ($male/$pop)*100 : 50; ?>%"></div>
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $pop > 0 ? ($female/$pop)*100 : 50; ?>%"></div>
+                        <div class="progress rounded-pill" style="height: 10px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $pop > 0 ? ($male/$pop)*100 : 50; ?>%" aria-valuenow="<?php echo $male; ?>" aria-valuemin="0" aria-valuemax="<?php echo $pop; ?>"></div>
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $pop > 0 ? ($female/$pop)*100 : 50; ?>%" aria-valuenow="<?php echo $female; ?>" aria-valuemin="0" aria-valuemax="<?php echo $pop; ?>"></div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Social Category Distribution -->
-                    <h5 class="fw-bold text-navy fs-6 mb-3 border-top pt-3">
-                        <i class="bi bi-people-fill text-warning me-2"></i>Social Category Breakdown
-                    </h5>
+                <!-- Social & Caste Composition -->
+                <div class="card town-glass-card p-4 mb-4">
+                    <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
+                        <span><i class="bi bi-people-fill text-warning me-2"></i>Social &amp; Caste Composition</span>
+                        <span class="badge bg-warning-subtle text-dark fw-semibold small">SC / ST Matrix</span>
+                    </h4>
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-sm align-middle mb-0">
@@ -857,7 +935,7 @@ require_once __DIR__ . '/header.php';
                 </div>
 
                 <!-- Economic, Banking & Manufacturing Infrastructure -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <div class="card town-glass-card p-4 mb-4">
                     <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
                         <span><i class="bi bi-cash-coin text-success me-2"></i>Economy &amp; Financial Infrastructure</span>
                         <span class="badge bg-success-subtle text-success fw-semibold small">Town Facilities</span>
@@ -907,7 +985,7 @@ require_once __DIR__ . '/header.php';
             <!-- Right Column: Administrative & Slum Summary -->
             <div class="col-lg-5">
                 <!-- Administrative Jurisdiction Card -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <div class="card town-glass-card p-4 mb-4">
                     <h4 class="fw-bold text-navy font-heading fs-5 mb-3">
                         <i class="bi bi-geo-alt-fill text-danger me-2"></i>Administrative Hierarchy
                     </h4>
@@ -938,41 +1016,17 @@ require_once __DIR__ . '/header.php';
                     </div>
 
                     <div class="mt-3 pt-3 border-top d-flex flex-column gap-2">
-                        <a href="<?php echo getPanchayatUrl($dSlug, $bSlug); ?>" class="btn btn-sm btn-outline-primary rounded-pill w-100 fw-semibold">
-                            🌾 <?php echo htmlspecialchars($bName); ?> Gram Panchayats &rarr;
+                        <a href="<?php echo getTownUrl($dSlug); ?>" class="btn btn-sm btn-outline-primary rounded-pill w-100 fw-semibold">
+                            🏙️ All <?php echo htmlspecialchars($dName); ?> Urban Towns &rarr;
                         </a>
-                        <a href="<?php echo getZilaParishadUrl($dSlug); ?>" class="btn btn-sm btn-outline-secondary rounded-pill w-100 fw-semibold">
-                            🏛️ <?php echo htmlspecialchars($dName); ?> Zila Parishad Board
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Dedicated Go to Village Data Card -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 border-top border-4 border-success">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="rounded-circle bg-success-subtle text-success p-3 fs-3 d-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
-                            🏡
-                        </div>
-                        <div>
-                            <span class="badge bg-success-subtle text-success fw-bold px-2 py-0.5 rounded-pill small">Rural Directory</span>
-                            <h4 class="fw-bold text-navy fs-5 mb-0">Go to Village Data</h4>
-                        </div>
-                    </div>
-                    <p class="small text-muted mb-3">
-                        Explore all rural Census 2011 villages, population, households, and Gram Panchayats in <strong><?php echo htmlspecialchars($bName); ?></strong> and <strong><?php echo htmlspecialchars($dName); ?></strong> district.
-                    </p>
-                    <div class="d-flex flex-column gap-2">
-                        <a href="<?php echo getVillageUrl($dSlug, $bSlug); ?>" class="btn btn-success rounded-pill fw-bold py-2 shadow-sm">
-                            🏡 <?php echo htmlspecialchars($bName); ?> Villages &rarr;
-                        </a>
-                        <a href="<?php echo getVillageUrl($dSlug); ?>" class="btn btn-outline-success rounded-pill fw-semibold btn-sm py-1.5">
-                            All <?php echo htmlspecialchars($dName); ?> District Villages &rarr;
+                        <a href="<?php echo getCensusUrl($dSlug); ?>" class="btn btn-sm btn-outline-secondary rounded-pill w-100 fw-semibold">
+                            📊 <?php echo htmlspecialchars($dName); ?> District Census Hub
                         </a>
                     </div>
                 </div>
 
                 <!-- Slum Summary Box -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 border-top border-4 border-warning">
+                <div class="card town-glass-card p-4 mb-4 border-top border-4 border-warning">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
                             <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill small mb-1">
@@ -1031,7 +1085,7 @@ require_once __DIR__ . '/header.php';
                 if ((float)$s['paved_roads_km'] > 0) $withRoadsCount++;
             }
         ?>
-            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white border-top border-4 border-warning" id="slums-section" style="scroll-margin-top: 80px;">
+            <div class="card town-glass-card p-4 mb-4 border-top border-4 border-warning" id="slums-section" style="scroll-margin-top: 80px;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <div>
                         <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill small mb-1">
@@ -1053,21 +1107,21 @@ require_once __DIR__ . '/header.php';
                 <!-- Quick Filter Chips -->
                 <?php if (count($slums) > 5): ?>
                     <div class="d-flex flex-wrap gap-2 mb-3 pb-2 border-bottom">
-                        <button type="button" class="btn btn-xs btn-outline-dark rounded-pill active slum-filter-btn" data-filter="all">
+                        <button type="button" class="btn btn-xs btn-outline-dark slum-chip-btn active slum-filter-btn" data-filter="all">
                             All Slums (<?php echo count($slums); ?>)
                         </button>
                         <?php if ($notifiedCount > 0): ?>
-                            <button type="button" class="btn btn-xs btn-outline-success rounded-pill slum-filter-btn" data-filter="notified">
+                            <button type="button" class="btn btn-xs btn-outline-success slum-chip-btn slum-filter-btn" data-filter="notified">
                                 Notified (<?php echo $notifiedCount; ?>)
                             </button>
                         <?php endif; ?>
-                        <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill slum-filter-btn" data-filter="non-notified">
+                        <button type="button" class="btn btn-xs btn-outline-secondary slum-chip-btn slum-filter-btn" data-filter="non-notified">
                             Non-Notified (<?php echo $nonNotifiedCount; ?>)
                         </button>
-                        <button type="button" class="btn btn-xs btn-outline-info rounded-pill slum-filter-btn" data-filter="water">
+                        <button type="button" class="btn btn-xs btn-outline-info slum-chip-btn slum-filter-btn" data-filter="water">
                             🚰 With Tap Water (<?php echo $withWaterCount; ?>)
                         </button>
-                        <button type="button" class="btn btn-xs btn-outline-warning rounded-pill text-dark slum-filter-btn" data-filter="roads">
+                        <button type="button" class="btn btn-xs btn-outline-warning slum-chip-btn text-dark slum-filter-btn" data-filter="roads">
                             🛣️ With Paved Roads (<?php echo $withRoadsCount; ?>)
                         </button>
                     </div>
@@ -1411,7 +1465,7 @@ require_once __DIR__ . '/header.php';
 
         <!-- Sibling Towns in Same District Navigation -->
         <?php if (!empty($nearbyTowns)): ?>
-            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+            <div class="card town-glass-card p-4 mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <div>
                         <span class="badge bg-primary-subtle text-primary fw-bold px-2.5 py-1 rounded-pill small mb-1">
@@ -1453,10 +1507,9 @@ require_once __DIR__ . '/header.php';
                                         <?php endif; ?>
                                     </div>
                                 </div>
-                                <div class="pt-2 border-top d-flex justify-content-between align-items-center">
-                                    <span class="text-muted small">Urban Profile</span>
-                                    <a href="<?php echo htmlspecialchars($ntUrl); ?>" class="btn btn-xs btn-outline-primary rounded-pill px-2.5 py-1 text-xs fw-bold">
-                                        View &rarr;
+                                <div class="pt-2 border-top">
+                                    <a href="<?php echo htmlspecialchars($ntUrl); ?>" class="btn btn-sm btn-primary rounded-pill w-100 fw-semibold">
+                                        View Town Profile &rarr;
                                     </a>
                                 </div>
                             </div>
@@ -1466,14 +1519,11 @@ require_once __DIR__ . '/header.php';
             </div>
         <?php endif; ?>
 
-        <!-- Bottom Ad Slot -->
-        <?php renderGoogleAd('footer_banner', GOOGLE_AD_SLOT_FOOTER, 'my-4'); ?>
-
     </main>
 
 <?php else: ?>
     <!-- ========================================================================= -->
-    <!-- 3. BIHAR TOWNS & SLUMS DIRECTORY LIST VIEW                                -->
+    <!-- 3. BIHAR CENSUS TOWNS & SLUMS DIRECTORY VIEW                              -->
     <!-- ========================================================================= -->
 
     <!-- Directory Hero Banner -->
@@ -1483,333 +1533,311 @@ require_once __DIR__ . '/header.php';
                 <div class="col-lg-8">
                     <nav aria-label="breadcrumb" class="mb-3">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>" class="text-white-50 text-decoration-none"><i class="bi bi-house-door me-1"></i>Home</a></li>
                             <li class="breadcrumb-item"><a href="<?php echo getCensusUrl(); ?>" class="text-white-50 text-decoration-none">Census 2011</a></li>
                             <li class="breadcrumb-item active text-warning fw-bold" aria-current="page">Towns &amp; Slums Directory</li>
                         </ol>
                     </nav>
 
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                        <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            <i class="bi bi-buildings-fill me-1"></i> 198 Statutory &amp; Census Towns
+                        </span>
+                        <span class="badge badge-glass-dark px-3 py-1.5 rounded-pill shadow-sm">
+                            670 Slum Settlements (Release 1000)
+                        </span>
+                        <span class="badge bg-primary text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            38 Districts Matrix
+                        </span>
+                    </div>
+
                     <h1 class="display-6 fw-bold mb-2 font-heading text-white">
-                        🏙️ <?php echo !empty($districtParam) ? htmlspecialchars(ucfirst($districtParam)) . ' District' : 'Bihar'; ?> Census Towns &amp; Slums Directory
+                        🏙️ Bihar Census 2011 Towns &amp; Slum Settlements Directory
                     </h1>
                     
                     <p class="lead mb-0 text-white-75 fs-6">
-                        Complete Census 2011 directory of all 198 Statutory &amp; Census Towns and 670 Slum Settlements across 38 Districts of Bihar.
+                        Complete demographic, civic status, ward sanitation, and infrastructure matrix of all <strong>198 statutory municipal corporations, nagar parishads, nagar panchayats, census towns</strong> and <strong>670 slum clusters</strong> in Bihar.
                     </p>
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="p-3 bg-white bg-opacity-10 backdrop-blur rounded-4 border border-white border-opacity-20 text-white">
-                        <div class="row g-2 text-center">
-                            <div class="col-6 border-end border-white border-opacity-20 pb-2">
-                                <span class="text-xs text-white-50 d-block">Total Towns</span>
-                                <div class="fw-bold fs-4"><?php echo number_format($totalTownCount); ?></div>
-                            </div>
-                            <div class="col-6 pb-2">
-                                <span class="text-xs text-white-50 d-block">Urban Pop.</span>
-                                <div class="fw-bold fs-4"><?php echo number_format($totalUrbanPop); ?></div>
-                            </div>
-                            <div class="col-6 border-end border-white border-opacity-20 pt-2 border-top">
-                                <span class="text-xs text-white-50 d-block">Slum Clusters</span>
-                                <div class="fw-bold fs-4 text-warning">670</div>
-                            </div>
-                            <div class="col-6 pt-2 border-top">
-                                <span class="text-xs text-white-50 d-block">Slum Pop.</span>
-                                <div class="fw-bold fs-4 text-warning"><?php echo number_format($totalSlumPopAll); ?></div>
-                            </div>
-                        </div>
+                <div class="col-lg-4 text-lg-end">
+                    <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2 justify-content-lg-end">
+                        <a href="<?php echo getVillageUrl(); ?>" class="btn btn-success rounded-pill fw-bold px-3 py-2 shadow-sm">
+                            🏡 Go to 44,874 Villages Directory &rarr;
+                        </a>
+                        <a href="<?php echo getCensusUrl(); ?>" class="btn btn-outline-light rounded-pill fw-bold px-3 py-2">
+                            📊 Complete Bihar Census Hub &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aggregate Urban Bihar Stats Bar -->
+            <div class="row g-2 g-md-3 mt-4 pt-3 border-top border-white border-opacity-10 text-center">
+                <div class="col-6 col-md-3">
+                    <div class="p-2.5 rounded-3 badge-glass-dark">
+                        <span class="text-white-50 text-xs d-block">Total Urban Centers</span>
+                        <span class="fw-bold text-warning fs-5">198 Towns</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-2.5 rounded-3 badge-glass-dark">
+                        <span class="text-white-50 text-xs d-block">Urban Population</span>
+                        <span class="fw-bold text-white fs-5"><?php echo number_format($totalUrbanPop ?: 11758016); ?></span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-2.5 rounded-3 badge-glass-dark">
+                        <span class="text-white-50 text-xs d-block">Slum Settlements</span>
+                        <span class="fw-bold text-danger fs-5">670 Slums</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-2.5 rounded-3 badge-glass-dark">
+                        <span class="text-white-50 text-xs d-block">Slum Population</span>
+                        <span class="fw-bold text-info fs-5"><?php echo number_format($totalSlumPopAll ?: 647412); ?></span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Main Container -->
+    <!-- Directory Main Content -->
     <main class="container py-4">
 
         <!-- Top Ad Slot -->
         <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-4'); ?>
 
-        <!-- Cross-Navigation Link to Village Data -->
-        <div class="alert alert-success border-0 shadow-sm rounded-4 p-3 mb-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
-            <div class="d-flex align-items-center gap-3">
-                <span class="fs-2">🏡</span>
-                <div>
-                    <div class="fw-bold text-success fs-6">Looking for Rural &amp; Village Census Data?</div>
-                    <small class="text-muted">Explore complete population and demographic data for all 44,874 Census Villages across 38 Districts and 534 Blocks in Bihar.</small>
-                </div>
-            </div>
-            <a href="<?php echo !empty($districtParam) ? getVillageUrl($districtParam) : getVillageUrl(); ?>" class="btn btn-success rounded-pill px-4 py-2 fw-bold shadow-sm">
-                Go to Village Directory &rarr;
-            </a>
-        </div>
-
         <!-- Search & Filter Controls -->
-        <section class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
-            <form method="GET" action="town.php" id="townFilterForm" class="row g-3 align-items-end">
-                <!-- Search Input -->
-                <div class="col-md-4 col-lg-3">
-                    <label for="townSearchInput" class="form-label small fw-bold text-navy mb-1">
-                        <i class="bi bi-search me-1"></i>Search Town Name / Code
-                    </label>
-                    <input type="text" class="form-control rounded-pill" id="townSearchInput" name="q" 
-                           placeholder="e.g. Patna, Danapur, 801278..." value="<?php echo htmlspecialchars($searchParam); ?>">
-                </div>
-
-                <!-- District Filter (No All District Button) -->
-                <div class="col-md-3 col-lg-3">
-                    <label for="districtSelect" class="form-label small fw-bold text-navy mb-1">
-                        <i class="bi bi-geo-alt me-1"></i>District
-                    </label>
-                    <select class="form-select rounded-pill" id="districtSelect" name="district" onchange="this.form.submit()">
-                        <option value="">-- Select District (38 Districts) --</option>
-                        <?php foreach ($districtsList as $d): 
-                            $dSlug = $d['slug'] ?? slugify($d['name']);
-                            $isSelected = (strtolower($districtParam) === strtolower($dSlug) || strtolower($districtParam) === strtolower($d['name']));
-                        ?>
-                            <option value="<?php echo htmlspecialchars($dSlug); ?>" <?php echo $isSelected ? 'selected' : ''; ?>>
+        <div class="card town-glass-card p-4 mb-4">
+            <form method="GET" action="<?php echo getTownUrl(); ?>" id="townFilterForm" class="row g-3">
+                <div class="col-12 col-md-4 col-lg-3">
+                    <label class="form-label small fw-bold text-navy mb-1"><i class="bi bi-geo-alt-fill text-danger me-1"></i> District</label>
+                    <select name="district" id="districtSelect" class="form-select form-select-sm" onchange="document.getElementById('townFilterForm').submit()">
+                        <option value="">All 38 Districts</option>
+                        <?php foreach ($districtsList as $d): ?>
+                            <option value="<?php echo htmlspecialchars($d['slug']); ?>" <?php echo $districtParam === $d['slug'] ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($d['name']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
 
-                <!-- CD Block Filter (Activated when District Selected) -->
-                <?php if (!empty($districtBlocks)): ?>
-                <div class="col-md-3 col-lg-2">
-                    <label for="blockSelect" class="form-label small fw-bold text-navy mb-1">
-                        <i class="bi bi-diagram-3 me-1"></i>CD Block
-                    </label>
-                    <select class="form-select rounded-pill" id="blockSelect" name="block" onchange="this.form.submit()">
-                        <option value="">All CD Blocks</option>
-                        <?php foreach ($districtBlocks as $b): 
-                            $bSlug = $b['sub_district_slug'] ?: slugify($b['cd_block_name']);
-                            $bName = $b['sub_district_name'] ?: $b['cd_block_name'];
-                            $isSelected = (strtolower($blockParam) === strtolower($bSlug) || strtolower($blockParam) === strtolower($bName));
-                        ?>
-                            <option value="<?php echo htmlspecialchars($bSlug); ?>" <?php echo $isSelected ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($bName); ?> (<?php echo $b['town_count']; ?>)
-                            </option>
-                        <?php endforeach; ?>
+                <div class="col-12 col-md-4 col-lg-3">
+                    <label class="form-label small fw-bold text-navy mb-1"><i class="bi bi-diagram-3-fill text-primary me-1"></i> Sub-District / Block</label>
+                    <select name="block" id="blockSelect" class="form-select form-select-sm" <?php echo empty($districtBlocks) ? 'disabled' : ''; ?> onchange="document.getElementById('townFilterForm').submit()">
+                        <option value="">All CD Blocks / Sub-Districts</option>
+                        <?php if (!empty($districtBlocks)): ?>
+                            <?php foreach ($districtBlocks as $db): 
+                                $bVal = $db['sub_district_slug'] ?: slugify($db['sub_district_name'] ?: $db['cd_block_name']);
+                                $bTitle = $db['sub_district_name'] ?: ($db['cd_block_name'] ?: 'Block');
+                            ?>
+                                <option value="<?php echo htmlspecialchars($bVal); ?>" <?php echo ($blockParam === $bVal || $blockParam === $db['sub_district_slug']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($bTitle); ?> (<?php echo $db['town_count']; ?>)
+                                </option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                 </div>
-                <?php endif; ?>
 
-                <!-- Civic Status Filter -->
-                <div class="col-md-3 col-lg-2">
-                    <label for="civicSelect" class="form-label small fw-bold text-navy mb-1">
-                        <i class="bi bi-building me-1"></i>Civic Status
-                    </label>
-                    <select class="form-select rounded-pill" id="civicSelect" name="civic" onchange="this.form.submit()">
-                        <option value="">All Civic Types</option>
-                        <?php foreach ($civicStatuses as $cs): 
-                            $cVal = $cs['civic_status'];
-                            if (empty($cVal)) continue;
-                            $isSelected = ($civicParam === $cVal);
-                        ?>
-                            <option value="<?php echo htmlspecialchars($cVal); ?>" <?php echo $isSelected ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($cVal); ?> (<?php echo $cs['count']; ?>)
+                <div class="col-12 col-md-4 col-lg-2">
+                    <label class="form-label small fw-bold text-navy mb-1"><i class="bi bi-building text-info me-1"></i> Civic Status</label>
+                    <select name="civic" class="form-select form-select-sm" onchange="document.getElementById('townFilterForm').submit()">
+                        <option value="">All Statuses</option>
+                        <?php foreach ($civicStatuses as $cs): ?>
+                            <option value="<?php echo htmlspecialchars($cs['civic_status']); ?>" <?php echo $civicParam === $cs['civic_status'] ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($cs['civic_status']); ?> (<?php echo $cs['count']; ?>)
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
 
-                <!-- Sort Filter -->
-                <div class="col-md-2 col-lg-2">
-                    <label for="sortSelect" class="form-label small fw-bold text-navy mb-1">
-                        <i class="bi bi-sort-down me-1"></i>Sort By
-                    </label>
-                    <select class="form-select rounded-pill" id="sortSelect" name="sort" onchange="this.form.submit()">
-                        <option value="pop_desc" <?php echo $sortParam === 'pop_desc' ? 'selected' : ''; ?>>Pop: High to Low</option>
-                        <option value="pop_asc" <?php echo $sortParam === 'pop_asc' ? 'selected' : ''; ?>>Pop: Low to High</option>
-                        <option value="slum_desc" <?php echo $sortParam === 'slum_desc' ? 'selected' : ''; ?>>Slums Pop: High</option>
-                        <option value="name_asc" <?php echo $sortParam === 'name_asc' ? 'selected' : ''; ?>>Name: A to Z</option>
-                        <option value="area_desc" <?php echo $sortParam === 'area_desc' ? 'selected' : ''; ?>>Area: Largest</option>
+                <div class="col-12 col-md-6 col-lg-2">
+                    <label class="form-label small fw-bold text-navy mb-1"><i class="bi bi-sort-numeric-down text-warning me-1"></i> Sort By</label>
+                    <select name="sort" class="form-select form-select-sm" onchange="document.getElementById('townFilterForm').submit()">
+                        <option value="pop_desc" <?php echo $sortParam === 'pop_desc' ? 'selected' : ''; ?>>Population (High to Low)</option>
+                        <option value="slum_desc" <?php echo $sortParam === 'slum_desc' ? 'selected' : ''; ?>>Slum Population (High to Low)</option>
+                        <option value="pop_asc" <?php echo $sortParam === 'pop_asc' ? 'selected' : ''; ?>>Population (Low to High)</option>
+                        <option value="name_asc" <?php echo $sortParam === 'name_asc' ? 'selected' : ''; ?>>Town Name (A to Z)</option>
+                        <option value="area_desc" <?php echo $sortParam === 'area_desc' ? 'selected' : ''; ?>>Urban Area (Largest)</option>
                     </select>
                 </div>
 
-                <!-- Submit / Reset Buttons -->
-                <div class="col-md-12 col-lg-<?php echo !empty($districtBlocks) ? '12' : '2'; ?> d-flex gap-2">
-                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">
-                        Filter Towns
-                    </button>
-                    <a href="town.php" class="btn btn-outline-secondary rounded-pill px-3" title="Reset Filters">
-                        <i class="bi bi-arrow-clockwise"></i> Reset
-                    </a>
-                </div>
-
-                <!-- Slum Only Checkbox Toggle -->
-                <div class="col-12 pt-2 border-top">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="slumOnlySwitch" name="slum_only" value="1" <?php echo $slumOnlyParam ? 'checked' : ''; ?> onchange="this.form.submit()">
-                        <label class="form-check-label small fw-semibold text-dark" for="slumOnlySwitch">
-                            🛖 Show only towns with designated Slum Settlements (670 Slum Areas in Bihar)
+                <div class="col-12 col-md-6 col-lg-2 d-flex align-items-end">
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="slum_only" value="1" id="slumOnlySwitch" <?php echo $slumOnlyParam ? 'checked' : ''; ?> onchange="document.getElementById('townFilterForm').submit()">
+                        <label class="form-check-label small fw-bold text-navy" for="slumOnlySwitch">
+                            🛖 Slums Only
                         </label>
                     </div>
                 </div>
-            </form>
-        </section>
 
-        <!-- Directory Results Header -->
+                <div class="col-12">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" name="q" class="form-control form-control-sm" placeholder="Search by town name, code, district, block..." value="<?php echo htmlspecialchars($searchParam); ?>">
+                        <button type="submit" class="btn btn-primary px-3 fw-bold">Search Towns</button>
+                        <?php if (!empty($districtParam) || !empty($blockParam) || !empty($civicParam) || !empty($searchParam) || $slumOnlyParam): ?>
+                            <a href="<?php echo getTownUrl(); ?>" class="btn btn-outline-secondary" title="Reset Filters">
+                                <i class="bi bi-arrow-counterclockwise"></i> Reset
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Result Summary Bar -->
         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
             <div>
-                <h2 class="fs-5 fw-bold text-navy mb-0">
-                    Towns &amp; Urban Centers Listing 
-                    <span class="badge bg-primary-subtle text-primary rounded-pill small ms-1"><?php echo number_format($totalCount); ?> Results</span>
-                </h2>
-                <span class="small text-muted">
-                    Page <?php echo $currentPage; ?> of <?php echo max(1, ceil($totalCount / $perPage)); ?>
+                <span class="text-navy fw-bold fs-6">
+                    Showing <strong><?php echo number_format($totalCount); ?></strong> Urban Centers
                 </span>
+                <?php if (!empty($districtParam)): ?>
+                    <span class="text-muted small">in <?php echo htmlspecialchars(ucfirst($districtParam)); ?> District</span>
+                <?php endif; ?>
             </div>
             <div class="small text-muted">
-                Official 2011 Census Urban Data &amp; Release 1000 Slums
+                Page <?php echo $currentPage; ?> of <?php echo max(1, ceil($totalCount / $perPage)); ?>
             </div>
         </div>
 
-        <!-- Towns Data Table -->
-        <section class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-4">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light text-muted small">
-                        <tr>
-                            <th class="ps-3">#</th>
-                            <th>Town Name</th>
-                            <th>Code</th>
-                            <th>District</th>
-                            <th>Block / Sub-District</th>
-                            <th>Civic Status</th>
-                            <th>Class</th>
-                            <th class="text-end">Population</th>
-                            <th class="text-end">Households</th>
-                            <th class="text-end">Sex Ratio</th>
-                            <th class="text-center">Slums</th>
-                            <th class="text-center pe-3">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($townsList)): ?>
-                            <?php foreach ($townsList as $idx => $t): 
-                                $rowNum = ($currentPage - 1) * $perPage + $idx + 1;
-                                $tLink = getTownUrl($t['district_slug'], $t['town_slug']);
-                                $tPop = (int)($t['population'] ?? 0);
-                                $tHh = (int)($t['households'] ?? 0);
-                                $tSr = (int)($t['sex_ratio'] ?? 0);
-                                $tSlums = (int)($t['slum_count'] ?? 0);
-                                $tCivic = $t['civic_status'] ?: 'Town';
-                                $tClass = $t['town_class'] ?: '-';
-                            ?>
-                                <tr>
-                                    <td class="ps-3 text-muted small"><?php echo $rowNum; ?></td>
-                                    <td>
-                                        <a href="<?php echo htmlspecialchars($tLink); ?>" class="fw-bold text-navy text-decoration-none hover-primary">
-                                            🏙️ <?php echo htmlspecialchars($t['town_name']); ?>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-light text-dark font-monospace border small"><?php echo htmlspecialchars($t['town_code']); ?></span>
-                                    </td>
-                                    <td>
-                                        <a href="<?php echo getTownUrl($t['district_slug']); ?>" class="text-decoration-none small text-primary">
-                                            <?php echo htmlspecialchars($t['district_name']); ?>
-                                        </a>
-                                    </td>
-                                    <td class="small text-muted">
-                                        <?php echo htmlspecialchars($t['cd_block_name'] ?: $t['sub_district_name']); ?>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-primary-subtle text-primary small"><?php echo htmlspecialchars($tCivic); ?></span>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-secondary-subtle text-secondary small">Class <?php echo htmlspecialchars($tClass); ?></span>
-                                    </td>
-                                    <td class="text-end fw-bold text-dark"><?php echo number_format($tPop); ?></td>
-                                    <td class="text-end text-muted small"><?php echo number_format($tHh); ?></td>
-                                    <td class="text-end text-muted small"><?php echo $tSr; ?></td>
-                                    <td class="text-center">
-                                        <?php if ($tSlums > 0): ?>
-                                            <span class="badge bg-warning-subtle text-dark fw-bold small">
-                                                🛖 <?php echo $tSlums; ?>
-                                            </span>
-                                        <?php else: ?>
-                                            <span class="text-muted small">-</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td class="text-center pe-3">
-                                        <a href="<?php echo htmlspecialchars($tLink); ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 text-xs fw-semibold">
-                                            View &rarr;
-                                        </a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="12" class="text-center py-5 text-muted">
-                                    <i class="bi bi-inbox fs-1 d-block mb-2 opacity-50"></i>
-                                    No towns found matching your criteria. Try adjusting your search query or filters.
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+        <!-- Towns Grid -->
+        <?php if (!empty($townsList)): ?>
+            <div class="row g-3 mb-4">
+                <?php foreach ($townsList as $t): 
+                    $tUrl = getTownUrl($t['district_slug'], $t['town_slug']);
+                    $tPop = (int)($t['population'] ?? 0);
+                    $tHh = (int)($t['households'] ?? 0);
+                    $tSr = (int)($t['sex_ratio'] ?? 0);
+                    $tSlums = (int)($t['slum_count'] ?? 0);
+                    $tSlumPop = (int)($t['slum_population'] ?? 0);
+                    $tCivic = $t['civic_status'] ?? 'Town';
+                ?>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card town-glass-card p-3 h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <span class="badge bg-primary-subtle text-primary font-monospace small">Code: <?php echo htmlspecialchars($t['town_code']); ?></span>
+                                    <span class="badge bg-secondary-subtle text-secondary small"><?php echo htmlspecialchars($tCivic); ?></span>
+                                </div>
+
+                                <h5 class="fw-bold text-navy mb-1 fs-6">
+                                    <a href="<?php echo htmlspecialchars($tUrl); ?>" class="text-decoration-none text-navy hover-primary">
+                                        🏙️ <?php echo htmlspecialchars($t['town_name']); ?>
+                                    </a>
+                                </h5>
+
+                                <p class="text-muted small mb-2">
+                                    <i class="bi bi-geo-alt text-danger me-1"></i> <?php echo htmlspecialchars($t['district_name']); ?> District • <?php echo htmlspecialchars($t['sub_district_name'] ?: ($t['cd_block_name'] ?: 'Block')); ?>
+                                </p>
+
+                                <div class="p-2.5 bg-light rounded-3 mb-3 border">
+                                    <div class="row g-1 text-center small">
+                                        <div class="col-4 border-end">
+                                            <span class="text-xs text-muted d-block">Population</span>
+                                            <span class="fw-bold text-navy"><?php echo number_format($tPop); ?></span>
+                                        </div>
+                                        <div class="col-4 border-end">
+                                            <span class="text-xs text-muted d-block">Households</span>
+                                            <span class="fw-bold text-info"><?php echo number_format($tHh); ?></span>
+                                        </div>
+                                        <div class="col-4">
+                                            <span class="text-xs text-muted d-block">Sex Ratio</span>
+                                            <span class="fw-bold text-danger"><?php echo $tSr; ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php if ($tSlums > 0): ?>
+                                    <div class="p-2 rounded-3 bg-warning-subtle text-dark border border-warning-subtle small mb-3 d-flex justify-content-between align-items-center">
+                                        <span>🛖 <strong><?php echo $tSlums; ?></strong> Slum Settlements</span>
+                                        <span class="badge bg-warning text-dark"><?php echo number_format($tSlumPop); ?> Pop.</span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="pt-2 border-top d-flex gap-2">
+                                <a href="<?php echo htmlspecialchars($tUrl); ?>" class="btn btn-primary rounded-pill w-100 btn-sm fw-semibold">
+                                    View Full Town Profile &rarr;
+                                </a>
+                                <?php if ($tSlums > 0): ?>
+                                    <a href="<?php echo htmlspecialchars($tUrl); ?>#slums-section" class="btn btn-outline-warning rounded-pill btn-sm text-dark" title="View <?php echo $tSlums; ?> Slums">
+                                        🛖
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
 
-            <!-- Pagination Controls -->
+            <!-- Pagination Bar -->
             <?php 
             $totalPages = max(1, ceil($totalCount / $perPage));
             if ($totalPages > 1): 
                 $queryParams = $_GET;
                 unset($queryParams['page']);
-                $baseUrl = 'town.php?' . http_build_query($queryParams);
+                $baseUrl = getTownUrl() . '?' . http_build_query($queryParams);
             ?>
-            <nav class="d-flex justify-content-between align-items-center flex-wrap gap-2 p-3 border-top">
-                <div class="small text-muted">
-                    Showing <?php echo number_format(($currentPage - 1) * $perPage + 1); ?> - <?php echo number_format(min($totalCount, $currentPage * $perPage)); ?> of <?php echo number_format($totalCount); ?> towns
-                </div>
-                <ul class="pagination pagination-sm mb-0">
-                    <?php if ($currentPage > 1): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="<?php echo $baseUrl . '&page=' . ($currentPage - 1); ?>" aria-label="Previous">
-                                &laquo; Prev
-                            </a>
-                        </li>
-                    <?php endif; ?>
+                <nav class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-4 pt-3 border-top">
+                    <div class="small text-muted">
+                        Showing <?php echo number_format(($currentPage - 1) * $perPage + 1); ?> - <?php echo number_format(min($totalCount, $currentPage * $perPage)); ?> of <?php echo number_format($totalCount); ?> towns
+                    </div>
+                    <ul class="pagination pagination-sm mb-0">
+                        <?php if ($currentPage > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $baseUrl . '&page=' . ($currentPage - 1); ?>" aria-label="Previous">
+                                    &laquo; Prev
+                                </a>
+                            </li>
+                        <?php endif; ?>
 
-                    <?php
-                    $startP = max(1, $currentPage - 2);
-                    $endP = min($totalPages, $currentPage + 2);
-                    if ($startP > 1) {
-                        echo '<li class="page-item"><a class="page-link" href="' . $baseUrl . '&page=1">1</a></li>';
-                        if ($startP > 2) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-                    }
-                    for ($p = $startP; $p <= $endP; $p++):
-                    ?>
-                        <li class="page-item <?php echo $p === $currentPage ? 'active' : ''; ?>">
-                            <a class="page-link" href="<?php echo $baseUrl . '&page=' . $p; ?>"><?php echo $p; ?></a>
-                        </li>
-                    <?php endfor; 
-                    if ($endP < $totalPages) {
-                        if ($endP < $totalPages - 1) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-                        echo '<li class="page-item"><a class="page-link" href="' . $baseUrl . '&page=' . $totalPages . '">' . $totalPages . '</a></li>';
-                    }
-                    ?>
+                        <?php
+                        $startP = max(1, $currentPage - 2);
+                        $endP = min($totalPages, $currentPage + 2);
+                        if ($startP > 1) {
+                            echo '<li class="page-item"><a class="page-link" href="' . $baseUrl . '&page=1">1</a></li>';
+                            if ($startP > 2) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                        }
+                        for ($p = $startP; $p <= $endP; $p++):
+                        ?>
+                            <li class="page-item <?php echo $p === $currentPage ? 'active' : ''; ?>">
+                                <a class="page-link" href="<?php echo $baseUrl . '&page=' . $p; ?>"><?php echo $p; ?></a>
+                            </li>
+                        <?php endfor; 
+                        if ($endP < $totalPages) {
+                            if ($endP < $totalPages - 1) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                            echo '<li class="page-item"><a class="page-link" href="' . $baseUrl . '&page=' . $totalPages . '">' . $totalPages . '</a></li>';
+                        }
+                        ?>
 
-                    <?php if ($currentPage < $totalPages): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="<?php echo $baseUrl . '&page=' . ($currentPage + 1); ?>" aria-label="Next">
-                                Next &raquo;
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                </ul>
-            </nav>
+                        <?php if ($currentPage < $totalPages): ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $baseUrl . '&page=' . ($currentPage + 1); ?>" aria-label="Next">
+                                    Next &raquo;
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
             <?php endif; ?>
-        </section>
 
-        <!-- Bottom Ad Slot -->
-        <?php renderGoogleAd('footer_banner', GOOGLE_AD_SLOT_FOOTER, 'my-4'); ?>
+        <?php else: ?>
+            <div class="card town-glass-card p-5 text-center my-4">
+                <i class="bi bi-buildings text-muted fs-1 mb-2"></i>
+                <h4 class="fw-bold text-navy mb-1">No Urban Centers Found</h4>
+                <p class="text-muted small mb-3">Try adjusting your filters, selecting a different district, or clearing the search query.</p>
+                <div>
+                    <a href="<?php echo getTownUrl(); ?>" class="btn btn-primary rounded-pill px-4 fw-semibold">
+                        View All Bihar Towns
+                    </a>
+                </div>
+            </div>
+        <?php endif; ?>
 
     </main>
 
 <?php endif; ?>
 
-<?php require_once __DIR__ . '/footer.php'; ?>
+<?php
+require_once __DIR__ . '/footer.php';
