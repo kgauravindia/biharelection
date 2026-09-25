@@ -181,6 +181,7 @@ AddDefaultCharset UTF-8
     # -------------------------------------------------------------
     # 11. Census Hub (e.g. /census, /census/saran, /census/saran/chapra)
     # -------------------------------------------------------------
+    RewriteRule ^census/census\.php$ census.php [L,QSA]
     RewriteRule ^census/?$ census.php [L,QSA]
     RewriteRule ^census/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ census.php?district=$1&subdistrict=$2 [L,QSA]
     RewriteRule ^census/([a-zA-Z0-9_-]+)/?$ census.php?district=$1 [L,QSA]

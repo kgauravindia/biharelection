@@ -5,10 +5,23 @@
  */
 require_once __DIR__ . '/config.php';
 
-$activeTab = $_GET['tab'] ?? 'districts';
-$selectedDistrictFilter = $_GET['district'] ?? '';
-$selectedSubdistrict = $_GET['subdistrict'] ?? '';
-$selectedCivic = $_GET['civic'] ?? '';
+$tabParam = trim($_GET['tab'] ?? '');
+$districtParam = trim($_GET['district'] ?? '');
+
+// Sanitize routing parameters (in case rewritten as /census/blocks or /census/census.php)
+if (in_array($districtParam, ['districts', 'blocks', 'villages', 'towns', 'social'], true)) {
+    $activeTab = $districtParam;
+    $selectedDistrictFilter = '';
+} elseif (str_ends_with($districtParam, '.php') || $districtParam === 'census') {
+    $activeTab = !empty($tabParam) ? $tabParam : 'districts';
+    $selectedDistrictFilter = '';
+} else {
+    $activeTab = !empty($tabParam) ? $tabParam : 'districts';
+    $selectedDistrictFilter = $districtParam;
+}
+
+$selectedSubdistrict = trim($_GET['subdistrict'] ?? '');
+$selectedCivic = trim($_GET['civic'] ?? '');
 $searchQuery = trim($_GET['q'] ?? '');
 $currentPage = max(1, (int)($_GET['page'] ?? 1));
 $perPage = 50;
@@ -201,27 +214,27 @@ require_once __DIR__ . '/header.php';
         <div class="card border-0 shadow-sm rounded-4 p-2 mb-4 bg-white">
             <ul class="nav nav-pills nav-fill gap-2 flex-wrap" id="censusTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a href="census.php?tab=districts" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'districts' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
+                    <a href="<?php echo getCensusUrl(); ?>?tab=districts" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'districts' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
                         <i class="bi bi-geo-alt-fill me-1 text-danger"></i> 38 Districts Matrix
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a href="census.php?tab=blocks" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'blocks' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
+                    <a href="<?php echo getCensusUrl(); ?>?tab=blocks" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'blocks' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
                         <i class="bi bi-diagram-3-fill me-1 text-warning"></i> 534 Blocks Directory
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a href="census.php?tab=villages<?php echo !empty($selectedDistrictFilter) ? '&district=' . urlencode($selectedDistrictFilter) : ''; ?>" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'villages' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
+                    <a href="<?php echo getCensusUrl(); ?>?tab=villages<?php echo !empty($selectedDistrictFilter) ? '&district=' . urlencode($selectedDistrictFilter) : ''; ?>" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'villages' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
                         <i class="bi bi-house-door-fill me-1 text-success"></i> 🏡 44,874 Villages Directory
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a href="census.php?tab=towns<?php echo !empty($selectedDistrictFilter) ? '&district=' . urlencode($selectedDistrictFilter) : ''; ?>" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'towns' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
+                    <a href="<?php echo getCensusUrl(); ?>?tab=towns<?php echo !empty($selectedDistrictFilter) ? '&district=' . urlencode($selectedDistrictFilter) : ''; ?>" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'towns' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
                         <i class="bi bi-buildings-fill me-1 text-info"></i> 🏙️ 198 Towns Directory
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a href="census.php?tab=social" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'social' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
+                    <a href="<?php echo getCensusUrl(); ?>?tab=social" class="nav-link rounded-3 py-2 fw-bold <?php echo $activeTab === 'social' ? 'active bg-primary' : 'text-dark bg-light'; ?>">
                         <i class="bi bi-pie-chart-fill me-1 text-primary"></i> State Social Matrix
                     </a>
                 </li>
@@ -329,10 +342,10 @@ require_once __DIR__ . '/header.php';
                             </td>
                             <td class="text-center">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="census.php?tab=villages&district=<?php echo $slug; ?>" class="btn btn-outline-success btn-sm rounded-pill px-2 me-1" title="View Villages in <?php echo htmlspecialchars($d['name']); ?>">
+                                    <a href="<?php echo getVillageUrl($slug); ?>" class="btn btn-outline-success btn-sm rounded-pill px-2 me-1" title="View Villages in <?php echo htmlspecialchars($d['name']); ?>">
                                         🏡 Villages
                                     </a>
-                                    <a href="census.php?tab=towns&district=<?php echo $slug; ?>" class="btn btn-outline-info btn-sm rounded-pill px-2" title="View Towns in <?php echo htmlspecialchars($d['name']); ?>">
+                                    <a href="<?php echo getTownUrl($slug); ?>" class="btn btn-outline-info btn-sm rounded-pill px-2" title="View Towns in <?php echo htmlspecialchars($d['name']); ?>">
                                         🏙️ Towns
                                     </a>
                                 </div>
@@ -422,7 +435,7 @@ require_once __DIR__ . '/header.php';
                             <td class="text-end"><?php echo number_format($sb['sc_population'] ?? 0); ?></td>
                             <td class="text-end"><?php echo number_format($sb['st_population'] ?? 0); ?></td>
                             <td class="text-center">
-                                <a href="census.php?tab=villages&district=<?php echo $dSlug; ?>&subdistrict=<?php echo urlencode($sb['sub_district']); ?>" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0 fw-semibold" style="font-size: 0.78rem;">
+                                <a href="<?php echo getVillageUrl($dSlug, slugify($sb['sub_district'])); ?>" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0 fw-semibold" style="font-size: 0.78rem;">
                                     View &rarr;
                                 </a>
                             </td>
@@ -455,7 +468,7 @@ require_once __DIR__ . '/header.php';
             </div>
 
             <!-- Village Filter & Search Bar -->
-            <form method="GET" action="census.php" class="row g-2 mb-3 p-3 bg-light rounded-3 align-items-center">
+            <form method="GET" action="<?php echo getCensusUrl(); ?>" class="row g-2 mb-3 p-3 bg-light rounded-3 align-items-center">
                 <input type="hidden" name="tab" value="villages">
                 
                 <div class="col-12 col-md-3">
@@ -488,7 +501,7 @@ require_once __DIR__ . '/header.php';
                         <i class="bi bi-funnel-fill"></i> Filter
                     </button>
                     <?php if (!empty($selectedDistrictFilter) || !empty($selectedSubdistrict) || !empty($searchQuery)): ?>
-                        <a href="census.php?tab=villages" class="btn btn-outline-secondary btn-sm" title="Reset Filters">
+                        <a href="<?php echo getCensusUrl(); ?>?tab=villages" class="btn btn-outline-secondary btn-sm" title="Reset Filters">
                             <i class="bi bi-arrow-counterclockwise"></i>
                         </a>
                     <?php endif; ?>
@@ -606,7 +619,7 @@ require_once __DIR__ . '/header.php';
             if ($totalPages > 1): 
                 $queryParams = $_GET;
                 unset($queryParams['page']);
-                $baseUrl = 'census.php?' . http_build_query($queryParams);
+                $baseUrl = getCensusUrl() . '?' . http_build_query($queryParams);
             ?>
             <nav class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-4 pt-3 border-top">
                 <div class="small text-muted">
@@ -674,7 +687,7 @@ require_once __DIR__ . '/header.php';
             </div>
 
             <!-- Town Filter & Search Bar -->
-            <form method="GET" action="census.php" class="row g-2 mb-3 p-3 bg-light rounded-3 align-items-center">
+            <form method="GET" action="<?php echo getCensusUrl(); ?>" class="row g-2 mb-3 p-3 bg-light rounded-3 align-items-center">
                 <input type="hidden" name="tab" value="towns">
                 
                 <div class="col-12 col-md-3">
@@ -714,7 +727,7 @@ require_once __DIR__ . '/header.php';
                         <i class="bi bi-funnel-fill"></i> Filter
                     </button>
                     <?php if (!empty($selectedDistrictFilter) || !empty($selectedCivic) || !empty($searchQuery)): ?>
-                        <a href="census.php?tab=towns" class="btn btn-outline-secondary btn-sm" title="Reset Filters">
+                        <a href="<?php echo getCensusUrl(); ?>?tab=towns" class="btn btn-outline-secondary btn-sm" title="Reset Filters">
                             <i class="bi bi-arrow-counterclockwise"></i>
                         </a>
                     <?php endif; ?>
@@ -858,7 +871,7 @@ require_once __DIR__ . '/header.php';
             if ($totalPages > 1): 
                 $queryParams = $_GET;
                 unset($queryParams['page']);
-                $baseUrl = 'census.php?' . http_build_query($queryParams);
+                $baseUrl = getCensusUrl() . '?' . http_build_query($queryParams);
             ?>
             <nav class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-4 pt-3 border-top">
                 <div class="small text-muted">

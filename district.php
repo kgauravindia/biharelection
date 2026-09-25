@@ -60,10 +60,10 @@ require_once __DIR__ . '/header.php';
                         🌾 <?php echo $panchayatSummary['total_panchayats']; ?> Gram Panchayats &rarr;
                     </a>
                 <?php endif; ?>
-                <a href="census.php?tab=villages&district=<?php echo $district['slug']; ?>" class="badge bg-info bg-opacity-25 text-white fw-bold px-3 py-2 text-decoration-none">
+                <a href="<?php echo getVillageUrl($district['slug']); ?>" class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 text-decoration-none">
                     🏡 2011 Villages Directory &rarr;
                 </a>
-                <a href="census.php?tab=towns&district=<?php echo $district['slug']; ?>" class="badge bg-light text-dark fw-bold px-3 py-2 text-decoration-none">
+                <a href="<?php echo getTownUrl($district['slug']); ?>" class="badge bg-light text-dark fw-bold px-3 py-2 text-decoration-none">
                     🏙️ 2011 Towns &rarr;
                 </a>
             </div>
@@ -162,10 +162,10 @@ require_once __DIR__ . '/header.php';
                     <p class="small text-muted mb-0">Official Government of India Census 2011 demographic data, sex ratio, literacy, and sub-district profile.</p>
                 </div>
                 <div class="d-flex flex-wrap gap-2">
-                    <a href="census.php?tab=villages&district=<?php echo $district['slug']; ?>" class="btn btn-outline-success btn-sm rounded-pill fw-bold px-3">
+                    <a href="<?php echo getVillageUrl($district['slug']); ?>" class="btn btn-outline-success btn-sm rounded-pill fw-bold px-3">
                         🏡 All <?php echo htmlspecialchars($district['name']); ?> Villages &rarr;
                     </a>
-                    <a href="census.php?tab=towns&district=<?php echo $district['slug']; ?>" class="btn btn-outline-info btn-sm rounded-pill fw-bold px-3">
+                    <a href="<?php echo getTownUrl($district['slug']); ?>" class="btn btn-outline-info btn-sm rounded-pill fw-bold px-3">
                         🏙️ All <?php echo htmlspecialchars($district['name']); ?> Towns &rarr;
                     </a>
                 </div>
