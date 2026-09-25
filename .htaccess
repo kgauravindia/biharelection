@@ -175,7 +175,8 @@ AddDefaultCharset UTF-8
     # District 3-segment & 2-segment fallback to Panchayat Profile
     RewriteRule ^district/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?district=$1&block=$2&panchayat=$3 [L,QSA]
 
-    # Clean 3-segment root routing (e.g. /patna/maner/khaspur, /saran/chapra/sandha)
+    # Clean 3-segment root routing (e.g. /patna/maner/khaspur, /saran/chapra/sandha) - Exclude system prefixes
+    RewriteCond %{REQUEST_URI} !^/(town|towns|village|villages|slum|census|caste-survey|caste-code|caste-codes|bihar-caste-survey|jati-code|jatigat-janganana|bihar-acts|acts-list|vidhan-sabha-acts|bihar-enacted-bills|enacted-bills|bihar-laws|vidhan-sabha|constituency|constituencies|mla|mp|lok-sabha|rajya-sabha|mlc|vidhan-parishad|district|block|blocks|panchayat|panchayats|mukhiya|sarpanch|zila-parishad|jila-parisad|jila-parishad|panchayat-samiti|candidate|representatives|admin|api|assets|uploads)/ [NC]
     RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat.php?district=$1&block=$2&panchayat=$3 [L,QSA]
 
     # -------------------------------------------------------------
