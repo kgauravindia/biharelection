@@ -806,6 +806,9 @@ CREATE TABLE IF NOT EXISTS `census_towns_2011` (
   `st_population` INT DEFAULT 0,
   `st_male` INT DEFAULT 0,
   `st_female` INT DEFAULT 0,
+  `slum_count` INT DEFAULT 0,
+  `slum_households` INT DEFAULT 0,
+  `slum_population` INT DEFAULT 0,
   `manufactured_1` VARCHAR(255) DEFAULT NULL,
   `manufactured_2` VARCHAR(255) DEFAULT NULL,
   `manufactured_3` VARCHAR(255) DEFAULT NULL,
@@ -872,6 +875,46 @@ CREATE TABLE IF NOT EXISTS `census_villages_2011` (
   INDEX (`gram_panchayat_name`),
   INDEX (`gram_panchayat_slug`),
   INDEX (`population`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 35. Census 2011 Town Slums (Slum_1000 - 670 Slums across Bihar Towns)
+CREATE TABLE IF NOT EXISTS `census_town_slums_2011` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `state_code` VARCHAR(10) DEFAULT '10',
+  `state_name` VARCHAR(100) DEFAULT 'BIHAR',
+  `district_code` VARCHAR(20) NOT NULL,
+  `district_name` VARCHAR(255) NOT NULL,
+  `district_slug` VARCHAR(255) NOT NULL,
+  `sub_district_code` VARCHAR(20) DEFAULT '',
+  `sub_district_name` VARCHAR(255) DEFAULT '',
+  `sub_district_slug` VARCHAR(255) DEFAULT '',
+  `town_code` VARCHAR(50) NOT NULL,
+  `town_name` VARCHAR(255) NOT NULL,
+  `town_slug` VARCHAR(255) NOT NULL,
+  `town_class` VARCHAR(50) DEFAULT '',
+  `town_population` INT DEFAULT 0,
+  `slum_name` VARCHAR(255) NOT NULL,
+  `slum_slug` VARCHAR(255) NOT NULL,
+  `is_notified` TINYINT DEFAULT 2, -- 1=Yes, 2=No
+  `households` INT DEFAULT 0,
+  `slum_population` INT DEFAULT 0,
+  `paved_roads_km` DECIMAL(8,2) DEFAULT 0.00,
+  `drainage_system` VARCHAR(50) DEFAULT '',
+  `latrines_pit` INT DEFAULT 0,
+  `latrines_flush` INT DEFAULT 0,
+  `latrines_service` INT DEFAULT 0,
+  `latrines_others` INT DEFAULT 0,
+  `latrines_community` INT DEFAULT 0,
+  `tap_points_water` INT DEFAULT 0,
+  `electricity_domestic` INT DEFAULT 0,
+  `electricity_road_light` INT DEFAULT 0,
+  `electricity_others` INT DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_town_code` (`town_code`),
+  INDEX `idx_district_slug` (`district_slug`),
+  INDEX `idx_town_slug` (`town_slug`),
+  INDEX `idx_slum_name` (`slum_name`(50)),
+  INDEX `idx_slum_pop` (`slum_population`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

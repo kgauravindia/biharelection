@@ -161,6 +161,35 @@ if ($districtObj && $pdo) {
                 }
             } catch (Throwable $e) {}
         }
+
+        // Fetch Census 2011 Villages belonging to this Gram Panchayat
+        $panchayatVillages = [];
+        $pNameClean = $singlePanchayat['panchayat_name'];
+        $pSlugClean = slugify($pNameClean);
+        $bSlugClean = slugify($currentBlockName);
+
+        try {
+            $stmtV = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE LOWER(district_slug) = :dslug AND (gram_panchayat_slug = :pslug OR gram_panchayat_name LIKE :pname) ORDER BY population DESC");
+            $stmtV->execute([
+                ':dslug' => $selectedDistrictSlug,
+                ':pslug' => $pSlugClean,
+                ':pname' => '%' . $pNameClean . '%'
+            ]);
+            $panchayatVillages = $stmtV->fetchAll(PDO::FETCH_ASSOC);
+
+            // Fallback: If no exact GP matched, check for villages in this block with same name or related
+            if (empty($panchayatVillages)) {
+                $stmtV2 = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE LOWER(district_slug) = :dslug AND (sub_district_slug = :bslug OR cd_block_name LIKE :bname) AND (village_slug LIKE :pslug OR village_name LIKE :pname) ORDER BY population DESC LIMIT 8");
+                $stmtV2->execute([
+                    ':dslug' => $selectedDistrictSlug,
+                    ':bslug' => $bSlugClean,
+                    ':bname' => '%' . $currentBlockName . '%',
+                    ':pslug' => '%' . $pSlugClean . '%',
+                    ':pname' => '%' . $pNameClean . '%'
+                ]);
+                $panchayatVillages = $stmtV2->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (Throwable $e) {}
     }
 
     // If single block matched, gather block samiti & ZP representation
@@ -938,11 +967,65 @@ require_once __DIR__ . '/header.php';
                         <a href="<?php echo getZilaParishadUrl($districtObj['slug']); ?>" class="btn btn-sm btn-primary rounded-pill px-3 fw-semibold shadow-sm">
                             District ZP Board &rarr;
                         </a>
+        </div>
+
+        <!-- Constituent Census Villages Section -->
+        <?php if (!empty($panchayatVillages)): ?>
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white border-top border-4 border-success">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div>
+                        <span class="badge bg-success-subtle text-success fw-bold px-2.5 py-1 rounded-pill small mb-1">
+                            Census 2011 Data
+                        </span>
+                        <h4 class="fw-bold text-navy font-heading mb-0 fs-5">
+                            🏡 Census Villages in <?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?> Gram Panchayat (<?php echo count($panchayatVillages); ?>)
+                        </h4>
+                        <p class="text-muted small mb-0 mt-1">Official Census 2011 constituent revenue villages, demographics, and infrastructure profiles.</p>
                     </div>
+                    <a href="<?php echo getVillageUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-sm btn-outline-success rounded-pill px-3 fw-semibold">
+                        All <?php echo htmlspecialchars($singlePanchayat['block']); ?> Villages &rarr;
+                    </a>
+                </div>
+
+                <div class="row g-3">
+                    <?php foreach ($panchayatVillages as $pv): 
+                        $vUrl = getVillageUrl($districtObj['slug'], slugify($pv['sub_district_name'] ?: $singlePanchayat['block']), $pv['village_slug']);
+                        $vPop = (int)($pv['population'] ?? 0);
+                        $vHh = (int)($pv['households'] ?? 0);
+                        $vSexRatio = (int)($pv['sex_ratio'] ?? 0);
+                    ?>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="p-3 rounded-3 border bg-light bg-opacity-50 h-100 d-flex flex-column justify-content-between hover-shadow transition">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                        <span class="badge bg-primary-subtle text-primary small font-monospace">Code: <?php echo htmlspecialchars($pv['village_code']); ?></span>
+                                        <?php if (!empty($pv['area_hectares'])): ?>
+                                            <span class="badge bg-secondary-subtle text-secondary small"><?php echo number_format((float)$pv['area_hectares'], 1); ?> Ha</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <h5 class="fw-bold text-navy mb-1 fs-6">
+                                        <a href="<?php echo htmlspecialchars($vUrl); ?>" class="text-decoration-none text-navy stretched-link-target">
+                                            🏡 <?php echo htmlspecialchars($pv['village_name']); ?>
+                                        </a>
+                                    </h5>
+                                    <div class="small text-muted mb-2">
+                                        <span>👥 <?php echo number_format($vPop); ?> Pop.</span> • 
+                                        <span>🏠 <?php echo number_format($vHh); ?> HH</span> • 
+                                        <span>⚖️ <?php echo $vSexRatio; ?> SR</span>
+                                    </div>
+                                </div>
+                                <div class="pt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="text-muted small">Village Census Profile</span>
+                                    <a href="<?php echo htmlspecialchars($vUrl); ?>" class="btn btn-xs btn-outline-primary rounded-pill px-2.5 py-1 text-xs fw-bold">
+                                        View &rarr;
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-
-        </div>
+        <?php endif; ?>
 
         <!-- Sibling Panchayats in this Block Navigation Section -->
         <?php if (!empty($panchayatsInSameBlock)): ?>

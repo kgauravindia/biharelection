@@ -219,6 +219,15 @@ AddDefaultCharset UTF-8
     RewriteRule ^village/([a-zA-Z0-9_-]+)/?$ village.php?district=$1 [L,QSA]
 
     # -------------------------------------------------------------
+    # 11e. Census Towns Directory & Slum Profile (198 Towns)
+    # -------------------------------------------------------------
+    RewriteRule ^towns/?$ town.php [L,QSA]
+    RewriteRule ^town/?$ town.php [L,QSA]
+    RewriteRule ^town/([0-9]{5,8})/?$ town.php?code=$1 [L,QSA]
+    RewriteRule ^town/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ town.php?district=$1&town=$2 [L,QSA]
+    RewriteRule ^town/([a-zA-Z0-9_-]+)/?$ town.php?district=$1 [L,QSA]
+
+    # -------------------------------------------------------------
     # 12. Candidates, Auth & Other Pages
     # -------------------------------------------------------------
     RewriteRule ^candidate/([a-zA-Z0-9_-]+)/?$ candidate.php?slug=$1 [L,QSA]

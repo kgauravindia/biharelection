@@ -17,3 +17,6 @@ config.prod.php
 *.log
 scratch/
 tmp/
+~$*
+*.xlsx
+*.xls

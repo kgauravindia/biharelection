@@ -534,8 +534,13 @@ require_once __DIR__ . '/header.php';
                             <tr>
                                 <td class="text-muted fw-bold"><?php echo $vIdx++; ?></td>
                                 <td>
-                                    <div class="fw-bold text-dark fs-6"><?php echo htmlspecialchars($v['village_name']); ?></div>
-                                    <small class="text-muted font-monospace"><i class="bi bi-upc"></i> Code: <?php echo htmlspecialchars($v['village_code']); ?></small>
+                                    <?php 
+                                    $vUrl = getVillageUrl($v['district_slug'], slugify($v['sub_district_name'] ?: $v['cd_block_name']), $v['village_slug']);
+                                    ?>
+                                    <a href="<?php echo htmlspecialchars($vUrl); ?>" class="fw-bold text-navy text-decoration-none hover-primary fs-6">
+                                        🏡 <?php echo htmlspecialchars($v['village_name']); ?>
+                                    </a>
+                                    <div><small class="text-muted font-monospace"><i class="bi bi-upc"></i> Code: <?php echo htmlspecialchars($v['village_code']); ?></small></div>
                                 </td>
                                 <td>
                                     <?php if (!empty($v['gram_panchayat_name'])): ?>
@@ -767,8 +772,19 @@ require_once __DIR__ . '/header.php';
                             <tr>
                                 <td class="text-muted fw-bold"><?php echo $tIdx++; ?></td>
                                 <td>
-                                    <div class="fw-bold text-dark fs-6"><?php echo htmlspecialchars($t['town_name']); ?></div>
-                                    <small class="text-muted font-monospace"><i class="bi bi-upc"></i> Code: <?php echo htmlspecialchars($t['town_code']); ?></small>
+                                    <?php 
+                                    $tUrl = getTownUrl($t['district_slug'], $t['town_slug']);
+                                    $slumsCount = (int)($t['slum_count'] ?? 0);
+                                    ?>
+                                    <a href="<?php echo htmlspecialchars($tUrl); ?>" class="fw-bold text-navy text-decoration-none hover-primary fs-6">
+                                        🏙️ <?php echo htmlspecialchars($t['town_name']); ?>
+                                    </a>
+                                    <div class="d-flex align-items-center gap-1 mt-0.5">
+                                        <small class="text-muted font-monospace"><i class="bi bi-upc"></i> Code: <?php echo htmlspecialchars($t['town_code']); ?></small>
+                                        <?php if ($slumsCount > 0): ?>
+                                            <span class="badge bg-warning-subtle text-dark small ms-1">🛖 <?php echo $slumsCount; ?> Slums</span>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="district.php?slug=<?php echo htmlspecialchars($t['district_slug']); ?>" class="text-decoration-none fw-semibold text-primary">
