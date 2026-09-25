@@ -59,6 +59,7 @@ if (empty($codeParam) && empty($townParam) && empty($slumIdParam) && !empty($dis
 }
 
 $slumObj = null;
+$town = null;
 
 // 1. Try to find a specific Slum / Ward Profile
 if ($slumIdParam > 0) {
