@@ -1186,11 +1186,14 @@ require_once __DIR__ . '/header.php';
                                             <span class="text-muted small">-</span>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="text-center" onclick="event.stopPropagation();">
-                                        <div class="btn-group btn-group-sm">
-                                            <button type="button" class="btn btn-xs btn-primary rounded-pill px-2.5 py-1 text-xs fw-semibold open-slum-modal-btn">
-                                                Info &rarr;
+                                    <td class="text-center">
+                                        <div class="d-flex align-items-center justify-content-center gap-1">
+                                            <button type="button" class="btn btn-xs btn-primary rounded-pill px-2.5 py-1 text-xs fw-semibold open-slum-modal-btn" title="View Quick Details">
+                                                <i class="bi bi-eye-fill me-1"></i>Info
                                             </button>
+                                            <a href="<?php echo htmlspecialchars($slumProfileUrl); ?>" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 text-xs" title="Open Dedicated Ward Profile Page" onclick="event.stopPropagation();">
+                                                &rarr;
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -1207,7 +1210,7 @@ require_once __DIR__ . '/header.php';
                         <div class="modal-header bg-warning bg-opacity-25 border-bottom border-warning">
                             <div>
                                 <span class="badge bg-warning text-dark fw-bold px-2 py-0.5 rounded-pill small mb-1" id="mSlumStatus">Notified</span>
-                                <h5 class="modal-title fw-bold text-navy" id="slumModalTitle">Slum / Ward Details</h5>
+                                <h5 class="modal-title fw-bold text-navy font-heading" id="slumModalTitle">Slum / Ward Details</h5>
                                 <span class="text-xs text-muted" id="mSlumParent">Parent Town</span>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -1219,18 +1222,21 @@ require_once __DIR__ . '/header.php';
                                     <div class="p-3 bg-light rounded-3 border">
                                         <span class="text-xs text-muted d-block mb-1">Slum Population</span>
                                         <div class="fw-bold fs-4 text-danger" id="mSlumPop">0</div>
+                                        <span class="text-xs text-muted">Persons</span>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="p-3 bg-light rounded-3 border">
                                         <span class="text-xs text-muted d-block mb-1">Households</span>
                                         <div class="fw-bold fs-4 text-info" id="mSlumHh">0</div>
+                                        <span class="text-xs text-muted">Families</span>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="p-3 bg-light rounded-3 border">
                                         <span class="text-xs text-muted d-block mb-1">Paved Roads</span>
                                         <div class="fw-bold fs-4 text-success" id="mSlumRoads">0 km</div>
+                                        <span class="text-xs text-muted">Internal Connectivity</span>
                                     </div>
                                 </div>
                             </div>
@@ -1259,7 +1265,7 @@ require_once __DIR__ . '/header.php';
                                             </div>
                                             <div class="d-flex justify-content-between py-1">
                                                 <span class="text-muted">Total Latrines:</span>
-                                                <strong class="text-primary" id="mLatTotal">0</strong>
+                                                <strong class="text-primary fs-6" id="mLatTotal">0</strong>
                                             </div>
                                         </div>
                                     </div>
@@ -1274,11 +1280,11 @@ require_once __DIR__ . '/header.php';
                                                 <strong id="mDrainage">None</strong>
                                             </div>
                                             <div class="d-flex justify-content-between py-1 border-bottom">
-                                                <span class="text-muted">Public Water Taps:</span>
-                                                <strong class="text-info" id="mWater">0</strong>
+                                                <span class="text-muted">Public Tap Water Points:</span>
+                                                <strong class="text-info fs-6" id="mWater">0</strong>
                                             </div>
                                             <div class="d-flex justify-content-between py-1 border-bottom">
-                                                <span class="text-muted">Domestic Electricity:</span>
+                                                <span class="text-muted">Domestic Power:</span>
                                                 <strong id="mElecDom">0</strong>
                                             </div>
                                             <div class="d-flex justify-content-between py-1">
@@ -1292,7 +1298,7 @@ require_once __DIR__ . '/header.php';
                         </div>
                         <div class="modal-footer border-0 pt-0 d-flex justify-content-between">
                             <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
-                            <a href="#" id="mSlumProfileLink" class="btn btn-primary rounded-pill px-4 fw-bold">
+                            <a href="#" id="mSlumProfileLink" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">
                                 Open Dedicated Profile &rarr;
                             </a>
                         </div>
@@ -1301,8 +1307,8 @@ require_once __DIR__ . '/header.php';
             </div>
             
             <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Table Search
+            function initSlumInteractivity() {
+                // Table Live Search
                 var filterInput = document.getElementById('slumTableFilter');
                 if (filterInput) {
                     filterInput.addEventListener('input', function() {
@@ -1343,38 +1349,63 @@ require_once __DIR__ . '/header.php';
                     });
                 });
 
-                // Modal Popup on Row Click
-                var slumModalEl = document.getElementById('slumDetailModal');
-                var slumModal = slumModalEl ? new bootstrap.Modal(slumModalEl) : null;
+                // Function to open Modal with slum data
+                window.showSlumModalData = function(slumElement) {
+                    var rawData = slumElement.getAttribute('data-slum');
+                    if (!rawData) return;
+                    var d = JSON.parse(rawData);
 
+                    document.getElementById('slumModalTitle').textContent = '🛖 ' + d.name;
+                    document.getElementById('mSlumStatus').textContent = d.status;
+                    document.getElementById('mSlumStatus').className = 'badge ' + (d.is_notified ? 'bg-success text-white' : 'bg-secondary text-white') + ' fw-bold px-2 py-0.5 rounded-pill small mb-1';
+                    document.getElementById('mSlumParent').textContent = d.town + ', ' + d.district + ' District';
+                    document.getElementById('mSlumPop').textContent = d.pop;
+                    document.getElementById('mSlumHh').textContent = d.hh;
+                    document.getElementById('mSlumRoads').textContent = d.roads + ' km';
+                    document.getElementById('mLatFlush').textContent = d.lat_flush;
+                    document.getElementById('mLatPit').textContent = d.lat_pit;
+                    document.getElementById('mLatComm').textContent = d.lat_comm;
+                    document.getElementById('mLatService').textContent = d.lat_service;
+                    document.getElementById('mLatTotal').textContent = d.lat_total;
+                    document.getElementById('mDrainage').textContent = d.drainage;
+                    document.getElementById('mWater').textContent = d.water + ' Taps';
+                    document.getElementById('mElecDom').textContent = d.elec_dom;
+                    document.getElementById('mElecRoad').textContent = d.elec_road;
+                    document.getElementById('mSlumProfileLink').setAttribute('href', d.url);
+
+                    var modalEl = document.getElementById('slumDetailModal');
+                    if (window.bootstrap && bootstrap.Modal) {
+                        var modalInstance = bootstrap.Modal.getOrCreateInstance(modalEl);
+                        modalInstance.show();
+                    }
+                };
+
+                // Row click listeners
                 document.querySelectorAll('.slum-row').forEach(function(row) {
                     row.addEventListener('click', function(e) {
-                        var rawData = this.getAttribute('data-slum');
-                        if (!rawData) return;
-                        var d = JSON.parse(rawData);
-
-                        document.getElementById('slumModalTitle').textContent = '🛖 ' + d.name;
-                        document.getElementById('mSlumStatus').textContent = d.status;
-                        document.getElementById('mSlumStatus').className = 'badge ' + (d.is_notified ? 'bg-success text-white' : 'bg-secondary text-white') + ' fw-bold px-2 py-0.5 rounded-pill small mb-1';
-                        document.getElementById('mSlumParent').textContent = d.town + ', ' + d.district + ' District';
-                        document.getElementById('mSlumPop').textContent = d.pop;
-                        document.getElementById('mSlumHh').textContent = d.hh;
-                        document.getElementById('mSlumRoads').textContent = d.roads + ' km';
-                        document.getElementById('mLatFlush').textContent = d.lat_flush;
-                        document.getElementById('mLatPit').textContent = d.lat_pit;
-                        document.getElementById('mLatComm').textContent = d.lat_comm;
-                        document.getElementById('mLatService').textContent = d.lat_service;
-                        document.getElementById('mLatTotal').textContent = d.lat_total;
-                        document.getElementById('mDrainage').textContent = d.drainage;
-                        document.getElementById('mWater').textContent = d.water + ' Taps';
-                        document.getElementById('mElecDom').textContent = d.elec_dom;
-                        document.getElementById('mElecRoad').textContent = d.elec_road;
-                        document.getElementById('mSlumProfileLink').setAttribute('href', d.url);
-
-                        if (slumModal) slumModal.show();
+                        // If user clicked on a link or button directly, don't double trigger
+                        if (e.target.closest('a')) return;
+                        window.showSlumModalData(this);
                     });
                 });
-            });
+
+                // Button click listeners
+                document.querySelectorAll('.open-slum-modal-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var row = this.closest('.slum-row');
+                        if (row) {
+                            window.showSlumModalData(row);
+                        }
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initSlumInteractivity);
+            } else {
+                initSlumInteractivity();
+            }
             </script>
         <?php endif; ?>
 
