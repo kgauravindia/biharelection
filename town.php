@@ -176,15 +176,88 @@ if ($slumObj) {
     }
     $slumPopPct = ($pop > 0 && $totalSlumPop > 0) ? round(($totalSlumPop / $pop) * 100, 1) : 0;
 
+    // Parse detailed 429 attributes from Census Release 1000
+    $rawAttrs = json_decode($town['raw_attributes'] ?? '{}', true) ?: [];
+
+    // Historical Population Progression (1901 - 2011)
+    $histYears = [1901, 1911, 1921, 1931, 1941, 1951, 1961, 1971, 1981, 1991, 2001, 2011];
+    $historicalPop = [];
+    foreach ($histYears as $y) {
+        $popVal = $rawAttrs["Town Population (Census $y)"] ?? null;
+        $grVal = $rawAttrs["Growth Rate Town (Census $y)"] ?? null;
+        if ($popVal !== null && $popVal !== '' && $popVal != '0') {
+            $historicalPop[] = [
+                'year' => $y,
+                'population' => (int)$popVal,
+                'growth_rate' => ($grVal !== null && $grVal !== '') ? (float)$grVal : null
+            ];
+        }
+    }
+
+    // Education Facilities
+    $eduGovtMedCol = (int)($rawAttrs['Govt.-Medical College (Numbers))'] ?? 0);
+    $eduPvtMedCol = (int)($rawAttrs['Private-Medical College (Numbers)'] ?? 0);
+    $eduGovtEngCol = (int)($rawAttrs['Govt.-Engineering College (Numbers))'] ?? 0);
+    $eduPvtEngCol = (int)($rawAttrs['Private-Engineering College (Numbers)'] ?? 0);
+    $eduGovtPoly = (int)($rawAttrs['Govt.-Polytechnic (Numbers))'] ?? 0);
+    $eduPvtPoly = (int)($rawAttrs['Private-Polytechnic (Numbers)'] ?? 0);
+    $eduGovtMgmt = (int)($rawAttrs['Govt.-Management Institute (Numbers))'] ?? 0);
+    $eduGovtLaw = (int)($rawAttrs['Govt. Degree College-Law (Numbers))'] ?? 0);
+    $eduGovtDeg = (int)($rawAttrs['Govt. Degree College-Art,Science and Commerce (Numbers))'] ?? 0);
+    $eduPvtDeg = (int)($rawAttrs['Private Degree College-Art,Science and Commerce (Numbers)'] ?? 0);
+    $eduGovtSrSec = (int)($rawAttrs['Govt. Senior Secondary School (Numbers)'] ?? 0);
+    $eduPvtSrSec = (int)($rawAttrs['Private Senior Secondary School (Numbers) '] ?? $rawAttrs['Private Senior Secondary School (Numbers)'] ?? 0);
+    $eduGovtSec = (int)($rawAttrs['Govt. Secondary School (Numbers)'] ?? 0);
+    $eduPvtSec = (int)($rawAttrs['Private Secondary School (Numbers)'] ?? 0);
+    $eduGovtMid = (int)($rawAttrs['Govt. Middle School (Numbers)'] ?? 0);
+    $eduPvtMid = (int)($rawAttrs['Private Middle School (Numbers)'] ?? 0);
+    $eduGovtPri = (int)($rawAttrs['Govt. Primary School (Numbers)'] ?? 0);
+    $eduPvtPri = (int)($rawAttrs['Private Primary School (Numbers)'] ?? 0);
+    $eduGovtDis = (int)($rawAttrs['Govt.-Special School for Disabled (Numbers))'] ?? 0);
+    $eduPvtDis = (int)($rawAttrs['Private-Special School for Disabled (Numbers)'] ?? 0);
+
+    // Healthcare Facilities
+    $medAlloHosp = (int)($rawAttrs['Hospital Allopathic (Numbers)'] ?? 0);
+    $medAlloBeds = (int)($rawAttrs['Hospital Allopathic Beds (Numbers)'] ?? 0);
+    $medAlloDocs = (int)($rawAttrs['Hospital Allopathic Doctors-In Position (Numbers)'] ?? 0);
+    $medAlloStaff = (int)($rawAttrs['Hospital Allopathic Para Medical Staff-In Postion (Numbers)'] ?? 0);
+    $medAltHosp = (int)($rawAttrs['Hospital Alternative Medicine (Numbers)'] ?? 0);
+    $medAltBeds = (int)($rawAttrs['Hospital Alternative Medicine Beds (Numbers)'] ?? 0);
+    $medAltDocs = (int)($rawAttrs['Hospital Alternative Medicine Doctors-In Position (Numbers)'] ?? 0);
+    $medAltStaff = (int)($rawAttrs['Hospital Alternative Medicine Para Medical Staff-In Position (Numbers)'] ?? 0);
+    $medNursing = (int)($rawAttrs['Nursing Home (Numbers) '] ?? $rawAttrs['Nursing Home (Numbers)'] ?? 0);
+    $medNursingBeds = (int)($rawAttrs['Nursing Home Beds (Numbers)'] ?? 0);
+    $medTbHosp = (int)($rawAttrs['T.B. Hospital/ Clinic (Numbers)'] ?? 0);
+    $medTbBeds = (int)($rawAttrs['T.B. Hospital/ Clinic Beds (Numbers)'] ?? 0);
+    $medVetHosp = (int)($rawAttrs['Veterinary Hospital (Numbers)'] ?? 0);
+    $medCharitable = (int)($rawAttrs['Non-Government Charitable-Hospital/Nursing Home (Numbers)'] ?? 0);
+    $medShops = (int)($rawAttrs['Non-Government Medicine Shop (Numbers)'] ?? 0);
+
+    // Public Amenities & Culture
+    $recStadium = (int)($rawAttrs['Govt.-Stadium (Numbers))'] ?? 0);
+    $recCinema = (int)($rawAttrs['Private-Cinema Theatre (Numbers)'] ?? 0);
+    $recAuditorium = (int)($rawAttrs['Govt.-Auditorium/Community Hall (Numbers))'] ?? 0);
+    $recLibrary = (int)($rawAttrs['Govt.-Public Library (Numbers))'] ?? 0);
+    $recReadingRoom = (int)($rawAttrs['Govt.-Public Reading Room (Numbers))'] ?? 0);
+
+    // Credit Societies
+    $agrCreditSoc = (int)($rawAttrs['Agricultural Credit Society (Numbers)'] ?? 0);
+    $nonAgrCreditSoc = (int)($rawAttrs['Non-Agricultural Credit Society (Numbers)'] ?? 0);
+
+    // Climate & Drainage
+    $rainfallMm = $rawAttrs['Rainfall (mm.)'] ?? '';
+    $tempMax = $rawAttrs['Maximum Temperature (in centigrade)'] ?? '';
+    $tempMin = $rawAttrs['Minimum Temperature (in centigrade)'] ?? '';
+
     // Banking & Industry
-    $natBanks = (int)($town['nationalised_banks'] ?? 0);
-    $comBanks = (int)($town['commercial_banks'] ?? 0);
-    $coopBanks = (int)($town['cooperative_banks'] ?? 0);
+    $natBanks = (int)($town['nationalised_banks'] ?? ($rawAttrs['Nationalised Bank (Numbers)'] ?? 0));
+    $comBanks = (int)($town['commercial_banks'] ?? ($rawAttrs['Private Commercial Bank (Numbers)'] ?? 0));
+    $coopBanks = (int)($town['cooperative_banks'] ?? ($rawAttrs['Co-operative Bank (Numbers)'] ?? 0));
     $totalBanks = $natBanks + $comBanks + $coopBanks;
 
-    $manuf1 = trim($town['manufactured_1'] ?? '');
-    $manuf2 = trim($town['manufactured_2'] ?? '');
-    $manuf3 = trim($town['manufactured_3'] ?? '');
+    $manuf1 = trim($town['manufactured_1'] ?? ($rawAttrs["Manufactured Commodity (First)\n"] ?? $rawAttrs['Manufactured Commodity (First)'] ?? ''));
+    $manuf2 = trim($town['manufactured_2'] ?? ($rawAttrs['Manufactured Commodity (Second)'] ?? ''));
+    $manuf3 = trim($town['manufactured_3'] ?? ($rawAttrs['Manufactured Commodity (Third)'] ?? ''));
     $manufacturedItems = array_filter([$manuf1, $manuf2, $manuf3]);
 
     $pageTitle = "{$tName} Town Population, Civic Status, Slums & Census 2011 Data ({$dName})";
@@ -955,30 +1028,275 @@ require_once __DIR__ . '/header.php';
                     </div>
                 </div>
 
-                <!-- Economic, Banking & Manufacturing Infrastructure -->
+                <!-- Education & Academic Institutions -->
                 <div class="card town-glass-card p-4 mb-4">
                     <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
-                        <span><i class="bi bi-cash-coin text-success me-2"></i>Economy &amp; Financial Infrastructure</span>
-                        <span class="badge bg-success-subtle text-success fw-semibold small">Town Facilities</span>
+                        <span><i class="bi bi-mortarboard-fill text-primary me-2"></i>Education &amp; Higher Learning</span>
+                        <span class="badge bg-primary-subtle text-primary fw-semibold small">Census 2011</span>
+                    </h4>
+
+                    <!-- Higher Learning & Professional Colleges Badges -->
+                    <div class="row g-2 mb-3">
+                        <?php if ($eduGovtMedCol > 0 || $eduPvtMedCol > 0): ?>
+                            <div class="col-6 col-md-4">
+                                <div class="p-2.5 bg-danger bg-opacity-10 border border-danger-subtle rounded-3 text-center">
+                                    <span class="text-xs text-muted d-block">Medical College</span>
+                                    <strong class="text-danger fs-6">🏥 <?php echo $eduGovtMedCol + $eduPvtMedCol; ?> College</strong>
+                                    <span class="text-xs text-muted d-block"><?php echo $eduGovtMedCol > 0 ? 'Govt.' : 'Private'; ?></span>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($eduGovtEngCol > 0 || $eduPvtEngCol > 0): ?>
+                            <div class="col-6 col-md-4">
+                                <div class="p-2.5 bg-primary bg-opacity-10 border border-primary-subtle rounded-3 text-center">
+                                    <span class="text-xs text-muted d-block">Engineering College</span>
+                                    <strong class="text-primary fs-6">⚙️ <?php echo $eduGovtEngCol + $eduPvtEngCol; ?> College</strong>
+                                    <span class="text-xs text-muted d-block"><?php echo $eduGovtEngCol > 0 ? 'Govt.' : 'Private'; ?></span>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($eduGovtPoly > 0 || $eduPvtPoly > 0): ?>
+                            <div class="col-6 col-md-4">
+                                <div class="p-2.5 bg-info bg-opacity-10 border border-info-subtle rounded-3 text-center">
+                                    <span class="text-xs text-muted d-block">Polytechnic College</span>
+                                    <strong class="text-info fs-6">📐 <?php echo $eduGovtPoly + $eduPvtPoly; ?> Institute</strong>
+                                    <span class="text-xs text-muted d-block"><?php echo $eduGovtPoly > 0 ? 'Govt.' : 'Private'; ?></span>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($eduGovtLaw > 0): ?>
+                            <div class="col-6 col-md-4">
+                                <div class="p-2.5 bg-warning bg-opacity-10 border border-warning-subtle rounded-3 text-center">
+                                    <span class="text-xs text-muted d-block">Law College</span>
+                                    <strong class="text-dark fs-6">⚖️ <?php echo $eduGovtLaw; ?> Govt. College</strong>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($eduGovtMgmt > 0): ?>
+                            <div class="col-6 col-md-4">
+                                <div class="p-2.5 bg-success bg-opacity-10 border border-success-subtle rounded-3 text-center">
+                                    <span class="text-xs text-muted d-block">Management Institute</span>
+                                    <strong class="text-success fs-6">📊 <?php echo $eduGovtMgmt; ?> Govt. Institute</strong>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($eduGovtDeg > 0 || $eduPvtDeg > 0): ?>
+                            <div class="col-6 col-md-4">
+                                <div class="p-2.5 bg-secondary bg-opacity-10 border border-secondary-subtle rounded-3 text-center">
+                                    <span class="text-xs text-muted d-block">Degree Colleges</span>
+                                    <strong class="text-navy fs-6">🎓 <?php echo $eduGovtDeg + $eduPvtDeg; ?> Colleges</strong>
+                                    <span class="text-xs text-muted d-block"><?php echo $eduGovtDeg; ?> Govt • <?php echo $eduPvtDeg; ?> Pvt</span>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Schools Breakdown Table -->
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered align-middle mb-0">
+                            <thead class="table-light text-muted small">
+                                <tr>
+                                    <th>School Level</th>
+                                    <th class="text-center">Government</th>
+                                    <th class="text-center">Private</th>
+                                    <th class="text-end">Total Schools</th>
+                                </tr>
+                            </thead>
+                            <tbody class="small">
+                                <tr>
+                                    <td class="fw-semibold text-navy">Senior Secondary (10+2)</td>
+                                    <td class="text-center"><?php echo $eduGovtSrSec; ?></td>
+                                    <td class="text-center"><?php echo $eduPvtSrSec; ?></td>
+                                    <td class="text-end fw-bold text-primary"><?php echo $eduGovtSrSec + $eduPvtSrSec; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold text-navy">Secondary (High School)</td>
+                                    <td class="text-center"><?php echo $eduGovtSec; ?></td>
+                                    <td class="text-center"><?php echo $eduPvtSec; ?></td>
+                                    <td class="text-end fw-bold text-primary"><?php echo $eduGovtSec + $eduPvtSec; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold text-navy">Middle Schools</td>
+                                    <td class="text-center"><?php echo $eduGovtMid; ?></td>
+                                    <td class="text-center"><?php echo $eduPvtMid; ?></td>
+                                    <td class="text-end fw-bold text-primary"><?php echo $eduGovtMid + $eduPvtMid; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold text-navy">Primary Schools</td>
+                                    <td class="text-center"><?php echo $eduGovtPri; ?></td>
+                                    <td class="text-center"><?php echo $eduPvtPri; ?></td>
+                                    <td class="text-end fw-bold text-primary"><?php echo $eduGovtPri + $eduPvtPri; ?></td>
+                                </tr>
+                                <?php if ($eduGovtDis > 0 || $eduPvtDis > 0): ?>
+                                    <tr>
+                                        <td class="fw-semibold text-success">Special School for Disabled</td>
+                                        <td class="text-center"><?php echo $eduGovtDis; ?></td>
+                                        <td class="text-center"><?php echo $eduPvtDis; ?></td>
+                                        <td class="text-end fw-bold text-success"><?php echo $eduGovtDis + $eduPvtDis; ?></td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Healthcare & Hospitals Infrastructure -->
+                <div class="card town-glass-card p-4 mb-4">
+                    <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
+                        <span><i class="bi bi-heart-pulse-fill text-danger me-2"></i>Healthcare &amp; Hospital Facilities</span>
+                        <span class="badge bg-danger-subtle text-danger fw-semibold small">Medical Grid</span>
+                    </h4>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-6 col-md-4">
+                            <div class="p-3 bg-light rounded-3 text-center border h-100">
+                                <span class="text-muted small d-block mb-1">Allopathic Hospitals</span>
+                                <h4 class="fw-bold text-danger mb-0"><?php echo $medAlloHosp; ?></h4>
+                                <span class="text-xs text-muted"><?php echo $medAlloBeds; ?> Total Beds</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-3 bg-light rounded-3 text-center border h-100">
+                                <span class="text-muted small d-block mb-1">Alternative Medicine</span>
+                                <h4 class="fw-bold text-success mb-0"><?php echo $medAltHosp; ?></h4>
+                                <span class="text-xs text-muted"><?php echo $medAltBeds; ?> Total Beds</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-3 bg-light rounded-3 text-center border h-100">
+                                <span class="text-muted small d-block mb-1">Nursing Homes</span>
+                                <h4 class="fw-bold text-primary mb-0"><?php echo $medNursing; ?></h4>
+                                <span class="text-xs text-muted"><?php echo $medNursingBeds; ?> Total Beds</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-3 bg-light rounded-3 text-center border h-100">
+                                <span class="text-muted small d-block mb-1">Medical Staff</span>
+                                <h4 class="fw-bold text-dark mb-0"><?php echo $medAlloDocs + $medAltDocs; ?></h4>
+                                <span class="text-xs text-muted">Doctors In Position</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-3 bg-light rounded-3 text-center border h-100">
+                                <span class="text-muted small d-block mb-1">Para-Medical Staff</span>
+                                <h4 class="fw-bold text-info mb-0"><?php echo $medAlloStaff + $medAltStaff; ?></h4>
+                                <span class="text-xs text-muted">Nurses &amp; Technicians</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="p-3 bg-light rounded-3 text-center border h-100">
+                                <span class="text-muted small d-block mb-1">Medicine Shops</span>
+                                <h4 class="fw-bold text-success mb-0"><?php echo number_format($medShops); ?></h4>
+                                <span class="text-xs text-muted">Licensed Pharmacies</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php if ($medTbHosp > 0 || $medVetHosp > 0 || $medCharitable > 0): ?>
+                        <div class="d-flex flex-wrap gap-2 pt-2 border-top">
+                            <?php if ($medTbHosp > 0): ?>
+                                <span class="badge bg-light text-dark border px-2.5 py-1.5 small">
+                                    🫁 <?php echo $medTbHosp; ?> T.B. Clinic (<?php echo $medTbBeds; ?> Beds)
+                                </span>
+                            <?php endif; ?>
+                            <?php if ($medVetHosp > 0): ?>
+                                <span class="badge bg-light text-dark border px-2.5 py-1.5 small">
+                                    🐾 <?php echo $medVetHosp; ?> Veterinary Hospital
+                                </span>
+                            <?php endif; ?>
+                            <?php if ($medCharitable > 0): ?>
+                                <span class="badge bg-light text-dark border px-2.5 py-1.5 small">
+                                    🤝 <?php echo $medCharitable; ?> Charitable Hospitals
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Historical Population Progression (1901 - 2011) -->
+                <?php if (!empty($historicalPop)): ?>
+                    <div class="card town-glass-card p-4 mb-4">
+                        <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
+                            <span><i class="bi bi-graph-up-arrow text-info me-2"></i>Historical Population Progression (1901–2011)</span>
+                            <span class="badge bg-info-subtle text-info fw-semibold small">110-Year Trend</span>
+                        </h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover align-middle mb-0 text-center">
+                                <thead class="table-light text-muted small">
+                                    <tr>
+                                        <th>Census Year</th>
+                                        <th class="text-end">Population</th>
+                                        <th class="text-end">Decadal Growth</th>
+                                        <th>Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="small">
+                                    <?php foreach ($historicalPop as $hp): 
+                                        $gr = $hp['growth_rate'];
+                                    ?>
+                                        <tr>
+                                            <td class="fw-bold text-navy"><?php echo $hp['year']; ?></td>
+                                            <td class="text-end fw-semibold"><?php echo number_format($hp['population']); ?></td>
+                                            <td class="text-end">
+                                                <?php if ($gr !== null): ?>
+                                                    <span class="fw-bold <?php echo $gr >= 0 ? 'text-success' : 'text-danger'; ?>">
+                                                        <?php echo ($gr >= 0 ? '+' : '') . $gr . '%'; ?>
+                                                    </span>
+                                                <?php else: ?>
+                                                    <span class="text-muted">-</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if ($gr !== null): ?>
+                                                    <?php if ($gr >= 25): ?>
+                                                        <span class="badge bg-success-subtle text-success small">High Surge 🚀</span>
+                                                    <?php elseif ($gr > 0): ?>
+                                                        <span class="badge bg-primary-subtle text-primary small">Steady Growth 📈</span>
+                                                    <?php else: ?>
+                                                        <span class="badge bg-danger-subtle text-danger small">Decline 📉</span>
+                                                    <?php endif; ?>
+                                                <?php else: ?>
+                                                    <span class="badge bg-light text-muted small">Base Year</span>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Economic, Banking, Credit Societies & Manufacturing -->
+                <div class="card town-glass-card p-4 mb-4">
+                    <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
+                        <span><i class="bi bi-cash-coin text-success me-2"></i>Economy, Banking &amp; Credit Societies</span>
+                        <span class="badge bg-success-subtle text-success fw-semibold small">Financial Network</span>
                     </h4>
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-4">
-                            <div class="p-3 bg-light rounded-3 text-center border">
+                            <div class="p-3 bg-light rounded-3 text-center border h-100">
                                 <span class="text-muted small d-block mb-1">Nationalised Banks</span>
                                 <h4 class="fw-bold text-primary mb-0"><?php echo $natBanks; ?></h4>
                                 <span class="text-xs text-muted">Branches</span>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="p-3 bg-light rounded-3 text-center border">
+                            <div class="p-3 bg-light rounded-3 text-center border h-100">
                                 <span class="text-muted small d-block mb-1">Commercial Banks</span>
                                 <h4 class="fw-bold text-info mb-0"><?php echo $comBanks; ?></h4>
                                 <span class="text-xs text-muted">Branches</span>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="p-3 bg-light rounded-3 text-center border">
+                            <div class="p-3 bg-light rounded-3 text-center border h-100">
                                 <span class="text-muted small d-block mb-1">Cooperative Banks</span>
                                 <h4 class="fw-bold text-warning mb-0"><?php echo $coopBanks; ?></h4>
                                 <span class="text-xs text-muted">Branches</span>
@@ -986,10 +1304,27 @@ require_once __DIR__ . '/header.php';
                         </div>
                     </div>
 
+                    <?php if ($agrCreditSoc > 0 || $nonAgrCreditSoc > 0): ?>
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <div class="p-2.5 rounded-3 bg-light border text-center">
+                                    <span class="text-xs text-muted d-block">Agricultural Credit Societies</span>
+                                    <strong class="text-navy fs-6">🌾 <?php echo $agrCreditSoc; ?> Societies</strong>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-2.5 rounded-3 bg-light border text-center">
+                                    <span class="text-xs text-muted d-block">Non-Agricultural Credit Societies</span>
+                                    <strong class="text-navy fs-6">💼 <?php echo $nonAgrCreditSoc; ?> Societies</strong>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
                     <?php if (!empty($manufacturedItems)): ?>
                         <div class="p-3 rounded-3 bg-warning-subtle border border-warning-subtle">
                             <div class="fw-bold text-dark mb-2">
-                                <i class="bi bi-gear-wide-connected me-1 text-warning"></i> Major Manufactured Commodities in <?php echo htmlspecialchars($tName); ?>:
+                                <i class="bi bi-gear-wide-connected me-1 text-warning"></i> Famous Manufactured Commodities &amp; Specialties in <?php echo htmlspecialchars($tName); ?>:
                             </div>
                             <div class="d-flex flex-wrap gap-2">
                                 <?php foreach ($manufacturedItems as $idx => $mItem): ?>
@@ -1001,6 +1336,67 @@ require_once __DIR__ . '/header.php';
                         </div>
                     <?php endif; ?>
                 </div>
+
+                <!-- Civic Amenities, Culture & Recreation -->
+                <?php if ($recStadium > 0 || $recCinema > 0 || $recAuditorium > 0 || $recLibrary > 0 || $recReadingRoom > 0 || !empty($rainfallMm)): ?>
+                    <div class="card town-glass-card p-4 mb-4">
+                        <h4 class="fw-bold text-navy font-heading fs-5 mb-3 d-flex align-items-center justify-content-between">
+                            <span><i class="bi bi-palette-fill text-warning me-2"></i>Civic Amenities, Culture &amp; Climate</span>
+                            <span class="badge bg-warning-subtle text-dark fw-semibold small">Urban Living</span>
+                        </h4>
+
+                        <div class="row g-3">
+                            <?php if ($recStadium > 0): ?>
+                                <div class="col-6 col-md-4">
+                                    <div class="p-2.5 bg-light rounded-3 text-center border">
+                                        <span class="text-xs text-muted d-block">Sports Stadium</span>
+                                        <strong class="text-success fs-6">🏟️ <?php echo $recStadium; ?> Stadium</strong>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($recCinema > 0): ?>
+                                <div class="col-6 col-md-4">
+                                    <div class="p-2.5 bg-light rounded-3 text-center border">
+                                        <span class="text-xs text-muted d-block">Cinema Theatres</span>
+                                        <strong class="text-primary fs-6">🎬 <?php echo $recCinema; ?> Theatres</strong>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($recAuditorium > 0): ?>
+                                <div class="col-6 col-md-4">
+                                    <div class="p-2.5 bg-light rounded-3 text-center border">
+                                        <span class="text-xs text-muted d-block">Community Halls</span>
+                                        <strong class="text-navy fs-6">🏛️ <?php echo $recAuditorium; ?> Halls</strong>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($recLibrary > 0): ?>
+                                <div class="col-6 col-md-4">
+                                    <div class="p-2.5 bg-light rounded-3 text-center border">
+                                        <span class="text-xs text-muted d-block">Public Library</span>
+                                        <strong class="text-info fs-6">📚 <?php echo $recLibrary; ?> Library</strong>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($recReadingRoom > 0): ?>
+                                <div class="col-6 col-md-4">
+                                    <div class="p-2.5 bg-light rounded-3 text-center border">
+                                        <span class="text-xs text-muted d-block">Public Reading Room</span>
+                                        <strong class="text-dark fs-6">📖 <?php echo $recReadingRoom; ?> Room</strong>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (!empty($rainfallMm)): ?>
+                                <div class="col-6 col-md-4">
+                                    <div class="p-2.5 bg-light rounded-3 text-center border">
+                                        <span class="text-xs text-muted d-block">Annual Rainfall</span>
+                                        <strong class="text-info fs-6">🌧️ <?php echo $rainfallMm; ?> mm</strong>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <!-- Right Column: Administrative & Slum Summary -->
