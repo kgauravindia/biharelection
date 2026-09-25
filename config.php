@@ -1168,6 +1168,47 @@ class DataProvider {
         }
     }
 
+    public static function getSlumById($id) {
+        $pdo = Database::getConnection();
+        if (!$pdo || empty($id)) return null;
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM census_town_slums_2011 WHERE id = :id LIMIT 1");
+            $stmt->execute([':id' => (int)$id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (Throwable $e) {
+            return null;
+        }
+    }
+
+    public static function getSlumBySlug($districtSlug, $townSlug, $slumSlugOrId) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return null;
+        try {
+            if (is_numeric($slumSlugOrId)) {
+                return self::getSlumById((int)$slumSlugOrId);
+            }
+            $stmt = $pdo->prepare("SELECT * FROM census_town_slums_2011 WHERE district_slug = :dslug AND town_slug = :tslug AND (slum_slug = :sslug OR id = :sid) LIMIT 1");
+            $stmt->execute([
+                ':dslug' => strtolower(trim($districtSlug)),
+                ':tslug' => strtolower(trim($townSlug)),
+                ':sslug' => strtolower(trim($slumSlugOrId)),
+                ':sid' => (int)$slumSlugOrId
+            ]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row) return $row;
+
+            // Fallback: match town_slug and slum_slug
+            $stmt2 = $pdo->prepare("SELECT * FROM census_town_slums_2011 WHERE town_slug = :tslug AND slum_slug = :sslug LIMIT 1");
+            $stmt2->execute([
+                ':tslug' => strtolower(trim($townSlug)),
+                ':sslug' => strtolower(trim($slumSlugOrId))
+            ]);
+            return $stmt2->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (Throwable $e) {
+            return null;
+        }
+    }
+
     public static function getNearbyTowns($districtSlug, $excludeId = 0, $limit = 6) {
         $pdo = Database::getConnection();
         if (!$pdo) return [];
@@ -1630,10 +1671,14 @@ function getVillageUrl($districtSlug = '', $blockSlug = '', $villageSlugOrCode =
     return SITE_URL . "/village";
 }
 
-function getTownUrl($districtSlug = '', $townSlugOrCode = '') {
+function getTownUrl($districtSlug = '', $townSlugOrCode = '', $slumSlugOrId = '') {
     $d = slugify($districtSlug);
     $t = is_numeric($townSlugOrCode) ? (string)$townSlugOrCode : slugify($townSlugOrCode);
+    $s = is_numeric($slumSlugOrId) ? (string)$slumSlugOrId : slugify($slumSlugOrId);
     
+    if ($d && $t && $s) {
+        return SITE_URL . "/town/{$d}/{$t}/{$s}";
+    }
     if (is_numeric($townSlugOrCode) && empty($d)) {
         return SITE_URL . "/town/{$townSlugOrCode}";
     }
@@ -1643,6 +1688,10 @@ function getTownUrl($districtSlug = '', $townSlugOrCode = '') {
         return SITE_URL . "/town/{$d}";
     }
     return SITE_URL . "/town";
+}
+
+function getSlumUrl($districtSlug = '', $townSlug = '', $slumSlugOrId = '') {
+    return getTownUrl($districtSlug, $townSlug, $slumSlugOrId);
 }
 
 function getCasteSurveyUrl($codeOrSlug = '') {
