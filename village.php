@@ -7,16 +7,34 @@ require_once __DIR__ . '/config.php';
 
 $pdo = Database::getConnection();
 
-// Input parameters
+// Input parameters resolution
 $codeParam = trim($_GET['code'] ?? '');
 $districtParam = trim($_GET['district'] ?? '');
 $blockParam = trim($_GET['block'] ?? '');
 $villageParam = trim($_GET['village'] ?? '');
-$searchParam = trim($_GET['q'] ?? '');
 $gpParam = trim($_GET['gp'] ?? '');
+$searchParam = trim($_GET['q'] ?? '');
+$slugParam = trim($_GET['slug'] ?? '');
 $sortParam = trim($_GET['sort'] ?? 'pop_desc');
 $currentPage = max(1, (int)($_GET['page'] ?? 1));
 $perPage = 50;
+
+$districtsList = DataProvider::getDistricts();
+
+// Handle generic slug routing
+if (empty($codeParam) && empty($villageParam) && !empty($slugParam)) {
+    if (is_numeric($slugParam) && strlen($slugParam) >= 5) {
+        $codeParam = $slugParam;
+    } else {
+        $matchedDist = DataProvider::getDistrictBySlug($slugParam);
+        if ($matchedDist) {
+            $districtParam = $slugParam;
+        } else {
+            // Check if slug matches a village directly
+            $villageParam = $slugParam;
+        }
+    }
+}
 
 $village = null;
 
@@ -24,7 +42,6 @@ $village = null;
 if (!empty($codeParam)) {
     $village = DataProvider::getVillageByCode($codeParam);
 } elseif (!empty($villageParam)) {
-    // If villageParam looks like a 6-digit census code
     if (is_numeric($villageParam) && strlen($villageParam) >= 5) {
         $village = DataProvider::getVillageByCode($villageParam);
     } else {
@@ -32,32 +49,20 @@ if (!empty($codeParam)) {
     }
 }
 
-$districtsList = DataProvider::getDistricts();
-
-// 2. If single village is matched, load related data & SEO
+// 2. If single village is matched, load related governance & demographic data
 if ($village) {
     $vName = $village['village_name'];
     $vCode = $village['village_code'];
     $dName = $village['district_name'];
+    $dSlug = $village['district_slug'];
     $bName = $village['sub_district_name'] ?: ($village['cd_block_name'] ?: 'Block');
+    $bSlug = $village['sub_district_slug'];
     $gpName = $village['gram_panchayat_name'] ?: '';
+    $gpSlug = $village['gram_panchayat_slug'] ?: '';
+    
     $pop = (int)($village['population'] ?? 0);
     $hh = (int)($village['households'] ?? 0);
     $sr = (int)($village['sex_ratio'] ?? 0);
-    
-    $pageTitle = "{$vName} Village Population, Gram Panchayat & Census 2011 Data ({$bName}, {$dName})";
-    $pageDescription = "Official 2011 Census demographic data for {$vName} Village (Code: {$vCode}), {$bName} Block, {$dName} District, Bihar. Population: " . number_format($pop) . ", Households: " . number_format($hh) . ", Sex Ratio: {$sr}.";
-    $pageKeywords = "{$vName} village, {$vName} census 2011, {$vName} population, {$bName} block villages, {$dName} district village list, Bihar Census 2011 villages";
-    $pageCanonical = getVillageUrl($village['district_slug'], $village['sub_district_slug'], $village['village_slug']);
-
-    // Fetch sibling villages in same Gram Panchayat or Block
-    $nearbyVillages = DataProvider::getNearbyVillages($village['district_slug'], $village['sub_district_slug'], $village['gram_panchayat_slug'], $village['id'], 8);
-
-    // Calculate derived metrics
-    $areaHectares = (float)($village['area_hectares'] ?? 0);
-    $areaAcres = $areaHectares * 2.47105;
-    $density = ($areaHectares > 0 && $pop > 0) ? round($pop / $areaHectares, 2) : 0;
-    $avgFamilySize = ($hh > 0 && $pop > 0) ? round($pop / $hh, 1) : 0;
     $male = (int)($village['male'] ?? 0);
     $female = (int)($village['female'] ?? 0);
     $scPop = (int)($village['sc_population'] ?? 0);
@@ -65,6 +70,41 @@ if ($village) {
     $scPct = ($pop > 0) ? round(($scPop / $pop) * 100, 2) : 0;
     $stPct = ($pop > 0) ? round(($stPop / $pop) * 100, 2) : 0;
     $genObcPct = max(0, round(100 - ($scPct + $stPct), 2));
+
+    $areaHectares = (float)($village['area_hectares'] ?? 0);
+    $areaAcres = $areaHectares * 2.47105;
+    $density = ($areaHectares > 0 && $pop > 0) ? round($pop / $areaHectares, 2) : 0;
+    $avgFamilySize = ($hh > 0 && $pop > 0) ? round($pop / $hh, 1) : 0;
+
+    $pageTitle = "{$vName} Village Population, Gram Panchayat & Census 2011 Data ({$bName}, {$dName})";
+    $pageDescription = "Official 2011 Census demographic data for {$vName} Village (Code: {$vCode}), {$bName} Block, {$dName} District, Bihar. Population: " . number_format($pop) . ", Households: " . number_format($hh) . ", Sex Ratio: {$sr}.";
+    $pageKeywords = "{$vName} village, {$vName} census 2011, {$vName} population, {$bName} block villages, {$dName} district village list, Bihar Census 2011 villages";
+    $pageCanonical = getVillageUrl($dSlug, $bSlug, $village['village_slug']);
+
+    // Fetch sibling villages in same Gram Panchayat or Block
+    $nearbyVillages = DataProvider::getNearbyVillages($dSlug, $bSlug, $gpSlug, $village['id'], 8);
+
+    // Fetch Gram Panchayat Elected Representatives (Mukhiya & Sarpanch)
+    $panchayatObj = null;
+    $blockSamiti = null;
+    $zilaMembers = [];
+
+    if ($pdo && !empty($gpName)) {
+        try {
+            $stmtP = $pdo->prepare("SELECT * FROM panchayats WHERE LOWER(district_slug) = :dslug AND (panchayat_name LIKE :pname OR slug LIKE :pslug) LIMIT 1");
+            $stmtP->execute([':dslug' => $dSlug, ':pname' => '%' . $gpName . '%', ':pslug' => '%' . slugify($gpName) . '%']);
+            $panchayatObj = $stmtP->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (Throwable $e) {}
+    }
+
+    // Fetch Block Samiti (Pramukh / Up-Pramukh)
+    if ($pdo && !empty($bName)) {
+        try {
+            $stmtS = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE LOWER(district_slug) = :dslug AND block LIKE :bname LIMIT 1");
+            $stmtS->execute([':dslug' => $dSlug, ':bname' => '%' . $bName . '%']);
+            $blockSamiti = $stmtS->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (Throwable $e) {}
+    }
 } else {
     // Directory Mode
     $distLabel = !empty($districtParam) ? ucfirst($districtParam) . ' District ' : 'Bihar ';
@@ -72,6 +112,29 @@ if ($village) {
     $pageDescription = "Explore the complete Census 2011 village directory of Bihar covering all 44,874 villages across 38 districts and 534 blocks. Filter by district, block, population and Gram Panchayat.";
     $pageKeywords = "Bihar village directory, Bihar 44874 villages, Census 2011 village list, Bihar gram panchayat villages, Bihar district census handbook";
     $pageCanonical = !empty($districtParam) ? getVillageUrl($districtParam) : SITE_URL . "/village";
+
+    // Fetch CD Blocks for active district if selected
+    $districtBlocks = [];
+    $blockGps = [];
+    if (!empty($districtParam) && $pdo) {
+        try {
+            $stmtB = $pdo->prepare("SELECT sub_district_slug, sub_district_name, COUNT(*) as village_count, SUM(population) as total_pop FROM census_villages_2011 WHERE district_slug = :dslug GROUP BY sub_district_slug, sub_district_name ORDER BY sub_district_name ASC");
+            $stmtB->execute([':dslug' => strtolower(trim($districtParam))]);
+            $districtBlocks = $stmtB->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Throwable $e) {}
+
+        if (!empty($blockParam)) {
+            try {
+                $stmtG = $pdo->prepare("SELECT gram_panchayat_slug, gram_panchayat_name, COUNT(*) as village_count FROM census_villages_2011 WHERE district_slug = :dslug AND (sub_district_slug = :bslug OR cd_block_name LIKE :bslug_like) AND gram_panchayat_name IS NOT NULL AND gram_panchayat_name != '' GROUP BY gram_panchayat_slug, gram_panchayat_name ORDER BY gram_panchayat_name ASC");
+                $stmtG->execute([
+                    ':dslug' => strtolower(trim($districtParam)),
+                    ':bslug' => strtolower(trim($blockParam)),
+                    ':bslug_like' => '%' . trim($blockParam) . '%'
+                ]);
+                $blockGps = $stmtG->fetchAll(PDO::FETCH_ASSOC);
+            } catch (Throwable $e) {}
+        }
+    }
 
     // Build directory query with pagination & sorting
     $where = [];
@@ -87,8 +150,9 @@ if ($village) {
         $params[':bslug_like'] = '%' . trim($blockParam) . '%';
     }
     if (!empty($gpParam)) {
-        $where[] = "gram_panchayat_slug = :gpslug";
+        $where[] = "(gram_panchayat_slug = :gpslug OR gram_panchayat_name LIKE :gp_like)";
         $params[':gpslug'] = strtolower(trim($gpParam));
+        $params[':gp_like'] = '%' . trim($gpParam) . '%';
     }
     if (!empty($searchParam)) {
         $where[] = "(village_name LIKE :q OR village_code LIKE :q OR gram_panchayat_name LIKE :q OR cd_block_name LIKE :q OR district_name LIKE :q)";
@@ -131,6 +195,65 @@ $activeNav = 'census';
 require_once __DIR__ . '/header.php';
 ?>
 
+<style>
+/* Custom Badge & Pill Styling */
+.badge-soft-primary { background-color: rgba(13, 110, 253, 0.12); color: #0d6efd; }
+.badge-soft-success { background-color: rgba(25, 135, 84, 0.12); color: #198754; }
+.badge-soft-warning { background-color: rgba(255, 193, 7, 0.18); color: #856404; }
+.badge-soft-danger { background-color: rgba(220, 53, 69, 0.12); color: #dc3545; }
+.badge-soft-info { background-color: rgba(13, 202, 240, 0.15); color: #055160; }
+
+.block-pill-btn {
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid #dee2e6;
+    background-color: #fff;
+    color: #495057;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.block-pill-btn:hover {
+    background-color: #e9ecef;
+    border-color: #0b1a30;
+    color: #0b1a30;
+    transform: translateY(-1px);
+}
+.block-pill-btn.active {
+    background: linear-gradient(135deg, #0b1a30 0%, #17345f 100%);
+    border-color: #0b1a30;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(11, 26, 48, 0.2);
+}
+.block-pill-btn.active .block-badge-count {
+    background-color: var(--accent-saffron, #ff9933);
+    color: #000;
+}
+.block-badge-count {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 50px;
+    background-color: #e9ecef;
+    color: #495057;
+    font-weight: 700;
+}
+
+.governance-card {
+    border-radius: 16px;
+    border: 1px solid #e9ecef;
+    background: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+.governance-card:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    border-color: #cbd5e1;
+}
+</style>
+
 <?php if ($village): ?>
     <!-- ========================================================================= -->
     <!-- VIEW 1: SINGLE VILLAGE DEMOGRAPHIC PROFILE                                -->
@@ -142,8 +265,8 @@ require_once __DIR__ . '/header.php';
                 <ol class="breadcrumb mb-0 small text-white-50">
                     <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>" class="text-white text-decoration-none">Home</a></li>
                     <li class="breadcrumb-item"><a href="<?php echo getCensusUrl(); ?>" class="text-white text-decoration-none">Census 2011</a></li>
-                    <li class="breadcrumb-item"><a href="<?php echo getVillageUrl($village['district_slug']); ?>" class="text-white text-decoration-none"><?php echo htmlspecialchars($village['district_name']); ?></a></li>
-                    <li class="breadcrumb-item"><a href="<?php echo getVillageUrl($village['district_slug'], $village['sub_district_slug']); ?>" class="text-white text-decoration-none"><?php echo htmlspecialchars($bName); ?></a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo getVillageUrl($dSlug); ?>" class="text-white text-decoration-none"><?php echo htmlspecialchars($dName); ?></a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo getVillageUrl($dSlug, $bSlug); ?>" class="text-white text-decoration-none"><?php echo htmlspecialchars($bName); ?></a></li>
                     <li class="breadcrumb-item active text-warning" aria-current="page"><?php echo htmlspecialchars($vName); ?></li>
                 </ol>
             </nav>
@@ -153,31 +276,34 @@ require_once __DIR__ . '/header.php';
                     <i class="bi bi-upc"></i> Census Code: <?php echo htmlspecialchars($vCode); ?>
                 </span>
                 <?php if (!empty($gpName)): ?>
-                    <a href="<?php echo getPanchayatUrl($village['district_slug'], slugify($bName), slugify($gpName)); ?>" class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 text-decoration-none border border-success border-opacity-50">
-                        🌾 GP: <?php echo htmlspecialchars($gpName); ?>
+                    <a href="<?php echo getPanchayatUrl($dSlug, slugify($bName), slugify($gpName)); ?>" class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 text-decoration-none border border-success border-opacity-50">
+                        🌾 Gram Panchayat: <?php echo htmlspecialchars($gpName); ?> &rarr;
                     </a>
                 <?php endif; ?>
-                <a href="<?php echo getBlockUrl($village['district_slug'], $village['sub_district_slug']); ?>" class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 text-decoration-none">
+                <a href="<?php echo getBlockUrl($dSlug, $bSlug); ?>" class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 text-decoration-none">
                     🏛️ Block: <?php echo htmlspecialchars($bName); ?>
                 </a>
-                <a href="<?php echo getDistrictUrl($village['district_slug']); ?>" class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 text-decoration-none">
+                <a href="<?php echo getDistrictUrl($dSlug); ?>" class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 text-decoration-none">
                     📍 District: <?php echo htmlspecialchars($dName); ?>
                 </a>
             </div>
 
             <h1 class="display-5 fw-extrabold text-white mb-2" style="font-family: 'Outfit', sans-serif;">
-                <?php echo htmlspecialchars($vName); ?> Village Census 2011 Data
+                <?php echo htmlspecialchars($vName); ?> Village Census 2011 Profile
             </h1>
             <p class="lead text-white-50 mb-4" style="font-size: 1.05rem; max-width: 880px;">
-                Complete Primary Census Abstract (PCA) profile of <strong><?php echo htmlspecialchars($vName); ?></strong> village in <?php echo htmlspecialchars($bName); ?> CD Block, <?php echo htmlspecialchars($dName); ?> District, Bihar.
+                Complete Primary Census Abstract (PCA) demographic, household, caste category (SC/ST), area, and infrastructure roster for <strong><?php echo htmlspecialchars($vName); ?></strong> village, <?php echo htmlspecialchars($bName); ?> Block, <?php echo htmlspecialchars($dName); ?> District, Bihar.
             </p>
 
             <!-- Action Buttons -->
             <div class="d-flex flex-wrap gap-2">
-                <a href="https://api.whatsapp.com/send?text=<?php echo urlencode("Explore {$vName} Village (Census Code: {$vCode}) Demographic & Population Data on BiharElection.com: " . $pageCanonical); ?>" target="_blank" class="btn btn-success fw-bold px-3 py-2 d-inline-flex align-items-center gap-2 shadow-sm">
+                <a href="https://api.whatsapp.com/send?text=<?php echo urlencode("Explore {$vName} Village (Census Code: {$vCode}) Demographics & Gram Panchayat Data on BiharElection.com: " . $pageCanonical); ?>" target="_blank" class="btn btn-success fw-bold px-3 py-2 d-inline-flex align-items-center gap-2 shadow-sm">
                     <i class="bi bi-whatsapp"></i> Share on WhatsApp
                 </a>
-                <a href="<?php echo getVillageUrl($village['district_slug']); ?>" class="btn btn-outline-light fw-bold px-3 py-2">
+                <button type="button" class="btn btn-light fw-bold px-3 py-2 shadow-sm" onclick="navigator.clipboard.writeText(window.location.href); alert('Village Profile link copied to clipboard!');">
+                    <i class="bi bi-link-45deg"></i> Copy Link
+                </button>
+                <a href="<?php echo getVillageUrl($dSlug); ?>" class="btn btn-outline-light fw-bold px-3 py-2">
                     <i class="bi bi-arrow-left"></i> All <?php echo htmlspecialchars($dName); ?> Villages
                 </a>
                 <a href="<?php echo getCensusUrl(); ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark">
@@ -237,7 +363,7 @@ require_once __DIR__ . '/header.php';
         </div>
 
         <!-- Detailed Demographic & Administration Section -->
-        <div class="row g-4 mb-5">
+        <div class="row g-4 mb-4">
             
             <!-- Left Column: Social & Category Matrix -->
             <div class="col-12 col-lg-7">
@@ -319,21 +445,21 @@ require_once __DIR__ . '/header.php';
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
                             <span class="text-muted">District:</span>
-                            <a href="<?php echo getDistrictUrl($village['district_slug']); ?>" class="text-decoration-none fw-bold text-primary">
+                            <a href="<?php echo getDistrictUrl($dSlug); ?>" class="text-decoration-none fw-bold text-primary">
                                 <?php echo htmlspecialchars($dName); ?> (Code: <?php echo htmlspecialchars($village['district_code']); ?>)
                             </a>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
                             <span class="text-muted">CD Block / Sub-District:</span>
-                            <a href="<?php echo getBlockUrl($village['district_slug'], $village['sub_district_slug']); ?>" class="text-decoration-none fw-bold text-primary">
+                            <a href="<?php echo getBlockUrl($dSlug, $bSlug); ?>" class="text-decoration-none fw-bold text-primary">
                                 <?php echo htmlspecialchars($bName); ?>
                             </a>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
                             <span class="text-muted">Gram Panchayat:</span>
                             <?php if (!empty($gpName)): ?>
-                                <a href="<?php echo getPanchayatUrl($village['district_slug'], slugify($bName), slugify($gpName)); ?>" class="badge bg-success bg-opacity-10 text-success text-decoration-none fw-bold">
-                                    🌾 <?php echo htmlspecialchars($gpName); ?>
+                                <a href="<?php echo getPanchayatUrl($dSlug, slugify($bName), slugify($gpName)); ?>" class="badge bg-success bg-opacity-10 text-success text-decoration-none fw-bold">
+                                    🌾 <?php echo htmlspecialchars($gpName); ?> &rarr;
                                 </a>
                             <?php else: ?>
                                 <span class="text-muted">Non-Panchayat Area</span>
@@ -371,6 +497,77 @@ require_once __DIR__ . '/header.php';
 
         </div>
 
+        <!-- Tier Governance & Representation Grid -->
+        <?php if ($panchayatObj || $blockSamiti): ?>
+        <section class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+            <h3 class="h5 fw-bold mb-3 text-dark" style="font-family: 'Outfit', sans-serif;">
+                <i class="bi bi-shield-check text-success me-2"></i> Local Governance &amp; Elected Representation
+            </h3>
+
+            <div class="row g-3">
+                <?php if ($panchayatObj): ?>
+                <div class="col-12 col-md-6">
+                    <div class="governance-card p-3 h-100">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-success bg-opacity-10 text-success fw-bold">Gram Panchayat Leadership</span>
+                            <span class="small text-muted"><?php echo htmlspecialchars($panchayatObj['panchayat_name']); ?></span>
+                        </div>
+                        <div class="row g-2 small">
+                            <div class="col-6">
+                                <div class="p-2 bg-light rounded-2">
+                                    <span class="text-muted d-block" style="font-size: 0.72rem;">Elected Mukhiya:</span>
+                                    <strong class="text-dark"><?php echo htmlspecialchars($panchayatObj['current_mukhiya'] ?: 'Not Specified'); ?></strong>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-2 bg-light rounded-2">
+                                    <span class="text-muted d-block" style="font-size: 0.72rem;">Elected Sarpanch:</span>
+                                    <strong class="text-dark"><?php echo htmlspecialchars($panchayatObj['current_sarpanch'] ?: 'Not Specified'); ?></strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-end">
+                            <a href="<?php echo getPanchayatUrl($dSlug, slugify($bName), slugify($gpName)); ?>" class="small text-primary text-decoration-none fw-semibold">
+                                View Full Panchayat Roster &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <?php if ($blockSamiti): ?>
+                <div class="col-12 col-md-6">
+                    <div class="governance-card p-3 h-100">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-warning bg-opacity-25 text-dark fw-bold">Block Panchayat Samiti</span>
+                            <span class="small text-muted"><?php echo htmlspecialchars($bName); ?></span>
+                        </div>
+                        <div class="row g-2 small">
+                            <div class="col-6">
+                                <div class="p-2 bg-light rounded-2">
+                                    <span class="text-muted d-block" style="font-size: 0.72rem;">Block Pramukh:</span>
+                                    <strong class="text-dark"><?php echo htmlspecialchars($blockSamiti['pramukh_name'] ?: 'Not Specified'); ?></strong>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-2 bg-light rounded-2">
+                                    <span class="text-muted d-block" style="font-size: 0.72rem;">Up-Pramukh:</span>
+                                    <strong class="text-dark"><?php echo htmlspecialchars($blockSamiti['up_pramukh_name'] ?: 'Not Specified'); ?></strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-end">
+                            <a href="<?php echo getPanchayatSamitiUrl($dSlug, slugify($bName)); ?>" class="small text-primary text-decoration-none fw-semibold">
+                                View Block Samiti &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+        </section>
+        <?php endif; ?>
+
         <!-- Related / Nearby Villages in same Gram Panchayat & Block -->
         <?php if (!empty($nearbyVillages)): ?>
         <section class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-5">
@@ -381,7 +578,7 @@ require_once __DIR__ . '/header.php';
                     </h3>
                     <p class="small text-muted mb-0">Demographic overview of other villages in the same local administrative territory</p>
                 </div>
-                <a href="<?php echo getVillageUrl($village['district_slug'], $village['sub_district_slug']); ?>" class="btn btn-outline-primary btn-sm rounded-pill fw-bold px-3">
+                <a href="<?php echo getVillageUrl($dSlug, $bSlug); ?>" class="btn btn-outline-primary btn-sm rounded-pill fw-bold px-3">
                     View All <?php echo htmlspecialchars($bName); ?> Villages &rarr;
                 </a>
             </div>
@@ -500,7 +697,52 @@ require_once __DIR__ . '/header.php';
         <!-- Top Leaderboard Ad Slot -->
         <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-4'); ?>
 
-        <!-- Search & Filter Card -->
+        <!-- Quick District Filter Pills -->
+        <div class="card border-0 shadow-sm rounded-4 p-3 bg-white mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="small text-muted text-uppercase fw-bold"><i class="bi bi-geo-alt text-primary me-1"></i> Quick Filter by District:</span>
+                <?php if (!empty($districtParam)): ?>
+                    <a href="village.php" class="small text-danger text-decoration-none fw-bold"><i class="bi bi-x-circle"></i> Clear District</a>
+                <?php endif; ?>
+            </div>
+            <div class="d-flex flex-wrap gap-1" style="max-height: 120px; overflow-y: auto;">
+                <?php foreach ($districtsList as $d): ?>
+                    <a href="village.php?district=<?php echo urlencode($d['slug']); ?>" class="btn btn-sm rounded-pill px-2 py-1 <?php echo $districtParam === $d['slug'] ? 'btn-primary fw-bold' : 'btn-outline-secondary'; ?>" style="font-size: 0.78rem;">
+                        <?php echo htmlspecialchars($d['name']); ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <!-- If District is Selected: Show Block Quick Filter Pills -->
+        <?php if (!empty($districtBlocks)): ?>
+        <div class="card border-0 shadow-sm rounded-4 p-3 bg-white mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="small text-muted text-uppercase fw-bold">
+                    <i class="bi bi-diagram-3 text-success me-1"></i> CD Blocks in <?php echo htmlspecialchars(ucfirst($districtParam)); ?> District (<?php echo count($districtBlocks); ?> Blocks):
+                </span>
+                <?php if (!empty($blockParam)): ?>
+                    <a href="village.php?district=<?php echo urlencode($districtParam); ?>" class="small text-danger text-decoration-none fw-bold"><i class="bi bi-x-circle"></i> All Blocks</a>
+                <?php endif; ?>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="village.php?district=<?php echo urlencode($districtParam); ?>" class="block-pill-btn <?php echo empty($blockParam) ? 'active' : ''; ?>">
+                    All Blocks
+                </a>
+                <?php foreach ($districtBlocks as $db): ?>
+                    <?php 
+                    $isBlkActive = (strtolower($blockParam) === strtolower($db['sub_district_slug']) || strtolower($blockParam) === strtolower($db['sub_district_name']));
+                    ?>
+                    <a href="village.php?district=<?php echo urlencode($districtParam); ?>&block=<?php echo urlencode($db['sub_district_slug']); ?>" class="block-pill-btn <?php echo $isBlkActive ? 'active' : ''; ?>">
+                        <?php echo htmlspecialchars($db['sub_district_name']); ?>
+                        <span class="block-badge-count"><?php echo number_format($db['village_count']); ?></span>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <!-- Search & Filter Form Card -->
         <section class="card border-0 shadow-sm rounded-4 p-3 p-md-4 bg-white mb-4">
             <h2 class="h5 fw-bold mb-3 text-dark" style="font-family: 'Outfit', sans-serif;">
                 <i class="bi bi-funnel-fill text-primary me-2"></i> Search &amp; Filter Bihar Villages
@@ -508,9 +750,9 @@ require_once __DIR__ . '/header.php';
 
             <form method="GET" action="village.php" class="row g-2">
                 <div class="col-12 col-md-3">
-                    <label class="form-label small fw-bold text-muted mb-1">Filter by District:</label>
-                    <select name="district" class="form-select form-select-sm" onchange="this.form.submit()">
-                        <option value="">All 38 Districts</option>
+                    <label class="form-label small fw-bold text-muted mb-1">1. District:</label>
+                    <select name="district" class="form-select form-select-sm" onchange="if(this.form.block) this.form.block.value=''; this.form.submit()">
+                        <option value="">Select District</option>
                         <?php foreach ($districtsList as $d): ?>
                             <option value="<?php echo htmlspecialchars($d['slug']); ?>" <?php echo $districtParam === $d['slug'] ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($d['name']); ?>
@@ -520,23 +762,39 @@ require_once __DIR__ . '/header.php';
                 </div>
 
                 <div class="col-12 col-md-3">
-                    <label class="form-label small fw-bold text-muted mb-1">Sub-District / Block:</label>
-                    <input type="text" name="block" class="form-control form-control-sm" placeholder="e.g. Chapra, Danapur, Amnour" value="<?php echo htmlspecialchars($blockParam); ?>">
+                    <label class="form-label small fw-bold text-muted mb-1">2. CD Block / Sub-District:</label>
+                    <?php if (!empty($districtBlocks)): ?>
+                        <select name="block" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <option value="">All Blocks in <?php echo htmlspecialchars(ucfirst($districtParam)); ?> (<?php echo count($districtBlocks); ?>)</option>
+                            <?php foreach ($districtBlocks as $db): ?>
+                                <?php 
+                                $isBSelected = (strtolower($blockParam) === strtolower($db['sub_district_slug']) || strtolower($blockParam) === strtolower($db['sub_district_name']));
+                                ?>
+                                <option value="<?php echo htmlspecialchars($db['sub_district_slug']); ?>" <?php echo $isBSelected ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($db['sub_district_name']); ?> (<?php echo number_format($db['village_count']); ?> vil.)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php else: ?>
+                        <select name="block" class="form-select form-select-sm" disabled>
+                            <option value="">Select District First</option>
+                        </select>
+                    <?php endif; ?>
                 </div>
 
                 <div class="col-12 col-md-3">
                     <label class="form-label small fw-bold text-muted mb-1">Search Village Name / Code:</label>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text bg-light"><i class="bi bi-search text-muted"></i></span>
-                        <input type="text" name="q" class="form-control" placeholder="Village name, code or GP..." value="<?php echo htmlspecialchars($searchParam); ?>">
+                        <input type="text" name="q" class="form-control" placeholder="Village name or code..." value="<?php echo htmlspecialchars($searchParam); ?>">
                     </div>
                 </div>
 
                 <div class="col-12 col-md-2">
                     <label class="form-label small fw-bold text-muted mb-1">Sort By:</label>
-                    <select name="sort" class="form-select form-select-sm">
-                        <option value="pop_desc" <?php echo $sortParam === 'pop_desc' ? 'selected' : ''; ?>>Population: High to Low</option>
-                        <option value="pop_asc" <?php echo $sortParam === 'pop_asc' ? 'selected' : ''; ?>>Population: Low to High</option>
+                    <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
+                        <option value="pop_desc" <?php echo $sortParam === 'pop_desc' ? 'selected' : ''; ?>>Pop: High to Low</option>
+                        <option value="pop_asc" <?php echo $sortParam === 'pop_asc' ? 'selected' : ''; ?>>Pop: Low to High</option>
                         <option value="area_desc" <?php echo $sortParam === 'area_desc' ? 'selected' : ''; ?>>Area: Largest First</option>
                         <option value="sex_desc" <?php echo $sortParam === 'sex_desc' ? 'selected' : ''; ?>>Sex Ratio: High to Low</option>
                     </select>
@@ -560,6 +818,7 @@ require_once __DIR__ . '/header.php';
             <span class="small text-muted">
                 Found <strong><?php echo number_format($totalCount); ?></strong> villages
                 <?php if (!empty($districtParam)): ?> in <strong><?php echo htmlspecialchars(ucfirst($districtParam)); ?></strong><?php endif; ?>
+                <?php if (!empty($blockParam)): ?> (Block: <em><?php echo htmlspecialchars($blockParam); ?></em>)<?php endif; ?>
                 <?php if (!empty($searchParam)): ?> matching "<em><?php echo htmlspecialchars($searchParam); ?></em>"<?php endif; ?>
             </span>
             <span class="small text-muted">
@@ -603,9 +862,9 @@ require_once __DIR__ . '/header.php';
                                 </td>
                                 <td>
                                     <?php if (!empty($v['gram_panchayat_name'])): ?>
-                                        <span class="badge bg-light text-dark border">
+                                        <a href="<?php echo getPanchayatUrl($v['district_slug'], slugify($v['sub_district_name'] ?: $v['cd_block_name']), slugify($v['gram_panchayat_name'])); ?>" class="badge bg-light text-dark border text-decoration-none">
                                             🌾 <?php echo htmlspecialchars($v['gram_panchayat_name']); ?>
-                                        </span>
+                                        </a>
                                     <?php else: ?>
                                         <span class="text-muted small">-</span>
                                     <?php endif; ?>
