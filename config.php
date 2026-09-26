@@ -1593,6 +1593,7 @@ HTML;
  * @param string $customClass Additional CSS class
  */
 function renderGoogleAd($slotType = 'leaderboard', $slotId = '', $customClass = '') {
+    // Disabled across data sections per policy - do not show ads or empty placeholder boxes
     if (!defined('GOOGLE_ADS_ENABLED') || !GOOGLE_ADS_ENABLED) {
         return;
     }
@@ -1600,76 +1601,54 @@ function renderGoogleAd($slotType = 'leaderboard', $slotId = '', $customClass = 
     $client = defined('GOOGLE_ADSENSE_CLIENT') ? GOOGLE_ADSENSE_CLIENT : '';
     $isLive = (!empty($client) && $client !== 'ca-pub-XXXXXXXXXXXXXXXX');
 
-    // On live/production environment, never render placeholder boxes if real AdSense client is not set
-    if (!$isLive && (!defined('IS_LOCAL') || !IS_LOCAL)) {
+    // Never render placeholder boxes or empty "Advertisement / विज्ञापन" containers
+    if (!$isLive) {
         return;
     }
 
     $styles = [
         'leaderboard' => [
             'class' => 'ad-leaderboard-slot',
-            'label' => 'Advertisement / विज्ञापन',
             'style' => 'display:block;',
-            'format' => 'auto',
-            'dims' => '728 × 90 Responsive Leaderboard'
+            'format' => 'auto'
         ],
         'in_feed' => [
             'class' => 'ad-infeed-slot',
-            'label' => 'Sponsored / विज्ञापन',
             'style' => 'display:block;',
-            'format' => 'fluid',
-            'dims' => 'Responsive In-Feed Native Ad Unit'
+            'format' => 'fluid'
         ],
         'sidebar' => [
             'class' => 'ad-sidebar-slot',
-            'label' => 'Advertisement',
             'style' => 'display:block;',
-            'format' => 'rectangle',
-            'dims' => '300 × 250 Medium Rectangle / Skyscraper'
+            'format' => 'rectangle'
         ],
         'table_banner' => [
             'class' => 'ad-table-slot',
-            'label' => 'Advertisement / विज्ञापन',
             'style' => 'display:block;',
-            'format' => 'horizontal',
-            'dims' => 'Responsive Table Roster Banner'
+            'format' => 'horizontal'
         ],
         'footer_banner' => [
             'class' => 'ad-footer-slot',
-            'label' => 'Advertisement',
             'style' => 'display:block;',
-            'format' => 'auto',
-            'dims' => '728 × 90 Responsive Footer Banner'
+            'format' => 'auto'
         ],
     ];
 
     $cfg = $styles[$slotType] ?? $styles['leaderboard'];
-    $slotId = $slotId ?: (defined('GOOGLE_AD_SLOT_' . strtoupper($slotType)) ? constant('GOOGLE_AD_SLOT_' . strtoupper($slotType)) : '1001001001');
+    $slotId = $slotId ?: (defined('GOOGLE_AD_SLOT_' . strtoupper($slotType)) ? constant('GOOGLE_AD_SLOT_' . strtoupper($slotType)) : '');
+    if (empty($slotId) || $slotId === '1001001001' || $slotId === '1002002002' || $slotId === '1003003003' || $slotId === '1004004004' || $slotId === '1005005005') {
+        return;
+    }
 
     echo '<div class="ad-slot-wrapper ' . htmlspecialchars($cfg['class']) . ' ' . htmlspecialchars($customClass) . '">';
-    echo '<div class="ad-slot-header"><span class="ad-badge">' . htmlspecialchars($cfg['label']) . '</span></div>';
     echo '<div class="ad-slot-inner">';
-    
-    if ($isLive) {
-        echo '<ins class="adsbygoogle"
-                 style="' . $cfg['style'] . '"
-                 data-ad-client="' . htmlspecialchars($client) . '"
-                 data-ad-slot="' . htmlspecialchars($slotId) . '"
-                 data-ad-format="' . htmlspecialchars($cfg['format']) . '"
-                 data-full-width-responsive="true"></ins>';
-        echo '<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
-    } else {
-        echo '<div class="ad-placeholder-box">
-                <div class="ad-placeholder-content">
-                    <div class="ad-icon"><i class="bi bi-badge-ad text-warning fs-4"></i></div>
-                    <div class="ad-text-wrap">
-                        <span class="ad-title">Google AdSense Space</span>
-                        <span class="ad-dims">' . htmlspecialchars($cfg['dims']) . '</span>
-                    </div>
-                </div>
-              </div>';
-    }
-    
+    echo '<ins class="adsbygoogle"
+             style="' . $cfg['style'] . '"
+             data-ad-client="' . htmlspecialchars($client) . '"
+             data-ad-slot="' . htmlspecialchars($slotId) . '"
+             data-ad-format="' . htmlspecialchars($cfg['format']) . '"
+             data-full-width-responsive="true"></ins>';
+    echo '<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
     echo '</div>';
     echo '</div>';
 }

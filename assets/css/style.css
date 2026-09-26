@@ -1111,20 +1111,11 @@ a:hover {
   clear: both;
 }
 
-.ad-slot-header {
-  margin-bottom: 6px;
-  line-height: 1;
-}
-
-.ad-badge {
-  font-size: 0.68rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: #94a3b8;
-  font-weight: 600;
-  background: rgba(241, 245, 249, 0.8);
-  padding: 2px 8px;
-  border-radius: 4px;
+.ad-slot-wrapper:empty,
+.ad-slot-wrapper:not(:has(ins.adsbygoogle)) {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .ad-slot-inner {
@@ -1133,58 +1124,7 @@ a:hover {
   justify-content: center;
   align-items: center;
   width: 100%;
-  background: rgba(248, 250, 252, 0.5);
-  border-radius: 12px;
-  border: 1px dashed rgba(203, 213, 225, 0.6);
-  min-height: 90px;
   overflow: hidden;
-}
-
-/* Leaderboard Slots (Header & Mid-Page) */
-.ad-leaderboard-slot .ad-slot-inner {
-  min-height: 90px;
-  max-width: 728px;
-  margin: 0 auto;
-}
-
-/* In-feed Native Units */
-.ad-infeed-slot .ad-slot-inner {
-  min-height: 120px;
-}
-
-/* Sidebar Rectangle Units */
-.ad-sidebar-slot .ad-slot-inner {
-  min-height: 250px;
-  max-width: 336px;
-  margin: 0 auto;
-}
-
-/* Table Roster Banners */
-.ad-table-slot .ad-slot-inner {
-  min-height: 90px;
-}
-
-/* Footer Banners */
-.ad-footer-slot .ad-slot-inner {
-  min-height: 90px;
-  max-width: 728px;
-  margin: 0 auto;
-}
-
-/* Mobile Screen Responsive Ad Reservations (Prevents 250px/280px Jump on Mobile) */
-@media (max-width: 768px) {
-  .ad-leaderboard-slot .ad-slot-inner {
-    min-height: 100px;
-  }
-  .ad-infeed-slot .ad-slot-inner {
-    min-height: 250px;
-  }
-  .ad-sidebar-slot .ad-slot-inner {
-    min-height: 250px;
-  }
-  .ad-footer-slot .ad-slot-inner {
-    min-height: 100px;
-  }
 }
 
 /* Handle empty / unfilled AdSense slots without layout disruption */
@@ -1193,33 +1133,9 @@ ins.adsbygoogle {
   margin: 0 auto !important;
 }
 
-ins.adsbygoogle[data-ad-status="unfilled"] {
+ins.adsbygoogle[data-ad-status="unfilled"],
+ins.adsbygoogle:empty {
   display: none !important;
-}
-
-.ad-placeholder-box {
-  padding: 1.25rem 1rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.ad-placeholder-content {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-align: left;
-}
-.ad-title {
-  display: block;
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: #475569;
-}
-.ad-dims {
-  display: block;
-  font-size: 0.75rem;
-  color: #94a3b8;
 }
 
 /* Representative / Profile avatar stabilization */
