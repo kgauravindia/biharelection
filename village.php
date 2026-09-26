@@ -20,6 +20,9 @@ $currentPage = max(1, (int)($_GET['page'] ?? 1));
 $perPage = 50;
 
 $districtsList = DataProvider::getDistricts();
+usort($districtsList, function($a, $b) {
+    return strcasecmp($a['name'] ?? '', $b['name'] ?? '');
+});
 
 // Handle generic slug routing
 if (empty($codeParam) && empty($villageParam) && !empty($slugParam)) {
