@@ -1436,22 +1436,37 @@ class DataProvider {
             $dSlug = strtolower(trim($districtSlug));
             $tSlug = strtolower(trim($townSlugOrName));
             $tClean = trim($townSlugOrName);
+            $tCleanName = trim(preg_replace('/\(.*?\)/', '', $tClean));
+            $tRootSlug = preg_replace('/-(m-corp|m-cl|np|ct|og|na|m|cantt|cb)(-og)?$/i', '', $tSlug);
+            $firstWordSlug = explode('-', $tSlug)[0];
+
+            $whereDistrict = !empty($dSlug) ? "(district_slug = :dslug OR district_name LIKE :dname)" : "1=1";
+            $params = [
+                ':tslug' => $tSlug,
+                ':trootslug' => $tRootSlug,
+                ':tcode' => $tSlug,
+                ':tname' => '%' . $tCleanName . '%',
+                ':rname' => '%' . $tClean . '%'
+            ];
+            if (!empty($dSlug)) {
+                $params[':dslug'] = $dSlug;
+                $params[':dname'] = '%' . $districtSlug . '%';
+            }
+
+            $firstWordCondition = "";
+            if (strlen($firstWordSlug) >= 4) {
+                $params[':tfirstword'] = $firstWordSlug;
+                $firstWordCondition = "OR town_slug = :tfirstword";
+            }
 
             // Fetch aggregate town summary and all wards
             $sql = "SELECT * FROM census_towns_1991 
-                    WHERE (district_slug = :dslug OR district_name LIKE :dname) 
-                    AND (town_slug = :tslug OR town_code = :tcode OR town_name LIKE :tname OR name LIKE :rname)
+                    WHERE $whereDistrict 
+                    AND (town_slug = :tslug OR town_slug = :trootslug $firstWordCondition OR town_code = :tcode OR town_name LIKE :tname OR name LIKE :rname)
                     ORDER BY CAST(ward_no AS UNSIGNED) ASC, id ASC";
 
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ':dslug' => $dSlug,
-                ':dname' => '%' . $districtSlug . '%',
-                ':tslug' => $tSlug,
-                ':tcode' => $tSlug,
-                ':tname' => '%' . $tClean . '%',
-                ':rname' => '%' . $tClean . '%'
-            ]);
+            $stmt->execute($params);
             $wards = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 
             if (empty($wards)) return null;
@@ -1514,6 +1529,28 @@ class DataProvider {
             ];
         } catch (Throwable $e) {
             return null;
+        }
+    }
+
+    public static function getCensusTowns1991Districts() {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $stmt = $pdo->query("SELECT district_name as name, district_slug as slug, COUNT(DISTINCT town_slug) as town_count, SUM(population) as total_pop FROM census_towns_1991 GROUP BY district_name, district_slug ORDER BY district_name ASC");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        } catch (Throwable $e) {
+            return [];
+        }
+    }
+
+    public static function getCensusTowns1991CivicStatuses() {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $stmt = $pdo->query("SELECT civic_status, COUNT(DISTINCT CONCAT(district_slug, town_slug)) as count FROM census_towns_1991 WHERE civic_status IS NOT NULL AND civic_status != '' GROUP BY civic_status ORDER BY count DESC");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        } catch (Throwable $e) {
+            return [];
         }
     }
 }
