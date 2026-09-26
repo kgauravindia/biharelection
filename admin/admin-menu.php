@@ -15,6 +15,9 @@ if ($db_menu) {
 
     $p_res = $db_menu->query("SELECT COUNT(*) as c FROM `posts` WHERE `status` = 'published'");
     if ($p_res) $total_posts_count = $p_res->fetch_assoc()['c'] ?? 0;
+
+    $u_res = $db_menu->query("SELECT COUNT(*) as c FROM `users`");
+    $total_citizens_count = $u_res ? (int)($u_res->fetch_assoc()['c'] ?? 0) : 0;
 }
 ?>
 <aside class="sidebar" id="adminSidebar">
@@ -36,6 +39,15 @@ if ($db_menu) {
         </a>
         <a href="analytics.php" class="nav-link-custom <?php echo ($current_page == 'analytics.php') ? 'active' : ''; ?>" title="Election & Visitor Analytics">
             <i class="fas fa-chart-pie text-info"></i> <span>Analytics</span>
+        </a>
+
+        <div class="nav-section-title">Citizens & Voters Hub</div>
+        <a href="citizens.php" class="nav-link-custom <?php echo in_array($current_page, ['citizens.php', 'edit-citizen.php']) ? 'active' : ''; ?>" title="Registered Citizens, Voters & Candidate Profiles">
+            <i class="fas fa-users-viewfinder text-primary"></i> 
+            <span>Registered Citizens</span>
+            <?php if ($total_citizens_count > 0): ?>
+                <span class="badge rounded-pill bg-primary text-white"><?php echo $total_citizens_count; ?></span>
+            <?php endif; ?>
         </a>
 
         <div class="nav-section-title">Assembly & Candidates</div>
@@ -120,8 +132,8 @@ if ($db_menu) {
         <a href="documentation.php" class="nav-link-custom <?php echo ($current_page == 'documentation.php') ? 'active' : ''; ?>" title="Admin Documentation & Developer Knowledge Base">
             <i class="fas fa-book-bookmark text-info"></i> <span>Documentation</span>
         </a>
-        <a href="users.php" class="nav-link-custom <?php echo ($current_page == 'users.php') ? 'active' : ''; ?>" title="Admin Users & Roles">
-            <i class="fas fa-user-shield text-secondary"></i> <span>Admin Users</span>
+        <a href="users.php" class="nav-link-custom <?php echo ($current_page == 'users.php') ? 'active' : ''; ?>" title="Admin Staff & System Roles">
+            <i class="fas fa-user-shield text-secondary"></i> <span>Admin Staff</span>
         </a>
         <a href="settings.php" class="nav-link-custom <?php echo ($current_page == 'settings.php') ? 'active' : ''; ?>" title="Site Configurations">
             <i class="fas fa-gear text-secondary"></i> <span>Site Settings</span>

@@ -73,13 +73,29 @@ if ($conn) {
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <div>
                 <h1 class="h3 fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">System Administrators & Staff</h1>
-                <p class="text-muted mb-0">Manage authorized users, editor roles and authentication credentials.</p>
+                <p class="text-muted mb-0">Manage authorized users, editor roles and backend authentication credentials.</p>
             </div>
-            <div class="mt-3 mt-md-0">
+            <div class="mt-3 mt-md-0 d-flex gap-2">
+                <a href="citizens.php" class="btn btn-outline-primary fw-semibold px-3 py-2 rounded-3 shadow-sm bg-white">
+                    <i class="fas fa-users-viewfinder me-1"></i> View Registered Citizens &rarr;
+                </a>
                 <button class="btn btn-danger fw-semibold px-3 py-2 rounded-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     <i class="fas fa-user-plus me-1"></i> Add Admin User
                 </button>
             </div>
+        </div>
+
+        <div class="alert alert-info border-0 shadow-sm rounded-3 d-flex align-items-center justify-content-between mb-4">
+            <div class="d-flex align-items-center gap-2">
+                <i class="fas fa-info-circle fs-5 text-primary"></i>
+                <div>
+                    <strong>Looking for registered public voters, mukhiyas & candidates?</strong> 
+                    Public citizens who signed up via mobile OTP or front-end registration are managed in the Citizens CRM.
+                </div>
+            </div>
+            <a href="citizens.php" class="btn btn-sm btn-primary fw-bold text-nowrap ms-3">
+                Open Citizens Directory
+            </a>
         </div>
 
         <?php if (!empty($message)): ?>

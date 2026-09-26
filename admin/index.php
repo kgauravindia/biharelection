@@ -66,6 +66,17 @@ if ($conn) {
 
     $r = $conn->query("SELECT COUNT(*) as c FROM `census_villages_2011`");
     $stats['villages_count'] = $r ? (int)$r->fetch_assoc()['c'] : 44874;
+
+    // Registered Citizens / Users
+    $r = $conn->query("SELECT COUNT(*) as c, SUM(CASE WHEN `is_mobile_verified` = 1 THEN 1 ELSE 0 END) as v FROM `users`");
+    if ($r) {
+        $row = $r->fetch_assoc();
+        $stats['citizens_count'] = (int)($row['c'] ?? 0);
+        $stats['verified_citizens'] = (int)($row['v'] ?? 0);
+    } else {
+        $stats['citizens_count'] = 0;
+        $stats['verified_citizens'] = 0;
+    }
 }
 
 // Fallback counts from JSON if DB was empty for candidates/mukhiyas
@@ -118,9 +129,15 @@ if ($conn) {
         }
     }
 }
-if (empty($recent_candidates)) {
-    $all_c = DataProvider::getCandidates();
-    $recent_candidates = array_slice($all_c, 0, 5);
+// Recent Registered Citizens
+$recent_citizens = [];
+if ($conn) {
+    $cit_r = $conn->query("SELECT * FROM `users` ORDER BY `id` DESC LIMIT 6");
+    if ($cit_r) {
+        while ($cit_row = $cit_r->fetch_assoc()) {
+            $recent_citizens[] = $cit_row;
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -163,8 +180,28 @@ if (empty($recent_candidates)) {
 
         <!-- Primary KPI Metrics Grid -->
         <div class="row g-3 mb-4">
+            <!-- Registered Citizens -->
+            <div class="col-sm-6 col-xl">
+                <div class="stat-card-v2">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="stat-label">Registered Citizens</span>
+                            <div class="stat-value text-primary"><?php echo number_format($stats['citizens_count']); ?></div>
+                        </div>
+                        <div class="stat-icon" style="background: #e0f2fe; color: #0284c7;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-muted small">
+                        <a href="citizens.php" class="text-decoration-none fw-semibold text-primary">
+                            <i class="fas fa-shield-check text-success me-1"></i> <?php echo number_format($stats['verified_citizens']); ?> Verified &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Constituencies -->
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl">
                 <div class="stat-card-v2">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
@@ -182,12 +219,12 @@ if (empty($recent_candidates)) {
             </div>
 
             <!-- Candidates -->
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl">
                 <div class="stat-card-v2">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
                             <span class="stat-label">Candidate Aspirants</span>
-                            <div class="stat-value text-primary"><?php echo number_format($stats['candidates']); ?></div>
+                            <div class="stat-value text-dark"><?php echo number_format($stats['candidates']); ?></div>
                         </div>
                         <div class="stat-icon" style="background: #e0e7ff; color: #4338ca;">
                             <i class="fas fa-user-tie"></i>
@@ -200,7 +237,7 @@ if (empty($recent_candidates)) {
             </div>
 
             <!-- Mukhiyas & Local Bodies -->
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl">
                 <div class="stat-card-v2">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
@@ -213,13 +250,12 @@ if (empty($recent_candidates)) {
                     </div>
                     <div class="mt-2 text-muted small">
                         <span class="badge bg-light text-dark border"><?php echo number_format($stats['mukhiyas']); ?> Mukhiyas</span>
-                        <span class="badge bg-light text-dark border ms-1"><?php echo number_format($stats['sarpanchs']); ?> Sarpanchs</span>
                     </div>
                 </div>
             </div>
 
             <!-- WhatsApp & Leads -->
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl">
                 <div class="stat-card-v2">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
@@ -231,7 +267,7 @@ if (empty($recent_candidates)) {
                         </div>
                     </div>
                     <div class="mt-2 text-muted small">
-                        <i class="fas fa-envelope text-info me-1"></i> <?php echo $stats['contacts_count']; ?> Total Leads
+                        <i class="fas fa-envelope text-info me-1"></i> <?php echo $stats['contacts_count']; ?> Leads
                     </div>
                 </div>
             </div>
@@ -240,8 +276,15 @@ if (empty($recent_candidates)) {
         <!-- Quick Access Navigation Cards -->
         <div class="row g-3 mb-4">
             <div class="col-6 col-md-4 col-xl-2">
+                <a href="citizens.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100 border-top border-primary border-3">
+                    <div class="mb-2"><i class="fas fa-users fa-2x text-primary"></i></div>
+                    <h6 class="fw-bold mb-1">Citizens Hub</h6>
+                    <small class="text-muted"><?php echo number_format($stats['citizens_count']); ?> Registered</small>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-xl-2">
                 <a href="towns.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
-                    <div class="mb-2"><i class="fas fa-city fa-2x text-primary"></i></div>
+                    <div class="mb-2"><i class="fas fa-city fa-2x text-info"></i></div>
                     <h6 class="fw-bold mb-1">199 Towns</h6>
                     <small class="text-muted">Statutory & Slums</small>
                 </a>
@@ -265,13 +308,6 @@ if (empty($recent_candidates)) {
                     <div class="mb-2"><i class="fas fa-address-book fa-2x text-info"></i></div>
                     <h6 class="fw-bold mb-1">Panchayats</h6>
                     <small class="text-muted">Mukhiya & Sarpanch</small>
-                </a>
-            </div>
-            <div class="col-6 col-md-4 col-xl-2">
-                <a href="posts.php" class="card text-decoration-none border-0 shadow-sm rounded-3 p-3 bg-white hover-elevate transition text-dark text-center h-100">
-                    <div class="mb-2"><i class="fas fa-newspaper fa-2x text-warning"></i></div>
-                    <h6 class="fw-bold mb-1">Blog Articles</h6>
-                    <small class="text-muted"><?php echo number_format($stats['posts_count'] ?? 167); ?> Posts</small>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-xl-2">
@@ -428,6 +464,85 @@ if (empty($recent_candidates)) {
                                 <?php else: ?>
                                     <tr>
                                         <td colspan="4" class="text-center py-4 text-muted">No candidates listed yet.</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Registered Citizens Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="section-card mb-0">
+                    <div class="section-card-header d-flex justify-content-between align-items-center">
+                        <h6 class="fw-bold mb-0 text-dark">
+                            <i class="fas fa-users-viewfinder me-2 text-primary"></i> Latest Registered Citizens & Voters
+                        </h6>
+                        <div class="d-flex gap-2 align-items-center">
+                            <a href="citizens.php" class="btn btn-sm btn-primary fw-semibold px-3 rounded-pill">
+                                View Full Directory &rarr;
+                            </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Citizen Name</th>
+                                    <th>Mobile & WhatsApp</th>
+                                    <th>District / Constituency</th>
+                                    <th>Role</th>
+                                    <th>Verification</th>
+                                    <th>Registered Date</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (!empty($recent_citizens)): ?>
+                                    <?php foreach ($recent_citizens as $cit): ?>
+                                        <tr>
+                                            <td>
+                                                <div class="fw-bold text-dark"><?php echo htmlspecialchars($cit['name'] ?: ($cit['full_name'] ?: 'Citizen')); ?></div>
+                                                <small class="text-muted"><?php echo htmlspecialchars($cit['email'] ?: 'No email registered'); ?></small>
+                                            </td>
+                                            <td>
+                                                <span class="font-monospace fw-semibold text-dark">+91 <?php echo htmlspecialchars($cit['mobile']); ?></span>
+                                            </td>
+                                            <td>
+                                                <div class="text-dark fw-medium"><?php echo htmlspecialchars($cit['district'] ?: 'Bihar (Statewide)'); ?></div>
+                                                <?php if (!empty($cit['constituency'])): ?>
+                                                    <small class="text-muted"><?php echo htmlspecialchars($cit['constituency']); ?></small>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-dark border"><?php echo strtoupper(htmlspecialchars($cit['role'] ?: 'voter')); ?></span>
+                                            </td>
+                                            <td>
+                                                <?php if ((int)($cit['is_mobile_verified'] ?? 0) === 1): ?>
+                                                    <span class="badge bg-success-subtle text-success border border-success-subtle"><i class="fas fa-check-circle me-1"></i>Verified</span>
+                                                <?php else: ?>
+                                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle"><i class="fas fa-clock me-1"></i>Unverified</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <small class="text-muted"><?php echo !empty($cit['created_at']) ? date('d M Y, h:i A', strtotime($cit['created_at'])) : '—'; ?></small>
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="citizens.php?search=<?php echo urlencode($cit['mobile']); ?>" class="btn btn-sm btn-light border text-primary" title="View in CRM">
+                                                    <i class="fas fa-arrow-up-right-from-square"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="7" class="text-center py-4 text-muted">
+                                            <i class="fas fa-user-clock fa-2x mb-2 d-block text-muted opacity-50"></i>
+                                            No citizen registrations yet.
+                                        </td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
