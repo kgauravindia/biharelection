@@ -23,6 +23,9 @@ $currentPage = max(1, (int)($_GET['page'] ?? 1));
 $perPage = 30;
 
 $districtsList = DataProvider::getDistricts();
+usort($districtsList, function($a, $b) {
+    return strcasecmp($a['name'] ?? '', $b['name'] ?? '');
+});
 
 // Handle generic slug routing and parameter normalization
 if (empty($codeParam) && empty($townParam) && empty($slumIdParam) && !empty($slugParam)) {
@@ -267,6 +270,15 @@ if ($slumObj) {
 
     // Fetch sibling towns in same district
     $nearbyTowns = DataProvider::getNearbyTowns($dSlug, $town['id'], 6);
+
+    // Fetch Historical 1991 Census urban profile for this town
+    $town1991 = null;
+    if ($pdo) {
+        $town1991 = DataProvider::getTown1991BySlug($dSlug, $town['town_slug']);
+        if (!$town1991 && !empty($tName)) {
+            $town1991 = DataProvider::getTown1991BySlug($dSlug, $tName);
+        }
+    }
 
 } else {
     // =========================================================================
@@ -1878,6 +1890,170 @@ require_once __DIR__ . '/header.php';
                 initSlumInteractivity();
             }
             </script>
+        <?php endif; ?>
+
+        <!-- Historical 1991 Urban Census vs 2011 Trajectory Section -->
+        <?php if ($town1991): 
+            $pop91 = (int)($town1991['population'] ?? 0);
+            $hh91 = (int)($town1991['households'] ?? 0);
+            $male91 = (int)($town1991['male'] ?? 0);
+            $female91 = (int)($town1991['female'] ?? 0);
+            $sr91 = ($male91 > 0) ? round(($female91 / $male91) * 1000) : 0;
+            $lit91 = (int)($town1991['literates'] ?? 0);
+            $litPct91 = ($pop91 > 0) ? round(($lit91 / $pop91) * 100, 1) : 0;
+            $sc91 = (int)($town1991['sc_population'] ?? 0);
+            $st91 = (int)($town1991['st_population'] ?? 0);
+            $growthPop = ($pop91 > 0 && $pop > 0) ? round((($pop - $pop91) / $pop91) * 100, 1) : null;
+            $workers91 = (int)($town1991['workers'] ?? 0);
+            $trade91 = (int)($town1991['trade'] ?? 0);
+            $trans91 = (int)($town1991['transport'] ?? 0);
+            $ind91 = (int)($town1991['household_ind'] + $town1991['non_household_ind']);
+        ?>
+        <section class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 border-top border-4 border-warning">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill small mb-1">
+                        📜 Historical Urban Census 1991 Archive
+                    </span>
+                    <h3 class="h5 fw-bold mb-0 text-navy font-heading">
+                        1991 vs 2011 Urban Trajectory: <?php echo htmlspecialchars($tName); ?> (<?php echo htmlspecialchars($town1991['civic_status'] ?: 'Urban'); ?>)
+                    </h3>
+                    <p class="small text-muted mb-0 mt-1">
+                        Official Primary Census Abstract (PCA Urban 1991) baseline demographic, ward breakdown (<?php echo $town1991['ward_count']; ?> Wards), &amp; occupational comparison.
+                    </p>
+                </div>
+                <?php if ($growthPop !== null): ?>
+                    <span class="badge <?php echo ($growthPop >= 0) ? 'bg-success' : 'bg-danger'; ?> fs-6 px-3 py-2 rounded-pill shadow-sm">
+                        <i class="bi bi-graph-up-arrow me-1"></i> <?php echo ($growthPop >= 0 ? '+' : '') . $growthPop; ?>% Growth (1991–2011)
+                    </span>
+                <?php endif; ?>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md-3">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="small text-muted d-block">1991 Population</span>
+                        <h4 class="h5 fw-bold text-navy mb-0 font-monospace"><?php echo number_format($pop91); ?></h4>
+                        <small class="text-muted">M: <?php echo number_format($male91); ?> | F: <?php echo number_format($female91); ?></small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="small text-muted d-block">1991 Households</span>
+                        <h4 class="h5 fw-bold text-warning mb-0 font-monospace"><?php echo number_format($hh91); ?></h4>
+                        <small class="text-muted"><?php echo $town1991['ward_count']; ?> Wards / OG</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="small text-muted d-block">1991 Literacy Rate</span>
+                        <h4 class="h5 fw-bold text-primary mb-0"><?php echo $litPct91; ?>%</h4>
+                        <small class="text-muted"><?php echo number_format($lit91); ?> Literates</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="small text-muted d-block">1991 Sex Ratio</span>
+                        <h4 class="h5 fw-bold text-success mb-0"><?php echo $sr91; ?></h4>
+                        <small class="text-muted">Females / 1000 Males</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="table-responsive mb-3">
+                <table class="table table-bordered align-middle small mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Demographic &amp; Economic Indicator</th>
+                            <th class="text-end">1991 Urban Census</th>
+                            <th class="text-end">2011 Urban Census</th>
+                            <th class="text-center">20-Year Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold">Total Population</td>
+                            <td class="text-end font-monospace"><?php echo number_format($pop91); ?></td>
+                            <td class="text-end font-monospace fw-bold text-primary"><?php echo number_format($pop); ?></td>
+                            <td class="text-center fw-bold <?php echo ($growthPop >= 0) ? 'text-success' : 'text-danger'; ?>">
+                                <?php echo ($growthPop !== null) ? (($growthPop >= 0 ? '+' : '') . $growthPop . '%') : 'N/A'; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total Households</td>
+                            <td class="text-end font-monospace"><?php echo number_format($hh91); ?></td>
+                            <td class="text-end font-monospace"><?php echo number_format($hh); ?></td>
+                            <td class="text-center text-muted font-monospace">
+                                <?php echo ($hh91 > 0) ? (($hh >= $hh91 ? '+' : '') . number_format($hh - $hh91)) : '-'; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheduled Caste (SC)</td>
+                            <td class="text-end font-monospace"><?php echo number_format($sc91); ?></td>
+                            <td class="text-end font-monospace"><?php echo number_format($scPop); ?></td>
+                            <td class="text-center text-muted">
+                                <?php echo ($pop91 > 0) ? round(($sc91 / $pop91) * 100, 1) . '% &rarr; ' . $scPct . '%' : '-'; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheduled Tribe (ST)</td>
+                            <td class="text-end font-monospace"><?php echo number_format($st91); ?></td>
+                            <td class="text-end font-monospace"><?php echo number_format($stPop); ?></td>
+                            <td class="text-center text-muted">
+                                <?php echo ($pop91 > 0) ? round(($st91 / $pop91) * 100, 1) . '% &rarr; ' . $stPct . '%' : '-'; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1991 Key Urban Economic Sectors</td>
+                            <td class="text-end font-monospace" colspan="2">
+                                Trade &amp; Commerce: <strong><?php echo number_format($trade91); ?></strong> | Transport &amp; Comm.: <strong><?php echo number_format($trans91); ?></strong> | Manufacturing: <strong><?php echo number_format($ind91); ?></strong>
+                            </td>
+                            <td class="text-center text-muted">Total Workers: <?php echo number_format($workers91); ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 1991 Wards Roster -->
+            <?php if (!empty($town1991['wards']) && count($town1991['wards']) > 1): ?>
+                <details class="mt-3">
+                    <summary class="fw-bold text-navy small cursor-pointer py-1">
+                        <i class="bi bi-chevron-down me-1"></i> View All <?php echo count($town1991['wards']); ?> Wards in 1991 Census Roster
+                    </summary>
+                    <div class="table-responsive mt-2" style="max-height: 320px; overflow-y: auto;">
+                        <table class="table table-hover table-sm align-middle mb-0 small">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Ward / Area Name</th>
+                                    <th>Ward Code</th>
+                                    <th class="text-end">Population</th>
+                                    <th class="text-end">Male / Female</th>
+                                    <th class="text-end">Households</th>
+                                    <th class="text-end">SC / ST</th>
+                                    <th class="text-end">Literates</th>
+                                    <th class="text-end">Workers</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($town1991['wards'] as $tw): ?>
+                                    <tr>
+                                        <td class="fw-bold text-dark"><?php echo htmlspecialchars($tw['name']); ?></td>
+                                        <td><code><?php echo htmlspecialchars($tw['ward_code']); ?></code></td>
+                                        <td class="text-end fw-semibold text-navy"><?php echo number_format((int)$tw['population']); ?></td>
+                                        <td class="text-end"><?php echo number_format((int)$tw['male']); ?> / <?php echo number_format((int)$tw['female']); ?></td>
+                                        <td class="text-end"><?php echo number_format((int)$tw['households']); ?></td>
+                                        <td class="text-end"><?php echo number_format((int)$tw['sc_population']); ?> / <?php echo number_format((int)$tw['st_population']); ?></td>
+                                        <td class="text-end"><?php echo number_format((int)$tw['literates_total']); ?></td>
+                                        <td class="text-end"><?php echo number_format((int)$tw['workers_total']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+            <?php endif; ?>
+        </section>
         <?php endif; ?>
 
         <!-- Sibling Towns in Same District Navigation -->

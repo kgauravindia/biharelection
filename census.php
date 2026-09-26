@@ -142,7 +142,7 @@ require_once __DIR__ . '/header.php';
                     10.41 Crore Population
                 </span>
                 <span class="badge bg-warning bg-opacity-25 text-white fw-bold px-3 py-2 border border-warning border-opacity-50">
-                    <i class="bi bi-clock-history"></i> 1991 Census Archive (77,697 Villages)
+                    <i class="bi bi-clock-history"></i> 1991 Census Archive: 77,697 Villages &amp; 279 Towns
                 </span>
             </div>
 

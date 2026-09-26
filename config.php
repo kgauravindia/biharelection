@@ -1365,6 +1365,157 @@ class DataProvider {
             return [];
         }
     }
+
+    // =========================================================================
+    // 1991 URBAN CENSUS DATA METHODS (3,160 Wards across 279 Towns)
+    // =========================================================================
+
+    public static function getCensusTowns1991List($districtSlug = null, $search = null, $page = 1, $limit = 50) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return ['total' => 0, 'data' => []];
+
+        try {
+            $where = [];
+            $params = [];
+
+            if (!empty($districtSlug)) {
+                $where[] = "district_slug = :dslug";
+                $params[':dslug'] = strtolower(trim($districtSlug));
+            }
+            if (!empty($search)) {
+                $where[] = "(town_name LIKE :q OR name LIKE :q OR town_code LIKE :q OR district_name LIKE :q)";
+                $params[':q'] = '%' . trim($search) . '%';
+            }
+
+            $whereSql = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+
+            $countSql = "SELECT COUNT(DISTINCT district_slug, town_slug) FROM census_towns_1991 $whereSql";
+            $countStmt = $pdo->prepare($countSql);
+            $countStmt->execute($params);
+            $total = (int)$countStmt->fetchColumn();
+
+            $offset = max(0, ($page - 1) * $limit);
+            $sql = "SELECT 
+                        district_name, district_slug, sub_district_name, sub_district_slug,
+                        town_code, town_name, town_slug, civic_status,
+                        COUNT(*) as ward_count,
+                        SUM(households) as total_households,
+                        SUM(population) as total_population,
+                        SUM(male) as total_male,
+                        SUM(female) as total_female,
+                        SUM(sc_population) as total_sc,
+                        SUM(st_population) as total_st,
+                        SUM(literates_total) as total_literates,
+                        SUM(workers_total) as total_workers
+                    FROM census_towns_1991
+                    $whereSql
+                    GROUP BY district_name, district_slug, sub_district_name, sub_district_slug, town_code, town_name, town_slug, civic_status
+                    ORDER BY total_population DESC
+                    LIMIT :limit OFFSET :offset";
+
+            $stmt = $pdo->prepare($sql);
+            foreach ($params as $k => $v) {
+                $stmt->bindValue($k, $v);
+            }
+            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+
+            return ['total' => $total, 'data' => $data];
+        } catch (Throwable $e) {
+            return ['total' => 0, 'data' => []];
+        }
+    }
+
+    public static function getTown1991BySlug($districtSlug, $townSlugOrName) {
+        $pdo = Database::getConnection();
+        if (!$pdo || empty($townSlugOrName)) return null;
+
+        try {
+            $dSlug = strtolower(trim($districtSlug));
+            $tSlug = strtolower(trim($townSlugOrName));
+            $tClean = trim($townSlugOrName);
+
+            // Fetch aggregate town summary and all wards
+            $sql = "SELECT * FROM census_towns_1991 
+                    WHERE (district_slug = :dslug OR district_name LIKE :dname) 
+                    AND (town_slug = :tslug OR town_code = :tcode OR town_name LIKE :tname OR name LIKE :rname)
+                    ORDER BY CAST(ward_no AS UNSIGNED) ASC, id ASC";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':dslug' => $dSlug,
+                ':dname' => '%' . $districtSlug . '%',
+                ':tslug' => $tSlug,
+                ':tcode' => $tSlug,
+                ':tname' => '%' . $tClean . '%',
+                ':rname' => '%' . $tClean . '%'
+            ]);
+            $wards = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+
+            if (empty($wards)) return null;
+
+            $first = $wards[0];
+            $totPop = 0; $totMale = 0; $totFemale = 0; $totHh = 0; $totHouses = 0;
+            $totSc = 0; $totSt = 0; $totLit = 0; $totWorkers = 0;
+            $totCult = 0; $totAgri = 0; $totHhInd = 0; $totNonHhInd = 0;
+            $totTrade = 0; $totTrans = 0; $totOther = 0; $totNonWork = 0;
+
+            foreach ($wards as $w) {
+                $totPop += (int)$w['population'];
+                $totMale += (int)$w['male'];
+                $totFemale += (int)$w['female'];
+                $totHh += (int)$w['households'];
+                $totHouses += (int)$w['res_houses'];
+                $totSc += (int)$w['sc_population'];
+                $totSt += (int)$w['st_population'];
+                $totLit += (int)$w['literates_total'];
+                $totWorkers += (int)$w['workers_total'];
+                $totCult += (int)($w['m_cultivators'] + $w['f_cultivators']);
+                $totAgri += (int)($w['m_agri_labour'] + $w['f_agri_labour']);
+                $totHhInd += (int)($w['m_household_ind'] + $w['f_household_ind']);
+                $totNonHhInd += (int)($w['m_non_household_ind'] + $w['f_non_household_ind']);
+                $totTrade += (int)($w['m_trade'] + $w['f_trade']);
+                $totTrans += (int)($w['m_transport'] + $w['f_transport']);
+                $totOther += (int)($w['m_other_services'] + $w['f_other_services']);
+                $totNonWork += (int)$w['non_workers_total'];
+            }
+
+            return [
+                'town_name' => $first['town_name'],
+                'town_slug' => $first['town_slug'],
+                'town_code' => $first['town_code'],
+                'civic_status' => $first['civic_status'],
+                'district_name' => $first['district_name'],
+                'district_slug' => $first['district_slug'],
+                'sub_district_name' => $first['sub_district_name'],
+                'ward_count' => count($wards),
+                'population' => $totPop,
+                'male' => $totMale,
+                'female' => $totFemale,
+                'households' => $totHh,
+                'res_houses' => $totHouses,
+                'sc_population' => $totSc,
+                'st_population' => $totSt,
+                'literates' => $totLit,
+                'sex_ratio' => ($totMale > 0) ? round(($totFemale / $totMale) * 1000) : 0,
+                'literacy_rate' => ($totPop > 0) ? round(($totLit / $totPop) * 100, 2) : 0,
+                'workers' => $totWorkers,
+                'cultivators' => $totCult,
+                'agri_labour' => $totAgri,
+                'household_ind' => $totHhInd,
+                'non_household_ind' => $totNonHhInd,
+                'trade' => $totTrade,
+                'transport' => $totTrans,
+                'other_services' => $totOther,
+                'non_workers' => $totNonWork,
+                'wards' => $wards
+            ];
+        } catch (Throwable $e) {
+            return null;
+        }
+    }
 }
 
 // Meta helper for SEO
