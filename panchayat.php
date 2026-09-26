@@ -190,6 +190,66 @@ if ($districtObj && $pdo) {
                 $panchayatVillages = $stmtV2->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (Throwable $e) {}
+
+        // Fetch Historical 1991 Census Villages for this Gram Panchayat
+        $panchayatVillages1991 = [];
+        $panchayat1991Stats = [
+            'population' => 0,
+            'male' => 0,
+            'female' => 0,
+            'households' => 0,
+            'literates' => 0,
+            'sc_pop' => 0,
+            'st_pop' => 0,
+            'workers' => 0,
+            'cultivators' => 0,
+            'agri_labour' => 0,
+            'village_count' => 0
+        ];
+
+        try {
+            $v2011Slugs = !empty($panchayatVillages) ? array_column($panchayatVillages, 'village_slug') : [$pSlugClean];
+            
+            if (!empty($v2011Slugs)) {
+                $inClause = implode(',', array_fill(0, count($v2011Slugs), '?'));
+                $params1991 = array_merge([$selectedDistrictSlug, $bSlugClean, '%' . $currentBlockName . '%'], $v2011Slugs, ['%' . $pNameClean . '%']);
+                
+                $sql1991 = "SELECT * FROM census_villages_1991 
+                            WHERE LOWER(district_slug) = ? 
+                            AND (sub_district_slug = ? OR sub_district_name LIKE ?) 
+                            AND (village_slug IN ($inClause) OR village_name LIKE ?) 
+                            ORDER BY population DESC";
+                $stmt91 = $pdo->prepare($sql1991);
+                $stmt91->execute($params1991);
+                $panchayatVillages1991 = $stmt91->fetchAll(PDO::FETCH_ASSOC);
+            }
+
+            if (empty($panchayatVillages1991)) {
+                $stmt91_fb = $pdo->prepare("SELECT * FROM census_villages_1991 WHERE LOWER(district_slug) = :dslug AND (village_slug = :pslug OR village_name LIKE :pname) ORDER BY population DESC LIMIT 8");
+                $stmt91_fb->execute([
+                    ':dslug' => $selectedDistrictSlug,
+                    ':pslug' => $pSlugClean,
+                    ':pname' => '%' . $pNameClean . '%'
+                ]);
+                $panchayatVillages1991 = $stmt91_fb->fetchAll(PDO::FETCH_ASSOC);
+            }
+
+            if (!empty($panchayatVillages1991)) {
+                foreach ($panchayatVillages1991 as $pv91) {
+                    $panchayat1991Stats['population'] += (int)($pv91['population'] ?? 0);
+                    $panchayat1991Stats['male'] += (int)($pv91['male'] ?? 0);
+                    $panchayat1991Stats['female'] += (int)($pv91['female'] ?? 0);
+                    $panchayat1991Stats['households'] += (int)($pv91['households'] ?? 0);
+                    $panchayat1991Stats['literates'] += (int)($pv91['literates_total'] ?? 0);
+                    $panchayat1991Stats['sc_pop'] += (int)($pv91['sc_population'] ?? 0);
+                    $panchayat1991Stats['st_pop'] += (int)($pv91['st_population'] ?? 0);
+                    $panchayat1991Stats['workers'] += (int)($pv91['workers_total'] ?? 0);
+                    $panchayat1991Stats['cultivators'] += (int)(($pv91['m_cultivators'] ?? 0) + ($pv91['f_cultivators'] ?? 0));
+                    $panchayat1991Stats['agri_labour'] += (int)(($pv91['m_agri_labour'] ?? 0) + ($pv91['f_agri_labour'] ?? 0));
+                }
+                $panchayat1991Stats['village_count'] = count($panchayatVillages1991);
+            }
+        } catch (Throwable $e) {}
     }
 
     // If single block matched, gather block samiti & ZP representation
@@ -1023,6 +1083,113 @@ require_once __DIR__ . '/header.php';
                             </div>
                         </div>
                     <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Historical Census 1991 Data & 20-Year Growth Trajectory Section -->
+        <?php if (!empty($panchayatVillages1991)): ?>
+            <?php 
+                $pop2011Total = 0;
+                $hh2011Total = 0;
+                if (!empty($panchayatVillages)) {
+                    foreach ($panchayatVillages as $pv) {
+                        $pop2011Total += (int)($pv['population'] ?? 0);
+                        $hh2011Total += (int)($pv['households'] ?? 0);
+                    }
+                }
+                $pop1991Total = $panchayat1991Stats['population'];
+                $hh1991Total = $panchayat1991Stats['households'];
+                $growthPct = ($pop1991Total > 0 && $pop2011Total > 0) ? round((($pop2011Total - $pop1991Total) / $pop1991Total) * 100, 1) : null;
+                $litRate1991 = ($pop1991Total > 0) ? round(($panchayat1991Stats['literates'] / $pop1991Total) * 100, 1) : 0;
+            ?>
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white border-top border-4 border-warning">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div>
+                        <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill small mb-1">
+                            📜 Historical 1991 Census Data
+                        </span>
+                        <h4 class="fw-bold text-navy font-heading mb-0 fs-5">
+                            Historical 1991 Census & 20-Year Growth: <?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?>
+                        </h4>
+                        <p class="text-muted small mb-0 mt-1">
+                            Official Primary Census Abstract (PCA) 1991 rural demographic records & 1991-2011 population shift.
+                        </p>
+                    </div>
+                    <?php if ($growthPct !== null): ?>
+                        <span class="badge <?php echo ($growthPct >= 0) ? 'bg-success' : 'bg-danger'; ?> fs-6 px-3 py-2 rounded-pill">
+                            <i class="bi bi-graph-up-arrow me-1"></i> <?php echo ($growthPct >= 0 ? '+' : '') . $growthPct; ?>% Growth (1991–2011)
+                        </span>
+                    <?php endif; ?>
+                </div>
+
+                <!-- 1991 Demographic Metric Grid -->
+                <div class="row g-3 mb-4">
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 bg-light rounded-3 border text-center">
+                            <span class="text-muted small d-block">1991 Population</span>
+                            <div class="h4 fw-bold text-navy mb-0"><?php echo number_format($pop1991Total); ?></div>
+                            <small class="text-muted"><?php echo number_format($panchayat1991Stats['male']); ?> M / <?php echo number_format($panchayat1991Stats['female']); ?> F</small>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 bg-light rounded-3 border text-center">
+                            <span class="text-muted small d-block">1991 Households</span>
+                            <div class="h4 fw-bold text-dark mb-0"><?php echo number_format($hh1991Total); ?></div>
+                            <small class="text-muted"><?php echo count($panchayatVillages1991); ?> Revenue Villages</small>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 bg-light rounded-3 border text-center">
+                            <span class="text-muted small d-block">1991 Literates</span>
+                            <div class="h4 fw-bold text-primary mb-0"><?php echo number_format($panchayat1991Stats['literates']); ?></div>
+                            <small class="text-muted"><?php echo $litRate1991; ?>% Literacy in 1991</small>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 bg-light rounded-3 border text-center">
+                            <span class="text-muted small d-block">1991 Agri Workers</span>
+                            <div class="h4 fw-bold text-success mb-0"><?php echo number_format($panchayat1991Stats['cultivators'] + $panchayat1991Stats['agri_labour']); ?></div>
+                            <small class="text-muted"><?php echo number_format($panchayat1991Stats['cultivators']); ?> Cult. / <?php echo number_format($panchayat1991Stats['agri_labour']); ?> Labour</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1991 Villages List Table -->
+                <h6 class="fw-bold text-navy mb-2"><i class="bi bi-houses me-1"></i> 1991 Constituent Revenue Villages:</h6>
+                <div class="table-responsive">
+                    <table class="table table-hover table-sm align-middle mb-0 small">
+                        <thead class="table-light">
+                            <tr>
+                                <th>1991 Village Name</th>
+                                <th>Village Code</th>
+                                <th>1991 Population</th>
+                                <th>Male / Female</th>
+                                <th>Households</th>
+                                <th>Area (Ha)</th>
+                                <th>SC / ST</th>
+                                <th>Literates</th>
+                                <th>Cultivators & Labourers</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($panchayatVillages1991 as $v91): ?>
+                                <tr>
+                                    <td class="fw-bold text-dark">
+                                        🏡 <?php echo htmlspecialchars($v91['village_name']); ?>
+                                    </td>
+                                    <td><code><?php echo htmlspecialchars($v91['village_code']); ?></code></td>
+                                    <td class="fw-bold text-navy"><?php echo number_format((int)$v91['population']); ?></td>
+                                    <td><?php echo number_format((int)$v91['male']); ?> / <?php echo number_format((int)$v91['female']); ?></td>
+                                    <td><?php echo number_format((int)$v91['households']); ?></td>
+                                    <td><?php echo number_format((float)$v91['area_hectares'], 1); ?></td>
+                                    <td><?php echo number_format((int)$v91['sc_population']); ?> / <?php echo number_format((int)$v91['st_population']); ?></td>
+                                    <td><?php echo number_format((int)$v91['literates_total']); ?></td>
+                                    <td><?php echo number_format((int)$v91['m_cultivators'] + (int)$v91['f_cultivators']); ?> Cult. + <?php echo number_format((int)$v91['m_agri_labour'] + (int)$v91['f_agri_labour']); ?> Lab.</td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         <?php endif; ?>

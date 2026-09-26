@@ -105,6 +105,15 @@ if ($village) {
             $blockSamiti = $stmtS->fetch(PDO::FETCH_ASSOC) ?: null;
         } catch (Throwable $e) {}
     }
+
+    // Fetch Historical 1991 Census record for this village
+    $village1991 = null;
+    if ($pdo) {
+        $village1991 = DataProvider::getVillage1991BySlug($dSlug, $bSlug, $village['village_slug']);
+        if (!$village1991 && !empty($vName)) {
+            $village1991 = DataProvider::getVillage1991BySlug($dSlug, '', $vName);
+        }
+    }
 } else {
     // Directory Mode
     $distLabel = !empty($districtParam) ? ucfirst($districtParam) . ' District ' : 'Bihar ';
@@ -564,6 +573,129 @@ require_once __DIR__ . '/header.php';
                     </div>
                 </div>
                 <?php endif; ?>
+            </div>
+        </section>
+        <?php endif; ?>
+
+        <!-- Historical 1991 Census vs 2011 Trajectory Section -->
+        <?php if ($village1991): 
+            $pop91 = (int)($village1991['population'] ?? 0);
+            $hh91 = (int)($village1991['households'] ?? 0);
+            $male91 = (int)($village1991['male'] ?? 0);
+            $female91 = (int)($village1991['female'] ?? 0);
+            $sr91 = ($male91 > 0) ? round(($female91 / $male91) * 1000) : 0;
+            $lit91 = (int)($village1991['literates_total'] ?? 0);
+            $litPct91 = ($pop91 > 0) ? round(($lit91 / $pop91) * 100, 1) : 0;
+            $sc91 = (int)($village1991['sc_population'] ?? 0);
+            $st91 = (int)($village1991['st_population'] ?? 0);
+            $growthPop = ($pop91 > 0 && $pop > 0) ? round((($pop - $pop91) / $pop91) * 100, 1) : null;
+            $cult91 = (int)(($village1991['m_cultivators'] ?? 0) + ($village1991['f_cultivators'] ?? 0));
+            $agri91 = (int)(($village1991['m_agri_labour'] ?? 0) + ($village1991['f_agri_labour'] ?? 0));
+        ?>
+        <section class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 border-top border-4 border-warning">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill small mb-1">
+                        📜 Historical Census 1991 Archive
+                    </span>
+                    <h3 class="h5 fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
+                        1991 vs 2011 Historical Trajectory: <?php echo htmlspecialchars($vName); ?> Village
+                    </h3>
+                    <p class="small text-muted mb-0 mt-1">Official Primary Census Abstract (PCA 1991) baseline demographic &amp; occupational data comparison</p>
+                </div>
+                <?php if ($growthPop !== null): ?>
+                    <span class="badge <?php echo ($growthPop >= 0) ? 'bg-success' : 'bg-danger'; ?> fs-6 px-3 py-2 rounded-pill">
+                        <i class="bi bi-graph-up-arrow me-1"></i> <?php echo ($growthPop >= 0 ? '+' : '') . $growthPop; ?>% Growth (1991–2011)
+                    </span>
+                <?php endif; ?>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md-3">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="small text-muted d-block">1991 Population</span>
+                        <h4 class="h5 fw-bold text-dark mb-0 font-monospace"><?php echo number_format($pop91); ?></h4>
+                        <small class="text-muted">M: <?php echo number_format($male91); ?> | F: <?php echo number_format($female91); ?></small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="small text-muted d-block">1991 Households</span>
+                        <h4 class="h5 fw-bold text-warning mb-0 font-monospace"><?php echo number_format($hh91); ?></h4>
+                        <small class="text-muted">Houses: <?php echo number_format($village1991['res_houses']); ?></small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="small text-muted d-block">1991 Literacy Rate</span>
+                        <h4 class="h5 fw-bold text-primary mb-0"><?php echo $litPct91; ?>%</h4>
+                        <small class="text-muted"><?php echo number_format($lit91); ?> Literates</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="small text-muted d-block">1991 Sex Ratio</span>
+                        <h4 class="h5 fw-bold text-success mb-0"><?php echo $sr91; ?></h4>
+                        <small class="text-muted">Females / 1000 Males</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle small mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Demographic Indicator</th>
+                            <th class="text-end">1991 Census (Undivided Bihar)</th>
+                            <th class="text-end">2011 Census</th>
+                            <th class="text-center">20-Year Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold">Total Population</td>
+                            <td class="text-end font-monospace"><?php echo number_format($pop91); ?></td>
+                            <td class="text-end font-monospace fw-bold text-primary"><?php echo number_format($pop); ?></td>
+                            <td class="text-center fw-bold <?php echo ($growthPop >= 0) ? 'text-success' : 'text-danger'; ?>">
+                                <?php echo ($growthPop !== null) ? (($growthPop >= 0 ? '+' : '') . $growthPop . '%') : 'N/A'; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total Households</td>
+                            <td class="text-end font-monospace"><?php echo number_format($hh91); ?></td>
+                            <td class="text-end font-monospace"><?php echo number_format($hh); ?></td>
+                            <td class="text-center text-muted font-monospace">
+                                <?php echo ($hh91 > 0) ? (($hh >= $hh91 ? '+' : '') . number_format($hh - $hh91)) : '-'; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheduled Caste (SC)</td>
+                            <td class="text-end font-monospace"><?php echo number_format($sc91); ?></td>
+                            <td class="text-end font-monospace"><?php echo number_format($scPop); ?></td>
+                            <td class="text-center text-muted">
+                                <?php echo ($pop91 > 0) ? round(($sc91 / $pop91) * 100, 1) . '% &rarr; ' . $scPct . '%' : '-'; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheduled Tribe (ST)</td>
+                            <td class="text-end font-monospace"><?php echo number_format($st91); ?></td>
+                            <td class="text-end font-monospace"><?php echo number_format($stPop); ?></td>
+                            <td class="text-center text-muted">
+                                <?php echo ($pop91 > 0) ? round(($st91 / $pop91) * 100, 1) . '% &rarr; ' . $stPct . '%' : '-'; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1991 Agricultural Workers</td>
+                            <td class="text-end font-monospace" colspan="2">
+                                Cultivators: <strong><?php echo number_format($cult91); ?></strong> | Agricultural Labourers: <strong><?php echo number_format($agri91); ?></strong>
+                            </td>
+                            <td class="text-center text-muted">Total: <?php echo number_format($cult91 + $agri91); ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="small text-muted mt-2">
+                <i class="bi bi-info-circle me-1"></i> 1991 Census Village Code: <code><?php echo htmlspecialchars($village1991['village_code']); ?></code> (Sub-District / Tehsil Code: <code><?php echo htmlspecialchars($village1991['sub_district_code']); ?></code>)
             </div>
         </section>
         <?php endif; ?>

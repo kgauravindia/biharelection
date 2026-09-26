@@ -1121,6 +1121,126 @@ class DataProvider {
         }
     }
 
+    public static function getCensusVillages1991List($districtSlug = null, $subDistrictSlug = null, $search = null, $page = 1, $limit = 50) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return ['total' => 0, 'data' => []];
+
+        $where = [];
+        $params = [];
+
+        if (!empty($districtSlug)) {
+            $where[] = "district_slug = :dslug";
+            $params[':dslug'] = strtolower(trim($districtSlug));
+        }
+        if (!empty($subDistrictSlug)) {
+            $where[] = "(sub_district_slug = :sbslug OR sub_district_name LIKE :sbslug_like)";
+            $params[':sbslug'] = strtolower(trim($subDistrictSlug));
+            $params[':sbslug_like'] = '%' . trim($subDistrictSlug) . '%';
+        }
+        if (!empty($search)) {
+            $where[] = "(village_name LIKE :q OR village_code LIKE :q OR sub_district_name LIKE :q OR district_name LIKE :q)";
+            $params[':q'] = '%' . trim($search) . '%';
+        }
+
+        $whereSql = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+        
+        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM census_villages_1991 $whereSql");
+        $countStmt->execute($params);
+        $total = (int)$countStmt->fetchColumn();
+
+        $offset = max(0, ($page - 1) * $limit);
+        $stmt = $pdo->prepare("SELECT * FROM census_villages_1991 $whereSql ORDER BY district_name ASC, sub_district_name ASC, village_name ASC LIMIT :limit OFFSET :offset");
+        foreach ($params as $k => $v) {
+            $stmt->bindValue($k, $v);
+        }
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return ['total' => $total, 'data' => $rows];
+    }
+
+    public static function getVillage1991BySlug($districtSlug, $blockSlug, $villageSlug) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return null;
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM census_villages_1991 WHERE district_slug = :dslug AND (sub_district_slug = :bslug OR sub_district_name LIKE :bslug_like) AND village_slug = :vslug LIMIT 1");
+            $stmt->execute([
+                ':dslug' => strtolower(trim($districtSlug)),
+                ':bslug' => strtolower(trim($blockSlug)),
+                ':bslug_like' => '%' . trim($blockSlug) . '%',
+                ':vslug' => strtolower(trim($villageSlug))
+            ]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row) return $row;
+
+            $stmt2 = $pdo->prepare("SELECT * FROM census_villages_1991 WHERE district_slug = :dslug AND village_slug = :vslug LIMIT 1");
+            $stmt2->execute([
+                ':dslug' => strtolower(trim($districtSlug)),
+                ':vslug' => strtolower(trim($villageSlug))
+            ]);
+            return $stmt2->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (Throwable $e) {
+            return null;
+        }
+    }
+
+    public static function get1991DataForPanchayat($districtSlug, $panchayatName, $blockName = '') {
+        $pdo = Database::getConnection();
+        if (!$pdo || empty($panchayatName)) return ['villages' => [], 'summary' => null];
+
+        try {
+            $dSlug = strtolower(trim($districtSlug));
+            $pSlug = slugify($panchayatName);
+            $pClean = trim($panchayatName);
+
+            $sql = "SELECT * FROM census_villages_1991 WHERE district_slug = :dslug AND (village_slug = :pslug OR village_name LIKE :pclean";
+            $params = [':dslug' => $dSlug, ':pslug' => $pSlug, ':pclean' => '%' . $pClean . '%'];
+
+            if (!empty($blockName)) {
+                $sql .= " OR (sub_district_slug = :bslug AND village_name LIKE :pclean2)";
+                $params[':bslug'] = slugify($blockName);
+                $params[':pclean2'] = '%' . $pClean . '%';
+            }
+            $sql .= ") ORDER BY population DESC LIMIT 20";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            $villages = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+
+            $summary = null;
+            if (!empty($villages)) {
+                $totPop = 0; $totMale = 0; $totFemale = 0; $totHh = 0; $totSc = 0; $totSt = 0; $totLit = 0;
+                foreach ($villages as $v) {
+                    $totPop += (int)$v['population'];
+                    $totMale += (int)$v['male'];
+                    $totFemale += (int)$v['female'];
+                    $totHh += (int)$v['households'];
+                    $totSc += (int)$v['sc_population'];
+                    $totSt += (int)$v['st_population'];
+                    $totLit += (int)$v['literates_total'];
+                }
+                $summary = [
+                    'count' => count($villages),
+                    'population' => $totPop,
+                    'male' => $totMale,
+                    'female' => $totFemale,
+                    'households' => $totHh,
+                    'sc_population' => $totSc,
+                    'st_population' => $totSt,
+                    'literates' => $totLit,
+                    'sex_ratio' => ($totMale > 0) ? round(($totFemale / $totMale) * 1000) : 0,
+                    'literacy_rate' => ($totPop > 0) ? round(($totLit / $totPop) * 100, 2) : 0
+                ];
+            }
+
+            return ['villages' => $villages, 'summary' => $summary];
+        } catch (Throwable $e) {
+            return ['villages' => [], 'summary' => null];
+        }
+    }
+
     public static function getTownByCode($code) {
         $pdo = Database::getConnection();
         if (!$pdo || empty($code)) return null;
