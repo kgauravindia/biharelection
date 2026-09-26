@@ -18,6 +18,47 @@ if (!empty($districts) && is_array($districts)) {
     });
 }
 
+// Handle Impersonation Session Exit message
+if (isset($_GET['msg']) && $_GET['msg'] === 'impersonation_ended') {
+    $message = "You have exited the citizen impersonation session and returned safely to the Admin CRM.";
+}
+
+// -------------------------------------------------------------
+// 0. Handle Login As / Impersonate Citizen
+// -------------------------------------------------------------
+if (isset($_GET['login_as']) && $conn) {
+    $target_id = (int)$_GET['login_as'];
+    if ($target_id > 0) {
+        $stmt_target = $conn->prepare("SELECT * FROM `users` WHERE `id` = ? LIMIT 1");
+        $stmt_target->bind_param("i", $target_id);
+        $stmt_target->execute();
+        $res_target = $stmt_target->get_result();
+        if ($res_target && $res_target->num_rows > 0) {
+            $u = $res_target->fetch_assoc();
+            
+            // Set public user session
+            $_SESSION['public_user_id']           = (int)$u['id'];
+            $_SESSION['public_user_name']         = !empty($u['name']) ? $u['name'] : (!empty($u['full_name']) ? $u['full_name'] : 'Citizen');
+            $_SESSION['public_user_mobile']       = $u['mobile'] ?? '';
+            $_SESSION['public_user_email']        = $u['email'] ?? '';
+            $_SESSION['public_user_role']         = $u['role'] ?? 'voter';
+            $_SESSION['public_user_district']     = $u['district'] ?? '';
+            $_SESSION['public_user_constituency'] = $u['constituency'] ?? '';
+            $_SESSION['public_user_panchayat']    = $u['panchayat'] ?? '';
+            $_SESSION['public_user_handle']       = $u['username_handle'] ?? '';
+            $_SESSION['public_user_avatar']       = $u['profile_photo'] ?? ($u['profile_image'] ?? ($u['photo'] ?? ''));
+            $_SESSION['impersonated_by_admin']   = true;
+            $_SESSION['impersonator_admin_name'] = $_SESSION['admin_user'] ?? 'Administrator';
+
+            // Direct redirect to public user dashboard
+            header("Location: ../dashboard.php");
+            exit();
+        } else {
+            $error = "Target citizen account not found.";
+        }
+    }
+}
+
 // -------------------------------------------------------------
 // 1. Handle CSV Export
 // -------------------------------------------------------------
@@ -766,6 +807,9 @@ $total_pages = ceil($total_records / $per_page);
                                     <!-- Actions -->
                                     <td class="text-end">
                                         <div class="d-inline-flex gap-1">
+                                            <a href="citizens.php?login_as=<?php echo $u['id']; ?>" class="btn btn-sm btn-light border text-success action-btn-circle" title="Login As <?php echo htmlspecialchars($displayName); ?> (Admin Impersonate)" target="_blank">
+                                                <i class="fas fa-right-to-bracket"></i>
+                                            </a>
                                             <button class="btn btn-sm btn-light border text-primary action-btn-circle" title="View Full Citizen Profile" onclick="viewCitizen(<?php echo htmlspecialchars(json_encode($u)); ?>)">
                                                 <i class="fas fa-eye"></i>
                                             </button>
@@ -779,6 +823,12 @@ $total_pages = ceil($total_records / $per_page);
                                                     <i class="fas fa-ellipsis-vertical"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 small">
+                                                    <li>
+                                                        <a class="dropdown-item text-success fw-semibold" href="citizens.php?login_as=<?php echo $u['id']; ?>" target="_blank">
+                                                            <i class="fas fa-right-to-bracket text-success me-2"></i> Login As This Citizen
+                                                        </a>
+                                                    </li>
+                                                    <li><hr class="dropdown-divider"></li>
                                                     <li>
                                                         <a class="dropdown-item" href="javascript:void(0)" onclick="viewCitizen(<?php echo htmlspecialchars(json_encode($u)); ?>)">
                                                             <i class="fas fa-id-card text-primary me-2"></i> View Profile
@@ -989,11 +1039,18 @@ $total_pages = ceil($total_records / $per_page);
                         </div>
                     </div>
 
-                    <div class="modal-footer border-top bg-light p-3">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btn-sm fw-semibold" id="v_btn_edit">
-                            <i class="fas fa-pen me-1"></i> Edit This Profile
-                        </button>
+                    <div class="modal-footer border-top bg-light p-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="#" id="v_login_as_btn" target="_blank" class="btn btn-success btn-sm fw-bold px-3">
+                                <i class="fas fa-right-to-bracket me-1"></i> Login As This Citizen
+                            </a>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btn-sm fw-semibold" id="v_btn_edit">
+                                <i class="fas fa-pen me-1"></i> Edit This Profile
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1297,6 +1354,7 @@ function viewCitizen(data) {
     const cleanWa = (data.whatsapp || data.mobile || '').replace(/[^0-9]/g, '');
     document.getElementById('v_call_link').href = 'tel:+91' + cleanPhone;
     document.getElementById('v_wa_link').href = `https://wa.me/91${cleanWa}?text=Hello%20${encodeURIComponent(name)}%20from%20BiharElection.com`;
+    document.getElementById('v_login_as_btn').href = 'citizens.php?login_as=' + data.id;
 
     document.getElementById('v_btn_edit').onclick = function() {
         const viewModalEl = document.getElementById('viewCitizenModal');

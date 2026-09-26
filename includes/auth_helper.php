@@ -432,7 +432,11 @@ function logoutUser() {
         $_SESSION['public_user_district'],
         $_SESSION['public_user_constituency'],
         $_SESSION['public_user_panchayat'],
-        $_SESSION['pending_otp']
+        $_SESSION['public_user_handle'],
+        $_SESSION['public_user_avatar'],
+        $_SESSION['pending_otp'],
+        $_SESSION['impersonated_by_admin'],
+        $_SESSION['impersonator_admin_name']
     );
 }
 

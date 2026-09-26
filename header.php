@@ -71,6 +71,26 @@ $activeNav = $activeNav ?? 'home';
 </head>
 <body>
 
+    <?php if (!empty($_SESSION['impersonated_by_admin'])): ?>
+    <!-- Admin Impersonation Notification Bar -->
+    <div class="bg-dark text-white py-1.5 px-3 border-bottom border-warning border-3 sticky-top" style="z-index: 1090; font-size: 0.85rem; background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-warning text-dark fw-bold px-2 py-1"><i class="bi bi-person-badge me-1"></i> Admin Login As</span>
+                <span>You are currently viewing portal as <strong><?php echo htmlspecialchars($_SESSION['public_user_name'] ?? 'Citizen'); ?></strong> (+91 <?php echo htmlspecialchars($_SESSION['public_user_mobile'] ?? ''); ?>)</span>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="<?php echo SITE_URL; ?>/admin/citizens.php" class="btn btn-sm btn-outline-light py-0.5 px-2.5 fw-semibold" style="font-size: 0.8rem;">
+                    <i class="bi bi-shield-check me-1"></i> Admin CRM
+                </a>
+                <a href="<?php echo SITE_URL; ?>/logout.php?exit_impersonation=1" class="btn btn-sm btn-warning text-dark py-0.5 px-2.5 fw-bold" style="font-size: 0.8rem;">
+                    <i class="bi bi-box-arrow-right me-1"></i> Exit Login As
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <!-- Top Daily Broadcast Ticker -->
     <div class="top-ticker py-2">
         <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
