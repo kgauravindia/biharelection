@@ -96,10 +96,15 @@ $activeNav = $activeNav ?? 'home';
         <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
             <div class="d-flex align-items-center gap-2 overflow-hidden text-truncate">
                 <span class="badge-live">Live 2026</span>
-                <span class="text-truncate small"><strong>Bihar Election Update:</strong> 2026 Panchayat Delimitation & 243 AC Profiling</span>
+                <span class="text-truncate small">
+                    <strong>Bihar Vidhan Parishad Election 2026:</strong> 
+                    <a href="<?php echo getVidhanParishadElectionUrl(); ?>" class="text-decoration-none text-white fw-bold hover-underline">
+                        Gazette Issued for 4 Graduates &amp; 4 Teachers Seats (Polling: 23 Oct) &rarr;
+                    </a>
+                </span>
             </div>
             <div>
-                <a href="<?php echo SITE_URL; ?>/whatsapp" class="small text-decoration-none">
+                <a href="<?php echo SITE_URL; ?>/whatsapp" class="small text-decoration-none text-warning fw-semibold">
                     <span>📲 Daily WhatsApp Digest &rarr;</span>
                 </a>
             </div>
@@ -262,6 +267,15 @@ $activeNav = $activeNav ?? 'home';
                                     <div>
                                         <div class="fw-bold">75 Vidhan Parishad MLCs</div>
                                         <small class="text-muted">Legislative Council members</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getVidhanParishadElectionUrl(); ?>">
+                                    <span>🗳️</span>
+                                    <div>
+                                        <div class="fw-bold text-danger">Vidhan Parishad Election 2026 <span class="badge bg-danger text-white ms-1" style="font-size: 10px;">LIVE</span></div>
+                                        <small class="text-muted">4 Graduates &amp; 4 Teachers Seats Gazette &amp; Schedule</small>
                                     </div>
                                 </a>
                             </li>

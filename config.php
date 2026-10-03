@@ -1883,6 +1883,10 @@ function getMlcUrl($slug = '') {
     return $slug ? SITE_URL . "/mlc/{$slug}" : SITE_URL . "/mlc";
 }
 
+function getVidhanParishadElectionUrl() {
+    return SITE_URL . "/vidhan-parishad-election";
+}
+
 function getDistrictUrl($slug, $subpath = '') {
     $slugClean = strtolower(trim((string)$slug));
     if ($subpath) {
