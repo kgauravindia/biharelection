@@ -327,7 +327,7 @@ $timeline = [
                         Gazette Ref: M2–03(TC&GC)/2026-5369
                     </span>
                     <span class="badge bg-danger text-white px-3 py-1.5 rounded-pill fw-semibold">
-                        8 Seats (4 Graduates + 4 Teachers)
+                        8 of 12 Seats (4 Graduates + 4 Teachers)
                     </span>
                 </div>
 
@@ -335,11 +335,11 @@ $timeline = [
                     Bihar Vidhan Parishad Biennial Election 2026
                 </h1>
                 <h2 class="h5 fw-normal text-light opacity-90 mb-3" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                    बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 4 स्नातक एवं 4 शिक्षक निर्वाचन क्षेत्र
+                    बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 8 सीटें (4 स्नातक + 4 शिक्षक निर्वाचन क्षेत्र)
                 </h2>
                 
                 <p class="lead fs-6 text-light opacity-90 mb-4" style="max-width: 720px; line-height: 1.6;">
-                    Official election timeline, gazette notifications, constituency coverage across all 38 Bihar districts, Returning Officers, and voter guidelines for the 2026 Legislative Council elections.
+                    Official election schedule and gazette notifications for <strong>8 out of 12 total Graduates' &amp; Teachers' constituencies</strong> in Bihar Legislative Council (covering 30 districts). Polling on <strong>23 October 2026</strong>.
                 </p>
 
                 <div class="d-flex flex-wrap gap-2 pt-1">
@@ -350,7 +350,7 @@ $timeline = [
                         <i class="bi bi-calendar-event me-1"></i> Full Schedule
                     </a>
                     <a href="#district-finder" class="btn btn-outline-warning px-3 py-2.5 rounded-3 fw-semibold">
-                        <i class="bi bi-search me-1"></i> Find Your Constituency
+                        <i class="bi bi-search me-1"></i> Check Your District Status
                     </a>
                 </div>
             </div>
@@ -421,16 +421,16 @@ $timeline = [
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-primary fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">8</div>
-                    <div class="fw-semibold text-dark small">Total MLC Seats</div>
-                    <small class="text-muted">4 Graduates + 4 Teachers</small>
+                    <div class="text-primary fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">8 / 12</div>
+                    <div class="fw-semibold text-dark small">Contested Quota Seats</div>
+                    <small class="text-muted">4 of 6 Grad + 4 of 6 Teach</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">38</div>
-                    <div class="fw-semibold text-dark small">Districts Covered</div>
-                    <small class="text-muted">100% of Bihar State</small>
+                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">30</div>
+                    <div class="fw-semibold text-dark small">Districts in this Poll</div>
+                    <small class="text-muted">Out of 38 Bihar Districts</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
@@ -909,46 +909,51 @@ function filterSeats(type, btn) {
     }
 }
 
-// District to Constituency Mapping Data
+// District to Constituency Mapping Data (Accurate breakdown for 8 of 12 seats)
 const districtMapping = {
-    "Patna": { grad: "Patna Graduates (पटना स्नातक)", teach: "Patna Teachers (पटना शिक्षक)", ro: "Divisional Commissioner, Patna" },
-    "Nalanda": { grad: "Patna Graduates (पटना स्नातक)", teach: "Patna Teachers (पटना शिक्षक)", ro: "Divisional Commissioner, Patna" },
-    "Nawada": { grad: "Patna Graduates (पटना स्नातक)", teach: "Patna Teachers (पटना शिक्षक)", ro: "Divisional Commissioner, Patna" },
-    "Muzaffarpur": { grad: "Tirhut Graduates (तिरहुत स्नातक)", teach: "Tirhut Teachers (तिरहुत शिक्षक)", ro: "Divisional Commissioner, Tirhut (Muzaffarpur)" },
-    "Vaishali": { grad: "Tirhut Graduates (तिरहुत स्नातक)", teach: "Tirhut Teachers (तिरहुत शिक्षक)", ro: "Divisional Commissioner, Tirhut (Muzaffarpur)" },
-    "Sitamarhi": { grad: "Tirhut Graduates (तिरहुत स्नातक)", teach: "Tirhut Teachers (तिरहुत शिक्षक)", ro: "Divisional Commissioner, Tirhut (Muzaffarpur)" },
-    "Sheohar": { grad: "Tirhut Graduates (तिरहुत स्नातक)", teach: "Tirhut Teachers (तिरहुत शिक्षक)", ro: "Divisional Commissioner, Tirhut (Muzaffarpur)" },
-    "Darbhanga": { grad: "Darbhanga Graduates (दरभंगा स्नातक)", teach: "Darbhanga Teachers (दरभंगा शिक्षक)", ro: "Divisional Commissioner, Darbhanga" },
-    "Madhubani": { grad: "Darbhanga Graduates (दरभंगा स्नातक)", teach: "Darbhanga Teachers (दरभंगा शिक्षक)", ro: "Divisional Commissioner, Darbhanga" },
-    "Samastipur": { grad: "Darbhanga Graduates (दरभंगा स्नातक)", teach: "Darbhanga Teachers (दरभंगा शिक्षक)", ro: "Divisional Commissioner, Darbhanga" },
-    "Begusarai": { grad: "Darbhanga Graduates (दरभंगा स्नातक)", teach: "Darbhanga Teachers (दरभंगा शिक्षक)", ro: "Divisional Commissioner, Darbhanga" },
-    "Saharsa": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Kosi / Eastern Quota", ro: "Divisional Commissioner, Kosi / Purnia" },
-    "Supaul": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Kosi / Eastern Quota", ro: "Divisional Commissioner, Kosi / Purnia" },
-    "Madhepura": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Kosi / Eastern Quota", ro: "Divisional Commissioner, Kosi / Purnia" },
-    "Purnia": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Purnia Division", ro: "Divisional Commissioner, Purnia" },
-    "Araria": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Purnia Division", ro: "Divisional Commissioner, Purnia" },
-    "Kishanganj": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Purnia Division", ro: "Divisional Commissioner, Purnia" },
-    "Katihar": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Purnia Division", ro: "Divisional Commissioner, Purnia" },
-    "Bhagalpur": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Bhagalpur Division", ro: "Divisional Commissioner, Bhagalpur" },
-    "Banka": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Bhagalpur Division", ro: "Divisional Commissioner, Bhagalpur" },
-    "Munger": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Munger Division", ro: "Divisional Commissioner, Munger" },
-    "Jamui": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Munger Division", ro: "Divisional Commissioner, Munger" },
-    "Lakhisarai": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Munger Division", ro: "Divisional Commissioner, Munger" },
-    "Sheikhpura": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Munger Division", ro: "Divisional Commissioner, Munger" },
-    "Khagaria": { grad: "Kosi Graduates (कोसी स्नातक)", teach: "Munger Division", ro: "Divisional Commissioner, Munger" },
-    "Saran": { grad: "Saran / Western Belt", teach: "Saran Teachers (सारण शिक्षक)", ro: "Divisional Commissioner, Saran (Chapra)" },
-    "Siwan": { grad: "Saran / Western Belt", teach: "Saran Teachers (सारण शिक्षक)", ro: "Divisional Commissioner, Saran (Chapra)" },
-    "Gopalganj": { grad: "Saran / Western Belt", teach: "Saran Teachers (सारण शिक्षक)", ro: "Divisional Commissioner, Saran (Chapra)" },
-    "East Champaran": { grad: "Tirhut / Champaran", teach: "Saran Teachers (सारण शिक्षक)", ro: "Divisional Commissioner, Saran (Chapra)" },
-    "West Champaran": { grad: "Tirhut / Champaran", teach: "Saran Teachers (सारण शिक्षक)", ro: "Divisional Commissioner, Saran (Chapra)" },
-    "Gaya": { grad: "Gaya Graduates", teach: "Gaya Teachers", ro: "Divisional Commissioner, Magadh" },
-    "Jehanabad": { grad: "Gaya Graduates", teach: "Gaya Teachers", ro: "Divisional Commissioner, Magadh" },
-    "Arwal": { grad: "Gaya Graduates", teach: "Gaya Teachers", ro: "Divisional Commissioner, Magadh" },
-    "Aurangabad": { grad: "Gaya Graduates", teach: "Gaya Teachers", ro: "Divisional Commissioner, Magadh" },
-    "Rohtas": { grad: "South Bihar Quota", teach: "South Bihar Quota", ro: "Divisional Commissioner, Patna/Magadh" },
-    "Kaimur": { grad: "South Bihar Quota", teach: "South Bihar Quota", ro: "Divisional Commissioner, Patna/Magadh" },
-    "Bhojpur": { grad: "Patna/Shahabad Quota", teach: "Patna/Shahabad Quota", ro: "Divisional Commissioner, Patna" },
-    "Buxar": { grad: "Patna/Shahabad Quota", teach: "Patna/Shahabad Quota", ro: "Divisional Commissioner, Patna" }
+    "Patna": { grad: "Patna Graduates (पटना स्नातक)", teach: "Patna Teachers (पटना शिक्षक)", ro: "Divisional Commissioner, Patna", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    "Nalanda": { grad: "Patna Graduates (पटना स्नातक)", teach: "Patna Teachers (पटना शिक्षक)", ro: "Divisional Commissioner, Patna", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    "Nawada": { grad: "Patna Graduates (पटना स्नातक)", teach: "Patna Teachers (पटना शिक्षक)", ro: "Divisional Commissioner, Patna", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    
+    "Muzaffarpur": { grad: "Tirhut Graduates (तिरहुत स्नातक)", teach: "Tirhut Teachers (तिरहुत शिक्षक)", ro: "Divisional Commissioner, Tirhut (Muzaffarpur)", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    "Vaishali": { grad: "Tirhut Graduates (तिरहुत स्नातक)", teach: "Tirhut Teachers (तिरहुत शिक्षक)", ro: "Divisional Commissioner, Tirhut (Muzaffarpur)", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    "Sitamarhi": { grad: "Tirhut Graduates (तिरहुत स्नातक)", teach: "Tirhut Teachers (तिरहुत शिक्षक)", ro: "Divisional Commissioner, Tirhut (Muzaffarpur)", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    "Sheohar": { grad: "Tirhut Graduates (तिरहुत स्नातक)", teach: "Tirhut Teachers (तिरहुत शिक्षक)", ro: "Divisional Commissioner, Tirhut (Muzaffarpur)", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    
+    "Darbhanga": { grad: "Darbhanga Graduates (दरभंगा स्नातक)", teach: "Darbhanga Teachers (दरभंगा शिक्षक)", ro: "Divisional Commissioner, Darbhanga", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    "Madhubani": { grad: "Darbhanga Graduates (दरभंगा स्नातक)", teach: "Darbhanga Teachers (दरभंगा शिक्षक)", ro: "Divisional Commissioner, Darbhanga", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    "Samastipur": { grad: "Darbhanga Graduates (दरभंगा स्नातक)", teach: "Darbhanga Teachers (दरभंगा शिक्षक)", ro: "Divisional Commissioner, Darbhanga", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    "Begusarai": { grad: "Darbhanga Graduates (दरभंगा स्नातक)", teach: "Darbhanga Teachers (दरभंगा शिक्षक)", ro: "Divisional Commissioner, Darbhanga", active: true, statusText: "🟢 Voting in 2026: Both Graduates & Teachers Seats" },
+    
+    "Saharsa": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Kosi / Purnia", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Supaul": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Kosi / Purnia", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Madhepura": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Kosi / Purnia", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Purnia": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Purnia", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Araria": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Purnia", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Kishanganj": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Purnia", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Katihar": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Purnia", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Bhagalpur": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Bhagalpur", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Banka": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Bhagalpur", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Munger": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Munger", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Jamui": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Munger", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Lakhisarai": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Munger", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Sheikhpura": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Munger", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    "Khagaria": { grad: "Kosi Graduates (कोसी स्नातक) [VOTING 2026]", teach: "Kosi Teachers (Separate Cycle)", ro: "Divisional Commissioner, Munger", active: true, statusText: "🟢 Voting in 2026: Kosi Graduates Seat (Teachers in separate cycle)" },
+    
+    "Saran": { grad: "Saran Graduates (Separate Cycle)", teach: "Saran Teachers (सारण शिक्षक) [VOTING 2026]", ro: "Divisional Commissioner, Saran (Chapra)", active: true, statusText: "🟢 Voting in 2026: Saran Teachers Seat (Graduates in separate cycle)" },
+    "Siwan": { grad: "Saran Graduates (Separate Cycle)", teach: "Saran Teachers (सारण शिक्षक) [VOTING 2026]", ro: "Divisional Commissioner, Saran (Chapra)", active: true, statusText: "🟢 Voting in 2026: Saran Teachers Seat (Graduates in separate cycle)" },
+    "Gopalganj": { grad: "Saran Graduates (Separate Cycle)", teach: "Saran Teachers (सारण शिक्षक) [VOTING 2026]", ro: "Divisional Commissioner, Saran (Chapra)", active: true, statusText: "🟢 Voting in 2026: Saran Teachers Seat (Graduates in separate cycle)" },
+    "East Champaran": { grad: "Tirhut/Saran Belt (Separate Cycle)", teach: "Saran Teachers (सारण शिक्षक) [VOTING 2026]", ro: "Divisional Commissioner, Saran (Chapra)", active: true, statusText: "🟢 Voting in 2026: Saran Teachers Seat" },
+    "West Champaran": { grad: "Tirhut/Saran Belt (Separate Cycle)", teach: "Saran Teachers (सारण शिक्षक) [VOTING 2026]", ro: "Divisional Commissioner, Saran (Chapra)", active: true, statusText: "🟢 Voting in 2026: Saran Teachers Seat" },
+    
+    "Gaya": { grad: "Gaya Graduates (गया स्नातक)", teach: "Gaya Teachers (गया शिक्षक)", ro: "Divisional Commissioner, Magadh", active: false, statusText: "⚪ Not Polling in Oct 2026 (Gaya Quotas term expires in a separate cycle)" },
+    "Jehanabad": { grad: "Gaya Graduates", teach: "Gaya Teachers", ro: "Divisional Commissioner, Magadh", active: false, statusText: "⚪ Not Polling in Oct 2026 (Part of Gaya Quota)" },
+    "Arwal": { grad: "Gaya Graduates", teach: "Gaya Teachers", ro: "Divisional Commissioner, Magadh", active: false, statusText: "⚪ Not Polling in Oct 2026 (Part of Gaya Quota)" },
+    "Aurangabad": { grad: "Gaya Graduates", teach: "Gaya Teachers", ro: "Divisional Commissioner, Magadh", active: false, statusText: "⚪ Not Polling in Oct 2026 (Part of Gaya Quota)" },
+    "Rohtas": { grad: "Gaya/South Bihar Quota", teach: "Gaya Teachers Quota", ro: "Divisional Commissioner, Magadh", active: false, statusText: "⚪ Not Polling in Oct 2026 (Different biennial cycle)" },
+    "Kaimur": { grad: "Gaya/South Bihar Quota", teach: "Gaya Teachers Quota", ro: "Divisional Commissioner, Magadh", active: false, statusText: "⚪ Not Polling in Oct 2026 (Different biennial cycle)" },
+    "Bhojpur": { grad: "Gaya/Shahabad Quota", teach: "Gaya Teachers Quota", ro: "Divisional Commissioner, Patna/Magadh", active: false, statusText: "⚪ Not Polling in Oct 2026 (Different biennial cycle)" },
+    "Buxar": { grad: "Gaya/Shahabad Quota", teach: "Gaya Teachers Quota", ro: "Divisional Commissioner, Patna/Magadh", active: false, statusText: "⚪ Not Polling in Oct 2026 (Different biennial cycle)" }
 };
 
 function lookupDistrictConstituency(district) {
@@ -963,6 +968,19 @@ function lookupDistrictConstituency(district) {
     document.getElementById('resGradSeat').innerText = info.grad;
     document.getElementById('resTeachSeat').innerText = info.teach;
     document.getElementById('resRO').innerText = info.ro;
+    
+    // Update active status badge
+    const badgeEl = box.querySelector('.badge');
+    if (badgeEl) {
+        if (info.active) {
+            badgeEl.className = 'badge bg-success';
+            badgeEl.innerText = info.statusText;
+        } else {
+            badgeEl.className = 'badge bg-secondary';
+            badgeEl.innerText = info.statusText;
+        }
+    }
+
     box.classList.remove('d-none');
 }
 </script>

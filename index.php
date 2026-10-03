@@ -857,33 +857,33 @@ require_once __DIR__ . '/header.php';
                                 Bihar Vidhan Parishad Biennial Election 2026
                             </h2>
                             <h3 class="h6 fw-normal text-light opacity-90 mb-3" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                                बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 4 स्नातक एवं 4 शिक्षक सीटें
+                                बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 8 सीटें (4 स्नातक + 4 शिक्षक)
                             </h3>
                             
                             <p class="text-light opacity-90 mb-4" style="line-height: 1.6; font-size: 0.95rem;">
-                                The Chief Electoral Officer, Bihar has notified biennial elections (Notification No. <strong>M2–03(TC&GC)/2026-5369</strong>) for <strong>8 Legislative Council seats</strong> across all 38 districts. Polling takes place on <strong>23 October 2026</strong> and counting on <strong>27 October 2026</strong>.
+                                The Chief Electoral Officer, Bihar has notified biennial elections (Notification No. <strong>M2–03(TC&GC)/2026-5369</strong>) for <strong>8 out of 12 total Graduates' &amp; Teachers' seats</strong> across 30 districts of Bihar. Polling on <strong>23 October 2026</strong> and counting on <strong>27 October 2026</strong>.
                             </p>
 
                             <div class="row g-2 g-sm-3 mb-4">
                                 <div class="col-6 col-sm-4">
                                     <div class="p-3 bg-white bg-opacity-10 rounded-3 border border-white border-opacity-25 text-center h-100">
-                                        <div class="fw-extrabold fs-4 text-warning">4 Seats</div>
-                                        <div class="small fw-bold text-white">Graduates Quota</div>
+                                        <div class="fw-extrabold fs-4 text-warning">4 / 6</div>
+                                        <div class="small fw-bold text-white">Graduates Seats</div>
                                         <div class="extra-small text-light opacity-75">Patna, Tirhut, Darbhanga, Kosi</div>
                                     </div>
                                 </div>
                                 <div class="col-6 col-sm-4">
                                     <div class="p-3 bg-white bg-opacity-10 rounded-3 border border-white border-opacity-25 text-center h-100">
-                                        <div class="fw-extrabold fs-4 text-warning">4 Seats</div>
-                                        <div class="small fw-bold text-white">Teachers Quota</div>
+                                        <div class="fw-extrabold fs-4 text-warning">4 / 6</div>
+                                        <div class="small fw-bold text-white">Teachers Seats</div>
                                         <div class="extra-small text-light opacity-75">Patna, Tirhut, Darbhanga, Saran</div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="p-3 bg-white bg-opacity-10 rounded-3 border border-white border-opacity-25 text-center h-100">
-                                        <div class="fw-extrabold fs-4 text-success">38</div>
-                                        <div class="small fw-bold text-white">Districts Covered</div>
-                                        <div class="extra-small text-light opacity-75">PR-STV Ballot System</div>
+                                        <div class="fw-extrabold fs-4 text-success">30</div>
+                                        <div class="small fw-bold text-white">Districts in Poll</div>
+                                        <div class="extra-small text-light opacity-75">Out of 38 (PR-STV)</div>
                                     </div>
                                 </div>
                             </div>
