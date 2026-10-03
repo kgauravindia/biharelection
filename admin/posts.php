@@ -275,8 +275,11 @@ $total_pages = ceil($total_rows / $limit);
                                 <tr>
                                     <td class="text-muted small"><?php echo $offset + $idx + 1; ?></td>
                                     <td>
-                                        <?php if (!empty($p['featured_image'])): ?>
-                                            <img src="<?php echo htmlspecialchars($p['featured_image']); ?>" alt="Cover" class="rounded object-fit-cover shadow-sm border" width="60" height="40" onerror="this.onerror=null; this.src='../assets/image/logo.png';">
+                                        <?php if (!empty($p['featured_image'])): 
+                                            $f_img = trim($p['featured_image']);
+                                            $img_src = (strpos($f_img, 'http://') === 0 || strpos($f_img, 'https://') === 0 || strpos($f_img, '/') === 0) ? $f_img : '../' . $f_img;
+                                        ?>
+                                            <img src="<?php echo htmlspecialchars($img_src); ?>" alt="Cover" class="rounded object-fit-cover shadow-sm border" width="60" height="40" onerror="this.onerror=null; this.src='../assets/image/logo.png';">
                                         <?php else: ?>
                                             <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted border" style="width: 60px; height: 40px; font-size: 10px;">
                                                 <i class="fas fa-image"></i>

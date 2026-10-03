@@ -192,6 +192,38 @@ function initAdminTables($conn) {
         INDEX (`status`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
+    // Blog & Editorial Posts Table
+    $conn->query("CREATE TABLE IF NOT EXISTS `posts` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `title` VARCHAR(500) NOT NULL,
+        `slug` VARCHAR(300) NOT NULL,
+        `excerpt` TEXT NULL,
+        `content` LONGTEXT NULL,
+        `featured_image` VARCHAR(500) NULL,
+        `categories` VARCHAR(255) NULL,
+        `tags` TEXT NULL,
+        `author_name` VARCHAR(100) DEFAULT 'Bihar Election Editorial Team',
+        `status` VARCHAR(20) DEFAULT 'published',
+        `views_count` INT DEFAULT 0,
+        `published_at` DATETIME NOT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX `idx_slug` (`slug`),
+        INDEX `idx_published_at` (`published_at`),
+        INDEX `idx_status` (`status`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+
+    // Categories Table
+    $conn->query("CREATE TABLE IF NOT EXISTS `categories` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `name` VARCHAR(150) NOT NULL,
+        `slug` VARCHAR(150) NOT NULL UNIQUE,
+        `description` TEXT NULL,
+        `posts_count` INT DEFAULT 0,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+
     // Seed panchayat_samiti from panchayat_samiti_2016 if table empty
     $chk_ps = $conn->query("SELECT id FROM `panchayat_samiti` LIMIT 1");
     if ($chk_ps && $chk_ps->num_rows === 0) {

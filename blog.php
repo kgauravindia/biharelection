@@ -85,6 +85,15 @@ if ($pdo) {
     }
 }
 
+function resolveBlogImgUrl($url) {
+    $url = trim((string)$url);
+    if (empty($url)) return '';
+    if (strpos($url, 'http://') === 0 || strpos($url, 'https://') === 0) {
+        return $url;
+    }
+    return rtrim(SITE_URL, '/') . '/' . ltrim($url, '/');
+}
+
 $raw_slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 $slug = trim($raw_slug, '/');
 $is_single = !empty($slug);
@@ -303,7 +312,7 @@ include __DIR__ . '/header.php';
                         <!-- Featured Image -->
                         <?php if (!empty($article['featured_image'])): ?>
                             <div class="mb-4 text-center">
-                                <img src="<?php echo htmlspecialchars($article['featured_image']); ?>" alt="<?php echo htmlspecialchars($article['title']); ?>" class="img-fluid rounded-4 shadow-sm border w-100 object-fit-cover" width="800" height="440" style="aspect-ratio: 16 / 9; max-height: 440px;" onerror="this.style.display='none';">
+                                <img src="<?php echo htmlspecialchars(resolveBlogImgUrl($article['featured_image'])); ?>" alt="<?php echo htmlspecialchars($article['title']); ?>" class="img-fluid rounded-4 shadow-sm border w-100 object-fit-cover" width="800" height="440" style="aspect-ratio: 16 / 9; max-height: 440px;" onerror="this.style.display='none';">
                             </div>
                         <?php endif; ?>
 
@@ -375,7 +384,7 @@ include __DIR__ . '/header.php';
                                 <?php foreach ($related_posts as $rp): ?>
                                     <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($rp['slug']); ?>" class="text-decoration-none d-flex gap-3 group-hover">
                                         <?php if (!empty($rp['featured_image'])): ?>
-                                            <img src="<?php echo htmlspecialchars($rp['featured_image']); ?>" alt="" class="rounded-3 object-fit-cover flex-shrink-0" width="70" height="55" onerror="this.onerror=null; this.src='<?php echo SITE_URL; ?>/assets/image/logo.png';">
+                                            <img src="<?php echo htmlspecialchars(resolveBlogImgUrl($rp['featured_image'])); ?>" alt="" class="rounded-3 object-fit-cover flex-shrink-0" width="70" height="55" onerror="this.onerror=null; this.src='<?php echo SITE_URL; ?>/assets/image/logo.png';">
                                         <?php else: ?>
                                             <div class="bg-light rounded-3 d-flex align-items-center justify-content-center text-muted flex-shrink-0 border" style="width: 70px; height: 55px;">
                                                 <i class="bi bi-image"></i>
@@ -495,7 +504,7 @@ include __DIR__ . '/header.php';
                             <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white transition hover-elevate">
                                 <?php if (!empty($p['featured_image'])): ?>
                                     <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($p['slug']); ?>">
-                                        <img src="<?php echo htmlspecialchars($p['featured_image']); ?>" class="card-img-top object-fit-cover" width="400" height="200" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="<?php echo htmlspecialchars($p['title']); ?>" onerror="this.onerror=null; this.src='<?php echo SITE_URL; ?>/assets/image/logo.png';">
+                                        <img src="<?php echo htmlspecialchars(resolveBlogImgUrl($p['featured_image'])); ?>" class="card-img-top object-fit-cover" width="400" height="200" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="<?php echo htmlspecialchars($p['title']); ?>" onerror="this.onerror=null; this.src='<?php echo SITE_URL; ?>/assets/image/logo.png';">
                                     </a>
                                 <?php else: ?>
                                     <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($p['slug']); ?>" class="bg-light d-flex align-items-center justify-content-center text-muted" style="height: 200px; aspect-ratio: 16 / 9;">
