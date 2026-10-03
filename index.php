@@ -12,6 +12,20 @@ $candidates = DataProvider::getCandidates();
 $news = DataProvider::getNews();
 $panchayats = DataProvider::getPanchayatData();
 
+// Fetch latest blog article
+$latest_post = null;
+$pdo_home = Database::getConnection();
+if ($pdo_home) {
+    try {
+        $stmt_post = $pdo_home->query("SELECT id, title, slug, published_at, categories FROM `posts` WHERE `status` = 'published' ORDER BY `published_at` DESC, `id` DESC LIMIT 1");
+        if ($stmt_post) {
+            $latest_post = $stmt_post->fetch(PDO::FETCH_ASSOC);
+        }
+    } catch (Throwable $e) {
+        // fallback
+    }
+}
+
 $pageTitle = 'Bihar Election 2026: 243 Assembly Data, 38 Districts & Panchayat Delimitation Platform';
 $pageDescription = 'Bihar\'s comprehensive non-government election data platform. Explore all 243 Assembly Constituencies, 38 District Hubs (Patna, Muzaffarpur, Gaya, Bhagalpur), 2026 Panchayat Delimitation status & verified MLA profiles.';
 $pageKeywords = 'Bihar Election 2026, 243 Bihar Assembly Constituencies, Patna Vidhan Sabha, Bihar Election Results, 38 Districts Bihar, Bihar Panchayat 2026, Bihar MLA list, Bihar Political Data';
@@ -74,8 +88,27 @@ require_once __DIR__ . '/header.php';
         </div>
     </section>
 
+    <!-- Latest Blog & Editorial Single Line Headline Strip -->
+    <?php if (!empty($latest_post)): ?>
+    <div class="container py-2" style="position: relative; z-index: 15; margin-top: -12px; margin-bottom: 6px;">
+        <div class="bg-white border rounded-pill py-1.5 px-3 shadow-sm d-flex align-items-center justify-content-between gap-2 overflow-hidden">
+            <div class="d-flex align-items-center gap-2 overflow-hidden text-truncate flex-grow-1">
+                <span class="badge bg-danger text-white rounded-pill px-2.5 py-1 text-uppercase fw-bold text-nowrap" style="font-size: 11px;">
+                    <i class="bi bi-newspaper me-1"></i> Latest Editorial
+                </span>
+                <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($latest_post['slug']); ?>" class="text-dark fw-bold text-truncate text-decoration-none hover-primary small mb-0 d-block" title="<?php echo htmlspecialchars($latest_post['title']); ?>">
+                    <?php echo htmlspecialchars($latest_post['title']); ?>
+                </a>
+            </div>
+            <a href="<?php echo SITE_URL; ?>/blog" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-0.5 text-nowrap fw-semibold d-none d-sm-inline-flex align-items-center gap-1" style="font-size: 12px;">
+                Visit Blog &rarr;
+            </a>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <!-- Live Governance & Electoral Stat Grid Bar (Mobile-first 2-col / 4-col / 8-col Grid) -->
-    <div class="container governance-stat-container" style="margin-top: -28px; position: relative; z-index: 10;">
+    <div class="container governance-stat-container" style="<?php echo !empty($latest_post) ? 'margin-top: -8px;' : 'margin-top: -28px;'; ?> position: relative; z-index: 10;">
         <div class="row g-2 g-md-3 row-cols-2 row-cols-sm-4 row-cols-xl-4 row-cols-xxl-8">
             <!-- 1: Assembly MLAs -->
             <div class="col">
@@ -802,103 +835,118 @@ require_once __DIR__ . '/header.php';
             </div>
         </section>
 
-        <!-- Upcoming Election: Bihar Legislative Council (MLC) Section -->
+        <!-- Ongoing Election: Bihar Legislative Council (Vidhan Parishad) 2026 Section -->
         <section class="mb-5">
-            <div class="card border-0 shadow-sm rounded-4 overflow-hidden" style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border: 1px solid #e2e8f0 !important;">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden" style="background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 50%, #0f172a 100%); color: #fff;">
                 <div class="p-4 p-lg-5">
                     <div class="row align-items-center g-4">
                         <div class="col-12 col-lg-7">
                             <div class="d-flex flex-wrap gap-2 mb-3">
-                                <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill">
-                                    <i class="bi bi-calendar-check-fill me-1"></i> Upcoming Election
+                                <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                                    <i class="bi bi-broadcast me-1"></i> ONGOING ELECTION
                                 </span>
-                                <span class="badge bg-primary text-white fw-bold px-3 py-1.5 rounded-pill">
-                                    🏛️ Bihar Vidhan Parishad
+                                <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                                    🗳️ Polling: 23 Oct 2026
                                 </span>
-                                <span class="badge bg-secondary text-white fw-bold px-3 py-1.5 rounded-pill">
-                                    75 Upper House Seats
+                                <span class="badge bg-light text-dark fw-semibold px-3 py-1.5 rounded-pill">
+                                    Gazette: TCGCGajat2026.pdf
                                 </span>
                             </div>
 
-                            <h2 class="h3 fw-bold mb-2" style="color: var(--primary-navy); font-family: 'Outfit', sans-serif;">
-                                Bihar Legislative Council (MLC) Elections
+                            <h2 class="h3 fw-bold mb-2 text-white" style="font-family: 'Outfit', sans-serif;">
+                                Bihar Vidhan Parishad Biennial Election 2026
                             </h2>
-                            <p class="text-muted mb-4" style="line-height: 1.6;">
-                                Explore full roster, tenure expirations, and quota breakdowns for all <strong>75 Members of Bihar Legislative Council (MLCs)</strong> across Local Authorities, Graduates, Teachers, and Assembly quotas.
+                            <h3 class="h6 fw-normal text-light opacity-90 mb-3" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                                बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 4 स्नातक एवं 4 शिक्षक सीटें
+                            </h3>
+                            
+                            <p class="text-light opacity-90 mb-4" style="line-height: 1.6; font-size: 0.95rem;">
+                                The Chief Electoral Officer, Bihar has notified biennial elections (Notification No. <strong>M2–03(TC&GC)/2026-5369</strong>) for <strong>8 Legislative Council seats</strong> across all 38 districts. Polling takes place on <strong>23 October 2026</strong> and counting on <strong>27 October 2026</strong>.
                             </p>
 
                             <div class="row g-2 g-sm-3 mb-4">
                                 <div class="col-6 col-sm-4">
-                                    <div class="p-3 bg-white rounded-3 shadow-xs border text-center h-100">
-                                        <div class="fw-extrabold fs-4 text-primary">24</div>
-                                        <div class="small fw-semibold text-dark">Local Authorities</div>
-                                        <div class="extra-small text-muted">Panchayat &amp; ULB Electors</div>
+                                    <div class="p-3 bg-white bg-opacity-10 rounded-3 border border-white border-opacity-25 text-center h-100">
+                                        <div class="fw-extrabold fs-4 text-warning">4 Seats</div>
+                                        <div class="small fw-bold text-white">Graduates Quota</div>
+                                        <div class="extra-small text-light opacity-75">Patna, Tirhut, Darbhanga, Kosi</div>
                                     </div>
                                 </div>
                                 <div class="col-6 col-sm-4">
-                                    <div class="p-3 bg-white rounded-3 shadow-xs border text-center h-100">
-                                        <div class="fw-extrabold fs-4 text-warning" style="color: #d97706 !important;">27</div>
-                                        <div class="small fw-semibold text-dark">Assembly Quota</div>
-                                        <div class="extra-small text-muted">Elected by 243 MLAs</div>
+                                    <div class="p-3 bg-white bg-opacity-10 rounded-3 border border-white border-opacity-25 text-center h-100">
+                                        <div class="fw-extrabold fs-4 text-warning">4 Seats</div>
+                                        <div class="small fw-bold text-white">Teachers Quota</div>
+                                        <div class="extra-small text-light opacity-75">Patna, Tirhut, Darbhanga, Saran</div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
-                                    <div class="p-3 bg-white rounded-3 shadow-xs border text-center h-100">
-                                        <div class="fw-extrabold fs-4 text-success">24</div>
-                                        <div class="small fw-semibold text-dark">Graduates &amp; Nominated</div>
-                                        <div class="extra-small text-muted">Teachers &amp; Governor Quotas</div>
+                                    <div class="p-3 bg-white bg-opacity-10 rounded-3 border border-white border-opacity-25 text-center h-100">
+                                        <div class="fw-extrabold fs-4 text-success">38</div>
+                                        <div class="small fw-bold text-white">Districts Covered</div>
+                                        <div class="extra-small text-light opacity-75">PR-STV Ballot System</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="d-flex flex-wrap gap-2">
-                                <a href="<?php echo SITE_URL; ?>/mlc" class="btn btn-danger fw-bold px-4 py-2.5 rounded-pill shadow-sm">
-                                    <i class="bi bi-list-columns-reverse me-1"></i> See 75 MLCs List &rarr;
+                                <a href="<?php echo getVidhanParishadElectionUrl(); ?>" class="btn btn-warning fw-bold px-4 py-2.5 rounded-pill text-dark shadow-sm">
+                                    <i class="bi bi-ui-checks-grid me-1"></i> View Election Hub &amp; Schedule &rarr;
                                 </a>
-                                <a href="<?php echo SITE_URL; ?>/representatives" class="btn btn-outline-secondary fw-bold px-4 py-2.5 rounded-pill">
-                                    All Representatives
+                                <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/ImportantInstructionsAndLetters/TCGCGajat2026.pdf" target="_blank" rel="noopener" class="btn btn-outline-light fw-bold px-3 py-2.5 rounded-pill">
+                                    <i class="bi bi-file-earmark-pdf me-1"></i> Gazette PDF
+                                </a>
+                                <a href="<?php echo SITE_URL; ?>/mlc" class="btn btn-outline-light fw-semibold px-3 py-2.5 rounded-pill">
+                                    All 75 MLCs List
                                 </a>
                             </div>
                         </div>
 
                         <div class="col-12 col-lg-5">
-                            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                            <div class="card border-0 shadow-sm rounded-4 p-4 text-dark bg-white">
                                 <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
                                     <h5 class="fw-bold mb-0 text-navy fs-6">
-                                        <i class="bi bi-person-lines-fill me-1 text-danger"></i> Vidhan Parishad Highlights
+                                        <i class="bi bi-calendar-event-fill me-1 text-danger"></i> Key Election Milestones
                                     </h5>
-                                    <span class="badge bg-light text-dark border">75 MLCs</span>
+                                    <span class="badge bg-danger text-white">Live 2026</span>
                                 </div>
 
-                                <div class="d-flex flex-column gap-2.5">
-                                    <div class="p-2.5 bg-light rounded-3 d-flex justify-content-between align-items-center">
+                                <div class="d-flex flex-column gap-2 small">
+                                    <div class="p-2 bg-light rounded-3 d-flex justify-content-between align-items-center">
                                         <div>
-                                            <div class="fw-bold small text-dark">Permanent Upper Chamber</div>
-                                            <div class="text-muted" style="font-size: 0.75rem;">1/3rd Members retire every 2 years (6-yr tenure)</div>
+                                            <div class="fw-bold text-dark">Gazette Notification Issued</div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">CEO Bihar Ref: M2–03/2026-5369</div>
                                         </div>
-                                        <span class="badge bg-primary text-white small">Biennial Polls</span>
+                                        <span class="badge bg-success">29 Sep 2026</span>
                                     </div>
 
-                                    <div class="p-2.5 bg-light rounded-3 d-flex justify-content-between align-items-center">
+                                    <div class="p-2 bg-light rounded-3 d-flex justify-content-between align-items-center">
                                         <div>
-                                            <div class="fw-bold small text-dark">Local Body Authority Electors</div>
-                                            <div class="text-muted" style="font-size: 0.75rem;">Mukhiyas, Ward Members, Panchayat Samiti &amp; ZP</div>
+                                            <div class="fw-bold text-dark">Last Date for Nominations</div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">Submission to Divisional ROs</div>
                                         </div>
-                                        <span class="badge bg-success text-white small">24 Seats</span>
+                                        <span class="badge bg-primary">06 Oct 2026</span>
                                     </div>
 
-                                    <div class="p-2.5 bg-light rounded-3 d-flex justify-content-between align-items-center">
+                                    <div class="p-2 bg-light rounded-3 d-flex justify-content-between align-items-center">
                                         <div>
-                                            <div class="fw-bold small text-dark">Teachers &amp; Graduates Quota</div>
-                                            <div class="text-muted" style="font-size: 0.75rem;">Patna, Tirhut, Kosi, Saran, Darbhanga, Gaya</div>
+                                            <div class="fw-bold text-dark">Voting Day (Polling Hours)</div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">8:00 AM – 4:00 PM via Paper Ballot</div>
                                         </div>
-                                        <span class="badge bg-info text-dark small">12 Seats</span>
+                                        <span class="badge bg-warning text-dark fw-bold">23 Oct 2026</span>
+                                    </div>
+
+                                    <div class="p-2 bg-light rounded-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="fw-bold text-dark">Counting of Votes &amp; Results</div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">Quota &amp; Preference Calculation</div>
+                                        </div>
+                                        <span class="badge bg-dark text-white">27 Oct 2026</span>
                                     </div>
                                 </div>
 
                                 <div class="mt-3 pt-2 border-top text-center">
-                                    <a href="<?php echo SITE_URL; ?>/mlc" class="small fw-bold text-decoration-none text-danger">
-                                        Open Bihar MLC Directory &amp; Contact Roster &rarr;
+                                    <a href="<?php echo getVidhanParishadElectionUrl(); ?>" class="small fw-bold text-decoration-none text-danger">
+                                        Check Your District Constituency &amp; Form 18/19 Guide &rarr;
                                     </a>
                                 </div>
                             </div>

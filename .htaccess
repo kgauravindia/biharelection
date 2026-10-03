@@ -106,8 +106,12 @@ AddDefaultCharset UTF-8
     RewriteRule ^rajya-sabha/([a-zA-Z0-9_-]+)/?$ mp.php?house=rajyasabha&slug=$1 [L,QSA]
 
     # -------------------------------------------------------------
-    # 3. MLC (Vidhan Parishad) (e.g. /mlc, /vidhan-parishad)
+    # 3. MLC (Vidhan Parishad) & 2026 Election
     # -------------------------------------------------------------
+    RewriteRule ^vidhan-parishad-election/?$ vidhan-parishad-election.php [L,QSA]
+    RewriteRule ^vidhan-parishad-election-2026/?$ vidhan-parishad-election.php [L,QSA]
+    RewriteRule ^vidhan-parishad-chunav/?$ vidhan-parishad-election.php [L,QSA]
+    RewriteRule ^mlc-election/?$ vidhan-parishad-election.php [L,QSA]
     RewriteRule ^mlc/?$ mlc.php [L,QSA]
     RewriteRule ^mlc/([a-zA-Z0-9_-]+)/?$ mlc.php?slug=$1 [L,QSA]
     RewriteRule ^vidhan-parishad/?$ mlc.php [L,QSA]
