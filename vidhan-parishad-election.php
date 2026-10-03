@@ -346,10 +346,13 @@ $timeline = [
                     <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/ImportantInstructionsAndLetters/TCGCGajat2026.pdf" target="_blank" rel="noopener" class="btn gazette-btn px-4 py-2.5 rounded-3 fw-bold">
                         <i class="bi bi-file-earmark-pdf-fill me-1"></i> View Official Gazette PDF (TCGCGajat2026.pdf) &rarr;
                     </a>
+                    <a href="#nomination-details" class="btn btn-warning px-3 py-2.5 rounded-3 fw-bold text-dark">
+                        <i class="bi bi-file-earmark-person-fill me-1"></i> Nomination Details (प्ररूप 2E / 26)
+                    </a>
                     <a href="#schedule" class="btn btn-outline-light px-3 py-2.5 rounded-3 fw-semibold">
                         <i class="bi bi-calendar-event me-1"></i> Full Schedule
                     </a>
-                    <a href="#district-finder" class="btn btn-outline-warning px-3 py-2.5 rounded-3 fw-semibold">
+                    <a href="#district-finder" class="btn btn-outline-info px-3 py-2.5 rounded-3 fw-semibold">
                         <i class="bi bi-search me-1"></i> Check Your District Status
                     </a>
                 </div>
@@ -504,7 +507,163 @@ $timeline = [
             </div>
 
             <!-- ============================================================= -->
-            <!-- 4. ALL 8 CONSTITUENCIES DETAILS -->
+            <!-- 4. CANDIDATE NOMINATION PROCESS, FORMS & GUIDELINES -->
+            <!-- ============================================================= -->
+            <div id="nomination-details" class="mb-5">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                    <div>
+                        <span class="badge bg-warning text-dark fw-bold text-uppercase px-2.5 py-1 mb-1">
+                            <i class="bi bi-file-earmark-person-fill me-1"></i> Candidate Filing Desk
+                        </span>
+                        <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
+                            Nomination Details &amp; Guidelines (नामनिर्देशन प्रक्रिया)
+                        </h3>
+                    </div>
+                    <span class="badge bg-danger fw-bold px-3 py-1.5 rounded-pill animate-pulse">
+                        <i class="bi bi-clock-history me-1"></i> Window: 29 Sep – 06 Oct 2026 (11 AM – 3 PM)
+                    </span>
+                </div>
+
+                <!-- Nomination Status Banner -->
+                <div class="alert alert-warning border-warning border-opacity-50 rounded-4 p-3.5 mb-4 shadow-sm">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="bg-warning text-dark rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 42px; height: 42px;">
+                            <i class="bi bi-megaphone-fill fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Nomination Filing is Currently Underway Across 8 Constituencies</h6>
+                            <p class="text-dark small opacity-90 mb-2" style="line-height: 1.5;">
+                                Candidates contesting for <strong>4 Graduates'</strong> (Patna, Tirhut, Darbhanga, Kosi) and <strong>4 Teachers'</strong> (Patna, Tirhut, Darbhanga, Saran) constituencies must submit their nomination papers to their respective Returning Officer (Divisional Commissioner) between <strong>11:00 AM and 3:00 PM</strong> on any working day up to <strong>06 October 2026</strong>.
+                            </p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="https://affidavit.eci.gov.in/" target="_blank" rel="noopener" class="btn btn-dark btn-sm rounded-pill fw-semibold">
+                                    <i class="bi bi-search me-1"></i> View Submitted Candidate Affidavits (ECI) &rarr;
+                                </a>
+                                <a href="https://suvidha.eci.gov.in/" target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm rounded-pill fw-semibold">
+                                    <i class="bi bi-box-arrow-up-right me-1"></i> ECI Suvidha Candidate Portal
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nomination Forms & Statutory Requirements -->
+                <div class="row g-3 mb-4">
+                    <!-- Form 2E Card -->
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white border-top border-primary border-4">
+                            <div class="d-flex align-items-center gap-2 mb-3">
+                                <div class="bg-primary-subtle text-primary rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                                    <i class="bi bi-file-earmark-text-fill fs-4"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-0 text-dark">Form 2E (प्ररूप 2ङ)</h5>
+                                    <small class="text-muted">Nomination Paper for Council Constituencies</small>
+                                </div>
+                            </div>
+                            <p class="text-secondary small mb-3">
+                                Prescribed statutory nomination form under Conduct of Elections Rules, 1961 for Legislative Council Graduates' and Teachers' Constituencies.
+                            </p>
+                            <ul class="text-secondary small ps-3 mb-4" style="line-height: 1.6;">
+                                <li><strong>Part I:</strong> Used for candidates set up by recognized political parties (requires 1 elector proposer).</li>
+                                <li><strong>Part II:</strong> Used for independent or unrecognized registered party candidates (requires <strong>10 registered electors</strong> of that constituency as proposers).</li>
+                                <li><strong>Part III:</strong> Candidate's declaration of age, symbol choice, and citizenship oath.</li>
+                            </ul>
+                            <a href="https://ceoelection.bihar.gov.in/" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold mt-auto">
+                                <i class="bi bi-download me-1"></i> Download Form 2E Blank Template
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Form 26 Affidavit Card -->
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white border-top border-warning border-4">
+                            <div class="d-flex align-items-center gap-2 mb-3">
+                                <div class="bg-warning-subtle text-warning-emphasis rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                                    <i class="bi bi-shield-check fs-4 text-warning"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-0 text-dark">Form 26 (प्ररूप 26 - शपथ पत्र)</h5>
+                                    <small class="text-muted">Mandatory Candidate Affidavit</small>
+                                </div>
+                            </div>
+                            <p class="text-secondary small mb-3">
+                                Mandatory sworn affidavit on non-judicial stamp paper attested by a Notary Public or Oath Commissioner before the RO.
+                            </p>
+                            <ul class="text-secondary small ps-3 mb-4" style="line-height: 1.6;">
+                                <li><strong>Criminal Antecedents:</strong> Disclosure of FIRs, pending cases, convictions, or charges framed.</li>
+                                <li><strong>Assets &amp; Liabilities:</strong> Complete movable/immovable assets and liabilities of candidate, spouse, and dependents.</li>
+                                <li><strong>PAN &amp; Tax:</strong> PAN details and last 5 years' Income Tax returns.</li>
+                                <li><strong>Educational Qualifications:</strong> Highest educational degree with school/university details.</li>
+                            </ul>
+                            <a href="https://affidavit.eci.gov.in/" target="_blank" class="btn btn-outline-warning text-dark btn-sm rounded-pill fw-semibold mt-auto">
+                                <i class="bi bi-box-arrow-up-right me-1"></i> ECI Online Affidavit Portal (Form 26)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Rules & Eligibility Table -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                    <h5 class="fw-bold text-dark mb-3" style="font-family: 'Outfit', sans-serif;">
+                        <i class="bi bi-check2-square text-success me-2"></i> Key Rules &amp; Qualifications for Contesting Candidates
+                    </h5>
+
+                    <div class="row g-3 small">
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100 border">
+                                <div class="fw-bold text-dark mb-1">
+                                    <i class="bi bi-person-check-fill text-primary me-1"></i> Age &amp; Elector Qualifications
+                                </div>
+                                <ul class="text-muted mb-0 ps-3" style="line-height: 1.5;">
+                                    <li>Candidate must be a citizen of India and minimum <strong>30 years of age</strong> as on the qualifying date.</li>
+                                    <li>Candidate must be registered as an elector in any Assembly constituency in Bihar.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100 border">
+                                <div class="fw-bold text-dark mb-1">
+                                    <i class="bi bi-cash-stack text-success me-1"></i> Security Deposit (जमानत राशि)
+                                </div>
+                                <ul class="text-muted mb-0 ps-3" style="line-height: 1.5;">
+                                    <li><strong>General Category:</strong> ₹10,000/-</li>
+                                    <li><strong>SC / ST Category:</strong> ₹5,000/- (valid caste certificate required).</li>
+                                    <li>Deposited in cash with the Returning Officer or via Government Treasury Challan.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100 border">
+                                <div class="fw-bold text-dark mb-1">
+                                    <i class="bi bi-people-fill text-info me-1"></i> Proposers Requirement (प्रस्तावक)
+                                </div>
+                                <ul class="text-muted mb-0 ps-3" style="line-height: 1.5;">
+                                    <li><strong>Recognized National/State Parties:</strong> 1 proposer registered in that council constituency.</li>
+                                    <li><strong>Unrecognized Parties / Independents:</strong> <strong>10 proposers</strong> who must be registered electors in the respective Graduate or Teacher electoral roll.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100 border">
+                                <div class="fw-bold text-dark mb-1">
+                                    <i class="bi bi-building text-danger me-1"></i> Where to Submit Nominations
+                                </div>
+                                <ul class="text-muted mb-0 ps-3" style="line-height: 1.5;">
+                                    <li>Submitted in person by the candidate or their authorized proposer to the designated <strong>Returning Officer (Divisional Commissioner)</strong> at their divisional headquarters.</li>
+                                    <li>Maximum 4 sets of nomination papers allowed per candidate.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- 5. ALL 8 CONSTITUENCIES DETAILS -->
             <!-- ============================================================= -->
             <div id="constituencies" class="mb-5">
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
@@ -780,6 +939,45 @@ $timeline = [
         <!-- Right Sidebar (4 Cols) -->
         <div class="col-lg-4">
             
+            <!-- Candidate Nomination Desk Widget -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 border-start border-warning border-4">
+                <div class="d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom">
+                    <h5 class="fw-bold text-dark mb-0" style="font-family: 'Outfit', sans-serif;">
+                        <i class="bi bi-person-lines-fill text-warning me-1"></i> Nomination Desk
+                    </h5>
+                    <span class="badge bg-danger">Open Now</span>
+                </div>
+                <div class="small text-secondary mb-3">
+                    Statutory filings for the 8 Council seats (29 Sep – 06 Oct 2026):
+                </div>
+                <div class="p-2.5 bg-light rounded-3 border mb-3 small">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">Last Date:</span>
+                        <strong class="text-dark">06 Oct 2026 (3:00 PM)</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">Nomination Paper:</span>
+                        <strong class="text-primary">Form 2E</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">Affidavit:</span>
+                        <strong class="text-dark">Form 26</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">Security Deposit:</span>
+                        <strong class="text-success">₹10,000 (Gen) / ₹5,000 (SC/ST)</strong>
+                    </div>
+                </div>
+                <div class="d-grid gap-2">
+                    <a href="https://affidavit.eci.gov.in/" target="_blank" rel="noopener" class="btn btn-warning fw-bold btn-sm py-2 rounded-3 text-dark">
+                        <i class="bi bi-search me-1"></i> ECI Candidate Affidavits Portal &rarr;
+                    </a>
+                    <a href="https://suvidha.eci.gov.in/" target="_blank" rel="noopener" class="btn btn-outline-dark fw-semibold btn-sm py-2 rounded-3">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Suvidha Candidate Portal
+                    </a>
+                </div>
+            </div>
+
             <!-- Gazette Notification Download Widget -->
             <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
                 <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom" style="font-family: 'Outfit', sans-serif;">
