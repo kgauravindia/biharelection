@@ -327,11 +327,6 @@ $activeNav = $activeNav ?? 'home';
                         </ul>
                     </li>
 
-                    <!-- Representatives -->
-                    <li class="nav-item">
-                        <a href="<?php echo hindi_base_url('representatives'); ?>" class="nav-link px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['representatives', 'candidates']) ? 'active text-warning' : ''; ?>">जनप्रतिनिधि</a>
-                    </li>
-
                     <!-- Blog -->
                     <li class="nav-item">
                         <a href="<?php echo getBlogUrl(); ?>" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'blog' ? 'active text-warning' : ''; ?>">ब्लॉग</a>

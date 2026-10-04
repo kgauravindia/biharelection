@@ -320,11 +320,6 @@ $activeNav = $activeNav ?? 'home';
                         </ul>
                     </li>
 
-                    <!-- Representatives / Candidates -->
-                    <li class="nav-item">
-                        <a href="<?php echo SITE_URL; ?>/representatives" class="nav-link px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['representatives', 'candidates']) ? 'active text-warning' : ''; ?>">Representatives</a>
-                    </li>
-
                     <!-- Blog -->
                     <li class="nav-item">
                         <a href="<?php echo getBlogUrl(); ?>" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'blog' ? 'active text-warning' : ''; ?>">Blog</a>
