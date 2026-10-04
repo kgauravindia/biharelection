@@ -205,10 +205,10 @@ $activeNav = $activeNav ?? 'home';
                         </ul>
                     </li>
 
-                    <!-- MLA (Vidhan Sabha) Dropdown -->
+                    <!-- Vidhan Sabha Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['assembly', 'mla']) ? 'active text-warning' : ''; ?>" href="#" id="mlaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            विधान सभा (MLA)
+                            विधान सभा
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="mlaDropdown">
                             <li><h6 class="dropdown-header text-uppercase small fw-bold">बिहार विधान सभा</h6></li>
