@@ -1,4 +1,8 @@
 <?php
+/**
+ * BiharElection.com - Blog & Editorial Posts Management
+ * Search, filter, edit, publish/draft toggle, and manage news reports & analysis articles.
+ */
 require_once __DIR__ . '/auth_check.php';
 requireAdmin();
 
@@ -7,7 +11,7 @@ $message = '';
 $error = '';
 
 if (isset($_GET['msg']) && $_GET['msg'] === 'saved') {
-    $message = "Post saved and published successfully.";
+    $message = "Article saved and published successfully.";
 }
 
 // Handle Delete Post
@@ -50,6 +54,7 @@ $filter_category = isset($_GET['category']) ? trim($_GET['category']) : '';
 $filter_status = isset($_GET['status']) ? trim($_GET['status']) : '';
 
 $posts = [];
+$all_recent_posts_for_jump = [];
 $total_rows = 0;
 $total_published = 0;
 $total_drafts = 0;
@@ -75,6 +80,14 @@ if ($conn) {
             }
         }
         sort($categories_list);
+    }
+
+    // Quick Jump dropdown list (all posts titles)
+    $jump_res = $conn->query("SELECT id, title, slug FROM `posts` ORDER BY `published_at` DESC, `id` DESC LIMIT 100");
+    if ($jump_res) {
+        while ($jr = $jump_res->fetch_assoc()) {
+            $all_recent_posts_for_jump[] = $jr;
+        }
     }
 
     // Build Query
@@ -117,6 +130,41 @@ $total_pages = ceil($total_rows / $limit);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
+    <style>
+        .post-row-actions {
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
+        }
+        .post-row:hover .post-row-actions {
+            opacity: 1;
+        }
+        .btn-edit-action {
+            background: #2563eb;
+            color: #ffffff !important;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+            text-decoration: none;
+        }
+        .btn-edit-action:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+        .quick-row-links a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .quick-row-links a:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
@@ -128,28 +176,34 @@ $total_pages = ceil($total_rows / $limit);
         
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <div>
-                <h1 class="h3 fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">Blog & Editorial Articles</h1>
-                <p class="text-muted mb-0">Manage and publish news reports, Vidhan Sabha analysis, and election guides.</p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1 small">
+                        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Blog &amp; Articles</li>
+                    </ol>
+                </nav>
+                <h1 class="h3 fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">Blog &amp; Editorial Articles</h1>
+                <p class="text-muted mb-0">Create, edit, and publish news reports, Vidhan Sabha analysis, and election guides.</p>
             </div>
-            <div class="mt-3 mt-md-0 d-flex gap-2">
-                <a href="../post-sitemap.xml" target="_blank" class="btn btn-outline-secondary fw-semibold px-3 py-2 rounded-3 shadow-sm bg-white">
-                    <i class="fas fa-sitemap me-1 text-warning"></i> XML Post Sitemap
+            <div class="mt-3 mt-md-0 d-flex flex-wrap gap-2 align-items-center">
+                <a href="../post-sitemap.xml" target="_blank" class="btn btn-outline-secondary fw-semibold px-3 py-2 rounded-pill shadow-sm bg-white btn-sm">
+                    <i class="fas fa-sitemap me-1 text-warning"></i> XML Sitemap
                 </a>
-                <a href="edit-post.php" class="btn btn-danger fw-semibold px-3 py-2 rounded-3 shadow-sm">
-                    <i class="fas fa-plus me-1"></i> Add New Article
+                <a href="edit-post.php" class="btn btn-danger fw-bold px-3.5 py-2 rounded-pill shadow-sm btn-sm d-inline-flex align-items-center gap-1">
+                    <i class="fas fa-plus-circle"></i> Add New Article
                 </a>
             </div>
         </div>
 
         <?php if (!empty($message)): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm" role="alert">
                 <i class="fas fa-check-circle me-2"></i> <?php echo htmlspecialchars($message); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
 
         <?php if (!empty($error)): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert">
                 <i class="fas fa-exclamation-triangle me-2"></i> <?php echo htmlspecialchars($error); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
@@ -203,6 +257,32 @@ $total_pages = ceil($total_rows / $limit);
             </div>
         </div>
 
+        <!-- Quick Jump to Edit Any Article Bar -->
+        <?php if (!empty($all_recent_posts_for_jump)): ?>
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white mb-4">
+                <div class="row align-items-center g-2">
+                    <div class="col-md-3">
+                        <span class="fw-bold text-dark small"><i class="fas fa-bolt text-warning me-1"></i> Quick Jump to Edit:</span>
+                    </div>
+                    <div class="col-md-7">
+                        <select id="quickEditSelect" class="form-select form-select-sm rounded-pill">
+                            <option value="">-- Select an existing article to edit directly --</option>
+                            <?php foreach ($all_recent_posts_for_jump as $jp): ?>
+                                <option value="<?php echo (int)$jp['id']; ?>">
+                                    #<?php echo $jp['id']; ?> — <?php echo htmlspecialchars($jp['title']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-sm btn-primary rounded-pill w-100 fw-bold" onclick="goToSelectedEdit()">
+                            <i class="fas fa-pen-to-square me-1"></i> Edit Post
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <!-- Filters & Search Toolbar -->
         <div class="section-card mb-4">
             <div class="section-card-body p-3">
@@ -244,7 +324,7 @@ $total_pages = ceil($total_rows / $limit);
         <div class="section-card">
             <div class="section-card-header d-flex justify-content-between align-items-center">
                 <h6 class="fw-bold mb-0 text-dark">
-                    <i class="fas fa-list me-2 text-danger"></i> Articles & Reports (<?php echo number_format($total_rows); ?> Total)
+                    <i class="fas fa-list me-2 text-danger"></i> Articles &amp; Reports (<?php echo number_format($total_rows); ?> Total)
                 </h6>
                 <span class="small text-muted">Page <?php echo $page; ?> of <?php echo max(1, $total_pages); ?></span>
             </div>
@@ -252,14 +332,14 @@ $total_pages = ceil($total_rows / $limit);
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th style="width: 60px;">#</th>
-                            <th style="width: 80px;">Cover</th>
-                            <th>Title & URL Slug</th>
+                            <th style="width: 50px;">ID</th>
+                            <th style="width: 70px;">Cover</th>
+                            <th>Title &amp; URL Slug</th>
                             <th>Category</th>
                             <th>Author</th>
                             <th>Status</th>
-                            <th>Published</th>
-                            <th class="text-end" style="width: 140px;">Actions</th>
+                            <th>Published Date</th>
+                            <th class="text-end" style="min-width: 170px;">Action / Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -268,32 +348,51 @@ $total_pages = ceil($total_rows / $limit);
                                 <td colspan="8" class="text-center py-5 text-muted">
                                     <i class="fas fa-folder-open fa-3x mb-3 text-secondary opacity-50 d-block"></i>
                                     No articles found matching your criteria.
+                                    <div class="mt-2">
+                                        <a href="edit-post.php" class="btn btn-sm btn-primary rounded-pill px-3">Add First Article</a>
+                                    </div>
                                 </td>
                             </tr>
                         <?php else: ?>
-                            <?php foreach ($posts as $idx => $p): ?>
-                                <tr>
-                                    <td class="text-muted small"><?php echo $offset + $idx + 1; ?></td>
+                            <?php foreach ($posts as $idx => $p): 
+                                $post_item_id = (int)$p['id'];
+                            ?>
+                                <tr class="post-row">
+                                    <td class="text-muted fw-bold small">#<?php echo $post_item_id; ?></td>
                                     <td>
                                         <?php if (!empty($p['featured_image'])): 
                                             $f_img = trim($p['featured_image']);
                                             $img_src = (strpos($f_img, 'http://') === 0 || strpos($f_img, 'https://') === 0 || strpos($f_img, '/') === 0) ? $f_img : '../' . $f_img;
                                         ?>
-                                            <img src="<?php echo htmlspecialchars($img_src); ?>" alt="Cover" class="rounded object-fit-cover shadow-sm border" width="60" height="40" onerror="this.onerror=null; this.src='../assets/image/logo.png';">
+                                            <a href="edit-post.php?id=<?php echo $post_item_id; ?>">
+                                                <img src="<?php echo htmlspecialchars($img_src); ?>" alt="Cover" class="rounded object-fit-cover shadow-sm border" width="55" height="38" onerror="this.onerror=null; this.src='../assets/image/logo.png';">
+                                            </a>
                                         <?php else: ?>
-                                            <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted border" style="width: 60px; height: 40px; font-size: 10px;">
-                                                <i class="fas fa-image"></i>
-                                            </div>
+                                            <a href="edit-post.php?id=<?php echo $post_item_id; ?>" class="text-decoration-none">
+                                                <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted border" style="width: 55px; height: 38px; font-size: 10px;">
+                                                    <i class="fas fa-image"></i>
+                                                </div>
+                                            </a>
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <div class="fw-bold text-dark text-truncate" style="max-width: 380px;">
-                                            <a href="edit-post.php?id=<?php echo $p['id']; ?>" class="text-dark text-decoration-none hover-primary">
-                                                <?php echo htmlspecialchars($p['title']); ?>
+                                        <div class="fw-bold text-dark mb-1" style="max-width: 420px;">
+                                            <a href="edit-post.php?id=<?php echo $post_item_id; ?>" class="text-dark text-decoration-none hover-primary d-inline-flex align-items-center gap-1">
+                                                <i class="fas fa-pen-to-square text-primary extra-small"></i>
+                                                <span><?php echo htmlspecialchars($p['title']); ?></span>
                                             </a>
                                         </div>
-                                        <div class="small text-muted text-truncate font-monospace" style="max-width: 380px;">
+                                        <div class="small text-muted text-truncate font-monospace" style="max-width: 420px; font-size: 0.78rem;">
                                             /blog/<?php echo htmlspecialchars(urldecode($p['slug'])); ?>
+                                        </div>
+                                        <div class="quick-row-links mt-1">
+                                            <a href="edit-post.php?id=<?php echo $post_item_id; ?>" class="text-primary fw-bold">Edit Article</a>
+                                            <span class="text-muted mx-1">&bull;</span>
+                                            <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($p['slug']); ?>" target="_blank" class="text-muted">View Live</a>
+                                            <span class="text-muted mx-1">&bull;</span>
+                                            <a href="posts.php?toggle_status=<?php echo $post_item_id; ?>" class="text-secondary"><?php echo ($p['status'] === 'published') ? 'Switch to Draft' : 'Publish Live'; ?></a>
+                                            <span class="text-muted mx-1">&bull;</span>
+                                            <a href="posts.php?delete_id=<?php echo $post_item_id; ?>" class="text-danger" onclick="return confirm('Delete article #<?php echo $post_item_id; ?> permanently?');">Delete</a>
                                         </div>
                                     </td>
                                     <td>
@@ -307,7 +406,7 @@ $total_pages = ceil($total_rows / $limit);
                                         <?php echo htmlspecialchars($p['author_name'] ?: 'Editorial Team'); ?>
                                     </td>
                                     <td>
-                                        <a href="posts.php?toggle_status=<?php echo $p['id']; ?>" class="text-decoration-none" title="Click to toggle status">
+                                        <a href="posts.php?toggle_status=<?php echo $post_item_id; ?>" class="text-decoration-none" title="Click to toggle status">
                                             <?php if ($p['status'] === 'published'): ?>
                                                 <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i> Published</span>
                                             <?php else: ?>
@@ -315,18 +414,23 @@ $total_pages = ceil($total_rows / $limit);
                                             <?php endif; ?>
                                         </a>
                                     </td>
-                                    <td class="small text-muted">
+                                    <td class="small text-muted" style="white-space: nowrap;">
                                         <?php echo date('d M Y', strtotime($p['published_at'])); ?>
                                     </td>
-                                    <td class="text-end">
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($p['slug']); ?>" target="_blank" class="btn btn-outline-secondary" title="View Live Post">
-                                                <i class="fas fa-eye"></i>
+                                    <td class="text-end" style="white-space: nowrap;">
+                                        <div class="d-flex justify-content-end align-items-center gap-1.5 post-row-actions">
+                                            <!-- Prominent Edit Button -->
+                                            <a href="edit-post.php?id=<?php echo $post_item_id; ?>" class="btn-edit-action" title="Edit Article #<?php echo $post_item_id; ?>">
+                                                <i class="fas fa-pen-to-square me-1"></i> Edit
                                             </a>
-                                            <a href="edit-post.php?id=<?php echo $p['id']; ?>" class="btn btn-outline-primary" title="Edit Article">
-                                                <i class="fas fa-edit"></i>
+                                            
+                                            <!-- View on Frontend -->
+                                            <a href="<?php echo SITE_URL; ?>/blog/<?php echo htmlspecialchars($p['slug']); ?>" target="_blank" class="btn btn-sm btn-light border rounded-circle" style="width: 32px; height: 32px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="View Live Post">
+                                                <i class="fas fa-eye text-muted"></i>
                                             </a>
-                                            <a href="posts.php?delete_id=<?php echo $p['id']; ?>" class="btn btn-outline-danger" title="Delete Article" onclick="return confirm('Are you sure you want to permanently delete this article?');">
+                                            
+                                            <!-- Delete Button -->
+                                            <a href="posts.php?delete_id=<?php echo $post_item_id; ?>" class="btn btn-sm btn-light border rounded-circle text-danger" style="width: 32px; height: 32px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="Delete Article" onclick="return confirm('Are you sure you want to permanently delete this article?');">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </div>
@@ -371,5 +475,15 @@ $total_pages = ceil($total_rows / $limit);
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function goToSelectedEdit() {
+    const sel = document.getElementById('quickEditSelect');
+    if (sel && sel.value) {
+        window.location.href = 'edit-post.php?id=' + sel.value;
+    } else {
+        alert('Please select an article from the dropdown first.');
+    }
+}
+</script>
 </body>
 </html>

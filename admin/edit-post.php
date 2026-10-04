@@ -49,6 +49,17 @@ if ($is_edit && $conn) {
     }
 }
 
+// Load recent articles for quick switch dropdown
+$all_articles_dropdown = [];
+if ($conn) {
+    $ar_res = $conn->query("SELECT id, title, slug, status FROM `posts` ORDER BY `published_at` DESC, `id` DESC LIMIT 150");
+    if ($ar_res) {
+        while ($arr = $ar_res->fetch_assoc()) {
+            $all_articles_dropdown[] = $arr;
+        }
+    }
+}
+
 // Load all categories for suggestions
 $categories_list = [];
 if ($conn) {
@@ -418,6 +429,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_post'])) {
             <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
                 <i class="fas fa-exclamation-triangle me-2"></i> <?php echo htmlspecialchars($error); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($all_articles_dropdown)): ?>
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white mb-4">
+                <div class="row align-items-center g-2">
+                    <div class="col-md-3">
+                        <span class="fw-bold text-dark small"><i class="fas fa-arrows-rotate text-primary me-1"></i> Switch Article to Edit:</span>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-select form-select-sm rounded-pill" onchange="if(this.value){ window.location.href = (this.value === 'new') ? 'edit-post.php' : 'edit-post.php?id=' + this.value; }">
+                            <option value="new" <?php echo !$is_edit ? 'selected' : ''; ?>>+ Create New Article (Empty Form)</option>
+                            <?php foreach ($all_articles_dropdown as $ad): ?>
+                                <option value="<?php echo (int)$ad['id']; ?>" <?php echo ($is_edit && (int)$ad['id'] === (int)$post_id) ? 'selected' : ''; ?>>
+                                    #<?php echo $ad['id']; ?> — <?php echo htmlspecialchars($ad['title']); ?> (<?php echo ucfirst($ad['status']); ?>)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-3 text-md-end">
+                        <a href="posts.php" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold">
+                            <i class="fas fa-list me-1"></i> View All Articles (<?php echo count($all_articles_dropdown); ?>)
+                        </a>
+                    </div>
+                </div>
             </div>
         <?php endif; ?>
 
