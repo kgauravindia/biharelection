@@ -224,6 +224,43 @@ function initAdminTables($conn) {
         `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
+    // Site Updates & Datewise Bulletins Table
+    $conn->query("CREATE TABLE IF NOT EXISTS `site_updates` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `update_date` DATE NOT NULL,
+        `update_time` TIME DEFAULT '00:00:00',
+        `title` VARCHAR(255) NOT NULL,
+        `title_hi` VARCHAR(255) DEFAULT NULL,
+        `category` VARCHAR(100) DEFAULT 'General Update',
+        `target_scope` VARCHAR(150) DEFAULT 'Bihar Statewide',
+        `description` TEXT DEFAULT NULL,
+        `url` VARCHAR(255) DEFAULT NULL,
+        `priority` VARCHAR(20) DEFAULT 'normal',
+        `is_pinned` TINYINT(1) DEFAULT 0,
+        `status` VARCHAR(20) DEFAULT 'published',
+        `author` VARCHAR(100) DEFAULT 'Admin Editorial',
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX `idx_update_date` (`update_date`),
+        INDEX `idx_category` (`category`),
+        INDEX `idx_priority` (`priority`),
+        INDEX `idx_status` (`status`),
+        INDEX `idx_pinned` (`is_pinned`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+
+    // Seed sample datewise site updates if empty
+    $chk_su = $conn->query("SELECT id FROM `site_updates` LIMIT 1");
+    if ($chk_su && $chk_su->num_rows === 0) {
+        $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', strtotime('-1 day'));
+        $two_days_ago = date('Y-m-d', strtotime('-2 days'));
+        $conn->query("INSERT INTO `site_updates` (`update_date`, `update_time`, `title`, `title_hi`, `category`, `target_scope`, `description`, `url`, `priority`, `is_pinned`, `status`) VALUES
+        ('$today', '18:30:00', 'Vidhan Parishad: 6 Graduates & 6 Teachers Constituency Guides Launched', 'विधान परिषद: 6 स्नातक एवं 6 शिक्षक निर्वाचन क्षेत्र डायरेक्टरी गाइड प्रकाशित', 'MLC Election 2026', 'Bihar Statewide', 'Launched dedicated portals for 6 Graduates and 6 Teachers constituencies with interactive district finders, Form 18/19 voter manuals, and 2026 biennial election updates.', '/graduates-constituency', 'important', 1, 'published'),
+        ('$today', '14:15:00', '2026 Biennial Election Hub & ECI Gazette Reference Released', '2026 द्विवार्षिक चुनाव हब एवं गजट अधिसूचना अपडेट', 'ECI Gazette & Notification', 'Patna, Tirhut, Darbhanga, Kosi, Saran', 'Comprehensive election hub covering 4 Graduates and 4 Teachers seats with polling on 23 Oct 2026 and counting on 27 Oct 2026.', '/vidhan-parishad-election', 'breaking', 1, 'published'),
+        ('$yesterday', '11:00:00', 'MLC 75 Members Roster & 2026 Biennial Vacancy Remarks Updated', 'एमएलसी 75 सदस्यों की रोस्टर सूची एवं 2026 द्विवार्षिक चुनाव रिक्तियां अपडेट', 'Constituency & Candidate Data', 'Bihar Legislative Council', 'Updated sitting member profiles and vacancy status across all council seats undergoing 2026 election.', '/mlc', 'normal', 0, 'published'),
+        ('$two_days_ago', '16:45:00', 'Voter Registration Form 18 & Form 19 Portal Integration Guide', 'मतदाता पंजीकरण फॉर्म 18 एवं फॉर्म 19 पोर्टल एकीकरण गाइड', 'Voter Registration', 'Bihar Statewide', 'Detailed steps for graduate and teacher electors to submit Form 18 and Form 19 online on voters.eci.gov.in and offline to ERO.', '/teachers-constituency', 'important', 0, 'published')");
+    }
+
     // Seed panchayat_samiti from panchayat_samiti_2016 if table empty
     $chk_ps = $conn->query("SELECT id FROM `panchayat_samiti` LIMIT 1");
     if ($chk_ps && $chk_ps->num_rows === 0) {

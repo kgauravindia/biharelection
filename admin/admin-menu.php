@@ -16,6 +16,9 @@ if ($db_menu) {
     $p_res = $db_menu->query("SELECT COUNT(*) as c FROM `posts` WHERE `status` = 'published'");
     if ($p_res) $total_posts_count = $p_res->fetch_assoc()['c'] ?? 0;
 
+    $su_res = $db_menu->query("SELECT COUNT(*) as c FROM `site_updates` WHERE `status` = 'published'");
+    $total_updates_count = $su_res ? (int)($su_res->fetch_assoc()['c'] ?? 0) : 0;
+
     $u_res = $db_menu->query("SELECT COUNT(*) as c FROM `users`");
     $total_citizens_count = $u_res ? (int)($u_res->fetch_assoc()['c'] ?? 0) : 0;
 }
@@ -94,6 +97,13 @@ if ($db_menu) {
         </a>
 
         <div class="nav-section-title">Editorial & Content</div>
+        <a href="datewise-updates.php" class="nav-link-custom <?php echo in_array($current_page, ['datewise-updates.php', 'site-updates.php']) ? 'active' : ''; ?>" title="Datewise Website Updates & Live Election Bulletins">
+            <i class="fas fa-calendar-check text-warning"></i> 
+            <span>Datewise Updates</span>
+            <?php if ($total_updates_count > 0): ?>
+                <span class="badge rounded-pill bg-warning text-dark"><?php echo $total_updates_count; ?></span>
+            <?php endif; ?>
+        </a>
         <a href="posts.php" class="nav-link-custom <?php echo in_array($current_page, ['posts.php', 'edit-post.php']) ? 'active' : ''; ?>" title="Blog & News Articles">
             <i class="fas fa-newspaper text-danger"></i> 
             <span>Blog & Articles</span>

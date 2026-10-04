@@ -139,6 +139,17 @@ if ($conn) {
         }
     }
 }
+
+// Recent Datewise Site Updates
+$recent_updates = [];
+if ($conn) {
+    $su_r = $conn->query("SELECT * FROM `site_updates` ORDER BY `is_pinned` DESC, `update_date` DESC, `update_time` DESC, `id` DESC LIMIT 4");
+    if ($su_r) {
+        while ($su_row = $su_r->fetch_assoc()) {
+            $recent_updates[] = $su_row;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -368,6 +379,64 @@ if ($conn) {
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Datewise Updates & Live Bulletins Section -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4 bg-white overflow-hidden">
+            <div class="section-card-header bg-white d-flex justify-content-between align-items-center p-3 px-4 border-bottom">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-warning bg-opacity-10 text-warning p-2 rounded-circle fs-6">
+                        <i class="fas fa-calendar-check"></i>
+                    </span>
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark">Datewise Website Updates &amp; Live Bulletins</h6>
+                        <small class="text-muted">Daily editorial changelog and live portal milestones</small>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="datewise-updates.php" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold">
+                        <i class="fas fa-arrow-right me-1"></i> Manage Updates Hub
+                    </a>
+                </div>
+            </div>
+            <div class="p-3 px-4">
+                <?php if (!empty($recent_updates)): ?>
+                    <div class="row g-3">
+                        <?php foreach ($recent_updates as $up): ?>
+                            <div class="col-md-6 col-xl-3">
+                                <div class="p-3 bg-light rounded-3 border h-100 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-1.5">
+                                            <span class="badge bg-white text-dark border px-2 py-0.5 rounded-pill extra-small fw-bold">
+                                                <i class="far fa-calendar-alt text-primary me-1"></i> <?php echo date('d M Y', strtotime($up['update_date'])); ?>
+                                            </span>
+                                            <?php if ($up['priority'] === 'breaking'): ?>
+                                                <span class="badge bg-danger text-white extra-small">⚡ Breaking</span>
+                                            <?php elseif ($up['priority'] === 'important'): ?>
+                                                <span class="badge bg-warning text-dark extra-small">★ Important</span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <h6 class="fw-bold text-dark mb-1 small" style="line-height: 1.4;">
+                                            <?php echo htmlspecialchars($up['title']); ?>
+                                        </h6>
+                                        <?php if (!empty($up['title_hi'])): ?>
+                                            <small class="text-muted d-block extra-small mb-2 text-truncate"><?php echo htmlspecialchars($up['title_hi']); ?></small>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="pt-2 border-top d-flex justify-content-between align-items-center extra-small text-muted">
+                                        <span class="badge bg-white text-primary border rounded-pill"><?php echo htmlspecialchars($up['category']); ?></span>
+                                        <?php if (!empty($up['url'])): ?>
+                                            <a href="<?php echo htmlspecialchars($up['url']); ?>" target="_blank" class="fw-semibold text-decoration-none">Link <i class="fas fa-external-link-alt"></i></a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <p class="text-muted small mb-0 py-2">No updates recorded yet. <a href="datewise-updates.php">Add first update &rarr;</a></p>
+                <?php endif; ?>
             </div>
         </div>
 
