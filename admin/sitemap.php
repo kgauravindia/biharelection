@@ -33,6 +33,15 @@ $sitemap_files = [
         'desc' => 'Core Hubs, 38 Districts, Vidhan Sabha (243 ACs), Lok Sabha (40 MPs), MLCs & Candidates.',
         'action' => 'generate_sitemap'
     ],
+    'hindi' => [
+        'name' => 'Hindi Platform Sitemap',
+        'file' => 'sitemap-hindi.xml',
+        'path' => __DIR__ . '/../sitemap-hindi.xml',
+        'icon' => 'fas fa-language',
+        'color' => 'success',
+        'desc' => 'Hindi Platform Hubs, 38 Districts, Vidhan Sabha (243 ACs), Lok Sabha (40 MPs) & MLCs.',
+        'action' => 'generate_hindi_sitemap'
+    ],
     'villages' => [
         'name' => 'Census 2011 Villages Sitemap',
         'file' => 'sitemap-villages.xml',
@@ -106,11 +115,11 @@ function buildPrimarySitemap($base_url, $path) {
     // 1. Static & Primary Hub Pages (Only Primary Canonical URLs - No Redundant Aliases)
     $static_pages = [
         ['url' => '/', 'priority' => '1.0', 'changefreq' => 'daily'],
+        ['url' => '/vidhan-parishad-election', 'priority' => '0.95', 'changefreq' => 'daily'],
         ['url' => '/blog', 'priority' => '0.9', 'changefreq' => 'daily'],
         ['url' => '/mla', 'priority' => '0.9', 'changefreq' => 'daily'],
         ['url' => '/mp', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/mlc', 'priority' => '0.85', 'changefreq' => 'weekly'],
-        ['url' => '/representatives', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/panchayat', 'priority' => '0.90', 'changefreq' => 'daily'],
         ['url' => '/village', 'priority' => '0.90', 'changefreq' => 'daily'],
         ['url' => '/town', 'priority' => '0.90', 'changefreq' => 'daily'],
@@ -118,6 +127,8 @@ function buildPrimarySitemap($base_url, $path) {
         ['url' => '/panchayat-samiti', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/blocks', 'priority' => '0.85', 'changefreq' => 'weekly'],
         ['url' => '/census', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/caste-survey', 'priority' => '0.90', 'changefreq' => 'weekly'],
+        ['url' => '/bihar-acts', 'priority' => '0.90', 'changefreq' => 'weekly'],
         ['url' => '/search-pin-code', 'priority' => '0.80', 'changefreq' => 'monthly'],
         ['url' => '/about', 'priority' => '0.80', 'changefreq' => 'monthly'],
         ['url' => '/contact', 'priority' => '0.80', 'changefreq' => 'monthly'],
@@ -210,6 +221,113 @@ function buildPrimarySitemap($base_url, $path) {
         if ($mlcSlug) {
             $xml .= "    <url>\n";
             $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl(getMlcUrl($mlcSlug), $base_url)) . "</loc>\n";
+            $xml .= "        <lastmod>{$today}</lastmod>\n";
+            $xml .= "        <changefreq>weekly</changefreq>\n";
+            $xml .= "        <priority>0.75</priority>\n";
+            $xml .= "    </url>\n";
+        }
+    }
+
+    $xml .= '</urlset>';
+
+    return (bool)file_put_contents($path, $xml);
+}
+
+function buildHindiSitemap($base_url, $path) {
+    $districts = DataProvider::getDistricts();
+    $constituencies = DataProvider::getConstituencies();
+    $candidates = DataProvider::getCandidates();
+    $loksabhaMps = DataProvider::getLokSabhaMps();
+    $mlcs = DataProvider::getMlcs();
+    $today = date('Y-m-d');
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+    // 1. Static & Primary Hindi Hub Pages
+    $static_pages = [
+        ['url' => '/hindi', 'priority' => '1.0', 'changefreq' => 'daily'],
+        ['url' => '/hindi/vidhan-parishad-election', 'priority' => '0.95', 'changefreq' => 'daily'],
+        ['url' => '/hindi/blog', 'priority' => '0.9', 'changefreq' => 'daily'],
+        ['url' => '/hindi/mla', 'priority' => '0.9', 'changefreq' => 'daily'],
+        ['url' => '/hindi/mp', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/hindi/mlc', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/hindi/panchayat', 'priority' => '0.90', 'changefreq' => 'daily'],
+        ['url' => '/hindi/village', 'priority' => '0.90', 'changefreq' => 'daily'],
+        ['url' => '/hindi/town', 'priority' => '0.90', 'changefreq' => 'daily'],
+        ['url' => '/hindi/zila-parishad', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/hindi/panchayat-samiti', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/hindi/block', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/hindi/census', 'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['url' => '/hindi/caste-survey', 'priority' => '0.90', 'changefreq' => 'weekly'],
+        ['url' => '/hindi/bihar-acts', 'priority' => '0.90', 'changefreq' => 'weekly'],
+        ['url' => '/hindi/search-pin-code', 'priority' => '0.80', 'changefreq' => 'monthly'],
+        ['url' => '/hindi/about', 'priority' => '0.80', 'changefreq' => 'monthly'],
+        ['url' => '/hindi/contact', 'priority' => '0.80', 'changefreq' => 'monthly'],
+        ['url' => '/hindi/whatsapp', 'priority' => '0.80', 'changefreq' => 'weekly'],
+        ['url' => '/hindi/mission-and-vision', 'priority' => '0.80', 'changefreq' => 'monthly'],
+        ['url' => '/hindi/advertise', 'priority' => '0.80', 'changefreq' => 'monthly'],
+        ['url' => '/hindi/disclaimer', 'priority' => '0.70', 'changefreq' => 'monthly'],
+        ['url' => '/hindi/privacy-policy', 'priority' => '0.70', 'changefreq' => 'monthly'],
+        ['url' => '/hindi/terms-and-conditions', 'priority' => '0.70', 'changefreq' => 'monthly'],
+    ];
+
+    foreach ($static_pages as $sp) {
+        $xml .= "    <url>\n";
+        $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl($sp['url'], $base_url)) . "</loc>\n";
+        $xml .= "        <lastmod>{$today}</lastmod>\n";
+        $xml .= "        <changefreq>" . $sp['changefreq'] . "</changefreq>\n";
+        $xml .= "        <priority>" . $sp['priority'] . "</priority>\n";
+        $xml .= "    </url>\n";
+    }
+
+    // 2. 38 Bihar District Hubs (Hindi)
+    foreach ($districts as $d) {
+        $dSlug = strtolower($d['slug'] ?? '');
+        if (!$dSlug) continue;
+
+        $xml .= "    <url>\n";
+        $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl('/hindi/district/' . urlencode($dSlug), $base_url)) . "</loc>\n";
+        $xml .= "        <lastmod>{$today}</lastmod>\n";
+        $xml .= "        <changefreq>daily</changefreq>\n";
+        $xml .= "        <priority>0.90</priority>\n";
+        $xml .= "    </url>\n";
+    }
+
+    // 3. 243 Vidhan Sabha Constituencies (Hindi)
+    foreach ($constituencies as $c) {
+        $cSlug = !empty($c['slug']) ? $c['slug'] : (string)($c['ac_no'] ?? '');
+        if (!$cSlug) continue;
+        $xml .= "    <url>\n";
+        $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl('/hindi/mla/' . urlencode($cSlug), $base_url)) . "</loc>\n";
+        $xml .= "        <lastmod>{$today}</lastmod>\n";
+        $xml .= "        <changefreq>daily</changefreq>\n";
+        $xml .= "        <priority>0.85</priority>\n";
+        $xml .= "    </url>\n";
+    }
+
+    // 4. Lok Sabha Parliamentary Constituencies & MPs (Hindi)
+    foreach ($loksabhaMps as $mp) {
+        $mpSlug = strtolower(trim($mp['slug'] ?? ''));
+        if (!$mpSlug && !empty($mp['mp_name'])) {
+            $mpSlug = slugify($mp['mp_name']);
+        }
+        if ($mpSlug) {
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl('/hindi/mp/' . urlencode($mpSlug), $base_url)) . "</loc>\n";
+            $xml .= "        <lastmod>{$today}</lastmod>\n";
+            $xml .= "        <changefreq>weekly</changefreq>\n";
+            $xml .= "        <priority>0.80</priority>\n";
+            $xml .= "    </url>\n";
+        }
+    }
+
+    // 5. Vidhan Parishad MLCs (Hindi)
+    foreach ($mlcs as $mlc) {
+        $mlcId = (string)($mlc['id'] ?? '');
+        if ($mlcId) {
+            $xml .= "    <url>\n";
+            $xml .= "        <loc>" . htmlspecialchars(toCanonicalUrl('/hindi/mlc?id=' . urlencode($mlcId), $base_url)) . "</loc>\n";
             $xml .= "        <lastmod>{$today}</lastmod>\n";
             $xml .= "        <changefreq>weekly</changefreq>\n";
             $xml .= "        <priority>0.75</priority>\n";
@@ -352,6 +470,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     // 1. Generate ALL Sitemaps
     if (isset($_POST['generate_all_sitemaps'])) {
         buildPrimarySitemap($base_url, $sitemap_files['primary']['path']);
+        buildHindiSitemap($base_url, $sitemap_files['hindi']['path']);
         
         require_once __DIR__ . '/../generate_village_sitemap.php';
         ob_start();
@@ -371,7 +490,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         buildCensusSitemap($base_url, $sitemap_files['census']['path']);
         buildExtraSitemap($base_url, $sitemap_files['extra']['path'], $conn);
 
-        $message = "🎉 All 6 Sitemaps (Primary, Villages, Towns, Panchayats, Census, and Extra) successfully generated and updated!";
+        $message = "🎉 All 7 Sitemaps (Primary, Hindi, Villages, Towns, Panchayats, Census, and Extra) successfully generated and updated!";
     }
 
     // 2. Primary Sitemap
@@ -381,6 +500,16 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $message = "Primary sitemap.xml generated successfully with {$count} URLs!";
         } else {
             $error = "Error generating sitemap.xml.";
+        }
+    }
+
+    // 2b. Hindi Sitemap
+    elseif (isset($_POST['generate_hindi_sitemap'])) {
+        if (buildHindiSitemap($base_url, $sitemap_files['hindi']['path'])) {
+            $count = countSitemapUrls($sitemap_files['hindi']['path']);
+            $message = "Hindi Platform Sitemap (sitemap-hindi.xml) generated successfully with {$count} URLs!";
+        } else {
+            $error = "Error generating sitemap-hindi.xml.";
         }
     }
 
