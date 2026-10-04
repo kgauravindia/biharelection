@@ -1948,6 +1948,16 @@ function getVidhanParishadElectionUrl() {
     return $base . "/vidhan-parishad-election";
 }
 
+function getGraduatesConstituencyUrl($slug = '') {
+    $base = getSiteBaseUrl();
+    return $slug ? $base . "/graduates-constituency#{$slug}" : $base . "/graduates-constituency";
+}
+
+function getTeachersConstituencyUrl($slug = '') {
+    $base = getSiteBaseUrl();
+    return $slug ? $base . "/teachers-constituency#{$slug}" : $base . "/teachers-constituency";
+}
+
 function getDistrictUrl($slug, $subpath = '') {
     $base = getSiteBaseUrl();
     $slugClean = strtolower(trim((string)$slug));
