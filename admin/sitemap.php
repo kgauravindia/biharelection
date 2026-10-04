@@ -912,12 +912,22 @@ if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitem
                         <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Configured</span>
                     </div>
                     <div class="section-card-body">
-                        <!-- Quick Copy Box -->
-                        <div class="p-3 bg-light rounded-3 mb-3 border">
-                            <label class="form-label small text-muted text-uppercase fw-bold mb-1">Primary Sitemap URL for Google Search Console</label>
-                            <div class="input-group">
+                        <!-- Quick Copy Boxes -->
+                        <div class="p-3 bg-light rounded-3 mb-2 border">
+                            <label class="form-label small text-muted text-uppercase fw-bold mb-1">Primary English Sitemap (Google &amp; Bing)</label>
+                            <div class="input-group input-group-sm">
                                 <input type="text" id="sitemapUrlInput" class="form-control font-monospace small bg-white" readonly value="<?php echo SITE_URL; ?>/sitemap.xml">
-                                <button class="btn btn-outline-primary" type="button" onclick="copySitemapUrl('sitemapUrlInput')">
+                                <button class="btn btn-outline-primary fw-semibold" type="button" onclick="copySitemapUrl('sitemapUrlInput')">
+                                    <i class="fas fa-copy me-1"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-light rounded-3 mb-3 border">
+                            <label class="form-label small text-muted text-uppercase fw-bold mb-1">Hindi Platform Sitemap (Google &amp; Bing)</label>
+                            <div class="input-group input-group-sm">
+                                <input type="text" id="sitemapHindiUrlInput" class="form-control font-monospace small bg-white" readonly value="<?php echo SITE_URL; ?>/sitemap-hindi.xml">
+                                <button class="btn btn-outline-success fw-semibold" type="button" onclick="copySitemapUrl('sitemapHindiUrlInput')">
                                     <i class="fas fa-copy me-1"></i> Copy
                                 </button>
                             </div>
@@ -943,15 +953,15 @@ if (php_sapi_name() === 'cli' && basename($_SERVER['PHP_SELF'] ?? '') !== 'sitem
                         <h6 class="fw-bold text-dark small text-uppercase mb-2">Technical SEO Checklist</h6>
                         <ul class="list-group list-group-flush small">
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <span><i class="fas fa-check-circle text-success me-2"></i> <code>robots.txt</code> directs crawlers to all 4 sitemaps</span>
+                                <span><i class="fas fa-check-circle text-success me-2"></i> <code>robots.txt</code> directs crawlers to all 7 sitemaps</span>
                                 <span class="badge bg-success">Active</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <span><i class="fas fa-check-circle text-success me-2"></i> Dynamic Canonical & OpenGraph meta tags across all routes</span>
+                                <span><i class="fas fa-check-circle text-success me-2"></i> Dynamic Canonical, Hreflang &amp; OpenGraph tags across routes</span>
                                 <span class="badge bg-success">Active</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
-                                <span><i class="fas fa-check-circle text-success me-2"></i> 301 Redirection active for legacy sitemaps</span>
+                                <span><i class="fas fa-check-circle text-success me-2"></i> Hindi &amp; English alternate language indexing (hreflang)</span>
                                 <span class="badge bg-success">Active</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
