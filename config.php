@@ -1794,22 +1794,80 @@ function getUserTotalRevealCount($userId) {
 }
 
 /**
+ * Site Base URL Provider supporting Multi-language (English and Hindi)
+ */
+function getSiteBaseUrl($isHindi = null) {
+    if ($isHindi === true || ($isHindi === null && defined('IS_HINDI') && IS_HINDI)) {
+        return SITE_URL . '/hindi';
+    }
+    return SITE_URL;
+}
+
+/**
+ * Global Multi-language Canonical URL Provider
+ */
+function getSiteCanonicalUrl($customCanonical = null, $isHindi = null) {
+    if (!empty($customCanonical)) {
+        $clean = trim((string)$customCanonical);
+        $clean = preg_replace('#^http://#i', 'https://', $clean);
+        return $clean;
+    }
+    $base = getSiteBaseUrl($isHindi);
+    $reqUri = $_SERVER['REQUEST_URI'] ?? '/';
+    $cleanPath = strtok($reqUri, '?');
+    if (!empty($_SERVER['HTTP_HOST'])) {
+        $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
+        if (strpos($scriptDir, '/biharelection') !== false) {
+            $cleanPath = preg_replace('#^/biharelection#', '', $cleanPath);
+        }
+    }
+    if (defined('IS_HINDI') && IS_HINDI) {
+        $cleanPath = preg_replace('#^/hindi#', '', $cleanPath);
+    }
+    return rtrim($base, '/') . '/' . ltrim($cleanPath, '/');
+}
+
+/**
+ * Multilingual Hreflang Tags Provider
+ */
+function getSiteHreflangTags($canonicalUrl) {
+    $siteUrlClean = rtrim(SITE_URL, '/');
+    if (strpos($canonicalUrl, '/hindi') !== false) {
+        $hiUrl = $canonicalUrl;
+        $enUrl = str_replace($siteUrlClean . '/hindi', $siteUrlClean, $canonicalUrl);
+        if ($enUrl === $siteUrlClean || $enUrl === $siteUrlClean . '/') {
+            $enUrl = $siteUrlClean . '/';
+        }
+    } else {
+        $enUrl = $canonicalUrl;
+        $suffix = substr($canonicalUrl, strlen($siteUrlClean));
+        $hiUrl = $siteUrlClean . '/hindi' . ($suffix === '/' ? '/' : $suffix);
+    }
+    $tags = '';
+    $tags .= '    <link rel="alternate" hreflang="en" href="' . htmlspecialchars($enUrl) . '">' . "\n";
+    $tags .= '    <link rel="alternate" hreflang="hi" href="' . htmlspecialchars($hiUrl) . '">' . "\n";
+    $tags .= '    <link rel="alternate" hreflang="x-default" href="' . htmlspecialchars($enUrl) . '">' . "\n";
+    return $tags;
+}
+
+/**
  * Clean SEO URL Routing Helpers
  */
 function getMlaUrl($ac) {
+    $base = getSiteBaseUrl();
     if (is_array($ac)) {
         $acNo = (int)($ac['ac_no'] ?? 0);
         $slug = $ac['slug'] ?? strtolower(str_replace(' ', '-', $ac['name'] ?? ''));
-        return SITE_URL . "/mla/{$acNo}-{$slug}";
+        return $base . "/mla/{$acNo}-{$slug}";
     } elseif (is_numeric($ac)) {
         $acObj = DataProvider::getConstituencyByAcNumber($ac);
         if ($acObj) {
             $slug = $acObj['slug'] ?? strtolower(str_replace(' ', '-', $acObj['name'] ?? ''));
-            return SITE_URL . "/mla/{$ac}-{$slug}";
+            return $base . "/mla/{$ac}-{$slug}";
         }
-        return SITE_URL . "/mla/{$ac}";
+        return $base . "/mla/{$ac}";
     }
-    return SITE_URL . "/mla/" . trim((string)$ac, '/');
+    return $base . "/mla/" . trim((string)$ac, '/');
 }
 
 function getConstituencyUrl($ac) {
@@ -1817,7 +1875,8 @@ function getConstituencyUrl($ac) {
 }
 
 function getMpUrl($slug = '') {
-    return $slug ? SITE_URL . "/mp/{$slug}" : SITE_URL . "/mp";
+    $base = getSiteBaseUrl();
+    return $slug ? $base . "/mp/{$slug}" : $base . "/mp";
 }
 
 /**
@@ -1880,38 +1939,42 @@ function slugify($text) {
 }
 
 function getMlcUrl($slug = '') {
-    return $slug ? SITE_URL . "/mlc/{$slug}" : SITE_URL . "/mlc";
+    $base = getSiteBaseUrl();
+    return $slug ? $base . "/mlc/{$slug}" : $base . "/mlc";
 }
 
 function getVidhanParishadElectionUrl() {
-    return SITE_URL . "/vidhan-parishad-election";
+    $base = getSiteBaseUrl();
+    return $base . "/vidhan-parishad-election";
 }
 
 function getDistrictUrl($slug, $subpath = '') {
+    $base = getSiteBaseUrl();
     $slugClean = strtolower(trim((string)$slug));
     if ($subpath) {
         $subClean = strtolower(trim((string)$subpath));
-        return SITE_URL . "/district/{$slugClean}/{$subClean}";
+        return $base . "/district/{$slugClean}/{$subClean}";
     }
-    return SITE_URL . "/district/{$slugClean}";
+    return $base . "/district/{$slugClean}";
 }
 
 function getPanchayatUrl($districtSlug = '', $blockSlugOrPanchayat = '', $panchayatSlug = '') {
+    $base = getSiteBaseUrl();
     $d = slugify($districtSlug);
     if ($panchayatSlug) {
         $b = slugify($blockSlugOrPanchayat);
         $p = slugify($panchayatSlug);
         if ($d && $b && $p) {
-            return SITE_URL . "/{$d}/{$b}/{$p}";
+            return $base . "/{$d}/{$b}/{$p}";
         }
     }
     $p = slugify($blockSlugOrPanchayat);
     if ($d && $p) {
-        return SITE_URL . "/panchayat/{$d}/{$p}";
+        return $base . "/panchayat/{$d}/{$p}";
     } elseif ($d) {
-        return SITE_URL . "/panchayat/{$d}";
+        return $base . "/panchayat/{$d}";
     }
-    return SITE_URL . "/panchayat";
+    return $base . "/panchayat";
 }
 
 function getMukhiyaUrl($districtSlug = '', $panchayatSlug = '') {
@@ -1923,84 +1986,90 @@ function getSarpanchUrl($districtSlug = '', $panchayatSlug = '') {
 }
 
 function getZilaParishadUrl($districtSlug = '', $wardNo = '') {
+    $base = getSiteBaseUrl();
     $d = slugify($districtSlug);
     $w = trim((string)$wardNo);
     if ($d && $w !== '') {
-        return SITE_URL . "/zila-parishad/{$d}/{$w}";
+        return $base . "/zila-parishad/{$d}/{$w}";
     } elseif ($d) {
-        return SITE_URL . "/zila-parishad/{$d}";
+        return $base . "/zila-parishad/{$d}";
     }
-    return SITE_URL . "/zila-parishad";
+    return $base . "/zila-parishad";
 }
 
 function getPanchayatSamitiUrl($districtSlug = '', $blockSlug = '') {
+    $base = getSiteBaseUrl();
     $d = slugify($districtSlug);
     $b = slugify($blockSlug);
     if ($d && $b) {
-        return SITE_URL . "/panchayat-samiti/{$d}/{$b}";
+        return $base . "/panchayat-samiti/{$d}/{$b}";
     } elseif ($d) {
-        return SITE_URL . "/panchayat-samiti/{$d}";
+        return $base . "/panchayat-samiti/{$d}";
     }
-    return SITE_URL . "/panchayat-samiti";
+    return $base . "/panchayat-samiti";
 }
 
 function getBlockUrl($districtSlug = '', $blockSlug = '') {
+    $base = getSiteBaseUrl();
     $d = slugify($districtSlug);
     $b = slugify($blockSlug);
     if ($d && $b) {
-        return SITE_URL . "/block/{$d}/{$b}";
+        return $base . "/block/{$d}/{$b}";
     } elseif ($b) {
-        return SITE_URL . "/block/{$b}";
+        return $base . "/block/{$b}";
     } elseif ($d) {
-        return SITE_URL . "/blocks?district={$d}";
+        return $base . "/blocks?district={$d}";
     }
-    return SITE_URL . "/blocks";
+    return $base . "/blocks";
 }
 
 function getCensusUrl($districtSlug = '', $subdistrictSlug = '') {
+    $base = getSiteBaseUrl();
     if ($districtSlug && $subdistrictSlug) {
-        return SITE_URL . "/census/{$districtSlug}/{$subdistrictSlug}";
+        return $base . "/census/{$districtSlug}/{$subdistrictSlug}";
     } elseif ($districtSlug) {
-        return SITE_URL . "/census/{$districtSlug}";
+        return $base . "/census/{$districtSlug}";
     }
-    return SITE_URL . "/census";
+    return $base . "/census";
 }
 
 function getVillageUrl($districtSlug = '', $blockSlug = '', $villageSlugOrCode = '') {
+    $base = getSiteBaseUrl();
     $d = slugify($districtSlug);
     $b = slugify($blockSlug);
     $v = is_numeric($villageSlugOrCode) ? (string)$villageSlugOrCode : slugify($villageSlugOrCode);
     
     if (is_numeric($villageSlugOrCode) && empty($d)) {
-        return SITE_URL . "/village/{$villageSlugOrCode}";
+        return $base . "/village/{$villageSlugOrCode}";
     }
     if ($d && $b && $v) {
-        return SITE_URL . "/village/{$d}/{$b}/{$v}";
+        return $base . "/village/{$d}/{$b}/{$v}";
     } elseif ($d && $b) {
-        return SITE_URL . "/village/{$d}/{$b}";
+        return $base . "/village/{$d}/{$b}";
     } elseif ($d) {
-        return SITE_URL . "/village/{$d}";
+        return $base . "/village/{$d}";
     }
-    return SITE_URL . "/village";
+    return $base . "/village";
 }
 
 function getTownUrl($districtSlug = '', $townSlugOrCode = '', $slumSlugOrId = '') {
+    $base = getSiteBaseUrl();
     $d = slugify($districtSlug);
     $t = is_numeric($townSlugOrCode) ? (string)$townSlugOrCode : slugify($townSlugOrCode);
     $s = is_numeric($slumSlugOrId) ? (string)$slumSlugOrId : slugify($slumSlugOrId);
     
     if ($d && $t && $s) {
-        return SITE_URL . "/town/{$d}/{$t}/{$s}";
+        return $base . "/town/{$d}/{$t}/{$s}";
     }
     if (is_numeric($townSlugOrCode) && empty($d)) {
-        return SITE_URL . "/town/{$townSlugOrCode}";
+        return $base . "/town/{$townSlugOrCode}";
     }
     if ($d && $t) {
-        return SITE_URL . "/town/{$d}/{$t}";
+        return $base . "/town/{$d}/{$t}";
     } elseif ($d) {
-        return SITE_URL . "/town/{$d}";
+        return $base . "/town/{$d}";
     }
-    return SITE_URL . "/town";
+    return $base . "/town";
 }
 
 function getSlumUrl($districtSlug = '', $townSlug = '', $slumSlugOrId = '') {
@@ -2008,13 +2077,15 @@ function getSlumUrl($districtSlug = '', $townSlug = '', $slumSlugOrId = '') {
 }
 
 function getCasteSurveyUrl($codeOrSlug = '') {
+    $base = getSiteBaseUrl();
     if ($codeOrSlug !== '') {
-        return SITE_URL . "/caste-survey/" . urlencode((string)$codeOrSlug);
+        return $base . "/caste-survey/" . urlencode((string)$codeOrSlug);
     }
-    return SITE_URL . "/caste-survey";
+    return $base . "/caste-survey";
 }
 
 function getBiharActsUrl($year = null, $category = null) {
+    $base = getSiteBaseUrl();
     $params = [];
     if ($year !== null && $year !== '') {
         $params['year'] = $year;
@@ -2023,13 +2094,14 @@ function getBiharActsUrl($year = null, $category = null) {
         $params['category'] = $category;
     }
     if (!empty($params)) {
-        return SITE_URL . "/bihar-acts?" . http_build_query($params);
+        return $base . "/bihar-acts?" . http_build_query($params);
     }
-    return SITE_URL . "/bihar-acts";
+    return $base . "/bihar-acts";
 }
 
 function getAdvertiseUrl($params = []) {
-    $baseUrl = SITE_URL . "/advertise";
+    $base = getSiteBaseUrl();
+    $baseUrl = $base . "/advertise";
     if (!empty($params)) {
         if (is_array($params)) {
             return $baseUrl . '?' . http_build_query($params);
@@ -2041,7 +2113,8 @@ function getAdvertiseUrl($params = []) {
 }
 
 function getBlogUrl($slug = '') {
-    return $slug ? SITE_URL . "/blog/" . ltrim($slug, '/') : SITE_URL . "/blog/";
+    $base = getSiteBaseUrl();
+    return $slug ? $base . "/blog/" . ltrim($slug, '/') : $base . "/blog/";
 }
 
 /**

@@ -1,18 +1,17 @@
 <?php
 /**
- * Bihar Election - Global Header Component (Bootstrap 5.3)
+ * Bihar Election - Global Hindi Header Component (Bootstrap 5.3)
  */
-require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/includes/auth_helper.php';
+require_once __DIR__ . '/functions.php';
 
-$pageTitle = $pageTitle ?? 'Bihar Election 2026: 243 Assembly Data, 38 Districts & Panchayat Hub';
-$pageDescription = $pageDescription ?? 'Bihar\'s comprehensive non-government election data platform covering 243 Assembly Constituencies, 38 Districts, and 2026 Panchayat Delimitation.';
-$pageKeywords = $pageKeywords ?? 'Bihar Election 2026, 243 Bihar Assembly Constituencies, Patna Vidhan Sabha, Bihar Election Results, Bihar Panchayat 2026, Bihar MLA list, Bihar Political Hub';
-$pageCanonical = $pageCanonical ?? SITE_URL;
+$pageTitle = $pageTitle ?? 'बिहार चुनाव 2026: 243 विधानसभा डेटा, 38 जिले एवं पंचायत हब';
+$pageDescription = $pageDescription ?? 'बिहार का सबसे विश्वसनीय गैर-सरकारी चुनाव डेटा पोर्टल। 243 विधानसभा क्षेत्र, 38 जिले, 534 प्रखंड और 2026 पंचायत परिसीमन की संपूर्ण जानकारी।';
+$pageKeywords = $pageKeywords ?? 'बिहार चुनाव 2026, 243 बिहार विधानसभा क्षेत्र, पटना विधानसभा, बिहार चुनाव परिणाम, बिहार पंचायत 2026, बिहार विधायक सूची, बिहार राजनीतिक हब';
+$pageCanonical = $pageCanonical ?? (SITE_URL . '/hindi');
 $activeNav = $activeNav ?? 'home';
 ?>
 <!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns#">
+<html lang="hi" prefix="og: http://ogp.me/ns#">
 <head>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z71DH969QS"></script>
@@ -28,7 +27,7 @@ $activeNav = $activeNav ?? 'home';
     <meta name="theme-color" content="#0b192c">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <?php renderSeoMeta($pageTitle, $pageDescription, $pageKeywords, $pageCanonical); ?>
-    <?php echo getSiteHreflangTags(getSiteCanonicalUrl($pageCanonical ?? null)); ?>
+    <?php echo getSiteHreflangTags(getSiteCanonicalUrl($pageCanonical ?? null, true)); ?>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="<?php echo SITE_URL; ?>/assets/image/logo.png">
@@ -55,19 +54,20 @@ $activeNav = $activeNav ?? 'home';
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "<?php echo SITE_NAME; ?>",
-      "url": "<?php echo SITE_URL; ?>/",
+      "name": "बिहार इलेक्शन",
+      "url": "<?php echo SITE_URL; ?>/hindi/",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "<?php echo SITE_URL; ?>/vidhan-sabha?q={search_term_string}",
+        "target": "<?php echo SITE_URL; ?>/hindi/vidhan-sabha?q={search_term_string}",
         "query-input": "required name=search_term_string"
       },
-      "description": "Bihar's Premier Non-Government Election Data & Political Intelligence Platform covering Panchayat to Parliament."
+      "description": "बिहार का अग्रणी स्वतंत्र गैर-सरकारी चुनावी डेटा एवं राजनीतिक सूचना मंच。"
     }
     </script>
     <!-- Global JS Site URL Definition -->
     <script>
       window.SITE_URL = "<?php echo SITE_URL; ?>";
+      window.HINDI_BASE_URL = "<?php echo HINDI_BASE_URL; ?>";
     </script>
 </head>
 <body>
@@ -77,15 +77,15 @@ $activeNav = $activeNav ?? 'home';
     <div class="bg-dark text-white py-1.5 px-3 border-bottom border-warning border-3 sticky-top" style="z-index: 1090; font-size: 0.85rem; background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);">
         <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
             <div class="d-flex align-items-center gap-2">
-                <span class="badge bg-warning text-dark fw-bold px-2 py-1"><i class="bi bi-person-badge me-1"></i> Admin Login As</span>
-                <span>You are currently viewing portal as <strong><?php echo htmlspecialchars($_SESSION['public_user_name'] ?? 'Citizen'); ?></strong> (+91 <?php echo htmlspecialchars($_SESSION['public_user_mobile'] ?? ''); ?>)</span>
+                <span class="badge bg-warning text-dark fw-bold px-2 py-1"><i class="bi bi-person-badge me-1"></i> एडमिन लॉगिन मोड</span>
+                <span>आप वर्तमान में <strong><?php echo htmlspecialchars($_SESSION['public_user_name'] ?? 'नागरिक'); ?></strong> (+91 <?php echo htmlspecialchars($_SESSION['public_user_mobile'] ?? ''); ?>) के रूप में देख रहे हैं</span>
             </div>
             <div class="d-flex gap-2">
                 <a href="<?php echo SITE_URL; ?>/admin/citizens.php" class="btn btn-sm btn-outline-light py-0.5 px-2.5 fw-semibold" style="font-size: 0.8rem;">
-                    <i class="bi bi-shield-check me-1"></i> Admin CRM
+                    <i class="bi bi-shield-check me-1"></i> एडमिन सीआरएम
                 </a>
                 <a href="<?php echo SITE_URL; ?>/logout.php?exit_impersonation=1" class="btn btn-sm btn-warning text-dark py-0.5 px-2.5 fw-bold" style="font-size: 0.8rem;">
-                    <i class="bi bi-box-arrow-right me-1"></i> Exit Login As
+                    <i class="bi bi-box-arrow-right me-1"></i> मोड से बाहर निकलें
                 </a>
             </div>
         </div>
@@ -96,17 +96,17 @@ $activeNav = $activeNav ?? 'home';
     <div class="top-ticker py-2">
         <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
             <div class="d-flex align-items-center gap-2 overflow-hidden text-truncate">
-                <span class="badge-live">Live 2026</span>
+                <span class="badge-live">लाइव 2026</span>
                 <span class="text-truncate small">
-                    <strong>Bihar Vidhan Parishad Election 2026:</strong> 
+                    <strong>बिहार विधान परिषद चुनाव 2026:</strong> 
                     <a href="<?php echo getVidhanParishadElectionUrl(); ?>" class="text-decoration-none text-white fw-bold hover-underline">
-                        Gazette Issued for 4 Graduates &amp; 4 Teachers Seats (Polling: 23 Oct) &rarr;
+                        4 स्नातक एवं 4 शिक्षक सीटों हेतु गजट अधिसूचना जारी (मतदान: 23 अक्टूबर) &rarr;
                     </a>
                 </span>
             </div>
             <div>
-                <a href="<?php echo SITE_URL; ?>/whatsapp" class="small text-decoration-none text-warning fw-semibold">
-                    <span>📲 Daily WhatsApp Digest &rarr;</span>
+                <a href="<?php echo hindi_base_url('whatsapp'); ?>" class="small text-decoration-none text-warning fw-semibold">
+                    <span>📲 दैनिक व्हाट्सएप बुलेटिन &rarr;</span>
                 </a>
             </div>
         </div>
@@ -115,10 +115,17 @@ $activeNav = $activeNav ?? 'home';
     <!-- Main Navigation Bar (Bootstrap 5.3 Responsive Navbar) -->
     <header class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom shadow-sm">
         <div class="container">
-            <a href="<?php echo SITE_URL; ?>/" class="brand-logo text-decoration-none me-lg-4 d-flex align-items-center gap-2 text-nowrap">
-                <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" alt="Bihar Election Logo" class="brand-logo-img" width="40" height="40">
+            <a href="<?php echo hindi_base_url(); ?>" class="brand-logo text-decoration-none me-lg-4 d-flex align-items-center gap-2 text-nowrap">
+                <img src="<?php echo SITE_URL; ?>/assets/image/logo.png" alt="बिहार इलेक्शन लोगो" class="brand-logo-img" width="40" height="40">
                 <span class="brand-title h5 mb-0 fw-bold text-nowrap" style="font-family: 'Outfit', sans-serif;">Bihar <span style="color: var(--accent-saffron);">Election</span></span>
             </a>
+
+            <!-- Mobile Search Toggle or Shortcuts -->
+            <div class="d-flex align-items-center gap-2 d-lg-none ms-auto me-2">
+                <a href="<?php echo hindi_base_url('vidhan-sabha'); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-2.5 py-1" title="विधानसभा खोजें">
+                    <i class="bi bi-search"></i>
+                </a>
+            </div>
 
             <!-- Mobile Hamburger Toggle Button -->
             <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarNav" aria-controls="mainNavbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,22 +137,22 @@ $activeNav = $activeNav ?? 'home';
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-1 gap-lg-1">
                     <!-- Home -->
                     <li class="nav-item">
-                        <a href="<?php echo SITE_URL; ?>/" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'home' ? 'active text-warning' : ''; ?>">Home</a>
+                        <a href="<?php echo hindi_base_url(); ?>" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'home' ? 'active text-warning' : ''; ?>">होम</a>
                     </li>
 
                     <!-- District & Block Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['districts', 'district', 'blocks', 'block', 'census', 'caste', 'village', 'town']) ? 'active text-warning' : ''; ?>" href="#" id="districtBlockDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            District &amp; Block
+                            जिला एवं प्रखंड
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="districtBlockDropdown">
-                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Administrative &amp; Census</h6></li>
+                            <li><h6 class="dropdown-header text-uppercase small fw-bold">प्रशासनिक एवं जनगणना</h6></li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/district">
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo hindi_base_url('district'); ?>">
                                     <span>🏢</span>
                                     <div>
-                                        <div class="fw-bold">All 38 Districts Hub</div>
-                                        <small class="text-muted">District profile, HQ &amp; demographics</small>
+                                        <div class="fw-bold">सभी 38 जिले हब</div>
+                                        <small class="text-muted">जिला प्रोफाइल, मुख्यालय एवं जनसांख्यिकी</small>
                                     </div>
                                 </a>
                             </li>
@@ -153,8 +160,8 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getBlockUrl(); ?>">
                                     <span>📍</span>
                                     <div>
-                                        <div class="fw-bold text-primary">534 CD Blocks Directory</div>
-                                        <small class="text-muted">Sub-districts &amp; Block Administration</small>
+                                        <div class="fw-bold text-primary">534 प्रखंड निर्देशिका</div>
+                                        <small class="text-muted">अनुमंडल एवं प्रखंड प्रशासनिक डेटा</small>
                                     </div>
                                 </a>
                             </li>
@@ -162,8 +169,8 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getVillageUrl(); ?>">
                                     <span>🏡</span>
                                     <div>
-                                        <div class="fw-bold text-success">44,874 Villages Directory</div>
-                                        <small class="text-muted">Census 2011 Rural Profiles &amp; Demographics</small>
+                                        <div class="fw-bold text-success">44,874 गांव निर्देशिका</div>
+                                        <small class="text-muted">जनगणना 2011 ग्रामीण प्रोफाइल व आंकड़े</small>
                                     </div>
                                 </a>
                             </li>
@@ -171,8 +178,8 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getTownUrl(); ?>">
                                     <span>🏙️</span>
                                     <div>
-                                        <div class="fw-bold text-info">198 Towns &amp; Slums Directory</div>
-                                        <small class="text-muted">Urban Census 2011 &amp; Slum Profiles</small>
+                                        <div class="fw-bold text-info">198 नगर निकाय एवं स्लम</div>
+                                        <small class="text-muted">शहरी जनगणना 2011 एवं मलिन बस्तियां</small>
                                     </div>
                                 </a>
                             </li>
@@ -181,8 +188,8 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getCensusUrl(); ?>">
                                     <span>📊</span>
                                     <div>
-                                        <div class="fw-bold text-primary">Census 2011 &amp; Demographics</div>
-                                        <small class="text-muted">38 Districts &amp; 534 Blocks Census Hub</small>
+                                        <div class="fw-bold text-primary">जनगणना 2011 एवं जनसांख्यिकी</div>
+                                        <small class="text-muted">38 जिले एवं 534 प्रखंड जनगणना हब</small>
                                     </div>
                                 </a>
                             </li>
@@ -190,8 +197,8 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getCasteSurveyUrl(); ?>">
                                     <span>📋</span>
                                     <div>
-                                        <div class="fw-bold text-warning">2022 Caste Survey &amp; Codes</div>
-                                        <small class="text-muted">215+ Official Caste Codes Directory</small>
+                                        <div class="fw-bold text-warning">2022 जाति गणना एवं कोड</div>
+                                        <small class="text-muted">215+ आधिकारिक जाति कोड निर्देशिका</small>
                                     </div>
                                 </a>
                             </li>
@@ -201,25 +208,25 @@ $activeNav = $activeNav ?? 'home';
                     <!-- MLA (Vidhan Sabha) Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['assembly', 'mla']) ? 'active text-warning' : ''; ?>" href="#" id="mlaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            MLA
+                            विधान सभा (MLA)
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="mlaDropdown">
-                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Vidhan Sabha (विधान सभा)</h6></li>
+                            <li><h6 class="dropdown-header text-uppercase small fw-bold">बिहार विधान सभा</h6></li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/mla">
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo hindi_base_url('mla'); ?>">
                                     <span>🗳️</span>
                                     <div>
-                                        <div class="fw-bold">243 Assembly Constituencies</div>
-                                        <small class="text-muted">Current MLAs, polling data &amp; results</small>
+                                        <div class="fw-bold">243 विधानसभा क्षेत्र</div>
+                                        <small class="text-muted">वर्तमान विधायक, मतदान डेटा एवं परिणाम</small>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/representatives?tab=mla2015">
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo hindi_base_url('representatives?tab=mla2015'); ?>">
                                     <span>📜</span>
                                     <div>
-                                        <div class="fw-bold">Historical 2015–2020 MLAs</div>
-                                        <small class="text-muted">All 243 Ex-MLAs &amp; contact roster</small>
+                                        <div class="fw-bold">ऐतिहासिक 2015–2020 विधायक</div>
+                                        <small class="text-muted">सभी 243 पूर्व विधायक एवं संपर्क सूची</small>
                                     </div>
                                 </a>
                             </li>
@@ -228,8 +235,8 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getBiharActsUrl(); ?>">
                                     <span>⚖️</span>
                                     <div>
-                                        <div class="fw-bold text-success">Bihar Acts (1937–2026)</div>
-                                        <small class="text-muted">1,723+ Enacted Vidhan Sabha Laws</small>
+                                        <div class="fw-bold text-success">बिहार अधिनियम (1937–2026)</div>
+                                        <small class="text-muted">1,723+ पारित विधान सभा कानून</small>
                                     </div>
                                 </a>
                             </li>
@@ -239,63 +246,63 @@ $activeNav = $activeNav ?? 'home';
                     <!-- MP & MLC (Parliament & Council) Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['representatives', 'mp', 'mlc']) ? 'active text-warning' : ''; ?>" href="#" id="repDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            MP &amp; MLC
+                            सांसद एवं MLC
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="repDropdown">
-                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Parliament &amp; State Council</h6></li>
+                            <li><h6 class="dropdown-header text-uppercase small fw-bold">संसद एवं विधान परिषद</h6></li>
                             <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getMpUrl(); ?>">
                                     <span>🏛️</span>
                                     <div>
-                                        <div class="fw-bold">40 Lok Sabha MPs</div>
-                                        <small class="text-muted">Parliamentary constituency MPs</small>
+                                        <div class="fw-bold">40 लोकसभा सांसद</div>
+                                        <small class="text-muted">संसदीय निर्वाचन क्षेत्र एवं सांसद विवरण</small>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/rajya-sabha">
-                                    <span>👑</span>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo hindi_base_url('mp?house=rajyasabha'); ?>">
+                                    <span>📜</span>
                                     <div>
-                                        <div class="fw-bold">15 Rajya Sabha MPs</div>
-                                        <small class="text-muted">Upper house members from Bihar</small>
+                                        <div class="fw-bold">16 राज्यसभा सांसद</div>
+                                        <small class="text-muted">बिहार का उच्च सदन प्रतिनिधित्व</small>
                                     </div>
                                 </a>
                             </li>
                             <li><hr class="dropdown-divider my-1"></li>
                             <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getMlcUrl(); ?>">
-                                    <span>📜</span>
+                                    <span>🎓</span>
                                     <div>
-                                        <div class="fw-bold">75 Vidhan Parishad MLCs</div>
-                                        <small class="text-muted">Legislative Council members</small>
+                                        <div class="fw-bold">75 विधान परिषद सदस्य (MLC)</div>
+                                        <small class="text-muted">स्नातक, शिक्षक एवं स्थानीय निकाय क्षेत्र</small>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getVidhanParishadElectionUrl(); ?>">
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2 bg-warning bg-opacity-10" href="<?php echo getVidhanParishadElectionUrl(); ?>">
                                     <span>🗳️</span>
                                     <div>
-                                        <div class="fw-bold text-danger">Vidhan Parishad Election 2026 <span class="badge bg-danger text-white ms-1" style="font-size: 10px;">LIVE</span></div>
-                                        <small class="text-muted">4 Graduates &amp; 4 Teachers Seats Gazette &amp; Schedule</small>
+                                        <div class="fw-bold text-dark">विधान परिषद चुनाव 2026</div>
+                                        <small class="text-muted">4 स्नातक + 4 शिक्षक निर्वाचन कार्यक्रम</small>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
-                    <!-- Panchayat (3-Tier Local Bodies) Dropdown -->
+                    <!-- Panchayati Raj Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['panchayat', 'mukhiya', 'sarpanch', 'zila-parishad', 'samiti', 'panchayat-samiti']) ? 'active text-warning' : ''; ?>" href="#" id="panchayatDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Panchayat
+                        <a class="nav-link dropdown-toggle px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['panchayat', 'zila-parishad', 'panchayat-samiti']) ? 'active text-warning' : ''; ?>" href="#" id="panchayatDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            पंचायती राज
                         </a>
                         <ul class="dropdown-menu shadow-sm border-0 mt-2" aria-labelledby="panchayatDropdown">
-                            <li><h6 class="dropdown-header text-uppercase small fw-bold">Panchayati Raj (3 Tiers)</h6></li>
+                            <li><h6 class="dropdown-header text-uppercase small fw-bold">त्रिस्तरीय पंचायती राज</h6></li>
                             <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getZilaParishadUrl(); ?>">
                                     <span>🏛️</span>
                                     <div>
-                                        <div class="fw-bold text-dark">District: Zila Parishad Boards</div>
-                                        <small class="text-muted">38 District Boards &amp; 1,099+ Wards</small>
+                                        <div class="fw-bold text-dark">जिला स्तर: जिला परिषद बोर्ड</div>
+                                        <small class="text-muted">38 जिला परिषद एवं 1,099+ प्रादेशिक वार्ड</small>
                                     </div>
                                 </a>
                             </li>
@@ -303,8 +310,8 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatSamitiUrl(); ?>">
                                     <span>🌾</span>
                                     <div>
-                                        <div class="fw-bold text-primary">Block: Panchayat Samiti &amp; Pramukh</div>
-                                        <small class="text-muted">389 Blocks &amp; Samiti Leadership</small>
+                                        <div class="fw-bold text-primary">प्रखंड स्तर: पंचायत समिति एवं प्रमुख</div>
+                                        <small class="text-muted">534 प्रखंड एवं समिति नेतृत्व</small>
                                     </div>
                                 </a>
                             </li>
@@ -312,24 +319,23 @@ $activeNav = $activeNav ?? 'home';
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatUrl(); ?>">
                                     <span>🏡</span>
                                     <div>
-                                        <div class="fw-bold text-success">Village: Gram Panchayats</div>
-                                        <small class="text-muted">8,400+ Gram Panchayats (Mukhiya &amp; Sarpanch)</small>
+                                        <div class="fw-bold text-success">ग्राम स्तर: ग्राम पंचायतें</div>
+                                        <small class="text-muted">8,053+ ग्राम पंचायतें (मुखिया एवं सरपंच)</small>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
-                    <!-- Representatives / Candidates -->
+                    <!-- Representatives -->
                     <li class="nav-item">
-                        <a href="<?php echo SITE_URL; ?>/representatives" class="nav-link px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['representatives', 'candidates']) ? 'active text-warning' : ''; ?>">Representatives</a>
+                        <a href="<?php echo hindi_base_url('representatives'); ?>" class="nav-link px-2 px-lg-3 fw-semibold <?php echo in_array($activeNav, ['representatives', 'candidates']) ? 'active text-warning' : ''; ?>">जनप्रतिनिधि</a>
                     </li>
 
                     <!-- Blog -->
                     <li class="nav-item">
-                        <a href="<?php echo getBlogUrl(); ?>" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'blog' ? 'active text-warning' : ''; ?>">Blog</a>
+                        <a href="<?php echo getBlogUrl(); ?>" class="nav-link px-2 px-lg-3 fw-semibold <?php echo $activeNav === 'blog' ? 'active text-warning' : ''; ?>">ब्लॉग</a>
                     </li>
-
 
                     <?php if (isUserLoggedIn()): 
                         $currUser = getCurrentUser();
@@ -338,32 +344,32 @@ $activeNav = $activeNav ?? 'home';
                     <li class="nav-item dropdown ms-lg-2 mt-2 mt-lg-0">
                         <a class="btn btn-outline-dark rounded-pill px-3 py-2 fw-bold dropdown-toggle d-inline-flex align-items-center gap-1 shadow-sm w-100 justify-content-center" href="#" id="userAccountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: #0b192c;">
                             <i class="bi bi-person-circle text-primary"></i> 
-                            <span class="text-truncate" style="max-width: 110px;"><?php echo htmlspecialchars($currUser['name'] ?? 'Citizen'); ?></span>
+                            <span class="text-truncate" style="max-width: 110px;"><?php echo htmlspecialchars($currUser['name'] ?? 'नागरिक'); ?></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" aria-labelledby="userAccountDropdown">
                             <li class="px-3 py-2 border-bottom">
-                                <div class="fw-bold text-dark text-truncate"><?php echo htmlspecialchars($currUser['name'] ?? 'Citizen'); ?></div>
+                                <div class="fw-bold text-dark text-truncate"><?php echo htmlspecialchars($currUser['name'] ?? 'नागरिक'); ?></div>
                                 <div class="small text-muted">+91 <?php echo htmlspecialchars(maskMobileNumber($currUser['mobile'] ?? '')); ?></div>
-                                <span class="badge bg-warning text-dark small text-uppercase mt-1"><?php echo htmlspecialchars($currUser['role'] ?? 'VOTER'); ?></span>
+                                <span class="badge bg-warning text-dark small text-uppercase mt-1"><?php echo htmlspecialchars($currUser['role'] ?? 'मतदाता'); ?></span>
                             </li>
-                            <li><a class="dropdown-item py-2" href="<?php echo SITE_URL; ?>/dashboard"><i class="bi bi-speedometer2 me-2 text-primary"></i> My Dashboard</a></li>
-                            <li><a class="dropdown-item py-2" href="<?php echo SITE_URL; ?>/dashboard"><i class="bi bi-person-gear me-2 text-secondary"></i> Profile Settings</a></li>
+                            <li><a class="dropdown-item py-2" href="<?php echo hindi_base_url('dashboard'); ?>"><i class="bi bi-speedometer2 me-2 text-primary"></i> मेरा डैशबोर्ड</a></li>
+                            <li><a class="dropdown-item py-2" href="<?php echo hindi_base_url('edit-profile'); ?>"><i class="bi bi-person-gear me-2 text-secondary"></i> प्रोफाइल सेटिंग्स</a></li>
                             <li><hr class="dropdown-divider my-1"></li>
-                            <li><a class="dropdown-item py-2 text-danger fw-semibold" href="<?php echo SITE_URL; ?>/logout"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a></li>
+                            <li><a class="dropdown-item py-2 text-danger fw-semibold" href="<?php echo hindi_base_url('logout'); ?>"><i class="bi bi-box-arrow-right me-2"></i> लॉगआउट</a></li>
                         </ul>
                     </li>
                     <?php else: ?>
                     <!-- Public Citizen Login Button -->
                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                        <a href="<?php echo SITE_URL; ?>/login" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-2 fw-bold d-inline-flex align-items-center gap-1 shadow-sm w-100 justify-content-center">
-                            <i class="bi bi-person-circle"></i> Citizen Login
+                        <a href="<?php echo hindi_base_url('login'); ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-2 fw-bold d-inline-flex align-items-center gap-1 shadow-sm w-100 justify-content-center">
+                            <i class="bi bi-person-circle"></i> नागरिक लॉगिन
                         </a>
                     </li>
                     <?php endif; ?>
 
                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                         <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="btn btn-success rounded-pill px-3 py-2 fw-bold d-inline-flex align-items-center gap-1 shadow-sm w-100 justify-content-center">
-                            <i class="bi bi-whatsapp"></i> WhatsApp
+                            <i class="bi bi-whatsapp"></i> व्हाट्सएप
                         </a>
                     </li>
 
@@ -372,12 +378,12 @@ $activeNav = $activeNav ?? 'home';
                         $currentScript = basename($_SERVER['PHP_SELF'] ?? 'index.php');
                         $queryString = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
                         $cleanScript = str_replace('.php', '', $currentScript);
-                        $langSwitchUrl = SITE_URL . '/hindi/' . ($cleanScript === 'index' ? '' : $cleanScript) . $queryString;
+                        $langSwitchUrl = SITE_URL . '/' . ($cleanScript === 'index' ? '' : $cleanScript) . $queryString;
                     }
                     ?>
                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                        <a href="<?php echo htmlspecialchars($langSwitchUrl); ?>" class="btn btn-outline-warning text-dark border-warning rounded-pill px-3 py-2 fw-bold d-inline-flex align-items-center gap-1 shadow-sm w-100 justify-content-center bg-warning bg-opacity-10" title="हिंदी में देखें">
-                            <i class="bi bi-translate text-primary"></i> <span>हिंदी</span>
+                        <a href="<?php echo htmlspecialchars($langSwitchUrl); ?>" class="btn btn-outline-primary text-primary border-primary rounded-pill px-3 py-2 fw-bold d-inline-flex align-items-center gap-1 shadow-sm w-100 justify-content-center bg-primary bg-opacity-10" title="Switch to English">
+                            <i class="bi bi-translate text-primary"></i> <span>English</span>
                         </a>
                     </li>
                 </ul>

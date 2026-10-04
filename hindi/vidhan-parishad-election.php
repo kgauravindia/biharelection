@@ -4,15 +4,15 @@
  * Dedicated hub for the ongoing 4 Graduates' & 4 Teachers' Constituencies Biennial Elections.
  * Reference: CEO Bihar Notification No. M2–03(TC&GC)/2026-5369 / ECI TCGCGajat2026.pdf
  */
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = 'Bihar Vidhan Parishad Election 2026: 8 Graduates & Teachers Seats Gazette, Schedule & Voter Guide';
-$pageDescription = 'Official schedule, gazette notification (TCGCGajat2026.pdf), district-wise constituency mapping, Form 18/19 eligibility and polling data for the Bihar Legislative Council Biennial Election 2026.';
-$pageKeywords = 'Bihar Vidhan Parishad Election 2026, Bihar Legislative Council Election, Graduates Constituency Bihar, Teachers Constituency Bihar, Patna Graduate MLC, Tirhut Graduate MLC, Darbhanga Graduate, Kosi Graduate, Saran Teacher, Form 18 Bihar, Form 19 Bihar, CEO Bihar TCGCGajat2026';
-$pageCanonical = SITE_URL . '/vidhan-parishad-election';
+$pageTitle = 'बिहार विधान परिषद चुनाव 2026: 8 स्नातक एवं शिक्षक सीटें, गजट अधिसूचना एवं मतदाता निर्देश';
+$pageDescription = 'बिहार विधान परिषद द्विवार्षिक चुनाव 2026 की आधिकारिक समय सारिणी, गजट अधिसूचना, जिलावार निर्वाचन क्षेत्र मैपिंग एवं प्ररूप 18/19 पात्रता डेटा।';
+$pageKeywords = 'बिहार विधान परिषद चुनाव 2026, स्नातक निर्वाचन क्षेत्र बिहार, शिक्षक निर्वाचन क्षेत्र बिहार, पटना स्नातक एमएलसी, तिरहुत स्नातक, दरभंगा स्नातक, कोसी स्नातक, सारण शिक्षक, प्ररूप 18, प्ररूप 19';
+$pageCanonical = hindi_base_url('vidhan-parishad-election');
 $activeNav = 'mlc';
 
-include 'header.php';
+include __DIR__ . '/includes/header.php';
 
 // 8 Constituencies Data
 $seats = [
@@ -344,19 +344,19 @@ $timeline = [
 
                 <div class="d-flex flex-wrap gap-2 pt-1">
                     <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/ImportantInstructionsAndLetters/TCGCGajat2026.pdf" target="_blank" rel="noopener" class="btn gazette-btn px-4 py-2.5 rounded-3 fw-bold">
-                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> View Official Gazette PDF (TCGCGajat2026.pdf) &rarr;
+                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> आधिकारिक गजट PDF (TCGCGajat2026.pdf) देखें &rarr;
                     </a>
                     <a href="#voter-guide" class="btn btn-success px-3.5 py-2.5 rounded-3 fw-bold text-white shadow-sm">
-                        <i class="bi bi-person-check-fill me-1"></i> Voter List &amp; Electoral Roll (मतदाता सूची)
+                        <i class="bi bi-person-check-fill me-1"></i> मतदाता सूची एवं निर्वाचक नामावली
                     </a>
                     <a href="#nomination-details" class="btn btn-warning px-3 py-2.5 rounded-3 fw-bold text-dark">
-                        <i class="bi bi-file-earmark-person-fill me-1"></i> Nomination Details (प्ररूप 2E / 26)
+                        <i class="bi bi-file-earmark-person-fill me-1"></i> नामांकन विवरण (प्ररूप 2E / 26)
                     </a>
                     <a href="#schedule" class="btn btn-outline-light px-3 py-2.5 rounded-3 fw-semibold">
-                        <i class="bi bi-calendar-event me-1"></i> Full Schedule
+                        <i class="bi bi-calendar-event me-1"></i> संपूर्ण चुनाव कार्यक्रम
                     </a>
                     <a href="#district-finder" class="btn btn-outline-info px-3 py-2.5 rounded-3 fw-semibold">
-                        <i class="bi bi-search me-1"></i> Check Your District Status
+                        <i class="bi bi-search me-1"></i> अपने जिले की स्थिति जांचें
                     </a>
                 </div>
             </div>
@@ -833,18 +833,18 @@ $timeline = [
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
                     <div>
                         <span class="badge bg-success text-white fw-bold text-uppercase px-2.5 py-1 mb-1">
-                            <i class="bi bi-person-check-fill me-1"></i> Electoral Roll &amp; Voter Guide
+                            <i class="bi bi-person-check-fill me-1"></i> निर्वाचक नामावली एवं मतदाता मार्गदर्शिका
                         </span>
                         <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
-                            Voter List &amp; Electoral Roll (मतदाता सूची एवं निर्वाचक नामावली)
+                            मतदाता सूची एवं निर्वाचक नामावली (Voter List &amp; Electoral Roll)
                         </h3>
                     </div>
                     <div class="d-flex gap-2">
                         <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener" class="btn btn-success btn-sm rounded-pill fw-bold shadow-sm">
-                            <i class="bi bi-search me-1"></i> Search Name in Voter List (ECI) &rarr;
+                            <i class="bi bi-search me-1"></i> मतदाता सूची में नाम खोजें (ECI) &rarr;
                         </a>
                         <a href="https://ceoelection.bihar.gov.in/" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold">
-                            <i class="bi bi-file-earmark-pdf me-1"></i> CEO Bihar Roll PDF
+                            <i class="bi bi-file-earmark-pdf me-1"></i> मुख्य निर्वाचन पदाधिकारी बिहार रोल PDF
                         </a>
                     </div>
                 </div>
@@ -856,29 +856,29 @@ $timeline = [
                             <i class="bi bi-journal-check fs-4"></i>
                         </div>
                         <div class="flex-grow-1">
-                            <h5 class="fw-bold text-dark mb-1">Special Notice on Legislative Council Electoral Rolls</h5>
+                            <h5 class="fw-bold text-dark mb-1">विधान परिषद निर्वाचक नामावली संबंधी विशेष सूचना</h5>
                             <p class="text-secondary small mb-3" style="line-height: 1.6;">
-                                Unlike the Legislative Assembly (Vidhan Sabha) voter list, the <strong>Electoral Roll for Council Graduates' &amp; Teachers' Constituencies is prepared afresh before every biennial election</strong>. Ordinary inclusion in the general voter list does <em>not</em> automatically entitle you to vote in Council elections — voters must specifically register via <strong>Form 18</strong> (Graduates) or <strong>Form 19</strong> (Teachers).
+                                विधानसभा (Vidhan Sabha) की सामान्य मतदाता सूची के विपरीत, <strong>विधान परिषद के स्नातक एवं शिक्षक निर्वाचन क्षेत्रों की निर्वाचक नामावली प्रत्येक द्विवार्षिक चुनाव से पूर्व नए सिरे से तैयार की जाती है</strong>। सामान्य मतदाता सूची में नाम होना स्वतः ही विधान परिषद चुनाव में मतदान का अधिकार नहीं देता — मतदाताओं को <strong>प्ररूप 18 (स्नातक)</strong> अथवा <strong>प्ररूप 19 (शिक्षक)</strong> भरकर पृथक पंजीकरण कराना अनिवार्य होता है।
                             </p>
                             
                             <div class="row g-2 pt-1">
                                 <div class="col-md-4">
                                     <div class="p-2.5 bg-light rounded-3 border">
-                                        <span class="text-muted d-block" style="font-size: 11px;">QUALIFYING DATE:</span>
-                                        <strong class="text-dark small">01 November 2025</strong>
+                                        <span class="text-muted d-block" style="font-size: 11px;">अर्हता तिथि (Qualifying Date):</span>
+                                        <strong class="text-dark small">01 नवम्बर 2025</strong>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="p-2.5 bg-light rounded-3 border">
-                                        <span class="text-muted d-block" style="font-size: 11px;">ROLL REVISION STATUS:</span>
-                                        <span class="badge bg-success-subtle text-success fw-bold">Final Electoral Roll Published</span>
+                                        <span class="text-muted d-block" style="font-size: 11px;">पुनरीक्षण स्थिति (Revision Status):</span>
+                                        <span class="badge bg-success-subtle text-success fw-bold">अंतिम निर्वाचक नामावली प्रकाशित</span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="p-2.5 bg-light rounded-3 border">
-                                        <span class="text-muted d-block" style="font-size: 11px;">ELECTORAL SEARCH:</span>
+                                        <span class="text-muted d-block" style="font-size: 11px;">मतदाता ऑनलाइन सत्यापन:</span>
                                         <a href="https://voters.eci.gov.in/" target="_blank" class="text-primary fw-bold small text-decoration-none hover-underline">
-                                            Verify Status Online &rarr;
+                                            ऑनलाइन स्थिति जांचें &rarr;
                                         </a>
                                     </div>
                                 </div>
@@ -891,47 +891,47 @@ $timeline = [
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 bg-white">
                     <div class="card-header bg-light py-3 px-4 border-bottom d-flex justify-content-between align-items-center">
                         <h6 class="fw-bold mb-0 text-dark">
-                            <i class="bi bi-table text-primary me-2"></i> 8 Constituencies Electoral Roll &amp; ERO Directory
+                            <i class="bi bi-table text-primary me-2"></i> 8 निर्वाचन क्षेत्र निर्वाचक नामावली एवं निर्वाचक निबंधन पदाधिकारी (ERO) निर्देशिका
                         </h6>
-                        <span class="badge bg-primary text-white small">8 Biennial Seats</span>
+                        <span class="badge bg-primary text-white small">8 द्विवार्षिक सीटें</span>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0 small">
                             <thead class="table-light text-uppercase text-secondary" style="font-size: 11px;">
                                 <tr>
-                                    <th class="ps-4">Constituency Name</th>
-                                    <th>Type</th>
-                                    <th>Districts Covered</th>
-                                    <th>Electoral Registration Officer (ERO)</th>
-                                    <th class="text-end pe-4">Roll Link / Action</th>
+                                    <th class="ps-4">निर्वाचन क्षेत्र का नाम</th>
+                                    <th>प्रकार</th>
+                                    <th>सम्मिलित जिले</th>
+                                    <th>निर्वाचक निबंधन पदाधिकारी (ERO)</th>
+                                    <th class="text-end pe-4">मतदाता सूची लिंक / विवरण</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($seats as $s): ?>
                                 <tr>
                                     <td class="ps-4">
-                                        <div class="fw-bold text-dark"><?php echo htmlspecialchars($s['name']); ?></div>
-                                        <div class="text-muted" style="font-size: 11px;"><?php echo htmlspecialchars($s['name_hi']); ?></div>
+                                        <div class="fw-bold text-dark"><?php echo htmlspecialchars($s['name_hi']); ?></div>
+                                        <div class="text-muted" style="font-size: 11px;"><?php echo htmlspecialchars($s['name']); ?></div>
                                     </td>
                                     <td>
                                         <span class="badge <?php echo $s['type'] === 'Graduates' ? 'bg-primary' : 'bg-success'; ?> rounded-pill px-2.5 py-1">
-                                            <?php echo htmlspecialchars($s['type']); ?>
+                                            <?php echo $s['type'] === 'Graduates' ? 'स्नातक' : 'शिक्षक'; ?>
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="text-secondary"><?php echo implode(', ', array_slice($s['districts'], 0, 3)); ?><?php echo count($s['districts']) > 3 ? ' +' . (count($s['districts']) - 3) . ' more' : ''; ?></span>
+                                        <span class="text-secondary"><?php echo implode(', ', array_slice($s['districts_hi'] ?? $s['districts'], 0, 3)); ?><?php echo count($s['districts']) > 3 ? ' +' . (count($s['districts']) - 3) . ' अन्य' : ''; ?></span>
                                     </td>
                                     <td>
-                                        <span class="fw-semibold text-dark"><?php echo htmlspecialchars($s['ro']); ?></span>
+                                        <span class="fw-semibold text-dark"><?php echo htmlspecialchars($s['ro_hi'] ?? $s['ro']); ?></span>
                                     </td>
                                     <td class="text-end pe-4">
                                         <?php if ($s['type'] === 'Graduates'): ?>
                                         <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/GCPDF.ASPX" target="_blank" rel="noopener" class="btn btn-primary btn-sm rounded-pill py-1 px-3 fw-semibold" style="font-size: 11.5px;">
-                                            <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> Graduate Roll PDF &rarr;
+                                            <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> स्नातक वोटर लिस्ट PDF &rarr;
                                         </a>
                                         <?php else: ?>
                                         <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/TCPDF.ASPX" target="_blank" rel="noopener" class="btn btn-success btn-sm rounded-pill py-1 px-3 fw-semibold" style="font-size: 11.5px;">
-                                            <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> Teacher Roll PDF &rarr;
+                                            <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> शिक्षक वोटर लिस्ट PDF &rarr;
                                         </a>
                                         <?php endif; ?>
                                     </td>
@@ -952,36 +952,36 @@ $timeline = [
                                     <i class="bi bi-mortarboard-fill fs-5"></i>
                                 </div>
                                 <div>
-                                    <h5 class="fw-bold mb-0 text-dark">Graduates Voter (Form 18 / प्ररूप 18)</h5>
+                                    <h5 class="fw-bold mb-0 text-dark">स्नातक मतदाता (प्ररूप 18 / Form 18)</h5>
                                     <small class="text-muted">स्नातक निर्वाचक नामावली पंजीकरण</small>
                                 </div>
                             </div>
 
-                            <h6 class="fw-bold text-dark small text-uppercase mb-2">Eligibility Criteria:</h6>
+                            <h6 class="fw-bold text-dark small text-uppercase mb-2">पात्रता मानदंड (Eligibility):</h6>
                             <ul class="text-secondary small ps-3 mb-3" style="line-height: 1.6;">
-                                <li>Citizen of India ordinarily resident in the constituency.</li>
-                                <li>Graduated at least <strong>3 years prior</strong> to the qualifying date (01 Nov 2025) from any university recognized by UGC / Govt of India.</li>
-                                <li>Or possesses recognized equivalent degree/diploma.</li>
+                                <li>भारत का नागरिक हो और संबंधित निर्वाचन क्षेत्र का सामान्य निवासी हो।</li>
+                                <li>अर्हता तिथि (01 नवम्बर 2025) से कम से कम <strong>3 वर्ष पूर्व</strong> भारत के किसी भी मान्यता प्राप्त विश्वविद्यालय से स्नातक उत्तीर्ण हो।</li>
+                                <li>अथवा राज्य द्वारा मान्यता प्राप्त समकक्ष शैक्षणिक योग्यता रखता हो।</li>
                             </ul>
 
-                            <h6 class="fw-bold text-dark small text-uppercase mb-2">Mandatory Documents:</h6>
+                            <h6 class="fw-bold text-dark small text-uppercase mb-2">आवश्यक दस्तावेज (Documents):</h6>
                             <ul class="text-secondary small ps-3 mb-3" style="line-height: 1.6;">
-                                <li>Degree Certificate / Provisional Degree / Final Year Marksheet (Self-attested).</li>
-                                <li>Aadhaar Card / EPIC (Voter ID) for identity proof.</li>
-                                <li>Proof of residence in constituency (Electricity bill, Passport, Domicile).</li>
+                                <li>डिग्री प्रमाण पत्र / प्रोविजनल डिग्री / अंतिम वर्ष की अंकतालिका (स्व-अभिप्रमाणित)।</li>
+                                <li>पहचान प्रमाण हेतु आधार कार्ड / वोटर आईडी (EPIC)।</li>
+                                <li>संबंधित निर्वाचन क्षेत्र में सामान्य निवास का प्रमाण (बिजली बिल, पासपोर्ट, निवास प्रमाण पत्र)।</li>
                             </ul>
 
                             <div class="d-flex flex-column gap-2 mt-auto">
                                 <div class="d-flex gap-2">
                                     <a href="https://ceoelection.bihar.gov.in/" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold flex-grow-1">
-                                        <i class="bi bi-download me-1"></i> Download Form 18 PDF
+                                        <i class="bi bi-download me-1"></i> प्ररूप 18 PDF
                                     </a>
                                     <a href="https://voters.eci.gov.in/" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill fw-semibold">
-                                        <i class="bi bi-box-arrow-up-right me-1"></i> Online Portal
+                                        <i class="bi bi-box-arrow-up-right me-1"></i> ऑनलाइन पोर्टल
                                     </a>
                                 </div>
                                 <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/GCPDF.ASPX" target="_blank" rel="noopener" class="btn btn-primary btn-sm rounded-pill fw-bold text-white shadow-sm">
-                                    <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> View / Download Graduates Voter List PDF (GCPDF) &rarr;
+                                    <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> स्नातक मतदाता सूची खोजें / डाउनलोड करें (GCPDF) &rarr;
                                 </a>
                             </div>
                         </div>
@@ -995,52 +995,52 @@ $timeline = [
                                     <i class="bi bi-person-video3 fs-5"></i>
                                 </div>
                                 <div>
-                                    <h5 class="fw-bold mb-0 text-dark">Teachers Voter (Form 19 / प्ररूप 19)</h5>
+                                    <h5 class="fw-bold mb-0 text-dark">शिक्षक मतदाता (प्ररूप 19 / Form 19)</h5>
                                     <small class="text-muted">शिक्षक निर्वाचक नामावली पंजीकरण</small>
                                 </div>
                             </div>
 
-                            <h6 class="fw-bold text-dark small text-uppercase mb-2">Eligibility Criteria:</h6>
+                            <h6 class="fw-bold text-dark small text-uppercase mb-2">पात्रता मानदंड (Eligibility):</h6>
                             <ul class="text-secondary small ps-3 mb-3" style="line-height: 1.6;">
-                                <li>Citizen of India ordinarily resident in the constituency.</li>
-                                <li>Engaged in teaching for a total of at least <strong>3 years within the preceding 6 years</strong>.</li>
-                                <li>Teaching in educational institutions not lower in standard than a secondary school as specified by CEO Bihar.</li>
+                                <li>भारत का नागरिक हो और संबंधित निर्वाचन क्षेत्र का सामान्य निवासी हो।</li>
+                                <li>विगत 6 वर्षों के भीतर कुल मिलाकर कम से कम <strong>3 वर्ष तक शिक्षण कार्य</strong> में संलग्न रहा हो।</li>
+                                <li>मुख्य निर्वाचन पदाधिकारी द्वारा विनिर्दिष्ट माध्यमिक या उच्चतर स्तर के मान्यता प्राप्त शैक्षणिक संस्थानों में कार्यरत हो।</li>
                             </ul>
 
                             <div class="p-2.5 bg-success-subtle rounded-3 border border-success-subtle mb-3 small">
                                 <div class="fw-bold text-success-emphasis mb-1">
-                                    <i class="bi bi-check2-circle me-1"></i> Specified Educational Institutions:
+                                    <i class="bi bi-check2-circle me-1"></i> विनिर्दिष्ट शैक्षणिक संस्थान (Specified Institutions):
                                 </div>
                                 <div class="text-secondary" style="font-size: 11.5px; line-height: 1.5;">
-                                    Teachers from Higher Secondary (+2) Schools, Affiliated Colleges, Universities, Technical &amp; Research Institutes listed in <strong>CEO Bihar Orders (Letter No. 4487 &amp; 4010)</strong> are eligible.
+                                    <strong>CEO बिहार आदेश (ज्ञापांक 4487 एवं 4010)</strong> में सूचीबद्ध माध्यमिक विद्यालय, उच्च माध्यमिक (+2) विद्यालय, अंगीभूत/संबद्ध महाविद्यालय, विश्वविद्यालय एवं तकनीकी संस्थानों के शिक्षक पात्र हैं।
                                 </div>
                             </div>
 
-                            <h6 class="fw-bold text-dark small text-uppercase mb-2">Mandatory Documents:</h6>
+                            <h6 class="fw-bold text-dark small text-uppercase mb-2">आवश्यक दस्तावेज (Documents):</h6>
                             <ul class="text-secondary small ps-3 mb-3" style="line-height: 1.6;">
-                                <li>Service Certificate issued by the Head of Institution (Principal/Director).</li>
-                                <li>Affiliation / Recognition proof of educational institution.</li>
-                                <li>EPIC / Aadhaar Card &amp; residential proof.</li>
+                                <li>संस्थान प्रधान (प्रधानाचार्य / प्राचार्य / निदेशक) द्वारा निर्गत सेवा प्रमाण पत्र।</li>
+                                <li>संस्थान की सरकारी मान्यता / संबद्धता प्रमाण पत्र।</li>
+                                <li>वोटर आईडी (EPIC) / आधार कार्ड एवं निवास प्रमाण।</li>
                             </ul>
 
                             <div class="d-flex flex-column gap-2 mt-auto">
                                 <div class="d-flex gap-2">
                                     <a href="https://ceoelection.bihar.gov.in/" target="_blank" class="btn btn-outline-success btn-sm rounded-pill fw-semibold flex-grow-1">
-                                        <i class="bi bi-download me-1"></i> Form 19 PDF
+                                        <i class="bi bi-download me-1"></i> प्ररूप 19 PDF
                                     </a>
                                     <a href="https://voters.eci.gov.in/" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill fw-semibold">
-                                        <i class="bi bi-box-arrow-up-right me-1"></i> Online Portal
+                                        <i class="bi bi-box-arrow-up-right me-1"></i> ऑनलाइन पोर्टल
                                     </a>
                                 </div>
                                 <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/TCPDF.ASPX" target="_blank" rel="noopener" class="btn btn-success btn-sm rounded-pill fw-bold text-white shadow-sm">
-                                    <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> View / Download Teachers Voter List PDF (TCPDF) &rarr;
+                                    <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> शिक्षक मतदाता सूची खोजें / डाउनलोड करें (TCPDF) &rarr;
                                 </a>
                                 <div class="d-flex gap-2">
                                     <a href="https://ceoelection.bihar.gov.in/PDF/Year_2025/tcgc2026/4487-List%20of%20Educational%20Institutions%20for%20Preparation%20of%20Electoral%20Roll%20of%20Teacher%20Constituency.pdf" target="_blank" rel="noopener" class="btn btn-warning btn-sm rounded-pill fw-bold text-dark shadow-sm flex-grow-1" style="font-size: 12px;">
-                                        <i class="bi bi-file-earmark-pdf-fill me-1 text-danger"></i> Letter 4487 (Updated Institutions) &rarr;
+                                        <i class="bi bi-file-earmark-pdf-fill me-1 text-danger"></i> आदेश 4487 (अद्यतन संस्थान) &rarr;
                                     </a>
                                     <a href="https://ceoelection.bihar.gov.in/PDF/Year_2025/tcgc2026/4010-List%20of%20Educational%20Institutions%20for%20Preparation%20of%20Electoral%20Roll%20of%20Teacher%20Constituency.pdf" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-pill fw-semibold" style="font-size: 12px;">
-                                        <i class="bi bi-file-earmark-pdf me-1"></i> Letter 4010
+                                        <i class="bi bi-file-earmark-pdf me-1"></i> आदेश 4010
                                     </a>
                                 </div>
                             </div>
@@ -1048,30 +1048,30 @@ $timeline = [
                     </div>
                 </div>
 
-                <!-- CEO Bihar Letter 4487 & 4010 Highlight Banner -->
+                <!-- CEO Bihar Letter 4487 & 4010 Highlight Banner (Hindi) -->
                 <div class="card border-0 shadow-sm rounded-4 p-4 mb-4" style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-left: 5px solid #16a34a !important;">
                     <div class="row align-items-center g-3">
                         <div class="col-lg-7">
                             <div class="d-flex align-items-center gap-2 mb-2">
                                 <span class="badge bg-success fw-bold px-2.5 py-1 rounded-pill">
-                                    <i class="bi bi-patch-check-fill me-1"></i> CEO Bihar Official Notifications
+                                    <i class="bi bi-patch-check-fill me-1"></i> CEO बिहार आधिकारिक अधिसूचनाएं
                                 </span>
-                                <span class="badge bg-warning text-dark fw-bold">Letter No. 4487 (Latest)</span>
-                                <span class="badge bg-light text-dark border fw-semibold">Letter No. 4010</span>
+                                <span class="badge bg-warning text-dark fw-bold">ज्ञापांक सं. 4487 (अद्यतन)</span>
+                                <span class="badge bg-light text-dark border fw-semibold">ज्ञापांक सं. 4010</span>
                             </div>
-                            <h5 class="fw-bold text-dark mb-1" style="font-family: 'Outfit', sans-serif;">
-                                Lists of Specified Educational Institutions for Teachers' Electoral Roll
+                            <h5 class="fw-bold text-dark mb-1" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                                शिक्षक निर्वाचन क्षेत्र की मतदाता सूची हेतु विनिर्दिष्ट शिक्षण संस्थानों की आधिकारिक सूची
                             </h5>
                             <p class="small text-secondary mb-0" style="line-height: 1.5;">
-                                Statutory lists of recognized Secondary Schools, Higher Secondary (+2) Schools, Degree Colleges, Universities, and Professional Institutes whose teachers qualify for inclusion in the Teachers' Constituency Electoral Roll (Form 19).
+                                मुख्य निर्वाचन पदाधिकारी, बिहार द्वारा जारी वैधानिक अधिसूचना के अनुसार मान्यता प्राप्त माध्यमिक, उच्च माध्यमिक (+2), महाविद्यालय, विश्वविद्यालय एवं व्यावसायिक संस्थानों की आधिकारिक सूची जिसके शिक्षक प्ररूप 19 में मतदाता बनने हेतु पात्र हैं।
                             </p>
                         </div>
                         <div class="col-lg-5 text-lg-end d-flex flex-wrap gap-2 justify-content-lg-end">
                             <a href="https://ceoelection.bihar.gov.in/PDF/Year_2025/tcgc2026/4487-List%20of%20Educational%20Institutions%20for%20Preparation%20of%20Electoral%20Roll%20of%20Teacher%20Constituency.pdf" target="_blank" rel="noopener" class="btn btn-success fw-bold px-3 py-2 rounded-3 shadow-sm text-white">
-                                <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> Letter 4487 PDF (Latest) &rarr;
+                                <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> आदेश 4487 PDF (अद्यतन) &rarr;
                             </a>
                             <a href="https://ceoelection.bihar.gov.in/PDF/Year_2025/tcgc2026/4010-List%20of%20Educational%20Institutions%20for%20Preparation%20of%20Electoral%20Roll%20of%20Teacher%20Constituency.pdf" target="_blank" rel="noopener" class="btn btn-outline-success fw-bold px-3 py-2 rounded-3">
-                                <i class="bi bi-file-earmark-pdf me-1"></i> Letter 4010 PDF &rarr;
+                                <i class="bi bi-file-earmark-pdf me-1"></i> आदेश 4010 PDF &rarr;
                             </a>
                         </div>
                     </div>
@@ -1080,28 +1080,28 @@ $timeline = [
                 <!-- 3-Step Guide to Search Name in Voter List -->
                 <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
                     <h5 class="fw-bold text-dark mb-3" style="font-family: 'Outfit', sans-serif;">
-                        <i class="bi bi-question-circle-fill text-warning me-2"></i> How to Check Your Name in Council Voter List (मतदाता सूची में नाम कैसे जांचें)
+                        <i class="bi bi-question-circle-fill text-warning me-2"></i> विधान परिषद मतदाता सूची में अपना नाम कैसे जांचें (3 आसान चरण)
                     </h5>
                     <div class="row g-3 small">
                         <div class="col-md-4">
                             <div class="p-3 bg-light rounded-3 h-100 border">
                                 <div class="badge bg-primary rounded-circle mb-2" style="width: 24px; height: 24px;">1</div>
-                                <h6 class="fw-bold text-dark mb-1">Step 1: Open CEO Bihar Portal</h6>
-                                <p class="text-muted mb-0">Open <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/GCPDF.ASPX" target="_blank" class="fw-semibold text-primary">Graduates Roll Portal (GCPDF)</a>, <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/TCPDF.ASPX" target="_blank" class="fw-semibold text-success">Teachers Roll Portal (TCPDF)</a>, or <code>ceoelection.bihar.gov.in</code>.</p>
+                                <h6 class="fw-bold text-dark mb-1">चरण 1: मुख्य निर्वाचन पदाधिकारी पोर्टल खोलें</h6>
+                                <p class="text-muted mb-0"><a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/GCPDF.ASPX" target="_blank" class="fw-semibold text-primary">स्नातक रोल पोर्टल (GCPDF)</a>, <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/TCPDF.ASPX" target="_blank" class="fw-semibold text-success">शिक्षक रोल पोर्टल (TCPDF)</a> अथवा <code>ceoelection.bihar.gov.in</code> पर जाएं।</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="p-3 bg-light rounded-3 h-100 border">
                                 <div class="badge bg-primary rounded-circle mb-2" style="width: 24px; height: 24px;">2</div>
-                                <h6 class="fw-bold text-dark mb-1">Step 2: Select Constituency &amp; District</h6>
-                                <p class="text-muted mb-0">Choose your specific Council Constituency (e.g. Patna Graduates or Saran Teachers) and your home District/Block.</p>
+                                <h6 class="fw-bold text-dark mb-1">चरण 2: निर्वाचन क्षेत्र एवं जिले का चयन करें</h6>
+                                <p class="text-muted mb-0">अपने संबंधित विधान परिषद निर्वाचन क्षेत्र (जैसे: पटना स्नातक अथवा सारण शिक्षक) और गृह जिले/प्रखंड का चयन करें।</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="p-3 bg-light rounded-3 h-100 border">
                                 <div class="badge bg-primary rounded-circle mb-2" style="width: 24px; height: 24px;">3</div>
-                                <h6 class="fw-bold text-dark mb-1">Step 3: Download Booth Roll / Search EPIC</h6>
-                                <p class="text-muted mb-0">Search using your EPIC number or download your local designated polling booth PDF to verify your name, serial number, and polling station location.</p>
+                                <h6 class="fw-bold text-dark mb-1">चरण 3: बूथवार PDF डाउनलोड या EPIC से खोजें</h6>
+                                <p class="text-muted mb-0">अपने वोटर आईडी (EPIC) नंबर से नाम खोजें या अपने मतदान केंद्र की बूथवार मतदाता सूची PDF डाउनलोड कर अपना क्रमांक और मतदान केंद्र जांचें।</p>
                             </div>
                         </div>
                     </div>
@@ -1188,43 +1188,43 @@ $timeline = [
 
             <!-- Gazette & Statutory Documents Download Widget -->
             <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
-                <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom" style="font-family: 'Outfit', sans-serif;">
-                    <i class="bi bi-file-earmark-pdf-fill text-danger me-2"></i> Official CEO Bihar Documents
+                <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                    <i class="bi bi-file-earmark-pdf-fill text-danger me-2"></i> मुख्य निर्वाचन पदाधिकारी आधिकारिक दस्तावेज
                 </h5>
                 
                 <!-- Document 1: Gazette -->
                 <div class="p-2.5 bg-light rounded-3 border mb-2.5 small">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <strong class="text-dark">Election Gazette Notification</strong>
+                        <strong class="text-dark">निर्वाचन गजट अधिसूचना</strong>
                         <span class="badge bg-danger">TCGCGajat2026</span>
                     </div>
-                    <div class="text-muted mb-2" style="font-size: 11.5px;">File No: M2–03(TC&amp;GC)/2026-5369</div>
+                    <div class="text-muted mb-2" style="font-size: 11.5px;">पत्रांक: M2–03(TC&amp;GC)/2026-5369</div>
                     <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/ImportantInstructionsAndLetters/TCGCGajat2026.pdf" target="_blank" rel="noopener" class="btn btn-outline-danger btn-sm w-100 fw-bold rounded-pill" style="font-size: 11.5px;">
-                        <i class="bi bi-download me-1"></i> Download Gazette PDF
+                        <i class="bi bi-download me-1"></i> गजट PDF डाउनलोड करें
                     </a>
                 </div>
 
                 <!-- Document 2: Letter 4487 (Latest Updated List) -->
                 <div class="p-2.5 bg-light rounded-3 border mb-2.5 small">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <strong class="text-dark">Teachers' Institutions (Latest)</strong>
-                        <span class="badge bg-success">Letter 4487</span>
+                        <strong class="text-dark">शिक्षक संस्थान सूची (अद्यतन)</strong>
+                        <span class="badge bg-success">ज्ञापांक 4487</span>
                     </div>
-                    <div class="text-muted mb-2" style="font-size: 11.5px;">Updated recognized institutions list for Form 19</div>
+                    <div class="text-muted mb-2" style="font-size: 11.5px;">प्ररूप 19 हेतु मान्य संस्थानों की नवीनतम सूची</div>
                     <a href="https://ceoelection.bihar.gov.in/PDF/Year_2025/tcgc2026/4487-List%20of%20Educational%20Institutions%20for%20Preparation%20of%20Electoral%20Roll%20of%20Teacher%20Constituency.pdf" target="_blank" rel="noopener" class="btn btn-success btn-sm w-100 fw-bold rounded-pill text-white" style="font-size: 11.5px;">
-                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> Download Letter 4487 PDF
+                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> आदेश 4487 PDF डाउनलोड
                     </a>
                 </div>
 
                 <!-- Document 3: Letter 4010 List of Educational Institutions -->
                 <div class="p-2.5 bg-light rounded-3 border small">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <strong class="text-dark">Teachers' Institutions (Initial)</strong>
-                        <span class="badge bg-secondary">Letter 4010</span>
+                        <strong class="text-dark">शिक्षक संस्थान सूची (मूल)</strong>
+                        <span class="badge bg-secondary">ज्ञापांक 4010</span>
                     </div>
-                    <div class="text-muted mb-2" style="font-size: 11.5px;">Specified institutions list for Teachers' roll</div>
+                    <div class="text-muted mb-2" style="font-size: 11.5px;">शिक्षक मतदाता सूची हेतु विनिर्दिष्ट संस्थान</div>
                     <a href="https://ceoelection.bihar.gov.in/PDF/Year_2025/tcgc2026/4010-List%20of%20Educational%20Institutions%20for%20Preparation%20of%20Electoral%20Roll%20of%20Teacher%20Constituency.pdf" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm w-100 fw-bold rounded-pill" style="font-size: 11.5px;">
-                        <i class="bi bi-file-earmark-pdf me-1"></i> Download Letter 4010 PDF
+                        <i class="bi bi-file-earmark-pdf me-1"></i> आदेश 4010 PDF डाउनलोड
                     </a>
                 </div>
             </div>
@@ -1415,4 +1415,4 @@ function lookupDistrictConstituency(district) {
 }
 </script>
 
-<?php include 'footer.php'; ?>
+<?php include __DIR__ . '/includes/footer.php'; ?>
