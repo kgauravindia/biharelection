@@ -9,6 +9,7 @@ $pageTitle = $pageTitle ?? 'Bihar Election 2026: 243 Assembly Data, 38 Districts
 $pageDescription = $pageDescription ?? 'Bihar\'s comprehensive non-government election data platform covering 243 Assembly Constituencies, 38 Districts, and 2026 Panchayat Delimitation.';
 $pageKeywords = $pageKeywords ?? 'Bihar Election 2026, 243 Bihar Assembly Constituencies, Patna Vidhan Sabha, Bihar Election Results, Bihar Panchayat 2026, Bihar MLA list, Bihar Political Hub';
 $pageCanonical = $pageCanonical ?? SITE_URL;
+$pageImage = $pageImage ?? ($pageOgImage ?? ($ogImage ?? ($thumbnail ?? '')));
 $activeNav = $activeNav ?? 'home';
 ?>
 <!DOCTYPE html>
@@ -27,7 +28,7 @@ $activeNav = $activeNav ?? 'home';
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#0b192c">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <?php renderSeoMeta($pageTitle, $pageDescription, $pageKeywords, $pageCanonical); ?>
+    <?php renderSeoMeta($pageTitle, $pageDescription, $pageKeywords, $pageCanonical, $pageImage); ?>
     <?php echo getSiteHreflangTags(getSiteCanonicalUrl($pageCanonical ?? null)); ?>
     
     <!-- Favicon -->

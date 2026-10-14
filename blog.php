@@ -139,6 +139,7 @@ if ($is_single && $pdo) {
             $pageTitle = htmlspecialchars($article['title']) . ' — Bihar Election News';
             $pageDescription = !empty($article['excerpt']) ? htmlspecialchars(strip_tags($article['excerpt'])) : htmlspecialchars(substr(strip_tags($article['content']), 0, 160));
             $pageCanonical = SITE_URL . '/blog/' . urlencode($article['slug']);
+            $pageImage = !empty($article['featured_image']) ? resolveBlogImgUrl($article['featured_image']) : '';
             $activeNav = 'blog';
         } else {
             // 404 Not Found

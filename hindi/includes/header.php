@@ -8,6 +8,7 @@ $pageTitle = $pageTitle ?? 'बिहार चुनाव 2026: 243 विध�
 $pageDescription = $pageDescription ?? 'बिहार का सबसे विश्वसनीय गैर-सरकारी चुनाव डेटा पोर्टल। 243 विधानसभा क्षेत्र, 38 जिले, 534 प्रखंड और 2026 पंचायत परिसीमन की संपूर्ण जानकारी।';
 $pageKeywords = $pageKeywords ?? 'बिहार चुनाव 2026, 243 बिहार विधानसभा क्षेत्र, पटना विधानसभा, बिहार चुनाव परिणाम, बिहार पंचायत 2026, बिहार विधायक सूची, बिहार राजनीतिक हब';
 $pageCanonical = $pageCanonical ?? (SITE_URL . '/hindi');
+$pageImage = $pageImage ?? ($pageOgImage ?? ($ogImage ?? ($thumbnail ?? '')));
 $activeNav = $activeNav ?? 'home';
 ?>
 <!DOCTYPE html>
@@ -26,7 +27,7 @@ $activeNav = $activeNav ?? 'home';
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#0b192c">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <?php renderSeoMeta($pageTitle, $pageDescription, $pageKeywords, $pageCanonical); ?>
+    <?php renderSeoMeta($pageTitle, $pageDescription, $pageKeywords, $pageCanonical, $pageImage); ?>
     <?php echo getSiteHreflangTags(getSiteCanonicalUrl($pageCanonical ?? null, true)); ?>
     
     <!-- Favicon -->

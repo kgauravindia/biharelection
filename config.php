@@ -1555,13 +1555,53 @@ class DataProvider {
     }
 }
 
-// Meta helper for SEO
+/**
+ * Resolves Open Graph / Social Media Thumbnail Image URL for link sharing.
+ * If image is empty, missing, or local file does not exist, defaults to site logo.
+ *
+ * @param string $ogImage
+ * @return string Full absolute URL to the image
+ */
+function resolveOgImage($ogImage = '') {
+    $defaultLogo = base_url('assets/image/logo.png');
+    $ogImage = trim((string)$ogImage);
+
+    if (empty($ogImage)) {
+        return $defaultLogo;
+    }
+
+    // Relative path -> verify and make absolute
+    if (!preg_match('/^https?:\/\//i', $ogImage)) {
+        $cleanPath = ltrim($ogImage, '/');
+        $localFile = __DIR__ . '/' . $cleanPath;
+        if (file_exists($localFile)) {
+            return base_url($cleanPath);
+        }
+        return $defaultLogo;
+    }
+
+    // If pointing to our own SITE_URL or domain, verify local file exists
+    $siteBase = rtrim(SITE_URL, '/');
+    if (str_starts_with($ogImage, $siteBase)) {
+        $rel = ltrim(substr($ogImage, strlen($siteBase)), '/');
+        $cleanRel = explode('?', $rel)[0];
+        $localFile = __DIR__ . '/' . $cleanRel;
+        if (!empty($cleanRel) && !file_exists($localFile)) {
+            return $defaultLogo;
+        }
+    }
+
+    return $ogImage;
+}
+
+// Meta helper for SEO & Social Link Sharing (WhatsApp, Facebook, Twitter, LinkedIn)
 function renderSeoMeta($title, $description, $keywords = '', $canonical = '', $ogImage = '') {
     $title = htmlspecialchars($title . ' | ' . SITE_NAME);
     $description = htmlspecialchars($description);
     $keywords = htmlspecialchars($keywords ?: 'Bihar Election 2026, Bihar Assembly Election, 243 Constituencies, Bihar Panchayat Election, Bihar MLA list, Bihar Political Data');
     $canonical = $canonical ?: SITE_URL;
-    $ogImage = $ogImage ?: SITE_URL . '/assets/img/og-biharelection.jpg';
+    $ogImage = htmlspecialchars(resolveOgImage($ogImage));
+    $siteName = htmlspecialchars(SITE_NAME);
 
     echo <<<HTML
     <title>{$title}</title>
@@ -1570,18 +1610,25 @@ function renderSeoMeta($title, $description, $keywords = '', $canonical = '', $o
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{$canonical}">
     
-    <!-- Open Graph / Social Media -->
+    <!-- Open Graph / Social Media / WhatsApp & Facebook Share Thumbnail -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{$siteName}">
     <meta property="og:url" content="{$canonical}">
     <meta property="og:title" content="{$title}">
     <meta property="og:description" content="{$description}">
     <meta property="og:image" content="{$ogImage}">
+    <meta property="og:image:secure_url" content="{$ogImage}">
+    <meta property="og:image:alt" content="{$title}">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{$canonical}">
     <meta name="twitter:title" content="{$title}">
     <meta name="twitter:description" content="{$description}">
     <meta name="twitter:image" content="{$ogImage}">
+
+    <!-- Standard Link Share Thumbnail fallback -->
+    <link rel="image_src" href="{$ogImage}">
 HTML;
 }
 

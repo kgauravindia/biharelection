@@ -29,6 +29,15 @@ $pageTitle = htmlspecialchars($cData['name']) . " (" . $cData['name_hi'] . "): "
 $pageDescription = "Official list of all " . $cData['booth_count'] . " Polling Booths (मतदान केंद्र) for " . $cData['name'] . " (" . $cData['name_hi'] . "), updated from CEO Bihar Final Electoral Roll. Check booth names, " . $formType . " voter registration, returning officer, and 2026 Biennial Election updates.";
 $pageKeywords = $cData['name'] . ", " . $cData['name_hi'] . ", Bihar MLC Election 2026, " . $cData['name'] . " Booth List, CEO Bihar " . $cData['segment_code'] . ", " . $formType . " Bihar, Vidhan Parishad Election 2026, " . implode(', ', $cData['districts']);
 $pageCanonical = SITE_URL . '/' . $cData['slug'];
+$pageImage = '';
+if (!empty($cData['candidates'])) {
+    foreach ($cData['candidates'] as $cand) {
+        if (!empty($cand['photo']) && file_exists(__DIR__ . '/../' . ltrim($cand['photo'], '/'))) {
+            $pageImage = SITE_URL . '/' . ltrim($cand['photo'], '/');
+            break;
+        }
+    }
+}
 $activeNav = 'mlc';
 
 // All 8 constituencies for inter-linking

@@ -60,6 +60,7 @@ if (!str_starts_with($displayHandle, '@')) {
 $pageTitle = htmlspecialchars($displayName) . " (" . htmlspecialchars($displayHandle) . ") — Public Profile | Bihar Election";
 $pageDescription = "Official public profile of " . htmlspecialchars($displayName) . (!empty($user['designation']) ? " (" . htmlspecialchars($user['designation']) . ")" : "") . (!empty($user['district']) ? " in {$user['district']} District, Bihar." : " on BiharElection.com.");
 $pageCanonical = SITE_URL . '/user/' . urlencode(ltrim($displayHandle, '@'));
+$pageImage = !empty($user['profile_photo']) ? (SITE_URL . '/' . ltrim($user['profile_photo'], '/')) : '';
 $activeNav = 'profile';
 
 require_once __DIR__ . '/header.php';

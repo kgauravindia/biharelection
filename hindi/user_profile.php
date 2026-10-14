@@ -60,6 +60,7 @@ if (!str_starts_with($displayHandle, '@')) {
 $pageTitle = htmlspecialchars($displayName) . " (" . htmlspecialchars($displayHandle) . ") — सार्वजनिक प्रोफाइल | Bihar Election";
 $pageDescription = "Official public profile of " . htmlspecialchars($displayName) . (!empty($user['designation']) ? " (" . htmlspecialchars($user['designation']) . ")" : "") . (!empty($user['district']) ? " in {$user['district']} District, Bihar." : " on BiharElection.com.");
 $pageCanonical = HINDI_BASE_URL . 'user/' . urlencode(ltrim($displayHandle, '@'));
+$pageImage = !empty($user['profile_photo']) ? (SITE_URL . '/' . ltrim($user['profile_photo'], '/')) : '';
 $activeNav = 'profile';
 
 require_once __DIR__ . '/includes/header.php';
