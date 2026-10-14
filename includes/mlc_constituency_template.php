@@ -197,6 +197,91 @@ require_once __DIR__ . '/../header.php';
 .blink-anim {
     animation: pulseGlow 1.8s infinite ease-in-out;
 }
+
+.cand-avatar {
+    width: 200px;
+    height: 200px;
+    max-width: 200px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 16px;
+    border: 3px solid #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    background: #f1f5f9;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: inline-block;
+}
+
+.cand-avatar:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 24px rgba(11, 25, 44, 0.18);
+    border-color: #0d6efd;
+}
+
+.cand-party-badge {
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.affidavit-btn {
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.affidavit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+.party-filter-pill {
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.party-filter-pill:hover, .party-filter-pill.active {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+}
+
+.party-filter-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+}
+
+.cand-mobile-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    box-shadow: 0 4px 14px rgba(11, 25, 44, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cand-mobile-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(11, 25, 44, 0.1);
+}
 </style>
 
 <!-- Hero Section -->
@@ -235,7 +320,12 @@ require_once __DIR__ . '/../header.php';
         </p>
 
         <div class="d-flex flex-wrap gap-2.5">
-            <a href="#booths-section" class="btn btn-warning fw-bold text-dark px-4 py-2.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-2">
+            <?php if (!empty($cData['candidates'])): ?>
+                <a href="#nominations-section" class="btn btn-warning fw-bold text-dark px-4 py-2.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-person-lines-fill text-danger"></i> Candidates &amp; Nominations (<?php echo count($cData['candidates']); ?>)
+                </a>
+            <?php endif; ?>
+            <a href="#booths-section" class="btn <?php echo !empty($cData['candidates']) ? 'btn-outline-light' : 'btn-warning text-dark'; ?> fw-bold px-4 py-2.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-2">
                 <i class="bi bi-geo-alt-fill text-danger"></i> View All <?php echo $cData['booth_count']; ?> Booths
             </a>
             <a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-warning fw-bold px-3.5 py-2.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-2">
@@ -415,6 +505,344 @@ require_once __DIR__ . '/../header.php';
             </div>
         </div>
     </div>
+
+    <!-- CANDIDATE NOMINATIONS & AFFIDAVITS DIRECTORY -->
+    <?php if (!empty($cData['candidates'])): 
+        $candList = $cData['candidates'];
+        $candCount = count($candList);
+        $totalSetsCount = 0;
+        foreach ($candList as $cand) {
+            $totalSetsCount += !empty($cand['sets']) ? count($cand['sets']) : 1;
+        }
+        $isTeacherSeat = (stripos($cData['id'] ?? '', 'teacher') !== false || stripos($cData['name'] ?? '', 'teacher') !== false);
+        $seatTypeDisplay = $isTeacherSeat ? 'Teacher Constituency' : 'Graduate Constituency';
+    ?>
+    <section id="nominations-section" class="mb-5">
+        <div class="card border-0 shadow-sm rounded-4 p-4 p-lg-5 bg-white">
+            <!-- Header -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3 mb-4">
+                <div>
+                    <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                        <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            <i class="bi bi-award-fill me-1"></i> Official Candidate Nominations
+                        </span>
+                        <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            <i class="bi bi-file-earmark-check-fill text-danger me-1"></i> Affidavits (शपथ पत्र)
+                        </span>
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1.5 small">
+                            <span id="candidateCountBadge"><?php echo $candCount; ?></span> Unique Candidates
+                        </span>
+                    </div>
+                    <h3 class="fw-extrabold text-navy mt-1 mb-1">
+                        Affidavit of Bye/Biennial Election to the Bihar Legislative Council
+                    </h3>
+                    <p class="text-muted small mb-0">
+                        Official directory of nominated candidates for <strong><?php echo htmlspecialchars($cData['name']); ?> (<?php echo htmlspecialchars($cData['name_hi'] ?? ''); ?>)</strong> &bull; <?php echo $seatTypeDisplay; ?> 2026. Each candidate is listed once with all filed sets and sworn affidavits.
+                    </p>
+                </div>
+
+                <div class="d-flex flex-column align-items-md-end gap-1 flex-shrink-0">
+                    <span class="small text-muted fw-semibold">
+                        source: <a href="https://ele.bihar.gov.in/mlc-nomination" target="_blank" rel="noopener noreferrer" class="text-primary text-decoration-none fw-bold">ele.bihar.gov.in/mlc-nomination</a>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Election Context Alert Banner -->
+            <div class="rounded-3 p-3 mb-4 border" style="background: #f8fafc; border-color: #e2e8f0;">
+                <div class="row g-2 align-items-center extra-small text-secondary">
+                    <div class="col-sm-6 col-lg-3">
+                        <span class="text-muted fw-bold d-block text-uppercase">Election Type:</span>
+                        <span class="fw-bold text-navy"><i class="bi bi-check2-circle text-success me-1"></i> <?php echo $seatTypeDisplay; ?></span>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <span class="text-muted fw-bold d-block text-uppercase">Election Year:</span>
+                        <span class="fw-bold text-navy"><i class="bi bi-calendar3 text-primary me-1"></i> Biennial Election 2026</span>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <span class="text-muted fw-bold d-block text-uppercase">Constituency:</span>
+                        <span class="fw-bold text-navy"><i class="bi bi-geo-alt-fill text-danger me-1"></i> <?php echo htmlspecialchars($cData['name']); ?></span>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <span class="text-muted fw-bold d-block text-uppercase">Total Filings Recorded:</span>
+                        <span class="fw-bold text-danger"><i class="bi bi-file-earmark-text text-danger me-1"></i> <?php echo $totalSetsCount; ?> Nomination Sets (<?php echo $candCount; ?> Unique Candidates)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Filter & Party Chips -->
+            <div class="row g-3 mb-3 align-items-center">
+                <div class="col-md-5 col-lg-6">
+                    <div class="position-relative">
+                        <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                        <input type="text" id="candSearchInput" class="form-control booth-search-box ps-5" placeholder="Search candidate by name, Hindi name, party, or date..." autocomplete="off" oninput="filterCandidateList()">
+                    </div>
+                </div>
+                <div class="col-md-7 col-lg-6 text-md-end">
+                    <div class="d-flex party-filter-scroll gap-1.5 justify-content-start justify-content-md-end">
+                        <button type="button" class="party-filter-pill active" data-party="ALL" onclick="setPartyFilter('ALL', this)">All (<?php echo count($cData['candidates']); ?>)</button>
+                        <?php 
+                        $parties = array_unique(array_column($cData['candidates'], 'party'));
+                        foreach ($parties as $pty):
+                            $pCount = count(array_filter($cData['candidates'], fn($x) => $x['party'] === $pty));
+                            $shortName = ($pty === 'Janata Dal (United)') ? 'JD(U)' : (($pty === 'Rashtriya Janata Dal') ? 'RJD' : (($pty === 'Jan Suraaj Party') ? 'Jan Suraaj' : (strlen($pty) > 12 ? substr($pty, 0, 11) . '.' : $pty)));
+                        ?>
+                            <button type="button" class="party-filter-pill" data-party="<?php echo htmlspecialchars($pty); ?>" onclick="setPartyFilter('<?php echo htmlspecialchars(addslashes($pty)); ?>', this)">
+                                <?php echo htmlspecialchars($shortName); ?> (<?php echo $pCount; ?>)
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Results Notice -->
+            <div id="noCandResults" class="alert alert-warning rounded-3 text-center py-4 d-none">
+                <i class="bi bi-person-x fs-2 d-block mb-2 text-warning"></i>
+                <h6 class="fw-bold mb-1">No candidate found matching your search.</h6>
+                <p class="small text-muted mb-0">Try clearing your search query or clicking "All".</p>
+            </div>
+
+            <!-- Desktop Candidates Table (md and up) -->
+            <div class="table-responsive rounded-3 border d-none d-md-block" id="candTableContainer">
+                <table class="table table-hover align-middle mb-0" id="candidatesTable">
+                    <thead style="background: #0F3E5F; color: #ffffff;">
+                        <tr class="small text-uppercase">
+                            <th scope="col" style="width: 5%; text-align: center;">SL NO.</th>
+                            <th scope="col" style="width: 220px; text-align: center;">PHOTO</th>
+                            <th scope="col" style="width: 26%;">CANDIDATE NAME</th>
+                            <th scope="col" style="width: 8%; text-align: center;">GENDER</th>
+                            <th scope="col" style="width: 17%;">PARTY</th>
+                            <th scope="col" style="width: 14%;">NOMINATION DATE</th>
+                            <th scope="col" style="width: 20%; text-align: center;">AFFIDAVIT (शपथ पत्र)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="candidatesTbody">
+                        <?php foreach ($cData['candidates'] as $cand): 
+                            $badgeColor = ($cand['party_short'] === 'JD(U)') ? 'bg-success' : (($cand['party_short'] === 'RJD') ? 'bg-success' : (($cand['party_short'] === 'JSP') ? 'bg-warning text-dark' : 'bg-secondary'));
+                        ?>
+                        <tr class="candidate-row" 
+                            data-name="<?php echo strtolower($cand['name'] . ' ' . $cand['name_raw'] . ' ' . $cand['name_hi']); ?>"
+                            data-party="<?php echo htmlspecialchars($cand['party']); ?>"
+                            data-date="<?php echo htmlspecialchars($cand['nomination_date']); ?>">
+                            <td class="text-center fw-bold text-muted"><?php echo $cand['sl_no']; ?></td>
+                            <td class="text-center" style="width: 220px; min-width: 215px; padding: 12px 8px;">
+                                <a href="<?php echo htmlspecialchars($cand['photo']); ?>" target="_blank" title="View Full Photo of <?php echo htmlspecialchars($cand['name']); ?>">
+                                    <img src="<?php echo htmlspecialchars($cand['photo']); ?>" alt="<?php echo htmlspecialchars($cand['name']); ?>" class="cand-avatar" width="200" height="200" onerror="this.src='assets/images/placeholder-candidate.png'">
+                                </a>
+                            </td>
+                            <td>
+                                <div class="fw-bold text-navy" style="font-size: 1.02rem;">
+                                    <?php echo htmlspecialchars($cand['name']); ?>
+                                </div>
+                                <div class="text-muted extra-small">
+                                    <?php echo htmlspecialchars($cand['name_hi']); ?>
+                                </div>
+                                <?php if ($cand['filings_count'] > 1): ?>
+                                    <span class="badge bg-light text-dark border extra-small mt-1">
+                                        <i class="bi bi-layers-fill text-primary me-1"></i><?php echo $cand['filings_count']; ?> Sets Filed
+                                    </span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-light text-dark border extra-small">
+                                    <?php echo htmlspecialchars($cand['gender']); ?>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge <?php echo $badgeColor; ?> cand-party-badge">
+                                    <?php echo htmlspecialchars($cand['party']); ?>
+                                </span>
+                                <?php if (!empty($cand['party_hi']) && $cand['party_hi'] !== $cand['party']): ?>
+                                    <div class="text-muted extra-small mt-0.5"><?php echo htmlspecialchars($cand['party_hi']); ?></div>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <div class="fw-semibold text-dark small">
+                                    <i class="bi bi-calendar-event text-primary me-1"></i><?php echo htmlspecialchars($cand['nomination_date']); ?>
+                                </div>
+                                <?php if ($cand['filings_count'] > 1): ?>
+                                    <div class="extra-small text-muted">
+                                        <?php 
+                                        $dates = array_unique(array_column($cand['sets'], 'date'));
+                                        if (count($dates) > 1) {
+                                            echo "Also filed on: " . implode(', ', array_slice($dates, 1));
+                                        }
+                                        ?>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center">
+                                <?php if ($cand['filings_count'] === 1): ?>
+                                    <button type="button" 
+                                            class="btn btn-sm btn-outline-danger rounded-pill affidavit-btn shadow-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#affidavitRedirectModal"
+                                            data-url="<?php echo htmlspecialchars($cand['affidavit_url']); ?>"
+                                            data-name="<?php echo htmlspecialchars($cand['name']); ?>"
+                                            data-party="<?php echo htmlspecialchars($cand['party']); ?>"
+                                            data-doc="Sworn Affidavit PDF"
+                                            onclick="openAffidavitModal('<?php echo htmlspecialchars(addslashes($cand['affidavit_url'])); ?>', '<?php echo htmlspecialchars(addslashes($cand['name'])); ?>', '<?php echo htmlspecialchars(addslashes($cand['party'])); ?>', 'Sworn Affidavit PDF')">
+                                        <i class="bi bi-file-earmark-pdf-fill text-danger fs-6"></i>
+                                        <span>View Affidavit</span>
+                                    </button>
+                                <?php else: ?>
+                                    <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                        <?php foreach ($cand['sets'] as $set): ?>
+                                            <button type="button" 
+                                                    class="btn btn-xs btn-outline-danger rounded-pill px-2.5 py-1 extra-small fw-semibold d-inline-flex align-items-center gap-1 shadow-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#affidavitRedirectModal"
+                                                    data-url="<?php echo htmlspecialchars($set['affidavit_url']); ?>"
+                                                    data-name="<?php echo htmlspecialchars($cand['name']); ?>"
+                                                    data-party="<?php echo htmlspecialchars($cand['party']); ?>"
+                                                    data-doc="Nomination Set <?php echo $set['set_no']; ?> (Filed: <?php echo htmlspecialchars($set['date']); ?>)"
+                                                    onclick="openAffidavitModal('<?php echo htmlspecialchars(addslashes($set['affidavit_url'])); ?>', '<?php echo htmlspecialchars(addslashes($cand['name'])); ?>', '<?php echo htmlspecialchars(addslashes($cand['party'])); ?>', 'Nomination Set <?php echo $set['set_no']; ?> (Filed: <?php echo htmlspecialchars($set['date']); ?>)')"
+                                                    title="Filing Date: <?php echo htmlspecialchars($set['date']); ?>">
+                                                <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
+                                                <span>Set <?php echo $set['set_no']; ?></span>
+                                            </button>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Candidate Cards Feed (xs / sm screens) -->
+            <div class="d-md-none" id="candMobileContainer">
+                <div class="row g-3">
+                    <?php foreach ($cData['candidates'] as $cand): 
+                        $badgeColor = ($cand['party_short'] === 'JD(U)') ? 'bg-success' : (($cand['party_short'] === 'RJD') ? 'bg-success' : (($cand['party_short'] === 'JSP') ? 'bg-warning text-dark' : 'bg-secondary'));
+                    ?>
+                    <div class="col-12 candidate-mobile-item"
+                        data-name="<?php echo strtolower($cand['name'] . ' ' . $cand['name_raw'] . ' ' . $cand['name_hi']); ?>"
+                        data-party="<?php echo htmlspecialchars($cand['party']); ?>"
+                        data-date="<?php echo htmlspecialchars($cand['nomination_date']); ?>">
+                        <div class="cand-mobile-card p-3.5">
+                            <div class="d-flex justify-content-between align-items-center mb-2.5">
+                                <span class="badge bg-light text-dark border fw-bold px-2.5 py-1">#<?php echo $cand['sl_no']; ?></span>
+                                <span class="badge <?php echo $badgeColor; ?> cand-party-badge"><?php echo htmlspecialchars($cand['party']); ?></span>
+                                <span class="badge bg-light text-muted border extra-small"><?php echo htmlspecialchars($cand['gender']); ?></span>
+                            </div>
+                            
+                            <div class="text-center my-2">
+                                <a href="<?php echo htmlspecialchars($cand['photo']); ?>" target="_blank" title="View Full Photo of <?php echo htmlspecialchars($cand['name']); ?>">
+                                    <img src="<?php echo htmlspecialchars($cand['photo']); ?>" alt="<?php echo htmlspecialchars($cand['name']); ?>" class="cand-avatar" width="200" height="200" onerror="this.src='assets/images/placeholder-candidate.png'">
+                                </a>
+                            </div>
+                            
+                            <h5 class="fw-bold text-navy mb-0.5 text-center mt-2"><?php echo htmlspecialchars($cand['name']); ?></h5>
+                            <div class="text-muted extra-small text-center mb-2.5"><?php echo htmlspecialchars($cand['name_hi']); ?></div>
+                            
+                            <div class="bg-light p-2 rounded-3 small mb-3 d-flex justify-content-between align-items-center border">
+                                <span class="text-muted extra-small"><i class="bi bi-calendar-event me-1"></i>Nomination:</span>
+                                <span class="fw-bold text-dark"><?php echo htmlspecialchars($cand['nomination_date']); ?></span>
+                            </div>
+                            
+                            <?php if ($cand['filings_count'] === 1): ?>
+                                <button type="button" 
+                                        class="btn btn-outline-danger w-100 rounded-pill py-2.5 fw-semibold d-inline-flex align-items-center justify-content-center gap-2 shadow-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#affidavitRedirectModal"
+                                        data-url="<?php echo htmlspecialchars($cand['affidavit_url']); ?>"
+                                        data-name="<?php echo htmlspecialchars($cand['name']); ?>"
+                                        data-party="<?php echo htmlspecialchars($cand['party']); ?>"
+                                        data-doc="Sworn Affidavit PDF"
+                                        onclick="openAffidavitModal('<?php echo htmlspecialchars(addslashes($cand['affidavit_url'])); ?>', '<?php echo htmlspecialchars(addslashes($cand['name'])); ?>', '<?php echo htmlspecialchars(addslashes($cand['party'])); ?>', 'Sworn Affidavit PDF')">
+                                    <i class="bi bi-file-earmark-pdf-fill text-danger fs-5"></i>
+                                    <span>View Affidavit (PDF)</span>
+                                </button>
+                            <?php else: ?>
+                                <div class="d-flex flex-column gap-1.5">
+                                    <div class="text-muted extra-small text-center mb-1">
+                                        <i class="bi bi-layers-fill text-primary me-1"></i><?php echo $cand['filings_count']; ?> Nomination Sets Filed
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                        <?php foreach ($cand['sets'] as $set): ?>
+                                            <button type="button" 
+                                                    class="btn btn-sm btn-outline-danger flex-grow-1 rounded-pill py-2 fw-semibold d-inline-flex align-items-center justify-content-center gap-1.5 shadow-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#affidavitRedirectModal"
+                                                    data-url="<?php echo htmlspecialchars($set['affidavit_url']); ?>"
+                                                    data-name="<?php echo htmlspecialchars($cand['name']); ?>"
+                                                    data-party="<?php echo htmlspecialchars($cand['party']); ?>"
+                                                    data-doc="Nomination Set <?php echo $set['set_no']; ?> (Filed: <?php echo htmlspecialchars($set['date']); ?>)"
+                                                    onclick="openAffidavitModal('<?php echo htmlspecialchars(addslashes($set['affidavit_url'])); ?>', '<?php echo htmlspecialchars(addslashes($cand['name'])); ?>', '<?php echo htmlspecialchars(addslashes($cand['party'])); ?>', 'Nomination Set <?php echo $set['set_no']; ?> (Filed: <?php echo htmlspecialchars($set['date']); ?>)')">
+                                                <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
+                                                <span>Set <?php echo $set['set_no']; ?> (PDF)</span>
+                                            </button>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- Footer Note -->
+            <div class="mt-3 pt-3 border-top small text-muted">
+                <span>
+                    source: <a href="https://ele.bihar.gov.in/mlc-nomination" target="_blank" rel="noopener noreferrer" class="text-primary text-decoration-none fw-bold">ele.bihar.gov.in/mlc-nomination</a>
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- External Site Notice Modal for Affidavits -->
+    <div class="modal fade" id="affidavitRedirectModal" tabindex="-1" aria-labelledby="affidavitModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
+                <div class="modal-header border-0 pb-0 pt-4 px-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="rounded-circle bg-warning bg-opacity-20 text-warning d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                            <i class="bi bi-box-arrow-up-right fs-5 text-dark"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title fw-bold text-navy mb-0" id="affidavitModalLabel">External Official Website Notice</h5>
+                            <small class="text-muted">बाहरी आधिकारिक पोर्टल सूचना</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-4 py-3">
+                    <div class="alert alert-warning border-0 rounded-3 mb-3 d-flex align-items-start gap-2.5">
+                        <i class="bi bi-shield-exclamation text-warning fs-4 flex-shrink-0"></i>
+                        <div>
+                            <strong class="d-block text-dark mb-1">You are leaving BiharElection.com</strong>
+                            <p class="small text-dark mb-0">
+                                You are now being redirected to the official Chief Electoral Officer (CEO) Bihar portal (<strong>ele.bihar.gov.in</strong>) to show the candidate's sworn affidavit.
+                            </p>
+                            <p class="extra-small text-muted mb-0 mt-1">
+                                (आप biharelection.com से बाहर आधिकारिक मुख्य निर्वाचन पदाधिकारी, बिहार के पोर्टल पर शपथ पत्र देखने जा रहे हैं।)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-3 rounded-3 border extra-small">
+                        <div class="mb-1"><strong class="text-muted">Candidate:</strong> <span id="modalCandName" class="fw-bold text-navy"></span></div>
+                        <div class="mb-1"><strong class="text-muted">Party:</strong> <span id="modalCandParty" class="badge bg-secondary"></span></div>
+                        <div class="mb-1"><strong class="text-muted">Document:</strong> <span id="modalAffidavitDoc" class="text-danger fw-semibold"></span></div>
+                        <div class="mt-2 pt-2 border-top text-truncate"><strong class="text-muted">Official URL:</strong> <span id="modalTargetUrl" class="text-primary font-monospace"></span></div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 bg-light px-4 py-3 d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-1"></i> Cancel / रद्द करें
+                    </button>
+                    <a id="modalConfirmBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm d-inline-flex align-items-center gap-2" onclick="closeAffidavitModal()">
+                        <span>Proceed to Show Affidavit</span>
+                        <i class="bi bi-arrow-right-circle-fill"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <!-- INTERACTIVE POLLING BOOTHS DIRECTORY -->
     <section id="booths-section" class="mb-5">
@@ -754,6 +1182,121 @@ function copyBoothTable() {
         }
     });
 }
+
+// Client-side Candidate Search & Filter
+let currentPartyFilter = 'ALL';
+
+function filterCandidateList() {
+    const query = (document.getElementById('candSearchInput')?.value || '').trim().toLowerCase();
+    const rows = document.querySelectorAll('.candidate-row, .candidate-mobile-item');
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+        const name = row.getAttribute('data-name') || '';
+        const party = row.getAttribute('data-party') || '';
+        const date = row.getAttribute('data-date') || '';
+
+        const matchesParty = (currentPartyFilter === 'ALL' || party === currentPartyFilter);
+        const matchesQuery = (!query || name.includes(query) || party.toLowerCase().includes(query) || date.includes(query));
+
+        if (matchesParty && matchesQuery) {
+            row.style.display = '';
+            if (row.classList.contains('candidate-row')) visibleCount++;
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    const badge = document.getElementById('candidateCountBadge');
+    if (badge) badge.innerText = visibleCount;
+
+    const noResults = document.getElementById('noCandResults');
+    const tableCont = document.getElementById('candTableContainer');
+    const mobileCont = document.getElementById('candMobileContainer');
+    if (noResults) {
+        if (visibleCount === 0) {
+            noResults.classList.remove('d-none');
+            if (tableCont) tableCont.classList.add('d-none');
+            if (mobileCont) mobileCont.classList.add('d-none');
+        } else {
+            noResults.classList.add('d-none');
+            if (tableCont) tableCont.classList.remove('d-none');
+            if (mobileCont) mobileCont.classList.remove('d-none');
+        }
+    }
+}
+
+function setPartyFilter(party, btn) {
+    currentPartyFilter = party;
+    document.querySelectorAll('.party-filter-pill').forEach(p => p.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    filterCandidateList();
+}
+
+// External Affidavit Redirect Popup Modal
+function openAffidavitModal(url, name, party, doc) {
+    const nameEl = document.getElementById('modalCandName');
+    const partyEl = document.getElementById('modalCandParty');
+    const docEl = document.getElementById('modalAffidavitDoc');
+    const urlEl = document.getElementById('modalTargetUrl');
+    const confirmBtn = document.getElementById('modalConfirmBtn');
+
+    if (nameEl) nameEl.innerText = name || '';
+    if (partyEl) partyEl.innerText = party || '';
+    if (docEl) docEl.innerText = doc || 'Certified Sworn Affidavit PDF';
+    if (urlEl) urlEl.innerText = url || '';
+    if (confirmBtn) confirmBtn.href = url || '#';
+
+    const modalEl = document.getElementById('affidavitRedirectModal');
+    if (window.bootstrap && bootstrap.Modal) {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+    } else if (window.jQuery && typeof $(modalEl).modal === 'function') {
+        $(modalEl).modal('show');
+    } else {
+        // Fallback popup if bootstrap modal JS is unavailable
+        if (confirm("You are now going to the official CEO Bihar portal (ele.bihar.gov.in) to show the affidavit of " + name + ".\n\nProceed to official portal?")) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+    }
+}
+
+function closeAffidavitModal() {
+    const modalEl = document.getElementById('affidavitRedirectModal');
+    if (window.bootstrap && bootstrap.Modal) {
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+    } else if (window.jQuery && typeof $(modalEl).modal === 'function') {
+        $(modalEl).modal('hide');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const modalEl = document.getElementById('affidavitRedirectModal');
+    if (modalEl) {
+        modalEl.addEventListener('show.bs.modal', function(event) {
+            const btn = event.relatedTarget;
+            if (btn) {
+                const url = btn.getAttribute('data-url');
+                const name = btn.getAttribute('data-name');
+                const party = btn.getAttribute('data-party');
+                const doc = btn.getAttribute('data-doc');
+                if (url) {
+                    const nameEl = document.getElementById('modalCandName');
+                    const partyEl = document.getElementById('modalCandParty');
+                    const docEl = document.getElementById('modalAffidavitDoc');
+                    const urlEl = document.getElementById('modalTargetUrl');
+                    const confirmBtn = document.getElementById('modalConfirmBtn');
+                    if (nameEl) nameEl.innerText = name || '';
+                    if (partyEl) partyEl.innerText = party || '';
+                    if (docEl) docEl.innerText = doc || 'Certified Sworn Affidavit PDF';
+                    if (urlEl) urlEl.innerText = url || '';
+                    if (confirmBtn) confirmBtn.href = url || '#';
+                }
+            }
+        });
+    }
+});
 </script>
 
 <!-- Structured JSON-LD Data -->

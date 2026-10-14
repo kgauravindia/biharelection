@@ -1,1 +1,2666 @@
-[]
+[
+    {
+        "name": "Dr Sanjeev Kumar",
+        "slug": "dr-sanjeev-kumar-patna-teacher-constituency",
+        "party": "Rashtriya Janata Dal",
+        "party_short": "RJD",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-09-29_04-29-21-477.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "29-09-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-09-29_04-29-21-469.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rahul Kumar",
+        "slug": "rahul-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-03_06-20-57-872.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-03_06-20-57-866.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Nawal Kishor",
+        "slug": "nawal-kishor-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-05_06-14-57-544.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-05_06-14-57-539.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dr. Ranjan Kumar",
+        "slug": "dr-ranjan-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-05_07-19-32-405.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-05_07-19-32-396.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Awadhesh Kumar Sinha",
+        "slug": "awadhesh-kumar-sinha-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-05_07-21-53-420.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-05_07-21-53-415.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ajay Kumar",
+        "slug": "ajay-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-05_07-25-18-653.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-05_07-25-18-639.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Nawal Kishore Yadav",
+        "slug": "nawal-kishore-yadav-patna-teacher-constituency",
+        "party": "Bharatiya Janata Party",
+        "party_short": "BJP",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-05_07-30-24-138.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-05_07-30-24-132.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sanjay Kumar",
+        "slug": "sanjay-kumar-patna-teacher-constituency",
+        "party": "Indian National Congress",
+        "party_short": "INC",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-05_07-40-09-086.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-05_07-40-09-076.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Archita Prakash",
+        "slug": "archita-prakash-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_05-47-02-031.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_05-47-02-024.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Kunal Kishore",
+        "slug": "kunal-kishore-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_05-53-18-750.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_05-53-18-741.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Vivek Kumar Kamla Prasad Sharma",
+        "slug": "vivek-kumar-kamla-prasad-sharma-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_06-01-49-773.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_06-01-49-763.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sanjay Kumar Sharma",
+        "slug": "sanjay-kumar-sharma-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_06-09-49-015.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_06-09-49-007.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ujjwal Kant",
+        "slug": "ujjwal-kant-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_06-11-20-488.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_06-11-20-477.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Divya Jyoti",
+        "slug": "divya-jyoti-patna-teacher-constituency",
+        "party": "Jan Suraaj Party",
+        "party_short": "JSP",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_06-17-43-181.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_06-17-43-145.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sanjeev Kumar",
+        "slug": "sanjeev-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_06-24-30-904.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_06-24-30-897.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Anil Kumar",
+        "slug": "anil-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_06-26-25-989.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_06-26-25-981.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sunil Kumar",
+        "slug": "sunil-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_06-29-02-173.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_06-29-02-166.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Raghwendra Kumar",
+        "slug": "raghwendra-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_06-32-27-004.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_06-32-26-995.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Avanish Kumar",
+        "slug": "avanish-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_08-43-26-693.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_08-43-26-687.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dr. Md. Firoz Ansari",
+        "slug": "dr-md-firoz-ansari-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_08-53-58-474.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_08-53-58-467.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Nirbhay Kumar",
+        "slug": "nirbhay-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_08-58-28-454.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_08-58-28-445.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Vinay Bhushan Kumar",
+        "slug": "vinay-bhushan-kumar-patna-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Teachers Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_teacher_constituency/5__2026-10-06_09-02-36-160.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "patna-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/5__2026-10-06_09-02-36-151.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Lalu Prasad Yadav",
+        "slug": "lalu-prasad-yadav-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-09-29_04-37-18-047.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "29-09-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-09-29_04-37-18-040.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Afaque Ahmad",
+        "slug": "afaque-ahmad-saran-teacher-constituency",
+        "party": "Jan Suraaj Party",
+        "party_short": "JSP",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-03_05-04-33-076.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-03_05-04-33-072.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Vidya Sagar Vidyarthi",
+        "slug": "vidya-sagar-vidyarthi-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-05_07-13-58-162.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-05_07-13-58-156.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Priyanshu Kumar Kashyap",
+        "slug": "priyanshu-kumar-kashyap-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-03_04-44-34-802.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-03_04-44-34-784.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Jay Ram Ray",
+        "slug": "jay-ram-ray-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-03_04-56-52-414.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-03_04-56-52-408.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Manohar Kumar Srivastava",
+        "slug": "manohar-kumar-srivastava-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-05_07-19-06-210.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-05_07-19-06-191.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Syed Najmul Hoda",
+        "slug": "syed-najmul-hoda-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-05_07-21-38-304.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-05_07-21-38-299.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Jairam Yadav",
+        "slug": "jairam-yadav-saran-teacher-constituency",
+        "party": "Rashtriya Janata Dal",
+        "party_short": "RJD",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-05_07-27-01-734.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-05_07-27-01-730.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Anand Pushkar",
+        "slug": "anand-pushkar-saran-teacher-constituency",
+        "party": "Janata Dal (United)",
+        "party_short": "JD(U)",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-05_07-34-21-454.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-05_07-34-21-447.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dr. Rahul Raj",
+        "slug": "dr-rahul-raj-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-05_07-36-53-364.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-05_07-36-53-358.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ram Pukar Sinha",
+        "slug": "ram-pukar-sinha-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-05_07-40-48-480.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-05_07-40-48-474.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Imam Hasan",
+        "slug": "imam-hasan-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-05_07-43-19-020.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-05_07-43-19-015.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Kailash Tiwari",
+        "slug": "kailash-tiwari-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-06_01-11-38-059.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-06_01-11-38-053.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Numan Ahmed Khan Nazmi",
+        "slug": "numan-ahmed-khan-nazmi-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-06_05-34-11-102.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-06_05-34-11-097.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Baitullah Ansari",
+        "slug": "baitullah-ansari-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-06_12-50-31-759.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-06_12-50-31-752.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ramendra Rai",
+        "slug": "ramendra-rai-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-06_05-40-07-395.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-06_05-40-07-388.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Pradip Kumar",
+        "slug": "pradip-kumar-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-06_05-52-36-217.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-06_05-52-36-211.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Himanshu Shekhar",
+        "slug": "himanshu-shekhar-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-06_05-56-57-661.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-06_05-56-57-645.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Nazir Husain",
+        "slug": "nazir-husain-saran-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Saran-Teachers Constituency",
+        "district": "Saran",
+        "photo": "assets/images/mlc_candidates/saran_teacher_constituency/6__2026-10-06_05-59-33-649.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "saran-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/6__2026-10-06_05-59-33-643.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Shyam Nandan Kumar Yadav",
+        "slug": "shyam-nandan-kumar-yadav-tirhut-teacher-constituency",
+        "party": "Jan Suraaj Party",
+        "party_short": "JSP",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-09-30_05-03-38-593.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "30-09-2026",
+            "filings_count": 6,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-09-30_05-03-38-583.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Bhushan Kumar Jha",
+        "slug": "bhushan-kumar-jha-tirhut-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-01_04-06-46-778.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-01_04-06-46-765.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Prem Kumar",
+        "slug": "prem-kumar-tirhut-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-03_04-15-42-479.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-03_04-15-42-469.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Narendra Prasad Singh",
+        "slug": "narendra-prasad-singh-tirhut-teacher-constituency",
+        "party": "Bharatiya Janata Party",
+        "party_short": "BJP",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-01_01-51-25-397.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-01_01-51-25-388.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rajesh Rathorre",
+        "slug": "rajesh-rathorre-tirhut-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-03_03-29-07-018.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-03_03-29-07-012.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sanjay Kumar Singh",
+        "slug": "sanjay-kumar-singh-tirhut-teacher-constituency",
+        "party": "Communist Party of India",
+        "party_short": "CPI",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-05_02-43-24-498.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-05_02-43-24-486.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dr. Abhay Nath Singh",
+        "slug": "dr-abhay-nath-singh-tirhut-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-05_01-19-55-759.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-05_01-19-55-748.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Kumari Rupam",
+        "slug": "kumari-rupam-tirhut-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-05_03-59-07-785.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-05_03-59-07-773.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Amit Kumar",
+        "slug": "amit-kumar-tirhut-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-05_03-29-53-645.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-05_03-29-53-633.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Krishna Nandan Trivedi",
+        "slug": "krishna-nandan-trivedi-tirhut-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-06_01-18-18-047.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-06_01-18-18-027.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Purnima Mishra",
+        "slug": "purnima-mishra-tirhut-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Teachers Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_teacher_constituency/7__2026-10-06_02-01-37-708.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "tirhut-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/7__2026-10-06_02-01-37-699.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Suresh Prasad Roy",
+        "slug": "suresh-prasad-roy-darbhanga-teacher-constituency",
+        "party": "Jan Suraaj Party",
+        "party_short": "JSP",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-01_06-43-07-079.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-01_06-43-07-070.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Shiv Narayan Prasad",
+        "slug": "shiv-narayan-prasad-darbhanga-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-03_04-24-19-607.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-03_04-24-19-597.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ram Deo Roy",
+        "slug": "ram-deo-roy-darbhanga-teacher-constituency",
+        "party": "Communist Party of India (Marxist)",
+        "party_short": "CPI(M)",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-03_04-28-27-094.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-03_04-28-27-085.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Shambhu Nath Thakur",
+        "slug": "shambhu-nath-thakur-darbhanga-teacher-constituency",
+        "party": "AAM ADMI PARTY",
+        "party_short": "AAM ADMI",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-05_07-53-17-727.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-05_07-53-17-718.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dr. Madan Mohan Jha",
+        "slug": "dr-madan-mohan-jha-darbhanga-teacher-constituency",
+        "party": "Indian National Congress",
+        "party_short": "INC",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-05_07-58-44-441.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-05_07-58-44-432.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Bhupneshwar Ram",
+        "slug": "bhupneshwar-ram-darbhanga-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-05_08-03-44-558.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-05_08-03-44-549.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ghanshyam Roy",
+        "slug": "ghanshyam-roy-darbhanga-teacher-constituency",
+        "party": "Janata Dal (United)",
+        "party_short": "JD(U)",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-05_08-20-04-596.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-05_08-20-04-588.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sultan Ahmad",
+        "slug": "sultan-ahmad-darbhanga-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-05_08-27-18-237.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-05_08-27-18-230.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Arun Kumar Jha",
+        "slug": "arun-kumar-jha-darbhanga-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-05_08-29-58-673.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-05_08-29-58-664.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Kumar Raut",
+        "slug": "kumar-raut-darbhanga-teacher-constituency",
+        "party": "Rashtriya Janata Dal",
+        "party_short": "RJD",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-06_08-17-15-312.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-06_08-17-15-304.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Shamshad Ali",
+        "slug": "shamshad-ali-darbhanga-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-06_08-20-30-834.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-06_08-20-30-827.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Santosh Kumar Ishwar",
+        "slug": "santosh-kumar-ishwar-darbhanga-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-06_08-23-06-276.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-06_08-23-06-270.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Nikki Jha",
+        "slug": "nikki-jha-darbhanga-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-06_08-24-31-995.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-06_08-24-31-988.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ahamadullah",
+        "slug": "ahamadullah-darbhanga-teacher-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Teachers Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_teacher_constituency/8__2026-10-06_08-25-37-921.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Teachers' Constituency",
+            "constituency_slug": "darbhanga-teacher-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/8__2026-10-06_08-25-37-914.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Anuj Singh",
+        "slug": "anuj-singh-patna-graduate-constituency",
+        "party": "Jan Suraaj Party",
+        "party_short": "JSP",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-01_04-20-45-667.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-01_04-20-45-659.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Gopal Krishna",
+        "slug": "gopal-krishna-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-03_05-37-03-771.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-03_05-37-03-765.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Golap Krishna",
+        "slug": "golap-krishna-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-03_05-37-47-828.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-03_05-37-47-824.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sudhanshu Kumar",
+        "slug": "sudhanshu-kumar-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-03_05-56-47-892.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-03_05-56-47-877.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sikandar",
+        "slug": "sikandar-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-03_06-13-09-389.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-03_06-13-09-379.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Md. Moquim Uddin",
+        "slug": "md-moquim-uddin-patna-graduate-constituency",
+        "party": "SAMAJ SHAKTI PARTY",
+        "party_short": "SAMAJ SH",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-03_06-23-51-326.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-03_06-23-51-321.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Himanshu Kumar",
+        "slug": "himanshu-kumar-patna-graduate-constituency",
+        "party": "AAM ADMI PARTY",
+        "party_short": "AAM ADMI",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-03_06-29-24-393.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-03_06-29-24-388.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dilip Kumar",
+        "slug": "dilip-kumar-patna-graduate-constituency",
+        "party": "Rashtriya Janata Dal",
+        "party_short": "RJD",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-05_05-56-56-726.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-05_05-56-56-716.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Narendra Kumar Lohani",
+        "slug": "narendra-kumar-lohani-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-05_06-06-25-504.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-05_06-06-25-497.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ranju Kumari",
+        "slug": "ranju-kumari-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-05_06-10-39-553.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-05_06-10-39-546.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Neeraj Kumar",
+        "slug": "neeraj-kumar-patna-graduate-constituency",
+        "party": "Janata Dal (United)",
+        "party_short": "JD(U)",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-05_07-34-24-236.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-05_07-34-24-231.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Devendra Rajak",
+        "slug": "devendra-rajak-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_05-59-45-091.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_05-59-45-084.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Asad Ullah Khan",
+        "slug": "asad-ullah-khan-patna-graduate-constituency",
+        "party": "Indian National Congress",
+        "party_short": "INC",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_06-34-24-651.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_06-34-24-642.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Prem Kumar",
+        "slug": "prem-kumar-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_06-39-51-474.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_06-39-51-465.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Amit Kumar Albela",
+        "slug": "amit-kumar-albela-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_06-42-03-422.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_06-42-03-413.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Arjun Prasad",
+        "slug": "arjun-prasad-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_08-41-45-527.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_08-41-45-522.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dr Dharmvir Kumar Bhaskar",
+        "slug": "dr-dharmvir-kumar-bhaskar-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_08-46-50-590.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_08-46-50-583.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Niraj Kumar",
+        "slug": "niraj-kumar-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_08-56-45-647.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_08-56-45-639.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Shafi Alam",
+        "slug": "shafi-alam-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_09-00-35-073.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_09-00-35-068.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Anand Mohan",
+        "slug": "anand-mohan-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_09-04-30-467.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_09-04-30-459.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dileep Kumar",
+        "slug": "dileep-kumar-patna-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Patna-Graduate Constituency",
+        "district": "Patna",
+        "photo": "assets/images/mlc_candidates/patna_graduate_constituency/1__2026-10-06_09-05-57-533.jpg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "patna-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/1__2026-10-06_09-05-57-525.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Banshi Dhar Brajwasi",
+        "slug": "banshi-dhar-brajwasi-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-01_02-18-15-425.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-01_02-18-15-417.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Vimohan Kumar",
+        "slug": "vimohan-kumar-tirhut-graduate-constituency",
+        "party": "Jan Suraaj Party",
+        "party_short": "JSP",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-09-30_04-30-03-910.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "30-09-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-09-30_04-30-03-901.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sadaat Khaiyam",
+        "slug": "sadaat-khaiyam-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-03_02-18-04-694.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-03_02-18-04-683.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rakesh Kumar Singh",
+        "slug": "rakesh-kumar-singh-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_02-02-49-131.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_02-02-49-122.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rahul Kumar",
+        "slug": "rahul-kumar-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_03-04-21-041.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_03-04-21-031.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Abhishek Jha",
+        "slug": "abhishek-jha-tirhut-graduate-constituency",
+        "party": "Janata Dal (United)",
+        "party_short": "JD(U)",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_03-48-31-272.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_03-48-31-261.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ravi Krishnan Rashmi",
+        "slug": "ravi-krishnan-rashmi-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_05-15-05-694.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_05-15-05-662.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Pranay Kumar",
+        "slug": "pranay-kumar-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_05-23-25-936.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_05-23-25-928.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Vinod Kumar Sharma",
+        "slug": "vinod-kumar-sharma-tirhut-graduate-constituency",
+        "party": "Jantantra Awaz Party",
+        "party_short": "Jantantr",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_06-03-43-536.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_06-03-43-527.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Balak Nath Sahani",
+        "slug": "balak-nath-sahani-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_06-36-18-429.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_06-36-18-421.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rishi Kumar Agrawal",
+        "slug": "rishi-kumar-agrawal-tirhut-graduate-constituency",
+        "party": "AAM ADMI PARTY",
+        "party_short": "AAM ADMI",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_07-17-00-427.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_07-17-00-418.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rampravesh Kumar",
+        "slug": "rampravesh-kumar-tirhut-graduate-constituency",
+        "party": "Samata Party",
+        "party_short": "Samata P",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_07-24-24-718.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_07-24-24-710.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Shivesh Kunal Singh",
+        "slug": "shivesh-kunal-singh-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_07-30-15-040.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 5,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_07-30-15-034.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rajan Kumar",
+        "slug": "rajan-kumar-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_07-35-12-989.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_07-35-12-981.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rajiwa Kumar",
+        "slug": "rajiwa-kumar-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-05_01-07-05-457.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-05_01-07-05-447.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Awadhesh Prasad Singh",
+        "slug": "awadhesh-prasad-singh-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-06_01-45-10-129.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-06_01-45-10-120.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rashmi Vinayak Gautam",
+        "slug": "rashmi-vinayak-gautam-tirhut-graduate-constituency",
+        "party": "Rashtriya Janata Dal",
+        "party_short": "RJD",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-06_02-34-52-010.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-06_02-34-52-001.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Raja Keshri",
+        "slug": "raja-keshri-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-06_02-48-52-293.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-06_02-48-52-283.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Baskit Kumar Sharma",
+        "slug": "baskit-kumar-sharma-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-06_03-23-52-591.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-06_03-23-52-583.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Aseshwar Rai",
+        "slug": "aseshwar-rai-tirhut-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Tirhut-Graduate Constituency",
+        "district": "Muzaffarpur",
+        "photo": "assets/images/mlc_candidates/tirhut_graduate_constituency/2__2026-10-06_04-30-55-435.JPG",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "tirhut-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/2__2026-10-06_04-30-55-428.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dr. Amarji Kumar",
+        "slug": "dr-amarji-kumar-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-01_06-53-55-356.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-01_06-53-55-345.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Anil Kumar Jha",
+        "slug": "anil-kumar-jha-darbhanga-graduate-constituency",
+        "party": "Rashtriya Janata Dal",
+        "party_short": "RJD",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-01_07-19-41-504.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-01_07-19-41-494.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Raushan Kumar",
+        "slug": "raushan-kumar-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-01_07-29-19-007.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-01_07-29-18-998.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Mohammad Imteyaz",
+        "slug": "mohammad-imteyaz-darbhanga-graduate-constituency",
+        "party": "Jan Suraaj Party",
+        "party_short": "JSP",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-01_07-42-41-241.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-01_07-42-41-233.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Nilesh Kumar Kanhaiya",
+        "slug": "nilesh-kumar-kanhaiya-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-03_03-35-21-636.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-03_03-35-21-627.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Naveen Kumar",
+        "slug": "naveen-kumar-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-03_03-38-57-397.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-03_03-38-57-390.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Bharat Kumar Roy",
+        "slug": "bharat-kumar-roy-darbhanga-graduate-constituency",
+        "party": "Bihar Justice Party",
+        "party_short": "Bihar Ju",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-06_11-20-53-095.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-06_11-20-53-084.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sarvesh Kumar",
+        "slug": "sarvesh-kumar-darbhanga-graduate-constituency",
+        "party": "Bharatiya Janata Party",
+        "party_short": "BJP",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-30-50-191.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-30-50-184.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Ashok Kumar Pandey",
+        "slug": "ashok-kumar-pandey-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-32-21-108.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 4,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-32-21-103.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Krishna Mohan Choudhary",
+        "slug": "krishna-mohan-choudhary-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-38-18-932.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-38-18-925.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Neha Kumari",
+        "slug": "neha-kumari-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-40-02-626.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-40-02-618.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Nagina Prasad Mahto",
+        "slug": "nagina-prasad-mahto-darbhanga-graduate-constituency",
+        "party": "Aadarsh Mithila Party",
+        "party_short": "Aadarsh ",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-41-20-897.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-41-20-889.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rajni Kant Pathak",
+        "slug": "rajni-kant-pathak-darbhanga-graduate-constituency",
+        "party": "Indian National Congress",
+        "party_short": "INC",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-42-49-742.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-42-49-732.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dharmansh Ranjan",
+        "slug": "dharmansh-ranjan-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-43-48-329.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-43-48-324.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Bramhanand Mishra",
+        "slug": "bramhanand-mishra-darbhanga-graduate-constituency",
+        "party": "Jan Mithila Vikas Party",
+        "party_short": "Jan Mith",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-44-55-280.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-44-55-261.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sanjay Kumar Deo \"kanhaiya\"",
+        "slug": "sanjay-kumar-deo-kanhaiya--darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-46-10-915.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-46-10-908.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Shashi Bhushan Singh",
+        "slug": "shashi-bhushan-singh-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-47-49-550.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-47-49-545.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sadan Kumar Mishra",
+        "slug": "sadan-kumar-mishra-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-49-01-985.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-49-01-979.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rinki Kumari",
+        "slug": "rinki-kumari-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-51-07-779.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-51-07-773.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Md. Imamul Haque",
+        "slug": "md-imamul-haque-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-52-58-282.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-52-58-274.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Dileep Kumar",
+        "slug": "dileep-kumar-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_09-54-33-592.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 3,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_09-54-33-584.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Brahmdeo Yadav",
+        "slug": "brahmdeo-yadav-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_10-05-15-005.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_10-05-14-997.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Aditya Kumar Jha",
+        "slug": "aditya-kumar-jha-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_10-06-34-729.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_10-06-34-719.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Anil Kumar Choudhary",
+        "slug": "anil-kumar-choudhary-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_10-07-22-802.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_10-07-22-792.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Varunesh Vijay",
+        "slug": "varunesh-vijay-darbhanga-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Darbhanga-Graduate Constituency",
+        "district": "Darbhanga",
+        "photo": "assets/images/mlc_candidates/darbhanga_graduate_constituency/3__2026-10-05_10-08-14-369.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "darbhanga-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/3__2026-10-05_10-08-14-364.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Santosh Kumar Tiwary",
+        "slug": "santosh-kumar-tiwary-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-01_03-51-11-285.png",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "01-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-01_03-51-11-273.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Sanjeev Kumar",
+        "slug": "sanjeev-kumar-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-09-29_04-30-59-240.png",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "29-09-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-09-29_04-30-59-230.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "N. K. Yadav",
+        "slug": "n-k-yadav-kosi-graduate-constituency",
+        "party": "Bharatiya Janata Party",
+        "party_short": "BJP",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-09-30_03-51-31-633.png",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "30-09-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-09-30_03-51-31-614.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Nitesh Kumar",
+        "slug": "nitesh-kumar-kosi-graduate-constituency",
+        "party": "Rashtriya Janata Dal",
+        "party_short": "RJD",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-03_05-39-36-412.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "03-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-03_05-39-36-405.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Amrendra Kumar Sah",
+        "slug": "amrendra-kumar-sah-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-05_07-49-07-593.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-05_07-49-07-567.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Rajneesh Ranjan",
+        "slug": "rajneesh-ranjan-kosi-graduate-constituency",
+        "party": "Jan Suraaj Party",
+        "party_short": "JSP",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-05_07-51-35-544.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-05_07-51-35-533.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Vandana Kumari",
+        "slug": "vandana-kumari-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-05_07-54-54-403.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 2,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-05_07-54-54-397.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Kundan Lal",
+        "slug": "kundan-lal-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-05_07-58-38-227.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-05_07-58-38-219.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Mathewkutty N D",
+        "slug": "mathewkutty-n-d-kosi-graduate-constituency",
+        "party": "AAM ADMI PARTY",
+        "party_short": "AAM ADMI",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-05_08-02-48-913.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "05-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-05_08-02-48-905.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Abhay Kumar",
+        "slug": "abhay-kumar-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-06_06-39-26-921.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-06_06-39-26-912.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Baam Bhola Sahni",
+        "slug": "baam-bhola-sahni-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-06_06-41-09-635.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-06_06-41-09-626.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Manoj Kumar Jaiswal",
+        "slug": "manoj-kumar-jaiswal-kosi-graduate-constituency",
+        "party": "Indian National Congress",
+        "party_short": "INC",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-06_06-42-57-175.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-06_06-42-57-170.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Manoj Kumar Singh",
+        "slug": "manoj-kumar-singh-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-06_06-44-39-944.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-06_06-44-39-934.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Mithilesh Kumar Jha",
+        "slug": "mithilesh-kumar-jha-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-06_06-47-39-951.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-06_06-47-39-935.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Kameshwar Yadav",
+        "slug": "kameshwar-yadav-kosi-graduate-constituency",
+        "party": "Aadarsh Mithila Party",
+        "party_short": "Aadarsh ",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-06_06-49-05-564.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-06_06-49-05-555.pdf",
+            "verified": true
+        }
+    },
+    {
+        "name": "Gokul Kumar Yadav",
+        "slug": "gokul-kumar-yadav-kosi-graduate-constituency",
+        "party": "Independent",
+        "party_short": "IND",
+        "constituency": "Kosi-Graduate Constituency",
+        "district": "Saharsa",
+        "photo": "assets/images/mlc_candidates/kosi_graduate_constituency/4__2026-10-06_06-51-58-949.jpeg",
+        "election_record": {
+            "election": "Bihar Legislative Council (Vidhan Parishad) 2026",
+            "election_type": "Graduates' Constituency",
+            "constituency_slug": "kosi-graduate-constituency",
+            "nomination_date": "06-10-2026",
+            "filings_count": 1,
+            "affidavit_url": "https://ele.bihar.gov.in/mlc-nomination/NOMONATION/LACAffitdivit/4__2026-10-06_06-51-58-937.pdf",
+            "verified": true
+        }
+    }
+]

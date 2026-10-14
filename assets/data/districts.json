@@ -7,7 +7,7 @@
         "headquarters": "Chhapra",
         "division": "Saran Division",
         "total_ac": 10,
-        "total_electors": 2921439,
+        "total_electors": 2902683,
         "ac_list": [
             {
                 "ac_no": 113,
@@ -114,7 +114,7 @@
         "headquarters": "Patna",
         "division": "Patna Division",
         "total_ac": 14,
-        "total_electors": 4842533,
+        "total_electors": 4815294,
         "ac_list": [
             {
                 "ac_no": 178,
@@ -249,7 +249,7 @@
         "headquarters": "Muzaffarpur",
         "division": "Tirhut Division",
         "total_ac": 11,
-        "total_electors": 3311859,
+        "total_electors": 3291478,
         "ac_list": [
             {
                 "ac_no": 88,
@@ -363,7 +363,7 @@
         "headquarters": "Gaya",
         "division": "Magadh Division",
         "total_ac": 10,
-        "total_electors": 2997962,
+        "total_electors": 2969435,
         "ac_list": [
             {
                 "ac_no": 225,
@@ -470,7 +470,7 @@
         "headquarters": "Bhagalpur",
         "division": "Bhagalpur Division",
         "total_ac": 7,
-        "total_electors": 2236210,
+        "total_electors": 2218492,
         "ac_list": [
             {
                 "ac_no": 152,
@@ -556,7 +556,7 @@
         "headquarters": "Purnia",
         "division": "Purnia Division",
         "total_ac": 7,
-        "total_electors": 2094310,
+        "total_electors": 2077573,
         "ac_list": [
             {
                 "ac_no": 56,
@@ -642,7 +642,7 @@
         "headquarters": "Darbhanga",
         "division": "Darbhanga Division",
         "total_ac": 10,
-        "total_electors": 2892790,
+        "total_electors": 2880799,
         "ac_list": [
             {
                 "ac_no": 78,
@@ -749,7 +749,7 @@
         "headquarters": "Hajipur",
         "division": "Tirhut Division",
         "total_ac": 8,
-        "total_electors": 2543368,
+        "total_electors": 2528649,
         "ac_list": [
             {
                 "ac_no": 123,
@@ -842,7 +842,7 @@
         "headquarters": "Ara",
         "division": "Patna Division",
         "total_ac": 7,
-        "total_electors": 2115939,
+        "total_electors": 2080605,
         "ac_list": [
             {
                 "ac_no": 192,
@@ -928,7 +928,7 @@
         "headquarters": "Samastipur",
         "division": "Darbhanga Division",
         "total_ac": 10,
-        "total_electors": 2944662,
+        "total_electors": 2926575,
         "ac_list": [
             {
                 "ac_no": 131,
@@ -1035,7 +1035,7 @@
         "headquarters": "Bihar Sharif",
         "division": "Patna Division",
         "total_ac": 7,
-        "total_electors": 2248467,
+        "total_electors": 2233999,
         "ac_list": [
             {
                 "ac_no": 171,
@@ -1121,7 +1121,7 @@
         "headquarters": "Sasaram",
         "division": "Patna Division",
         "total_ac": 7,
-        "total_electors": 2238422,
+        "total_electors": 2210689,
         "ac_list": [
             {
                 "ac_no": 207,
@@ -1207,7 +1207,7 @@
         "headquarters": "Siwan",
         "division": "Saran Division",
         "total_ac": 8,
-        "total_electors": 2457755,
+        "total_electors": 2444322,
         "ac_list": [
             {
                 "ac_no": 105,
@@ -1300,7 +1300,7 @@
         "headquarters": "Gopalganj",
         "division": "Saran Division",
         "total_ac": 6,
-        "total_electors": 1818465,
+        "total_electors": 1806465,
         "ac_list": [
             {
                 "ac_no": 99,
@@ -1379,7 +1379,7 @@
         "headquarters": "Madhubani",
         "division": "Darbhanga Division",
         "total_ac": 10,
-        "total_electors": 3127245,
+        "total_electors": 3109890,
         "ac_list": [
             {
                 "ac_no": 31,
@@ -1486,7 +1486,7 @@
         "headquarters": "Motihari",
         "division": "Tirhut Division",
         "total_ac": 12,
-        "total_electors": 3447209,
+        "total_electors": 3428474,
         "ac_list": [
             {
                 "ac_no": 10,
@@ -1607,7 +1607,7 @@
         "headquarters": "Bettiah",
         "division": "Tirhut Division",
         "total_ac": 9,
-        "total_electors": 2630671,
+        "total_electors": 2610482,
         "ac_list": [
             {
                 "ac_no": 1,
@@ -1707,7 +1707,7 @@
         "headquarters": "Begusarai",
         "division": "Munger Division",
         "total_ac": 7,
-        "total_electors": 2140977,
+        "total_electors": 2129452,
         "ac_list": [
             {
                 "ac_no": 141,
@@ -1793,7 +1793,7 @@
         "headquarters": "Katihar",
         "division": "Purnia Division",
         "total_ac": 7,
-        "total_electors": 2081095,
+        "total_electors": 2070262,
         "ac_list": [
             {
                 "ac_no": 63,
@@ -1879,7 +1879,7 @@
         "headquarters": "Kishanganj",
         "division": "Purnia Division",
         "total_ac": 4,
-        "total_electors": 1126140,
+        "total_electors": 1112530,
         "ac_list": [
             {
                 "ac_no": 52,
@@ -1944,7 +1944,7 @@
         "headquarters": "Araria",
         "division": "Purnia Division",
         "total_ac": 6,
-        "total_electors": 1980475,
+        "total_electors": 1966807,
         "ac_list": [
             {
                 "ac_no": 46,
@@ -2023,7 +2023,7 @@
         "headquarters": "Supaul",
         "division": "Kosi Division",
         "total_ac": 5,
-        "total_electors": 1540670,
+        "total_electors": 1536989,
         "ac_list": [
             {
                 "ac_no": 41,
@@ -2095,7 +2095,7 @@
         "headquarters": "Saharsa",
         "division": "Kosi Division",
         "total_ac": 4,
-        "total_electors": 1297833,
+        "total_electors": 1292606,
         "ac_list": [
             {
                 "ac_no": 74,
@@ -2160,7 +2160,7 @@
         "headquarters": "Madhepura",
         "division": "Kosi Division",
         "total_ac": 4,
-        "total_electors": 1363141,
+        "total_electors": 1359445,
         "ac_list": [
             {
                 "ac_no": 70,
@@ -2225,7 +2225,7 @@
         "headquarters": "Khagaria",
         "division": "Munger Division",
         "total_ac": 4,
-        "total_electors": 1169463,
+        "total_electors": 1162619,
         "ac_list": [
             {
                 "ac_no": 148,
@@ -2290,7 +2290,7 @@
         "headquarters": "Munger",
         "division": "Munger Division",
         "total_ac": 3,
-        "total_electors": 1003815,
+        "total_electors": 995676,
         "ac_list": [
             {
                 "ac_no": 164,
@@ -2348,7 +2348,7 @@
         "headquarters": "Lakhisarai",
         "division": "Munger Division",
         "total_ac": 2,
-        "total_electors": 749972,
+        "total_electors": 745458,
         "ac_list": [
             {
                 "ac_no": 167,
@@ -2399,7 +2399,7 @@
         "headquarters": "Sheikhpura",
         "division": "Munger Division",
         "total_ac": 2,
-        "total_electors": 496008,
+        "total_electors": 493193,
         "ac_list": [
             {
                 "ac_no": 169,
@@ -2450,7 +2450,7 @@
         "headquarters": "Jamui",
         "division": "Munger Division",
         "total_ac": 4,
-        "total_electors": 1274245,
+        "total_electors": 1267825,
         "ac_list": [
             {
                 "ac_no": 240,
@@ -2515,7 +2515,7 @@
         "headquarters": "Banka",
         "division": "Bhagalpur Division",
         "total_ac": 5,
-        "total_electors": 1456381,
+        "total_electors": 1450171,
         "ac_list": [
             {
                 "ac_no": 159,
@@ -2587,7 +2587,7 @@
         "headquarters": "Nawada",
         "division": "Magadh Division",
         "total_ac": 5,
-        "total_electors": 1725380,
+        "total_electors": 1716289,
         "ac_list": [
             {
                 "ac_no": 235,
@@ -2659,7 +2659,7 @@
         "headquarters": "Aurangabad",
         "division": "Magadh Division",
         "total_ac": 6,
-        "total_electors": 1836715,
+        "total_electors": 1824415,
         "ac_list": [
             {
                 "ac_no": 219,
@@ -2738,7 +2738,7 @@
         "headquarters": "Jehanabad",
         "division": "Magadh Division",
         "total_ac": 3,
-        "total_electors": 812619,
+        "total_electors": 805655,
         "ac_list": [
             {
                 "ac_no": 216,
@@ -2796,7 +2796,7 @@
         "headquarters": "Arwal",
         "division": "Magadh Division",
         "total_ac": 2,
-        "total_electors": 527482,
+        "total_electors": 523444,
         "ac_list": [
             {
                 "ac_no": 214,
@@ -2847,7 +2847,7 @@
         "headquarters": "Buxar",
         "division": "Patna Division",
         "total_ac": 4,
-        "total_electors": 1295720,
+        "total_electors": 1283615,
         "ac_list": [
             {
                 "ac_no": 199,
@@ -2912,7 +2912,7 @@
         "headquarters": "Bhabhua",
         "division": "Patna Division",
         "total_ac": 4,
-        "total_electors": 1174335,
+        "total_electors": 1168638,
         "ac_list": [
             {
                 "ac_no": 203,
@@ -2977,7 +2977,7 @@
         "headquarters": "Dumra",
         "division": "Tirhut Division",
         "total_ac": 8,
-        "total_electors": 2464492,
+        "total_electors": 2449659,
         "ac_list": [
             {
                 "ac_no": 23,
@@ -3070,7 +3070,7 @@
         "headquarters": "Sheohar",
         "division": "Tirhut Division",
         "total_ac": 1,
-        "total_electors": 304871,
+        "total_electors": 301705,
         "ac_list": [
             {
                 "ac_no": 22,

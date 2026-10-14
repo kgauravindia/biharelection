@@ -381,6 +381,39 @@ CREATE TABLE IF NOT EXISTS `election_2025_ac_voters` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 12b. Vidhan Sabha 2025: AC Voters (SSR 2025 w.r.t. 01.07.2025 Qualifying Date - Final Roll Published 30 Sep 2025)
+CREATE TABLE IF NOT EXISTS `election_2025_ac_voters_sep` (
+  `ac_no` INT PRIMARY KEY,
+  `ac_name` VARCHAR(150) NOT NULL,
+  `district` VARCHAR(100) DEFAULT NULL,
+  `total_electors` INT DEFAULT 0,
+  `male_electors` INT DEFAULT 0,
+  `female_electors` INT DEFAULT 0,
+  `third_gender_electors` INT DEFAULT 0,
+  `sex_ratio` INT DEFAULT 0,
+  `male_jan25` INT DEFAULT 0,
+  `female_jan25` INT DEFAULT 0,
+  `third_gender_jan25` INT DEFAULT 0,
+  `total_jan25` INT DEFAULT 0,
+  `sex_ratio_jan25` INT DEFAULT 0,
+  `male_draft_jul25` INT DEFAULT 0,
+  `female_draft_jul25` INT DEFAULT 0,
+  `third_gender_draft_jul25` INT DEFAULT 0,
+  `total_draft_jul25` INT DEFAULT 0,
+  `sex_ratio_draft_jul25` INT DEFAULT 0,
+  `male_sep25` INT DEFAULT 0,
+  `female_sep25` INT DEFAULT 0,
+  `third_gender_sep25` INT DEFAULT 0,
+  `total_sep25` INT DEFAULT 0,
+  `sex_ratio_sep25` INT DEFAULT 0,
+  `roll_date` DATE DEFAULT '2025-09-30',
+  `source_file` VARCHAR(255) DEFAULT 'https://ceoelection.bihar.gov.in/PDF/Year_2025/Format1-8/Format_1B.pdf',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX (`district`),
+  INDEX (`total_electors`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- 13. Vidhan Sabha 2025: Party Performance
 CREATE TABLE IF NOT EXISTS `election_2025_party_performance` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
