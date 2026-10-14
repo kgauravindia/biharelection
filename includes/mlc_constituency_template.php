@@ -25,8 +25,10 @@ $article = $isTeachers ? 'Article 171(3)(b)' : 'Article 171(3)(a)';
 $formType = $isTeachers ? 'Form 19' : 'Form 18';
 
 // SEO Setup
+$candCount = !empty($cData['candidates']) ? count($cData['candidates']) : 0;
+$candText = ($candCount > 0) ? "{$candCount} candidates, " : "";
 $pageTitle = htmlspecialchars($cData['name']) . " (" . $cData['name_hi'] . "): " . $cData['booth_count'] . " Polling Booths, Voter Roll & 2026 MLC Election Guide";
-$pageDescription = "Official list of all " . $cData['booth_count'] . " Polling Booths (मतदान केंद्र) for " . $cData['name'] . " (" . $cData['name_hi'] . "), updated from CEO Bihar Final Electoral Roll. Check booth names, " . $formType . " voter registration, returning officer, and 2026 Biennial Election updates.";
+$pageDescription = "{$cData['name']} ({$cData['name_hi']}) 2026 MLC guide: {$candText}{$cData['booth_count']} booths, {$formType} voter roll & CEO Bihar updates.";
 $pageKeywords = $cData['name'] . ", " . $cData['name_hi'] . ", Bihar MLC Election 2026, " . $cData['name'] . " Booth List, CEO Bihar " . $cData['segment_code'] . ", " . $formType . " Bihar, Vidhan Parishad Election 2026, " . implode(', ', $cData['districts']);
 $pageCanonical = SITE_URL . '/' . $cData['slug'];
 $pageImage = '';

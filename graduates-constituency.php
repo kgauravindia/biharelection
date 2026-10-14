@@ -6,7 +6,7 @@
 require_once __DIR__ . '/config.php';
 
 $pageTitle = 'Bihar Graduates Constituencies (6 Seats): Vidhan Parishad MLC Electoral Guide, Voter Form 18 & 2026 Election';
-$pageDescription = 'Comprehensive directory and electoral guide to all 6 Graduates Constituencies of Bihar Legislative Council (Vidhan Parishad): Patna, Tirhut, Darbhanga, Kosi, Gaya, and Saran with Form 18 registration rules, districts mapping and 2026 Biennial Election updates.';
+$pageDescription = 'Guide to Bihar MLC Graduates\' Constituencies (Vidhan Parishad): Patna, Tirhut, Darbhanga & Kosi seats, candidate lists, Form 18 voter roll & 2026 election.';
 $pageKeywords = 'Bihar Graduates Constituency, Bihar Vidhan Parishad Graduate MLC, Patna Graduates Constituency, Tirhut Graduates, Darbhanga Graduates, Kosi Graduates, Gaya Graduates, Saran Graduates, Form 18 Bihar, Article 171 Constitution';
 $pageCanonical = SITE_URL . '/graduates-constituency';
 $activeNav = 'mlc';

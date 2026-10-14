@@ -6,7 +6,7 @@
 require_once __DIR__ . '/config.php';
 
 $pageTitle = 'Bihar Teachers Constituencies (6 Seats): Vidhan Parishad MLC Electoral Guide, Voter Form 19 & 2026 Election';
-$pageDescription = 'Comprehensive directory and electoral guide to all 6 Teachers Constituencies of Bihar Legislative Council (Vidhan Parishad): Patna, Tirhut, Darbhanga, Saran, Gaya, and Kosi with Form 19 voter registration rules, school/college eligibility criteria, and 2026 Biennial Election updates.';
+$pageDescription = 'Guide to Bihar MLC Teachers\' Constituencies (Vidhan Parishad): Patna, Tirhut, Saran & Darbhanga seats, candidate lists, Form 19 voter roll & 2026 election.';
 $pageKeywords = 'Bihar Teachers Constituency, Bihar Vidhan Parishad Teacher MLC, Patna Teachers Constituency, Tirhut Teachers, Darbhanga Teachers, Saran Teachers, Gaya Teachers, Kosi Teachers, Form 19 Bihar, Article 171 Constitution';
 $pageCanonical = SITE_URL . '/teachers-constituency';
 $activeNav = 'mlc';
