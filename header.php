@@ -280,6 +280,24 @@ $activeNav = $activeNav ?? 'home';
                                     </div>
                                 </a>
                             </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/teachers-constituency">
+                                    <span>📚</span>
+                                    <div>
+                                        <div class="fw-bold text-success">Teachers' Constituencies (Form 19)</div>
+                                        <small class="text-muted">Saran, Patna, Tirhut, Darbhanga Booths &amp; Rolls</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/graduates-constituency">
+                                    <span>🎓</span>
+                                    <div>
+                                        <div class="fw-bold text-primary">Graduates' Constituencies (Form 18)</div>
+                                        <small class="text-muted">Patna, Tirhut, Darbhanga, Kosi Booths &amp; Rolls</small>
+                                    </div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

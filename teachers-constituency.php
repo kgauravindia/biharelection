@@ -20,6 +20,7 @@ $teachersSeats = [
         'hq' => 'Patna',
         'ro' => 'Divisional Commissioner, Patna',
         'ro_hi' => 'प्रमंडलीय आयुक्त, पटना',
+        'ro_url' => 'https://patnadivision.bih.nic.in/',
         'districts' => ['Patna', 'Nalanda', 'Nawada'],
         'districts_hi' => ['पटना', 'नालंदा', 'नवादा'],
         'status' => 'election_2026',
@@ -36,6 +37,7 @@ $teachersSeats = [
         'hq' => 'Muzaffarpur',
         'ro' => 'Divisional Commissioner, Tirhut (Muzaffarpur)',
         'ro_hi' => 'प्रमंडलीय आयुक्त, तिरहुत (मुजफ्फरपुर)',
+        'ro_url' => 'https://tirhutdivision.bih.nic.in/',
         'districts' => ['Muzaffarpur', 'Vaishali', 'Sitamarhi', 'Sheohar'],
         'districts_hi' => ['मुजफ्फरपुर', 'वैशाली', 'सीतामढ़ी', 'शिवहर'],
         'status' => 'election_2026',
@@ -52,6 +54,7 @@ $teachersSeats = [
         'hq' => 'Darbhanga',
         'ro' => 'Divisional Commissioner, Darbhanga',
         'ro_hi' => 'प्रमंडलीय आयुक्त, दरभंगा',
+        'ro_url' => 'https://darbhangadivision.bih.nic.in/',
         'districts' => ['Darbhanga', 'Madhubani', 'Samastipur', 'Begusarai'],
         'districts_hi' => ['दरभंगा', 'मधुबनी', 'समस्तीपुर', 'बेगूसराय'],
         'status' => 'election_2026',
@@ -68,6 +71,7 @@ $teachersSeats = [
         'hq' => 'Chapra',
         'ro' => 'Divisional Commissioner, Saran (Chapra)',
         'ro_hi' => 'प्रमंडलीय आयुक्त, सारण (छपरा)',
+        'ro_url' => 'https://sarandivision.bih.nic.in/',
         'districts' => ['Saran', 'Siwan', 'Gopalganj', 'East Champaran', 'West Champaran'],
         'districts_hi' => ['सारण', 'सिवान', 'गोपालगंज', 'पूर्वी चंपारण', 'पश्चिमी चंपारण'],
         'status' => 'election_2026',
@@ -84,6 +88,7 @@ $teachersSeats = [
         'hq' => 'Gaya',
         'ro' => 'Divisional Commissioner, Magadh (Gaya)',
         'ro_hi' => 'प्रमंडलीय आयुक्त, मगध (गया)',
+        'ro_url' => 'https://magadhdivision.bih.nic.in/',
         'districts' => ['Gaya', 'Jehanabad', 'Arwal', 'Aurangabad', 'Rohtas', 'Kaimur', 'Bhojpur', 'Buxar'],
         'districts_hi' => ['गया', 'जहानाबाद', 'अरवल', 'औरंगाबाद', 'रोहतास', 'कैमूर', 'भोजपुर', 'बक्सर'],
         'status' => 'active_term',
@@ -100,6 +105,7 @@ $teachersSeats = [
         'hq' => 'Saharsa / Purnia',
         'ro' => 'Divisional Commissioner, Kosi / Purnia',
         'ro_hi' => 'प्रमंडलीय आयुक्त, कोसी / पूर्णिया',
+        'ro_url' => 'https://kosidivision.bih.nic.in/',
         'districts' => ['Saharsa', 'Supaul', 'Madhepura', 'Purnia', 'Araria', 'Kishanganj', 'Katihar', 'Bhagalpur', 'Banka', 'Munger', 'Jamui', 'Lakhisarai', 'Sheikhpura', 'Khagaria'],
         'districts_hi' => ['सहरसा', 'सुपौल', 'मधेपुरा', 'पूर्णिया', 'अररिया', 'किशनगंज', 'कटिहार', 'भागलपुर', 'बांका', 'मुंगेर', 'जमुई', 'लखीसराय', 'शेखपुरा', 'खगड़िया'],
         'status' => 'active_term',
@@ -297,9 +303,17 @@ require_once __DIR__ . '/header.php';
                                 <span class="text-muted extra-small">HQ / Div:</span>
                                 <strong class="text-dark"><?php echo htmlspecialchars($seat['hq']); ?></strong>
                             </div>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <span class="text-muted extra-small">Returning Officer:</span>
-                                <span class="text-navy fw-semibold extra-small text-end" style="max-width: 170px;"><?php echo htmlspecialchars($seat['ro']); ?></span>
+                                <span class="text-navy fw-semibold extra-small text-end" style="max-width: 180px;">
+                                    <?php if (!empty($seat['ro_url'])): ?>
+                                        <a href="<?php echo htmlspecialchars($seat['ro_url']); ?>" target="_blank" rel="noopener noreferrer" class="text-primary hover-underline text-decoration-none">
+                                            <?php echo htmlspecialchars($seat['ro']); ?> <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 9px;"></i>
+                                        </a>
+                                    <?php else: ?>
+                                        <?php echo htmlspecialchars($seat['ro']); ?>
+                                    <?php endif; ?>
+                                </span>
                             </div>
                         </div>
 
@@ -323,12 +337,21 @@ require_once __DIR__ . '/header.php';
                                 <?php echo htmlspecialchars($seat['incumbent']); ?>
                             </span>
                         </div>
+                        <?php 
+                            $conSlug = rtrim($seat['id'], 's') . '-constituency';
+                            $hasBoothPage = file_exists(__DIR__ . '/' . $conSlug . '.php');
+                        ?>
+                        <?php if ($hasBoothPage): ?>
+                            <a href="<?php echo SITE_URL . '/' . $conSlug; ?>" class="btn btn-sm btn-success w-100 rounded-pill fw-semibold py-1.5 mb-2 shadow-sm d-inline-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-geo-alt-fill"></i> View Polling Booths (मतदान केंद्र)
+                            </a>
+                        <?php endif; ?>
                         <?php if ($isOngoing): ?>
-                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-danger w-100 rounded-pill fw-semibold py-1.5 shadow-sm">
+                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-outline-danger w-100 rounded-pill fw-semibold py-1.5">
                                 <i class="bi bi-box-arrow-up-right me-1"></i> 2026 Election Schedule &amp; Candidates
                             </a>
                         <?php else: ?>
-                            <a href="<?php echo SITE_URL; ?>/mlc" class="btn btn-sm btn-outline-success w-100 rounded-pill fw-semibold py-1.5">
+                            <a href="<?php echo SITE_URL; ?>/mlc" class="btn btn-sm btn-outline-secondary w-100 rounded-pill fw-semibold py-1.5">
                                 <i class="bi bi-person-lines-fill me-1"></i> View Member Profile
                             </a>
                         <?php endif; ?>
@@ -340,9 +363,27 @@ require_once __DIR__ . '/header.php';
 
     <!-- Voter Registration & Electoral Mechanism Dossier -->
     <div class="card border-0 shadow-sm rounded-4 bg-white p-4 p-lg-5 mb-5">
-        <h3 class="fw-extrabold text-navy mb-4 d-flex align-items-center gap-2">
-            <i class="bi bi-mortarboard-fill text-success"></i> Form 19 Voter Eligibility &amp; Teacher Enrollment Rules
-        </h3>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <div>
+                <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-1.5 rounded-pill mb-1">
+                    Form 19 Guide
+                </span>
+                <h3 class="fw-extrabold text-navy mb-0">
+                    <i class="bi bi-mortarboard-fill text-success"></i> Form 19 Voter Eligibility &amp; Teacher Enrollment Rules
+                </h3>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="https://ceo.bihar.gov.in/tcgconline/" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill fw-bold btn-sm px-3 py-1.5 d-inline-flex align-items-center gap-1.5 shadow-sm">
+                    <i class="bi bi-pencil-square"></i> Apply Online (tcgconline)
+                </a>
+                <a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-warning text-dark rounded-pill fw-bold btn-sm px-3 py-1.5 d-inline-flex align-items-center gap-1.5">
+                    <i class="bi bi-search"></i> Search Council Roll
+                </a>
+                <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/TCPDF.ASPX" target="_blank" rel="noopener noreferrer" class="btn btn-outline-danger rounded-pill fw-bold btn-sm px-3 py-1.5 d-inline-flex align-items-center gap-1.5">
+                    <i class="bi bi-file-earmark-pdf"></i> CEO PDF Roll
+                </a>
+            </div>
+        </div>
 
         <div class="row g-4">
             <div class="col-lg-6">
@@ -371,8 +412,9 @@ require_once __DIR__ . '/header.php';
                         <h5 class="fw-bold text-navy mb-0">Form 19 Application &amp; Employment Certificate</h5>
                     </div>
                     <ul class="text-muted small ps-3 mb-0 d-flex flex-column gap-2">
-                        <li><strong>Statutory Application:</strong> Apply via <strong>Form 19</strong> (offline or online via <a href="https://voters.eci.gov.in" target="_blank" rel="noopener noreferrer" class="text-primary fw-semibold">voters.eci.gov.in</a>).</li>
+                        <li><strong>Statutory Application:</strong> Apply online via CEO Bihar portal (<a href="https://ceo.bihar.gov.in/tcgconline/" target="_blank" rel="noopener noreferrer" class="text-primary fw-bold">ceo.bihar.gov.in/tcgconline</a>) or ECI (<a href="https://voters.eci.gov.in" target="_blank" rel="noopener noreferrer" class="text-primary fw-semibold">voters.eci.gov.in</a>), or offline with Form 19.</li>
                         <li><strong>Service Verification Certificate:</strong> Must attach a signed and stamped Certificate of Employment / Service from the Head of the Educational Institution (Principal, Headmaster, Registrar, or Dean) certifying the required 3-year tenure.</li>
+                        <li><strong>Elector Search &amp; Verification:</strong> Verify your existing registration status using <a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener noreferrer" class="text-primary fw-bold">ceo.bihar.gov.in/tcgcelectorsearch</a>.</li>
                         <li><strong>De-novo Preparation:</strong> A fresh electoral roll is compiled prior to every biennial election. Existing registration in general assembly rolls does not automatically confer voting rights in council elections.</li>
                     </ul>
                 </div>

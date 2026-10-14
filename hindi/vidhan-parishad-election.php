@@ -23,6 +23,7 @@ $seats = [
         'name_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
         'ro' => 'Divisional Commissioner, Patna',
         'ro_hi' => 'प्रमंडलीय आयुक्त, पटना',
+        'ro_url' => 'https://patnadivision.bih.nic.in/',
         'hq' => 'Patna',
         'districts' => ['Patna', 'Nalanda', 'Nawada'],
         'districts_hi' => ['पटना', 'नालंदा', 'नवादा'],
@@ -37,6 +38,7 @@ $seats = [
         'name_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
         'ro' => 'Divisional Commissioner, Tirhut (Muzaffarpur)',
         'ro_hi' => 'प्रमंडलीय आयुक्त, तिरहुत (मुजफ्फरपुर)',
+        'ro_url' => 'https://tirhutdivision.bih.nic.in/',
         'hq' => 'Muzaffarpur',
         'districts' => ['Muzaffarpur', 'Vaishali', 'Sitamarhi', 'Sheohar'],
         'districts_hi' => ['मुजफ्फरपुर', 'वैशाली', 'सीतामढ़ी', 'शिवहर'],
@@ -51,6 +53,7 @@ $seats = [
         'name_hi' => 'दरभंगा स्नातक निर्वाचन क्षेत्र',
         'ro' => 'Divisional Commissioner, Darbhanga',
         'ro_hi' => 'प्रमंडलीय आयुक्त, दरभंगा',
+        'ro_url' => 'https://darbhangadivision.bih.nic.in/',
         'hq' => 'Darbhanga',
         'districts' => ['Darbhanga', 'Madhubani', 'Samastipur', 'Begusarai'],
         'districts_hi' => ['दरभंगा', 'मधुबनी', 'समस्तीपुर', 'बेगूसराय'],
@@ -65,6 +68,7 @@ $seats = [
         'name_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
         'ro' => 'Divisional Commissioner, Kosi / Purnia',
         'ro_hi' => 'प्रमंडलीय आयुक्त, कोसी / पूर्णिया',
+        'ro_url' => 'https://kosidivision.bih.nic.in/',
         'hq' => 'Saharsa / Purnia',
         'districts' => ['Saharsa', 'Supaul', 'Madhepura', 'Purnia', 'Araria', 'Kishanganj', 'Katihar', 'Bhagalpur', 'Banka', 'Munger', 'Jamui', 'Lakhisarai', 'Sheikhpura', 'Khagaria'],
         'districts_hi' => ['सहरसा', 'सुपौल', 'मधेपुरा', 'पूर्णिया', 'अररिया', 'किशनगंज', 'कटिहार', 'भागलपुर', 'बांका', 'मुंगेर', 'जमुई', 'लखीसराय', 'शेखपुरा', 'खगड़िया'],
@@ -79,6 +83,7 @@ $seats = [
         'name_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
         'ro' => 'Divisional Commissioner, Patna',
         'ro_hi' => 'प्रमंडलीय आयुक्त, पटना',
+        'ro_url' => 'https://patnadivision.bih.nic.in/',
         'hq' => 'Patna',
         'districts' => ['Patna', 'Nalanda', 'Nawada'],
         'districts_hi' => ['पटना', 'नालंदा', 'नवादा'],
@@ -93,6 +98,7 @@ $seats = [
         'name_hi' => 'तिरहुत शिक्षक निर्वाचन क्षेत्र',
         'ro' => 'Divisional Commissioner, Tirhut (Muzaffarpur)',
         'ro_hi' => 'प्रमंडलीय आयुक्त, तिरहुत (मुजफ्फरपुर)',
+        'ro_url' => 'https://tirhutdivision.bih.nic.in/',
         'hq' => 'Muzaffarpur',
         'districts' => ['Muzaffarpur', 'Vaishali', 'Sitamarhi', 'Sheohar'],
         'districts_hi' => ['मुजफ्फरपुर', 'वैशाली', 'सीतामढ़ी', 'शिवहर'],
@@ -107,6 +113,7 @@ $seats = [
         'name_hi' => 'दरभंगा शिक्षक निर्वाचन क्षेत्र',
         'ro' => 'Divisional Commissioner, Darbhanga',
         'ro_hi' => 'प्रमंडलीय आयुक्त, दरभंगा',
+        'ro_url' => 'https://darbhangadivision.bih.nic.in/',
         'hq' => 'Darbhanga',
         'districts' => ['Darbhanga', 'Madhubani', 'Samastipur', 'Begusarai'],
         'districts_hi' => ['दरभंगा', 'मधुबनी', 'समस्तीपुर', 'बेगूसराय'],
@@ -121,6 +128,7 @@ $seats = [
         'name_hi' => 'सारण शिक्षक निर्वाचन क्षेत्र',
         'ro' => 'Divisional Commissioner, Saran (Chapra)',
         'ro_hi' => 'प्रमंडलीय आयुक्त, सारण (छपरा)',
+        'ro_url' => 'https://sarandivision.bih.nic.in/',
         'hq' => 'Chapra',
         'districts' => ['Saran', 'Siwan', 'Gopalganj', 'East Champaran', 'West Champaran'],
         'districts_hi' => ['सारण (छपरा)', 'सिवान', 'गोपालगंज', 'पूर्वी चंपारण (मोतिहारी)', 'पश्चिमी चंपारण (बेतिया)'],
@@ -128,6 +136,18 @@ $seats = [
         'term_expiry' => '16 November 2026',
         'description' => 'Encompassing teachers and professors in Saran and Champaran belt (Chapra, Siwan, Gopalganj, Motihari, Bettiah).'
     ]
+];
+
+// 8 निर्वाचन क्षेत्रों के मतदान केंद्र एवं समर्पित हब मैपिंग
+$boothPageMap = [
+    'patna-graduates' => ['slug' => 'patna-graduate-constituency', 'count' => 134, 'code' => 1],
+    'tirhut-graduates' => ['slug' => 'tirhut-graduate-constituency', 'count' => 145, 'code' => 4],
+    'darbhanga-graduates' => ['slug' => 'darbhanga-graduate-constituency', 'count' => 138, 'code' => 5],
+    'kosi-graduates' => ['slug' => 'kosi-graduate-constituency', 'count' => 181, 'code' => 6],
+    'patna-teachers' => ['slug' => 'patna-teacher-constituency', 'count' => 80, 'code' => 1],
+    'tirhut-teachers' => ['slug' => 'tirhut-teacher-constituency', 'count' => 58, 'code' => 4],
+    'darbhanga-teachers' => ['slug' => 'darbhanga-teacher-constituency', 'count' => 99, 'code' => 5],
+    'saran-teachers' => ['slug' => 'saran-teacher-constituency', 'count' => 98, 'code' => 3],
 ];
 
 // Schedule Timeline Events
@@ -709,7 +729,14 @@ $timeline = [
                                 <div class="bg-light p-2.5 rounded-3 mb-3 small">
                                     <div class="mb-1">
                                         <strong class="text-dark"><i class="bi bi-building me-1 text-secondary"></i> Returning Officer:</strong>
-                                        <div class="text-muted"><?php echo htmlspecialchars($seat['ro']); ?></div>
+                                        <div class="text-muted">
+                                            <?php echo htmlspecialchars($seat['ro_hi'] ?? $seat['ro']); ?>
+                                            <?php if (!empty($seat['ro_url'])): ?>
+                                                <a href="<?php echo htmlspecialchars($seat['ro_url']); ?>" target="_blank" rel="noopener" class="ms-1 text-primary text-decoration-none hover-underline extra-small" title="प्रमंडलीय आयुक्त आधिकारिक पोर्टल">
+                                                    <i class="bi bi-box-arrow-up-right"></i>
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                     <div>
                                         <strong class="text-dark"><i class="bi bi-geo-alt me-1 text-danger"></i> HQ:</strong> <?php echo htmlspecialchars($seat['hq']); ?>
@@ -720,11 +747,24 @@ $timeline = [
                                     <div class="small fw-bold text-muted mb-1.5 text-uppercase" style="font-size: 11px;">
                                         <i class="bi bi-map me-1"></i> Districts in this Constituency (<?php echo count($seat['districts']); ?>):
                                     </div>
-                                    <div class="d-flex flex-wrap gap-1">
+                                    <div class="d-flex flex-wrap gap-1 mb-2.5">
                                         <?php foreach ($seat['districts'] as $dist): ?>
                                             <span class="district-tag"><?php echo htmlspecialchars($dist); ?></span>
                                         <?php endforeach; ?>
                                     </div>
+
+                                    <?php 
+                                        $bCard = $boothPageMap[$seat['id']] ?? null;
+                                    ?>
+                                    <?php if ($bCard): ?>
+                                        <div class="pt-2 border-top">
+                                            <a href="<?php echo SITE_URL . '/' . $bCard['slug']; ?>" class="btn <?php echo $seat['type'] === 'Graduates' ? 'btn-outline-primary' : 'btn-outline-success'; ?> btn-sm w-100 rounded-pill fw-semibold py-1.5 d-inline-flex align-items-center justify-content-center gap-1.5 shadow-sm">
+                                                <i class="bi bi-geo-alt-fill text-danger"></i>
+                                                <span>सभी <?php echo $bCard['count']; ?> मतदान केंद्र देखें (Polling Booths)</span>
+                                                <i class="bi bi-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -839,12 +879,15 @@ $timeline = [
                             मतदाता सूची एवं निर्वाचक नामावली (Voter List &amp; Electoral Roll)
                         </h3>
                     </div>
-                    <div class="d-flex gap-2">
-                        <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener" class="btn btn-success btn-sm rounded-pill fw-bold shadow-sm">
-                            <i class="bi bi-search me-1"></i> मतदाता सूची में नाम खोजें (ECI) &rarr;
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener" class="btn btn-warning text-dark btn-sm rounded-pill fw-bold shadow-sm d-inline-flex align-items-center gap-1.5">
+                            <i class="bi bi-person-search"></i> CEO मतदाता सूची में नाम खोजें &rarr;
                         </a>
-                        <a href="https://ceoelection.bihar.gov.in/" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold">
-                            <i class="bi bi-file-earmark-pdf me-1"></i> मुख्य निर्वाचन पदाधिकारी बिहार रोल PDF
+                        <a href="https://ceo.bihar.gov.in/tcgconline/" target="_blank" rel="noopener" class="btn btn-primary btn-sm rounded-pill fw-bold shadow-sm d-inline-flex align-items-center gap-1.5">
+                            <i class="bi bi-pencil-square"></i> ऑनलाइन आवेदन (प्ररूप 18/19) &rarr;
+                        </a>
+                        <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener" class="btn btn-outline-success btn-sm rounded-pill fw-semibold d-inline-flex align-items-center gap-1">
+                            <i class="bi bi-check2-circle"></i> ECI पोर्टल
                         </a>
                     </div>
                 </div>
@@ -862,23 +905,31 @@ $timeline = [
                             </p>
                             
                             <div class="row g-2 pt-1">
-                                <div class="col-md-4">
-                                    <div class="p-2.5 bg-light rounded-3 border">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="p-2.5 bg-light rounded-3 border h-100">
                                         <span class="text-muted d-block" style="font-size: 11px;">अर्हता तिथि (Qualifying Date):</span>
                                         <strong class="text-dark small">01 नवम्बर 2025</strong>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="p-2.5 bg-light rounded-3 border">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="p-2.5 bg-light rounded-3 border h-100">
                                         <span class="text-muted d-block" style="font-size: 11px;">पुनरीक्षण स्थिति (Revision Status):</span>
-                                        <span class="badge bg-success-subtle text-success fw-bold">अंतिम निर्वाचक नामावली प्रकाशित</span>
+                                        <span class="badge bg-success-subtle text-success fw-bold">अंतिम नामावली (06.10.2026)</span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="p-2.5 bg-light rounded-3 border">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="p-2.5 bg-light rounded-3 border h-100">
                                         <span class="text-muted d-block" style="font-size: 11px;">मतदाता ऑनलाइन सत्यापन:</span>
-                                        <a href="https://voters.eci.gov.in/" target="_blank" class="text-primary fw-bold small text-decoration-none hover-underline">
-                                            ऑनलाइन स्थिति जांचें &rarr;
+                                        <a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener" class="text-warning fw-bold small text-decoration-none hover-underline d-inline-flex align-items-center gap-1">
+                                            <i class="bi bi-search"></i> CEO नाम खोजें &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="p-2.5 bg-light rounded-3 border h-100">
+                                        <span class="text-muted d-block" style="font-size: 11px;">ऑनलाइन पंजीकरण:</span>
+                                        <a href="https://ceo.bihar.gov.in/tcgconline/" target="_blank" rel="noopener" class="text-primary fw-bold small text-decoration-none hover-underline d-inline-flex align-items-center gap-1">
+                                            <i class="bi bi-box-arrow-up-right"></i> CEO ऑनलाइन पोर्टल &rarr;
                                         </a>
                                     </div>
                                 </div>
@@ -889,11 +940,14 @@ $timeline = [
 
                 <!-- 8 Constituencies Electoral Roll Quick-Access Table -->
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 bg-white">
-                    <div class="card-header bg-light py-3 px-4 border-bottom d-flex justify-content-between align-items-center">
-                        <h6 class="fw-bold mb-0 text-dark">
-                            <i class="bi bi-table text-primary me-2"></i> 8 निर्वाचन क्षेत्र निर्वाचक नामावली एवं निर्वाचक निबंधन पदाधिकारी (ERO) निर्देशिका
-                        </h6>
-                        <span class="badge bg-primary text-white small">8 द्विवार्षिक सीटें</span>
+                    <div class="card-header bg-light py-3 px-4 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">
+                                <i class="bi bi-table text-primary me-2"></i> 8 निर्वाचन क्षेत्र निर्वाचक नामावली एवं निर्वाचक निबंधन पदाधिकारी (ERO) निर्देशिका
+                            </h6>
+                            <small class="text-muted">समर्पित मतदान केंद्र सूची देखें, मतदाता सूची में नाम खोजें या आधिकारिक PDF डाउनलोड करें</small>
+                        </div>
+                        <span class="badge bg-primary text-white small px-2.5 py-1">8 द्विवार्षिक सीटें</span>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0 small">
@@ -903,14 +957,23 @@ $timeline = [
                                     <th>प्रकार</th>
                                     <th>सम्मिलित जिले</th>
                                     <th>निर्वाचक निबंधन पदाधिकारी (ERO)</th>
-                                    <th class="text-end pe-4">मतदाता सूची लिंक / विवरण</th>
+                                    <th class="text-end pe-4" style="min-width: 320px;">मतदाता सूची लिंक / विवरण</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($seats as $s): ?>
+                                <?php foreach ($seats as $s): 
+                                    $bInfo = $boothPageMap[$s['id']] ?? null;
+                                    $boothUrl = $bInfo ? SITE_URL . '/' . $bInfo['slug'] : '#';
+                                    $boothCount = $bInfo ? $bInfo['count'] : '';
+                                    $pdfUrl = ($s['type'] === 'Graduates') 
+                                        ? 'https://ceo.bihar.gov.in/GCTCPDFVIEW/GCPDF.ASPX' 
+                                        : 'https://ceo.bihar.gov.in/GCTCPDFVIEW/TCPDF.ASPX';
+                                ?>
                                 <tr>
                                     <td class="ps-4">
-                                        <div class="fw-bold text-dark"><?php echo htmlspecialchars($s['name_hi']); ?></div>
+                                        <a href="<?php echo $boothUrl; ?>" class="fw-bold text-dark text-decoration-none hover-primary d-block">
+                                            <?php echo htmlspecialchars($s['name_hi']); ?>
+                                        </a>
                                         <div class="text-muted" style="font-size: 11px;"><?php echo htmlspecialchars($s['name']); ?></div>
                                     </td>
                                     <td>
@@ -922,18 +985,34 @@ $timeline = [
                                         <span class="text-secondary"><?php echo implode(', ', array_slice($s['districts_hi'] ?? $s['districts'], 0, 3)); ?><?php echo count($s['districts']) > 3 ? ' +' . (count($s['districts']) - 3) . ' अन्य' : ''; ?></span>
                                     </td>
                                     <td>
-                                        <span class="fw-semibold text-dark"><?php echo htmlspecialchars($s['ro_hi'] ?? $s['ro']); ?></span>
+                                        <span class="fw-semibold text-dark d-block"><?php echo htmlspecialchars($s['ro_hi'] ?? $s['ro']); ?></span>
+                                        <?php if (!empty($s['ro_url'])): ?>
+                                            <a href="<?php echo htmlspecialchars($s['ro_url']); ?>" target="_blank" rel="noopener" class="text-primary fw-semibold extra-small text-decoration-none hover-underline d-inline-flex align-items-center gap-1 mt-0.5" title="प्रमंडलीय आयुक्त आधिकारिक पोर्टल">
+                                                <i class="bi bi-building"></i>
+                                                <span><?php echo parse_url($s['ro_url'], PHP_URL_HOST); ?></span>
+                                                <i class="bi bi-box-arrow-up-right" style="font-size: 9px;"></i>
+                                            </a>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="text-end pe-4">
-                                        <?php if ($s['type'] === 'Graduates'): ?>
-                                        <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/GCPDF.ASPX" target="_blank" rel="noopener" class="btn btn-primary btn-sm rounded-pill py-1 px-3 fw-semibold" style="font-size: 11.5px;">
-                                            <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> स्नातक वोटर लिस्ट PDF &rarr;
-                                        </a>
-                                        <?php else: ?>
-                                        <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/TCPDF.ASPX" target="_blank" rel="noopener" class="btn btn-success btn-sm rounded-pill py-1 px-3 fw-semibold" style="font-size: 11.5px;">
-                                            <i class="bi bi-file-earmark-pdf-fill me-1 text-warning"></i> शिक्षक वोटर लिस्ट PDF &rarr;
-                                        </a>
-                                        <?php endif; ?>
+                                        <div class="d-inline-flex flex-wrap justify-content-end align-items-center gap-1.5">
+                                            <!-- Dedicated Polling Booths Link -->
+                                            <a href="<?php echo $boothUrl; ?>" class="btn <?php echo $s['type'] === 'Graduates' ? 'btn-primary' : 'btn-success'; ?> btn-sm rounded-pill py-1 px-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1" style="font-size: 11.5px;" title="<?php echo htmlspecialchars($s['name_hi']); ?> के सभी <?php echo $boothCount; ?> मतदान केंद्र देखें">
+                                                <i class="bi bi-geo-alt-fill text-warning"></i>
+                                                <span>मतदान केंद्र (<?php echo $boothCount; ?>)</span>
+                                                <i class="bi bi-arrow-right"></i>
+                                            </a>
+                                            <!-- CEO Elector Search Link -->
+                                            <a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener" class="btn btn-outline-warning text-dark btn-sm rounded-pill py-1 px-2 fw-semibold d-inline-flex align-items-center gap-1" style="font-size: 11px;" title="CEO बिहार मतदाता सूची में नाम खोजें">
+                                                <i class="bi bi-person-search text-primary"></i>
+                                                <span>नाम खोजें</span>
+                                            </a>
+                                            <!-- Official CEO Roll PDF Link -->
+                                            <a href="<?php echo $pdfUrl; ?>" target="_blank" rel="noopener" class="btn btn-outline-danger btn-sm rounded-pill py-1 px-2 fw-semibold d-inline-flex align-items-center gap-1" style="font-size: 11px;" title="आधिकारिक प्रमाणित वोटर लिस्ट PDF डाउनलोड करें">
+                                                <i class="bi bi-file-earmark-pdf-fill"></i>
+                                                <span>रोल PDF</span>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -972,12 +1051,20 @@ $timeline = [
                             </ul>
 
                             <div class="d-flex flex-column gap-2 mt-auto">
+                                <div class="d-flex flex-wrap gap-2">
+                                    <a href="https://ceo.bihar.gov.in/tcgconline/" target="_blank" rel="noopener" class="btn btn-warning btn-sm rounded-pill fw-bold text-dark shadow-sm flex-grow-1">
+                                        <i class="bi bi-pencil-square me-1 text-danger"></i> ऑनलाइन आवेदन (CEO tcgconline) &rarr;
+                                    </a>
+                                    <a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm rounded-pill fw-semibold">
+                                        <i class="bi bi-person-search me-1"></i> नाम खोजें
+                                    </a>
+                                </div>
                                 <div class="d-flex gap-2">
                                     <a href="https://ceoelection.bihar.gov.in/" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold flex-grow-1">
                                         <i class="bi bi-download me-1"></i> प्ररूप 18 PDF
                                     </a>
-                                    <a href="https://voters.eci.gov.in/" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill fw-semibold">
-                                        <i class="bi bi-box-arrow-up-right me-1"></i> ऑनलाइन पोर्टल
+                                    <a href="https://voters.eci.gov.in/" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill fw-semibold">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i> ECI पोर्टल
                                     </a>
                                 </div>
                                 <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/GCPDF.ASPX" target="_blank" rel="noopener" class="btn btn-primary btn-sm rounded-pill fw-bold text-white shadow-sm">
@@ -1024,12 +1111,20 @@ $timeline = [
                             </ul>
 
                             <div class="d-flex flex-column gap-2 mt-auto">
+                                <div class="d-flex flex-wrap gap-2">
+                                    <a href="https://ceo.bihar.gov.in/tcgconline/" target="_blank" rel="noopener" class="btn btn-warning btn-sm rounded-pill fw-bold text-dark shadow-sm flex-grow-1">
+                                        <i class="bi bi-pencil-square me-1 text-danger"></i> ऑनलाइन आवेदन (CEO tcgconline) &rarr;
+                                    </a>
+                                    <a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm rounded-pill fw-semibold">
+                                        <i class="bi bi-person-search me-1"></i> नाम खोजें
+                                    </a>
+                                </div>
                                 <div class="d-flex gap-2">
                                     <a href="https://ceoelection.bihar.gov.in/" target="_blank" class="btn btn-outline-success btn-sm rounded-pill fw-semibold flex-grow-1">
                                         <i class="bi bi-download me-1"></i> प्ररूप 19 PDF
                                     </a>
-                                    <a href="https://voters.eci.gov.in/" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill fw-semibold">
-                                        <i class="bi bi-box-arrow-up-right me-1"></i> ऑनलाइन पोर्टल
+                                    <a href="https://voters.eci.gov.in/" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill fw-semibold">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i> ECI पोर्टल
                                     </a>
                                 </div>
                                 <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/TCPDF.ASPX" target="_blank" rel="noopener" class="btn btn-success btn-sm rounded-pill fw-bold text-white shadow-sm">

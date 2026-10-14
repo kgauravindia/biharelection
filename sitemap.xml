@@ -8,9 +8,69 @@
     </url>
     <url>
         <loc>https://biharelection.com/vidhan-parishad-election</loc>
-        <lastmod>2026-10-04</lastmod>
+        <lastmod>2026-10-14</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.95</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/teachers-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/graduates-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/saran-teacher-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/patna-teacher-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/tirhut-teacher-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/darbhanga-teacher-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/patna-graduate-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/tirhut-graduate-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/darbhanga-graduate-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://biharelection.com/kosi-graduate-constituency</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.90</priority>
     </url>
     <url>
         <loc>https://biharelection.com/blog</loc>

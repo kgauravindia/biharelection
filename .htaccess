@@ -117,6 +117,17 @@ AddDefaultCharset UTF-8
     RewriteRule ^graduate-constituency/?$ graduates-constituency.php [L,QSA]
     RewriteRule ^teachers-constituency/?$ teachers-constituency.php [L,QSA]
     RewriteRule ^teacher-constituency/?$ teachers-constituency.php [L,QSA]
+
+    # Individual 8 MLC Constituencies (Teachers & Graduates)
+    RewriteRule ^saran-teacher(s)?-constituency/?$ saran-teacher-constituency.php [L,QSA]
+    RewriteRule ^patna-teacher(s)?-constituency/?$ patna-teacher-constituency.php [L,QSA]
+    RewriteRule ^tirhut-teacher(s)?-constituency/?$ tirhut-teacher-constituency.php [L,QSA]
+    RewriteRule ^darbhanga-teacher(s)?-constituency/?$ darbhanga-teacher-constituency.php [L,QSA]
+
+    RewriteRule ^patna-graduate(s)?-constituency/?$ patna-graduate-constituency.php [L,QSA]
+    RewriteRule ^tirhut-graduate(s)?-constituency/?$ tirhut-graduate-constituency.php [L,QSA]
+    RewriteRule ^darbhanga-graduate(s)?-constituency/?$ darbhanga-graduate-constituency.php [L,QSA]
+    RewriteRule ^kosi-graduate(s)?-constituency/?$ kosi-graduate-constituency.php [L,QSA]
     RewriteRule ^mlc/?$ mlc.php [L,QSA]
     RewriteRule ^mlc/([a-zA-Z0-9_-]+)/?$ mlc.php?slug=$1 [L,QSA]
     RewriteRule ^vidhan-parishad/?$ mlc.php [L,QSA]

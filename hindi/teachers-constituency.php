@@ -20,6 +20,7 @@ $teachersSeats = [
         'hq' => 'पटना',
         'ro' => 'Divisional Commissioner, Patna',
         'ro_hi' => 'प्रमंडलीय आयुक्त, पटना प्रमंडल',
+        'ro_url' => 'https://patnadivision.bih.nic.in/',
         'districts' => ['Patna', 'Nalanda', 'Nawada'],
         'districts_hi' => ['पटना', 'नालंदा', 'नवादा'],
         'status' => 'election_2026',
@@ -36,6 +37,7 @@ $teachersSeats = [
         'hq' => 'मुजफ्फरपुर',
         'ro' => 'Divisional Commissioner, Tirhut (Muzaffarpur)',
         'ro_hi' => 'प्रमंडलीय आयुक्त, तिरहुत (मुजफ्फरपुर)',
+        'ro_url' => 'https://tirhutdivision.bih.nic.in/',
         'districts' => ['Muzaffarpur', 'Vaishali', 'Sitamarhi', 'Sheohar'],
         'districts_hi' => ['मुजफ्फरपुर', 'वैशाली', 'सीतामढ़ी', 'शिवहर'],
         'status' => 'election_2026',
@@ -52,6 +54,7 @@ $teachersSeats = [
         'hq' => 'दरभंगा',
         'ro' => 'Divisional Commissioner, Darbhanga',
         'ro_hi' => 'प्रमंडलीय आयुक्त, दरभंगा प्रमंडल',
+        'ro_url' => 'https://darbhangadivision.bih.nic.in/',
         'districts' => ['Darbhanga', 'Madhubani', 'Samastipur', 'Begusarai'],
         'districts_hi' => ['दरभंगा', 'मधुबनी', 'समस्तीपुर', 'बेगूसराय'],
         'status' => 'election_2026',
@@ -68,6 +71,7 @@ $teachersSeats = [
         'hq' => 'छपरा',
         'ro' => 'Divisional Commissioner, Saran (Chapra)',
         'ro_hi' => 'प्रमंडलीय आयुक्त, सारण (छपरा)',
+        'ro_url' => 'https://sarandivision.bih.nic.in/',
         'districts' => ['Saran', 'Siwan', 'Gopalganj', 'East Champaran', 'West Champaran'],
         'districts_hi' => ['सारण', 'सिवान', 'गोपालगंज', 'पूर्वी चंपारण', 'पश्चिमी चंपारण'],
         'status' => 'election_2026',
@@ -84,6 +88,7 @@ $teachersSeats = [
         'hq' => 'गया',
         'ro' => 'Divisional Commissioner, Magadh (Gaya)',
         'ro_hi' => 'प्रमंडलीय आयुक्त, मगध (गया)',
+        'ro_url' => 'https://magadhdivision.bih.nic.in/',
         'districts' => ['Gaya', 'Jehanabad', 'Arwal', 'Aurangabad', 'Rohtas', 'Kaimur', 'Bhojpur', 'Buxar'],
         'districts_hi' => ['गया', 'जहानाबाद', 'अरवल', 'औरंगाबाद', 'रोहतास', 'कैमूर', 'भोजपुर', 'बक्सर'],
         'status' => 'active_term',
@@ -100,6 +105,7 @@ $teachersSeats = [
         'hq' => 'सहरसा / पूर्णिया',
         'ro' => 'Divisional Commissioner, Kosi / Purnia',
         'ro_hi' => 'प्रमंडलीय आयुक्त, कोसी / पूर्णिया प्रमंडल',
+        'ro_url' => 'https://kosidivision.bih.nic.in/',
         'districts' => ['Saharsa', 'Supaul', 'Madhepura', 'Purnia', 'Araria', 'Kishanganj', 'Katihar', 'Bhagalpur', 'Banka', 'Munger', 'Jamui', 'Lakhisarai', 'Sheikhpura', 'Khagaria'],
         'districts_hi' => ['सहरसा', 'सुपौल', 'मधेपुरा', 'पूर्णिया', 'अररिया', 'किशनगंज', 'कटिहार', 'भागलपुर', 'बांका', 'मुंगेर', 'जमुई', 'लखीसराय', 'शेखपुरा', 'खगड़िया'],
         'status' => 'active_term',
@@ -535,9 +541,17 @@ require_once __DIR__ . '/includes/header.php';
                                 <span class="text-muted extra-small">मुख्यालय:</span>
                                 <strong class="text-dark"><?php echo htmlspecialchars($seat['hq']); ?></strong>
                             </div>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <span class="text-muted extra-small">निर्वाचन पदाधिकारी:</span>
-                                <span class="text-navy fw-semibold extra-small text-end" style="max-width: 170px;"><?php echo htmlspecialchars($seat['ro_hi']); ?></span>
+                                <span class="text-navy fw-semibold extra-small text-end" style="max-width: 180px;">
+                                    <?php if (!empty($seat['ro_url'])): ?>
+                                        <a href="<?php echo htmlspecialchars($seat['ro_url']); ?>" target="_blank" rel="noopener noreferrer" class="text-primary hover-underline text-decoration-none">
+                                            <?php echo htmlspecialchars($seat['ro_hi']); ?> <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 9px;"></i>
+                                        </a>
+                                    <?php else: ?>
+                                        <?php echo htmlspecialchars($seat['ro_hi']); ?>
+                                    <?php endif; ?>
+                                </span>
                             </div>
                         </div>
 
@@ -561,12 +575,21 @@ require_once __DIR__ . '/includes/header.php';
                                 <?php echo htmlspecialchars($seat['incumbent']); ?>
                             </span>
                         </div>
+                        <?php 
+                            $conSlug = rtrim($seat['id'], 's') . '-constituency';
+                            $hasBoothPage = file_exists(__DIR__ . '/../' . $conSlug . '.php');
+                        ?>
+                        <?php if ($hasBoothPage): ?>
+                            <a href="<?php echo SITE_URL . '/' . $conSlug; ?>" class="btn btn-sm btn-success w-100 rounded-pill fw-semibold py-2 mb-2 shadow-sm d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-geo-alt-fill"></i> मतदान केंद्र सूची (Polling Booths)
+                            </a>
+                        <?php endif; ?>
                         <?php if ($isOngoing): ?>
-                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-danger w-100 rounded-pill fw-semibold py-2 shadow-sm d-flex align-items-center justify-content-center gap-1">
+                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-outline-danger w-100 rounded-pill fw-semibold py-2 shadow-sm d-flex align-items-center justify-content-center gap-1">
                                 <i class="bi bi-box-arrow-up-right"></i> 2026 चुनाव कार्यक्रम एवं उम्मीदवार
                             </a>
                         <?php else: ?>
-                            <a href="<?php echo HINDI_BASE_URL; ?>mlc" class="btn btn-sm btn-outline-success w-100 rounded-pill fw-semibold py-2 d-flex align-items-center justify-content-center gap-1">
+                            <a href="<?php echo HINDI_BASE_URL; ?>mlc" class="btn btn-sm btn-outline-secondary w-100 rounded-pill fw-semibold py-2 d-flex align-items-center justify-content-center gap-1">
                                 <i class="bi bi-person-lines-fill"></i> सदस्य प्रोफ़ाइल देखें
                             </a>
                         <?php endif; ?>
@@ -585,7 +608,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <!-- Voter Registration & Electoral Mechanism Dossier -->
     <div class="card border-0 shadow-sm rounded-4 bg-white p-4 p-lg-5 mb-5">
-        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
             <div>
                 <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-1.5 rounded-pill mb-1">
                     फॉर्म 19 संपूर्ण गाइड
@@ -594,9 +617,17 @@ require_once __DIR__ . '/includes/header.php';
                     <i class="bi bi-mortarboard-fill text-success me-1"></i> शिक्षक मतदाता पात्रता एवं पंजीकरण नियमावली
                 </h3>
             </div>
-            <a href="https://voters.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn btn-outline-success rounded-pill fw-bold btn-sm px-3 py-1.5">
-                <i class="bi bi-box-arrow-up-right me-1"></i> ECI Voters Portal
-            </a>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="https://ceo.bihar.gov.in/tcgconline/" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill fw-bold btn-sm px-3 py-1.5 d-inline-flex align-items-center gap-1.5 shadow-sm">
+                    <i class="bi bi-pencil-square"></i> ऑनलाइन आवेदन (tcgconline)
+                </a>
+                <a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-warning text-dark rounded-pill fw-bold btn-sm px-3 py-1.5 d-inline-flex align-items-center gap-1.5">
+                    <i class="bi bi-search"></i> सूची में नाम खोजें
+                </a>
+                <a href="https://ceo.bihar.gov.in/GCTCPDFVIEW/TCPDF.ASPX" target="_blank" rel="noopener noreferrer" class="btn btn-outline-danger rounded-pill fw-bold btn-sm px-3 py-1.5 d-inline-flex align-items-center gap-1.5">
+                    <i class="bi bi-file-earmark-pdf"></i> CEO रोल PDF
+                </a>
+            </div>
         </div>
 
         <div class="row g-4">
@@ -634,8 +665,9 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <ul class="text-muted small ps-3 mb-0 d-flex flex-column gap-2">
-                        <li><strong>आवेदन प्रक्रिया:</strong> <strong>फॉर्म 19</strong> भरकर ऑनलाइन (<a href="https://voters.eci.gov.in" target="_blank" rel="noopener noreferrer" class="text-primary fw-semibold">voters.eci.gov.in</a>) या ऑफलाइन निर्वाचक निबंधन पदाधिकारी (ERO/SDM/BDO) के पास जमा करें।</li>
+                        <li><strong>आवेदन प्रक्रिया:</strong> <strong>फॉर्म 19</strong> भरकर ऑनलाइन मुख्य निर्वाचन पदाधिकारी पोर्टल (<a href="https://ceo.bihar.gov.in/tcgconline/" target="_blank" rel="noopener noreferrer" class="text-primary fw-bold">ceo.bihar.gov.in/tcgconline</a>) या ECI (<a href="https://voters.eci.gov.in" target="_blank" rel="noopener noreferrer" class="text-primary fw-semibold">voters.eci.gov.in</a>) अथवा ऑफलाइन ERO/SDM/BDO के पास जमा करें।</li>
                         <li><strong>संस्थान प्रधान का प्रमाण पत्र:</strong> शिक्षण संस्थान के प्रधान (प्रधानाध्यापक, प्राचार्य या कुलसचिव) द्वारा 3 वर्ष की संतोषजनक शिक्षण सेवा का हस्ताक्षरित एवं मुहरयुक्त प्रमाण पत्र संलग्न करना अनिवार्य है।</li>
+                        <li><strong>मतदाता सूची में नाम सत्यापन:</strong> अपना नाम एवं मतदान केंद्र भाग संख्या CEO बिहार पोर्टल (<a href="https://ceo.bihar.gov.in/tcgcelectorsearch/" target="_blank" rel="noopener noreferrer" class="text-primary fw-bold">ceo.bihar.gov.in/tcgcelectorsearch</a>) पर ऑनलाइन खोजें।</li>
                         <li><strong>मतदाता सूची का नया निर्माण:</strong> प्रत्येक द्विवार्षिक चुनाव से पूर्व शिक्षकों की पूरी मतदाता सूची नए सिरे से तैयार की जाती है।</li>
                     </ul>
                 </div>
