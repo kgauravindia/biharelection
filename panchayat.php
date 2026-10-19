@@ -120,7 +120,8 @@ if ($districtObj && $pdo) {
             }
         }
 
-        // Tier-2 Panchayat Samiti (Pramukh / Up-Pramukh) for this block
+        // Tier-2 Panchayat Samiti (Pramukh / Up-Pramukh & Elected Member 2021-2026)
+        $panchayatSamitiMembers = [];
         try {
             $stmtSamiti = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE LOWER(district_slug) = :dslug");
             $stmtSamiti->execute([':dslug' => $selectedDistrictSlug]);
@@ -129,6 +130,26 @@ if ($districtObj && $pdo) {
                 if (isBlockMatch($sr['block'], $currentBlockName) || (!empty($blockInput) && isBlockMatch($sr['block'], $blockInput))) {
                     $blockSamiti = $sr;
                     break;
+                }
+            }
+        } catch (Throwable $e) {}
+
+        // Elected Panchayat Samiti Member(s) (2021-2026) for this Gram Panchayat
+        try {
+            $stmtPsm = $pdo->prepare("SELECT * FROM panchayat_samiti_member_2021 WHERE LOWER(district_slug) = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
+            $stmtPsm->execute([':dslug' => $selectedDistrictSlug]);
+            $allDistPsm = $stmtPsm->fetchAll(PDO::FETCH_ASSOC);
+
+            $pTargetName = trim($singlePanchayat['panchayat_name'] ?? '');
+            $pTargetSlug = slugify($pTargetName);
+
+            foreach ($allDistPsm as $pm) {
+                if (isBlockMatch($pm['block'] ?? '', $currentBlockName) || (!empty($blockInput) && isBlockMatch($pm['block'] ?? '', $blockInput))) {
+                    $pmPanchayat = trim($pm['panchayat'] ?? '');
+                    $pmSlug = slugify($pmPanchayat);
+                    if ($pmSlug === $pTargetSlug || strcasecmp($pmPanchayat, $pTargetName) === 0 || stripos($pmPanchayat, $pTargetName) !== false || stripos($pTargetName, $pmPanchayat) !== false) {
+                        $panchayatSamitiMembers[] = $pm;
+                    }
                 }
             }
         } catch (Throwable $e) {}
@@ -255,6 +276,7 @@ if ($districtObj && $pdo) {
     // If single block matched, gather block samiti & ZP representation
     if ($singleBlockObj && !$singlePanchayat) {
         $bName = $singleBlockObj['sub_district'];
+        $blockSamitiMembers = [];
         try {
             $stmtSamiti = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE LOWER(district_slug) = :dslug");
             $stmtSamiti->execute([':dslug' => $selectedDistrictSlug]);
@@ -263,6 +285,18 @@ if ($districtObj && $pdo) {
                 if (isBlockMatch($sr['block'], $bName)) {
                     $blockSamiti = $sr;
                     break;
+                }
+            }
+        } catch (Throwable $e) {}
+
+        // Gather all Panchayat Samiti members in this block
+        try {
+            $stmtBlockPsm = $pdo->prepare("SELECT * FROM panchayat_samiti_member_2021 WHERE LOWER(district_slug) = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC, panchayat ASC");
+            $stmtBlockPsm->execute([':dslug' => $selectedDistrictSlug]);
+            $allDistBlockPsm = $stmtBlockPsm->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($allDistBlockPsm as $pm) {
+                if (isBlockMatch($pm['block'] ?? '', $bName) || (!empty($blockInput) && isBlockMatch($pm['block'] ?? '', $blockInput))) {
+                    $blockSamitiMembers[] = $pm;
                 }
             }
         } catch (Throwable $e) {}
@@ -887,7 +921,7 @@ require_once __DIR__ . '/header.php';
 
             <!-- 3. PANCHAYAT SAMITI CARD -->
             <div class="col-12 col-lg-6">
-                <div class="tier-card tier-card-samiti p-4">
+                <div class="tier-card tier-card-samiti p-4 h-100 d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="d-flex align-items-center gap-3">
                             <div class="tier-avatar-box bg-success bg-opacity-10 text-success">
@@ -895,10 +929,10 @@ require_once __DIR__ . '/header.php';
                             </div>
                             <div>
                                 <span class="tier-header-badge bg-success bg-opacity-15 text-success mb-1">
-                                    Tier 2 &bull; Block Level Samiti
+                                    Tier 2 &bull; Panchayat Samiti (2021–2026)
                                 </span>
                                 <h4 class="fw-bold text-navy font-heading mb-0 fs-5">
-                                    Panchayat Samiti (प्रखंड प्रमुख)
+                                    Panchayat Samiti Member (पंचायत समिति सदस्य)
                                 </h4>
                             </div>
                         </div>
@@ -908,25 +942,80 @@ require_once __DIR__ . '/header.php';
                     </div>
 
                     <p class="text-muted small mb-3">
-                        Intermediate Tier-2 governance unit coordinating Gram Panchayats across <strong><?php echo htmlspecialchars($singlePanchayat['block']); ?> CD Block</strong>.
+                        Intermediate Tier-2 governance unit representing <strong><?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?> Gram Panchayat</strong> in <strong><?php echo htmlspecialchars($singlePanchayat['block']); ?> Panchayat Samiti</strong>.
                     </p>
 
-                    <div class="p-3 bg-light rounded-3 mb-3 border">
-                        <div class="mb-2">
-                            <span class="text-muted small d-block">Block Pramukh (प्रखंड प्रमुख)</span>
-                            <h5 class="fw-bold text-navy mb-0 fs-5">
-                                <?php echo htmlspecialchars($blockSamiti['pramukh_2016'] ?? 'Pramukh Appointed'); ?>
-                            </h5>
-                        </div>
+                    <?php if (!empty($panchayatSamitiMembers)): ?>
+                        <?php foreach ($panchayatSamitiMembers as $sm): ?>
+                            <div class="p-3 bg-light rounded-3 mb-3 border">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <div class="d-flex align-items-center gap-1 mb-1 flex-wrap">
+                                            <span class="badge bg-success text-white fw-bold px-2 py-0.5 rounded-pill small">
+                                                Territory / क्षे० सं०: <?php echo htmlspecialchars($sm['territory_no'] ?: '—'); ?>
+                                            </span>
+                                            <?php if (!empty($sm['reservation_status'])): ?>
+                                                <span class="badge bg-warning bg-opacity-25 text-dark fw-bold px-2 py-0.5 rounded-pill small">
+                                                    <?php echo htmlspecialchars($sm['reservation_status']); ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <h5 class="fw-bold text-navy mb-0 fs-5">
+                                            <?php echo htmlspecialchars($sm['candidate_name']); ?>
+                                        </h5>
+                                        <?php if (!empty($sm['father_husband_name'])): ?>
+                                            <span class="text-muted small d-block">
+                                                पिता / पति: <?php echo htmlspecialchars($sm['father_husband_name']); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php if (!empty($sm['mobile'])): ?>
+                                        <div><?php echo renderMaskedPhoneButton($sm['mobile'], $sm['candidate_name'] . ' (Panchayat Samiti Member)'); ?></div>
+                                    <?php endif; ?>
+                                </div>
 
-                        <?php if (!empty($blockSamiti['up_pramukh_2016'])): ?>
-                            <div class="border-top pt-2 mt-2">
-                                <span class="text-muted small d-block">Up-Pramukh (उप प्रमुख)</span>
-                                <div class="fw-semibold text-dark">
-                                    <?php echo htmlspecialchars($blockSamiti['up_pramukh_2016']); ?>
+                                <div class="row g-2 pt-2 border-top small text-muted">
+                                    <?php if (!empty($sm['gender']) || !empty($sm['age'])): ?>
+                                        <div class="col-6">
+                                            <i class="bi bi-person me-1"></i>
+                                            <?php echo htmlspecialchars(($sm['gender'] ?? '') . ($sm['age'] ? ' (' . $sm['age'] . ' yrs)' : '')); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if (!empty($sm['category'])): ?>
+                                        <div class="col-6">
+                                            <i class="bi bi-tag me-1"></i> Category: <?php echo htmlspecialchars($sm['category']); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if (!empty($sm['address'])): ?>
+                                        <div class="col-12 text-truncate">
+                                            <i class="bi bi-geo-alt me-1"></i> <?php echo htmlspecialchars($sm['address']); ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
-                        <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="p-3 bg-light rounded-3 mb-3 border">
+                            <span class="text-muted small d-block">Panchayat Samiti Member (2021-2026)</span>
+                            <div class="fw-bold text-dark fs-6">Elected Member for <?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?></div>
+                            <span class="small text-muted">Elected from <?php echo htmlspecialchars($singlePanchayat['block']); ?> Territorial Constituency</span>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Block Samiti Presiding Officers -->
+                    <div class="p-2.5 bg-success bg-opacity-10 rounded-3 mb-3 border border-success border-opacity-25 small">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-muted d-block" style="font-size: 0.72rem;">BLOCK PRAMUKH (प्रखंड प्रमुख)</span>
+                                <strong class="text-navy"><?php echo htmlspecialchars($blockSamiti['pramukh_2016'] ?? 'Block Pramukh'); ?></strong>
+                            </div>
+                            <?php if (!empty($blockSamiti['up_pramukh_2016'])): ?>
+                                <div class="text-end border-start ps-3">
+                                    <span class="text-muted d-block" style="font-size: 0.72rem;">UP-PRAMUKH (उप-प्रमुख)</span>
+                                    <strong class="text-dark"><?php echo htmlspecialchars($blockSamiti['up_pramukh_2016']); ?></strong>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
 
                     <div class="profile-prop-row">
@@ -1382,6 +1471,88 @@ require_once __DIR__ . '/header.php';
                 </div>
             <?php endforeach; ?>
         </div>
+
+        <!-- Block Panchayat Samiti Members Roster (2021-2026) -->
+        <?php if (!empty($blockSamitiMembers)): ?>
+        <div class="card border-0 shadow-sm rounded-4 p-4 mt-4 mb-4 bg-white border-top border-4 border-success">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3 pb-3 border-bottom">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge bg-success bg-opacity-15 text-success fw-bold px-2.5 py-1 rounded-pill small">
+                            🏛️ Tier 2 Panchayat Samiti
+                        </span>
+                        <span class="badge bg-light text-muted border px-2 py-0.5 rounded-pill small">
+                            Tenure: 2021–2026
+                        </span>
+                    </div>
+                    <h3 class="fw-bold font-heading text-navy fs-4 mb-0">
+                        <?php echo htmlspecialchars($bName); ?> Panchayat Samiti Members (पंचायत समिति सदस्य)
+                    </h3>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-success text-white fw-bold px-3 py-2 rounded-pill">
+                        <?php echo count($blockSamitiMembers); ?> Elected Members
+                    </span>
+                    <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], $bSlug); ?>" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-semibold">
+                        Full Samiti View &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="py-2.5 px-3 text-navy small fw-bold text-uppercase">Territory (क्षे० सं०)</th>
+                            <th class="py-2.5 px-3 text-navy small fw-bold text-uppercase">Gram Panchayat</th>
+                            <th class="py-2.5 px-3 text-navy small fw-bold text-uppercase">Elected Member</th>
+                            <th class="py-2.5 px-3 text-navy small fw-bold text-uppercase">Father/Husband</th>
+                            <th class="py-2.5 px-3 text-navy small fw-bold text-uppercase">Reservation</th>
+                            <th class="py-2.5 px-3 text-navy small fw-bold text-uppercase text-center">Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($blockSamitiMembers as $bm): ?>
+                            <tr>
+                                <td class="px-3 fw-bold text-success">
+                                    <span class="badge bg-success bg-opacity-15 text-success px-2 py-1 rounded-pill">
+                                        #<?php echo htmlspecialchars($bm['territory_no'] ?: '—'); ?>
+                                    </span>
+                                </td>
+                                <td class="px-3 fw-semibold text-navy">
+                                    <?php 
+                                    $gpSlug = slugify($bm['panchayat']);
+                                    ?>
+                                    <a href="<?php echo getPanchayatUrl($districtObj['slug'], $bSlug, $gpSlug); ?>" class="text-decoration-none text-navy hover-primary">
+                                        🌾 <?php echo htmlspecialchars($bm['panchayat']); ?>
+                                    </a>
+                                </td>
+                                <td class="px-3">
+                                    <strong class="text-dark d-block"><?php echo htmlspecialchars($bm['candidate_name']); ?></strong>
+                                    <small class="text-muted"><?php echo htmlspecialchars(($bm['gender'] ?? '') . ($bm['age'] ? ' • ' . $bm['age'] . ' yrs' : '')); ?></small>
+                                </td>
+                                <td class="px-3 text-muted small">
+                                    <?php echo htmlspecialchars($bm['father_husband_name'] ?: '—'); ?>
+                                </td>
+                                <td class="px-3">
+                                    <span class="badge bg-light text-dark border small px-2 py-1">
+                                        <?php echo htmlspecialchars($bm['reservation_status'] ?: 'सामान्य'); ?>
+                                    </span>
+                                </td>
+                                <td class="px-3 text-center">
+                                    <?php if (!empty($bm['mobile'])): ?>
+                                        <?php echo renderMaskedPhoneButton($bm['mobile'], $bm['candidate_name'] . ' (Panchayat Samiti Member)'); ?>
+                                    <?php else: ?>
+                                        <span class="text-muted small">—</span>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <script>
         function filterBlockPanchayats() {

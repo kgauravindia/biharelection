@@ -328,6 +328,15 @@ $activeNav = $activeNav ?? 'home';
                                 </a>
                             </li>
                             <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/panchayat-samiti-members">
+                                    <span>👥</span>
+                                    <div>
+                                        <div class="fw-bold text-success">Panchayat Samiti Members (2021–2026)</div>
+                                        <small class="text-muted">8,752 Elected Members Across 534 Blocks</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatUrl(); ?>">
                                     <span>🏡</span>
                                     <div>

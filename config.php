@@ -767,6 +767,38 @@ class DataProvider {
         }));
     }
 
+    public static function getPanchayatSamitiMembers2021($districtSlugOrName = null, $block = null, $panchayat = null) {
+        $pdo = Database::getConnection();
+        if (!$pdo) return [];
+        try {
+            $sql = "SELECT * FROM panchayat_samiti_member_2021 WHERE 1=1";
+            $params = [];
+            if ($districtSlugOrName) {
+                $needle = strtolower(trim($districtSlugOrName));
+                $sql .= " AND (LOWER(district_slug) = :dslug OR LOWER(district) = :dname OR LOWER(district_hi) = :dhi)";
+                $params[':dslug'] = $needle;
+                $params[':dname'] = $needle;
+                $params[':dhi'] = $needle;
+            }
+            if ($block) {
+                $sql .= " AND LOWER(block) = LOWER(:block)";
+                $params[':block'] = trim($block);
+            }
+            if ($panchayat) {
+                $sql .= " AND (LOWER(panchayat) = LOWER(:pname) OR LOWER(panchayat) LIKE LOWER(:plike))";
+                $params[':pname'] = trim($panchayat);
+                $params[':plike'] = '%' . trim($panchayat) . '%';
+            }
+            $sql .= " ORDER BY CAST(territory_no AS UNSIGNED) ASC, id ASC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Throwable $e) {
+            error_log("Error fetching Panchayat Samiti Members 2021: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public static function getMukhiyas2016($districtSlugOrName = null, $block = null) {
         if (self::$mukhiyas2016 === null) {
             self::$mukhiyas2016 = [];
