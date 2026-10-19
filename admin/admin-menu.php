@@ -74,6 +74,10 @@ if ($db_menu) {
         <a href="panchayat-samiti.php" class="nav-link-custom <?php echo ($current_page == 'panchayat-samiti.php') ? 'active' : ''; ?>" title="Block Panchayat Samiti Pramukhs">
             <i class="fas fa-award text-success"></i> <span>Panchayat Samiti</span>
         </a>
+        <a href="panchayat-samiti-member.php" class="nav-link-custom <?php echo ($current_page == 'panchayat-samiti-member.php') ? 'active' : ''; ?>" title="Panchayat Samiti Members Directory (8,752 Members)">
+            <i class="fas fa-people-roof text-danger"></i> <span>Samiti Members</span>
+            <span class="badge rounded-pill bg-danger text-white">8.7K</span>
+        </a>
         <a href="zila-parishad.php" class="nav-link-custom <?php echo ($current_page == 'zila-parishad.php') ? 'active' : ''; ?>" title="Zila Parishad Members & Chiefs">
             <i class="fas fa-building-columns text-primary"></i> <span>Zila Parishad</span>
         </a>
