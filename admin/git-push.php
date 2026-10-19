@@ -1,18 +1,128 @@
 <?php
 /**
  * Bihar Election Control Hub — Git Push & Deployment Console
+ * Cross-platform, fail-safe architecture compatible with Hostinger/cPanel Linux and local Windows.
  */
+// Enable debugging if requested by authenticated admin
+if (isset($_GET['debug']) && $_GET['debug'] === '1') {
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
+    error_reporting(E_ALL);
+}
+
 require_once __DIR__ . '/auth_check.php';
 requireAdmin();
 
-$repoDir = realpath(__DIR__ . '/..');
+// Polyfills for PHP < 8.0 compatibility
+if (!function_exists('str_contains')) {
+    function str_contains(string $haystack, string $needle): bool {
+        return '' === $needle || false !== strpos($haystack, $needle);
+    }
+}
+if (!function_exists('str_starts_with')) {
+    function str_starts_with(string $haystack, string $needle): bool {
+        return 0 === strncmp($haystack, $needle, strlen($needle));
+    }
+}
+if (!function_exists('str_ends_with')) {
+    function str_ends_with(string $haystack, string $needle): bool {
+        return '' === $needle || substr($haystack, -strlen($needle)) === $needle;
+    }
+}
 
-// Helper to run git commands securely within repo directory
+$repoDir = realpath(__DIR__ . '/..');
+$hasGitDir = is_dir($repoDir . '/.git');
+
+/**
+ * Check if exec() is allowed and not listed in disable_functions
+ */
+function isExecCallable() {
+    if (!function_exists('exec')) {
+        return false;
+    }
+    $disabled = ini_get('disable_functions');
+    if (!empty($disabled)) {
+        $disabledArr = array_map('trim', explode(',', strtolower($disabled)));
+        if (in_array('exec', $disabledArr, true)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * Locate git executable cross-platform
+ */
+function getGitExecutable() {
+    static $cachedGit = null;
+    if ($cachedGit !== null) return $cachedGit;
+
+    if (PHP_OS_FAMILY === 'Windows') {
+        return $cachedGit = 'git';
+    }
+
+    $candidates = [
+        'git',
+        '/usr/bin/git',
+        '/usr/local/bin/git',
+        '/bin/git',
+        '/opt/cpanel/ea-git/bin/git',
+        '/usr/local/cpanel/3rdparty/bin/git'
+    ];
+    if (isExecCallable()) {
+        foreach ($candidates as $cand) {
+            $testOut = [];
+            $testCode = 0;
+            @exec("$cand --version 2>&1", $testOut, $testCode);
+            if ($testCode === 0) {
+                return $cachedGit = $cand;
+            }
+        }
+    }
+    return $cachedGit = 'git';
+}
+
+/**
+ * Safely execute git commands without fatal errors
+ */
 function runGitCmd($cmd, $repoDir) {
-    $fullCmd = 'cd /d "' . $repoDir . '" && ' . $cmd . ' 2>&1';
+    if (!isExecCallable()) {
+        return [
+            'cmd' => $cmd,
+            'output' => "Shell execution is disabled in PHP configuration (disable_functions).",
+            'code' => -1,
+            'success' => false,
+            'exec_disabled' => true
+        ];
+    }
+
+    $gitBin = getGitExecutable();
+    
+    // Cross-platform execution
+    if (str_starts_with(trim($cmd), 'git ')) {
+        $subCmd = substr(trim($cmd), 4);
+        $fullCmd = escapeshellcmd($gitBin) . ' -C ' . escapeshellarg($repoDir) . ' ' . $subCmd;
+    } else {
+        if (PHP_OS_FAMILY === 'Windows') {
+            $fullCmd = 'cd /d ' . escapeshellarg($repoDir) . ' && ' . $cmd;
+        } else {
+            $fullCmd = 'cd ' . escapeshellarg($repoDir) . ' && ' . $cmd;
+        }
+    }
+
     $output = [];
     $returnVar = 0;
-    exec($fullCmd, $output, $returnVar);
+    try {
+        @exec($fullCmd . ' 2>&1', $output, $returnVar);
+    } catch (\Throwable $e) {
+        return [
+            'cmd' => $cmd,
+            'output' => "Execution Error: " . $e->getMessage(),
+            'code' => -1,
+            'success' => false
+        ];
+    }
+
     return [
         'cmd' => $cmd,
         'output' => implode("\n", $output),
@@ -26,6 +136,7 @@ if (empty($_SESSION['git_csrf_token'])) {
     $_SESSION['git_csrf_token'] = bin2hex(random_bytes(32));
 }
 
+$execAvailable = isExecCallable();
 $lastAction = null;
 $actionResult = null;
 
@@ -39,14 +150,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'code' => 1,
             'success' => false
         ];
+    } elseif (!$execAvailable) {
+        $actionResult = [
+            'cmd' => 'Server Configuration Check',
+            'output' => "Cannot execute Git command: 'exec()' is in disable_functions on this server.\nTo enable it, remove 'exec' from disable_functions in your hosting PHP options (cPanel / Hostinger hPanel).",
+            'code' => 1,
+            'success' => false
+        ];
     } else {
         $action = $_POST['action'] ?? '';
+        $branch = trim($_POST['branch'] ?? 'main');
+        if (empty($branch) || !preg_match('/^[a-zA-Z0-9_\-\/]+$/', $branch)) {
+            $branch = 'main';
+        }
         
         if ($action === 'push') {
-            $branch = trim($_POST['branch'] ?? 'main');
-            if (empty($branch) || !preg_match('/^[a-zA-Z0-9_\-\/]+$/', $branch)) {
-                $branch = 'main';
-            }
             $lastAction = "Git Push (origin {$branch})";
             $actionResult = runGitCmd("git push origin " . escapeshellarg($branch), $repoDir);
         } elseif ($action === 'commit_and_push') {
@@ -54,25 +172,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (empty($commitMsg)) {
                 $commitMsg = 'Admin platform update — ' . date('Y-m-d H:i:s');
             }
-            $branch = trim($_POST['branch'] ?? 'main');
-            if (empty($branch) || !preg_match('/^[a-zA-Z0-9_\-\/]+$/', $branch)) {
-                $branch = 'main';
-            }
             
             $stageAll = !empty($_POST['stage_all']);
             $stageCmd = $stageAll ? "git add -A" : "git add -u";
             
             $r1 = runGitCmd($stageCmd, $repoDir);
             $r2 = runGitCmd("git commit -m " . escapeshellarg($commitMsg), $repoDir);
-            
-            // If nothing to commit, still try to push any existing unpushed commits
             $r3 = runGitCmd("git push origin " . escapeshellarg($branch), $repoDir);
             
-            $combinedOutput = "=== STAGE ===\n" . ($r1['output'] ?: 'Files staged.') . "\n\n";
-            $combinedOutput .= "=== COMMIT ===\n" . ($r2['output'] ?: 'No new changes to commit.') . "\n\n";
-            $combinedOutput .= "=== PUSH ===\n" . ($r3['output'] ?: 'No output.');
+            $combinedOutput = "=== 1. STAGING FILES ===\n" . ($r1['output'] ?: 'Files staged.') . "\n\n";
+            $combinedOutput .= "=== 2. CREATING COMMIT ===\n" . ($r2['output'] ?: 'No new changes to commit.') . "\n\n";
+            $combinedOutput .= "=== 3. PUSHING TO GITHUB ===\n" . ($r3['output'] ?: 'No output.');
             
-            $lastAction = "Commit & Push";
+            $lastAction = "Stage, Commit & Push";
             $actionResult = [
                 'cmd' => "$stageCmd && git commit -m ... && git push origin $branch",
                 'output' => $combinedOutput,
@@ -80,10 +192,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'success' => $r3['success']
             ];
         } elseif ($action === 'pull') {
-            $branch = trim($_POST['branch'] ?? 'main');
-            if (empty($branch) || !preg_match('/^[a-zA-Z0-9_\-\/]+$/', $branch)) {
-                $branch = 'main';
-            }
             $lastAction = "Git Pull (origin {$branch})";
             $actionResult = runGitCmd("git pull origin " . escapeshellarg($branch), $repoDir);
         } elseif ($action === 'fetch') {
@@ -93,61 +201,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch current git metadata
-$branchResult = runGitCmd("git rev-parse --abbrev-ref HEAD", $repoDir);
-$currentBranch = trim($branchResult['output']) ?: 'main';
-
-$remoteResult = runGitCmd("git config --get remote.origin.url", $repoDir);
-$remoteUrl = trim($remoteResult['output']);
-
-$lastCommitResult = runGitCmd('git log -1 --pretty=format:"%h|||%an|||%ar|||%s"', $repoDir);
-$commitParts = explode('|||', trim($lastCommitResult['output']));
+// Default metadata values
+$currentBranch = 'main';
+$remoteUrl = 'https://github.com/kgauravindia/biharelection.git';
 $lastCommit = [
-    'hash' => $commitParts[0] ?? 'N/A',
-    'author' => $commitParts[1] ?? 'Unknown',
-    'date' => $commitParts[2] ?? 'Unknown',
-    'message' => $commitParts[3] ?? 'No commit history'
+    'hash' => 'N/A',
+    'author' => 'Unknown',
+    'date' => 'Unknown',
+    'message' => 'No commit history'
 ];
-
-// Check uncommitted changes
-$statusPorcelain = runGitCmd("git status --porcelain", $repoDir);
 $changedFiles = [];
-if (!empty(trim($statusPorcelain['output']))) {
-    $lines = explode("\n", trim($statusPorcelain['output']));
-    foreach ($lines as $line) {
-        $status = substr($line, 0, 2);
-        $file = trim(substr($line, 2));
-        $changedFiles[] = [
-            'status' => $status,
-            'file' => $file
-        ];
-    }
-}
-
-// Check ahead / behind commits
-$aheadBehind = runGitCmd("git rev-list --left-right --count origin/{$currentBranch}...HEAD", $repoDir);
 $aheadCount = 0;
 $behindCount = 0;
-if ($aheadBehind['success'] && !empty(trim($aheadBehind['output']))) {
-    $counts = preg_split('/\s+/', trim($aheadBehind['output']));
-    $behindCount = (int)($counts[0] ?? 0);
-    $aheadCount = (int)($counts[1] ?? 0);
-}
-
-// Recent commit log
-$logResult = runGitCmd('git log -5 --pretty=format:"%h|||%an|||%ar|||%s"', $repoDir);
 $recentCommits = [];
-if (!empty(trim($logResult['output']))) {
-    foreach (explode("\n", trim($logResult['output'])) as $cLine) {
-        $p = explode('|||', $cLine);
-        if (count($p) >= 4) {
-            $recentCommits[] = [
-                'hash' => $p[0],
-                'author' => $p[1],
-                'date' => $p[2],
-                'message' => $p[3]
+$gitVersionStr = 'Unavailable';
+
+// Query Git only if exec is allowed and .git exists
+if ($execAvailable && $hasGitDir) {
+    try {
+        $vRes = runGitCmd("git --version", $repoDir);
+        if ($vRes['success']) {
+            $gitVersionStr = trim($vRes['output']);
+        }
+        
+        $branchResult = runGitCmd("git rev-parse --abbrev-ref HEAD", $repoDir);
+        if ($branchResult['success'] && !empty(trim($branchResult['output']))) {
+            $currentBranch = trim($branchResult['output']);
+        }
+
+        $remoteResult = runGitCmd("git config --get remote.origin.url", $repoDir);
+        if ($remoteResult['success'] && !empty(trim($remoteResult['output']))) {
+            $remoteUrl = trim($remoteResult['output']);
+        }
+
+        $lastCommitResult = runGitCmd('git log -1 --pretty=format:"%h|||%an|||%ar|||%s"', $repoDir);
+        if ($lastCommitResult['success'] && !empty(trim($lastCommitResult['output']))) {
+            $commitParts = explode('|||', trim($lastCommitResult['output']));
+            $lastCommit = [
+                'hash' => $commitParts[0] ?? 'N/A',
+                'author' => $commitParts[1] ?? 'Unknown',
+                'date' => $commitParts[2] ?? 'Unknown',
+                'message' => $commitParts[3] ?? 'No commit history'
             ];
         }
+
+        $statusPorcelain = runGitCmd("git status --porcelain", $repoDir);
+        if ($statusPorcelain['success'] && !empty(trim($statusPorcelain['output']))) {
+            $lines = explode("\n", trim($statusPorcelain['output']));
+            foreach ($lines as $line) {
+                if (strlen($line) >= 3) {
+                    $changedFiles[] = [
+                        'status' => substr($line, 0, 2),
+                        'file' => trim(substr($line, 2))
+                    ];
+                }
+            }
+        }
+
+        $aheadBehind = runGitCmd("git rev-list --left-right --count origin/{$currentBranch}...HEAD", $repoDir);
+        if ($aheadBehind['success'] && !empty(trim($aheadBehind['output']))) {
+            $counts = preg_split('/\s+/', trim($aheadBehind['output']));
+            $behindCount = (int)($counts[0] ?? 0);
+            $aheadCount = (int)($counts[1] ?? 0);
+        }
+
+        $logResult = runGitCmd('git log -5 --pretty=format:"%h|||%an|||%ar|||%s"', $repoDir);
+        if ($logResult['success'] && !empty(trim($logResult['output']))) {
+            foreach (explode("\n", trim($logResult['output'])) as $cLine) {
+                $p = explode('|||', $cLine);
+                if (count($p) >= 4) {
+                    $recentCommits[] = [
+                        'hash' => $p[0],
+                        'author' => $p[1],
+                        'date' => $p[2],
+                        'message' => $p[3]
+                    ];
+                }
+            }
+        }
+    } catch (\Throwable $ex) {
+        // Safe catch to ensure page always renders
+        error_log("Git metadata query error: " . $ex->getMessage());
     }
 }
 ?>
@@ -182,15 +316,6 @@ if (!empty(trim($logResult['output']))) {
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .terminal-dots {
-            display: flex;
-            gap: 6px;
-        }
-        .terminal-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
         }
         .terminal-body {
             padding: 16px;
@@ -253,12 +378,65 @@ if (!empty(trim($logResult['output']))) {
             </div>
         </div>
 
+        <!-- Server Environment Alert if exec is disabled -->
+        <?php if (!$execAvailable): ?>
+            <div class="alert alert-warning border-warning rounded-4 shadow-sm mb-4 p-4">
+                <div class="d-flex align-items-start gap-3">
+                    <div class="fs-2 text-warning"><i class="fas fa-triangle-exclamation"></i></div>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-1">Shell Execution (<code>exec()</code>) is Disabled on this Hosting Server</h5>
+                        <p class="mb-2 text-secondary">
+                            Your production hosting provider (Hostinger / cPanel) restricts the PHP <code>exec()</code> function by default in <code>disable_functions</code>.
+                        </p>
+                        <div class="p-3 bg-white rounded-3 border mb-3">
+                            <span class="fw-bold d-block mb-1 text-dark"><i class="fas fa-wrench me-1 text-primary"></i> How to enable Git Push on Hostinger / cPanel (takes 30 seconds):</span>
+                            <ol class="small text-muted mb-0 ps-3">
+                                <li>Log into <strong>Hostinger hPanel</strong> or <strong>cPanel</strong>.</li>
+                                <li>Navigate to <strong>Advanced &rarr; PHP Configuration</strong> (or <em>Select PHP Version &rarr; PHP Options</em>).</li>
+                                <li>Find the <strong><code>disable_functions</code></strong> directive.</li>
+                                <li>Remove <strong><code>exec</code></strong> from the list and click <strong>Save</strong>.</li>
+                                <li>Refresh this page, and <strong>Git Push</strong> will work seamlessly!</li>
+                            </ol>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="git-push.php?debug=1" class="btn btn-sm btn-outline-dark rounded-pill px-3 fw-semibold">
+                                <i class="fas fa-bug me-1"></i> View Server Diagnostics
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php elseif (!$hasGitDir): ?>
+            <div class="alert alert-info border-info rounded-4 shadow-sm mb-4 p-4">
+                <div class="d-flex align-items-start gap-3">
+                    <div class="fs-2 text-info"><i class="fas fa-info-circle"></i></div>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-1">No <code>.git</code> Directory Detected on Production Server</h5>
+                        <p class="mb-0 text-secondary">
+                            The codebase was uploaded without the hidden <code>.git/</code> repository folder. To enable live Git commands on production, ensure the repository is cloned directly or upload the <code>.git</code> directory via FTP/SSH.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($_GET['debug']) && $_GET['debug'] === '1'): ?>
+            <div class="card border-0 rounded-4 shadow-sm mb-4 bg-dark text-light p-3 font-monospace small">
+                <h6 class="fw-bold text-warning mb-2"><i class="fas fa-laptop-code me-2"></i> Diagnostics Log</h6>
+                <div>PHP Version: <?php echo PHP_VERSION; ?> (<?php echo PHP_OS; ?>)</div>
+                <div>Exec Function: <?php echo $execAvailable ? 'ENABLED' : 'DISABLED'; ?></div>
+                <div>Disabled Functions: <?php echo htmlspecialchars(ini_get('disable_functions') ?: 'None'); ?></div>
+                <div>Git Directory: <?php echo $hasGitDir ? 'EXISTS' : 'NOT FOUND (' . htmlspecialchars($repoDir . '/.git') . ')'; ?></div>
+                <div>Git Binary: <?php echo htmlspecialchars(getGitExecutable()); ?> (<?php echo htmlspecialchars($gitVersionStr); ?>)</div>
+            </div>
+        <?php endif; ?>
+
         <?php if ($actionResult !== null): ?>
             <div class="alert <?php echo $actionResult['success'] ? 'alert-success border-success' : 'alert-danger border-danger'; ?> rounded-4 shadow-sm mb-4">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <div class="fw-bold fs-6">
                         <i class="<?php echo $actionResult['success'] ? 'fas fa-circle-check text-success' : 'fas fa-circle-exclamation text-danger'; ?> me-2"></i>
-                        Action Executed: <?php echo htmlspecialchars($lastAction); ?>
+                        Action Executed: <?php echo htmlspecialchars($lastAction ?: 'Command'); ?>
                     </div>
                     <span class="badge <?php echo $actionResult['success'] ? 'bg-success' : 'bg-danger'; ?> rounded-pill">
                         Exit Code: <?php echo $actionResult['code']; ?>
@@ -366,9 +544,14 @@ if (!empty(trim($logResult['output']))) {
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold rounded-pill shadow-sm py-2">
+                            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold rounded-pill shadow-sm py-2" <?php echo !$execAvailable ? 'disabled' : ''; ?>>
                                 <i class="fas fa-arrow-up-from-bracket me-2"></i> Commit & Git Push Now
                             </button>
+                            <?php if (!$execAvailable): ?>
+                                <small class="text-danger d-block text-center mt-2 fw-semibold">
+                                    <i class="fas fa-ban me-1"></i> Disabled until <code>exec</code> is enabled in your hosting PHP options.
+                                </small>
+                            <?php endif; ?>
                         </form>
                     </div>
                 </div>
@@ -388,16 +571,16 @@ if (!empty(trim($logResult['output']))) {
                             <input type="hidden" name="action" value="push">
                             <input type="hidden" name="branch" value="<?php echo htmlspecialchars($currentBranch); ?>">
 
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-outline-danger fw-bold rounded-pill px-4">
+                            <div class="d-flex flex-wrap gap-2">
+                                <button type="submit" class="btn btn-outline-danger fw-bold rounded-pill px-4" <?php echo !$execAvailable ? 'disabled' : ''; ?>>
                                     <i class="fas fa-paper-plane me-1"></i> Push to origin/<?php echo htmlspecialchars($currentBranch); ?>
                                 </button>
                                 
-                                <button type="submit" name="action" value="pull" class="btn btn-outline-secondary fw-semibold rounded-pill px-3">
+                                <button type="submit" name="action" value="pull" class="btn btn-outline-secondary fw-semibold rounded-pill px-3" <?php echo !$execAvailable ? 'disabled' : ''; ?>>
                                     <i class="fas fa-cloud-arrow-down me-1"></i> Git Pull
                                 </button>
 
-                                <button type="submit" name="action" value="fetch" class="btn btn-outline-secondary fw-semibold rounded-pill px-3">
+                                <button type="submit" name="action" value="fetch" class="btn btn-outline-secondary fw-semibold rounded-pill px-3" <?php echo !$execAvailable ? 'disabled' : ''; ?>>
                                     <i class="fas fa-rotate me-1"></i> Git Fetch
                                 </button>
                             </div>
@@ -429,13 +612,13 @@ if (!empty(trim($logResult['output']))) {
                                     $rawStatus = trim($cf['status']);
                                     $badgeClass = 'status-M';
                                     $badgeLetter = 'M';
-                                    if (str_contains($rawStatus, '?')) {
+                                    if (strpos($rawStatus, '?') !== false) {
                                         $badgeClass = 'status-U';
                                         $badgeLetter = '?';
-                                    } elseif (str_contains($rawStatus, 'A')) {
+                                    } elseif (strpos($rawStatus, 'A') !== false) {
                                         $badgeClass = 'status-A';
                                         $badgeLetter = 'A';
-                                    } elseif (str_contains($rawStatus, 'D')) {
+                                    } elseif (strpos($rawStatus, 'D') !== false) {
                                         $badgeClass = 'status-D';
                                         $badgeLetter = 'D';
                                     }
@@ -464,18 +647,22 @@ if (!empty(trim($logResult['output']))) {
                     </div>
                     <div class="section-card-body p-0">
                         <div class="list-group list-group-flush">
-                            <?php foreach ($recentCommits as $rc): ?>
-                                <div class="list-group-item py-3 px-3">
-                                    <div class="d-flex justify-content-between align-items-start mb-1">
-                                        <span class="badge bg-dark font-monospace text-light px-2 py-1"><?php echo htmlspecialchars($rc['hash']); ?></span>
-                                        <small class="text-muted"><i class="far fa-clock me-1"></i><?php echo htmlspecialchars($rc['date']); ?></small>
+                            <?php if (empty($recentCommits)): ?>
+                                <div class="p-3 text-muted small text-center">No recent commit history available.</div>
+                            <?php else: ?>
+                                <?php foreach ($recentCommits as $rc): ?>
+                                    <div class="list-group-item py-3 px-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-1">
+                                            <span class="badge bg-dark font-monospace text-light px-2 py-1"><?php echo htmlspecialchars($rc['hash']); ?></span>
+                                            <small class="text-muted"><i class="far fa-clock me-1"></i><?php echo htmlspecialchars($rc['date']); ?></small>
+                                        </div>
+                                        <div class="small fw-semibold text-dark text-truncate mb-1" title="<?php echo htmlspecialchars($rc['message']); ?>">
+                                            <?php echo htmlspecialchars($rc['message']); ?>
+                                        </div>
+                                        <small class="text-muted"><i class="fas fa-user-pen me-1"></i><?php echo htmlspecialchars($rc['author']); ?></small>
                                     </div>
-                                    <div class="small fw-semibold text-dark text-truncate mb-1" title="<?php echo htmlspecialchars($rc['message']); ?>">
-                                        <?php echo htmlspecialchars($rc['message']); ?>
-                                    </div>
-                                    <small class="text-muted"><i class="fas fa-user-pen me-1"></i><?php echo htmlspecialchars($rc['author']); ?></small>
-                                </div>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
