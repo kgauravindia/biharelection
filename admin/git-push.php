@@ -1,9 +1,8 @@
 <?php
 /**
  * Bihar Election Control Hub — Git Push & Deployment Console
- * Cross-platform, fail-safe architecture compatible with Hostinger/cPanel Linux and local Windows.
+ * Cross-platform, fail-safe architecture with GitHub Personal Access Token (PAT) authentication.
  */
-// Enable debugging if requested by authenticated admin
 if (isset($_GET['debug']) && $_GET['debug'] === '1') {
     ini_set('display_errors', '1');
     ini_set('display_startup_errors', '1');
@@ -32,6 +31,17 @@ if (!function_exists('str_ends_with')) {
 
 $repoDir = realpath(__DIR__ . '/..');
 $hasGitDir = is_dir($repoDir . '/.git');
+
+/**
+ * Mask sensitive tokens in logs and output
+ */
+function maskGitSecrets($str) {
+    if (empty($str)) return $str;
+    $str = preg_replace('/https:\/\/[^@]+@github\.com/i', 'https://oauth2:***@github.com', $str);
+    $str = preg_replace('/ghp_[a-zA-Z0-9]{20,}/', 'ghp_••••••••', $str);
+    $str = preg_replace('/github_pat_[a-zA-Z0-9_]{20,}/', 'github_pat_••••••••', $str);
+    return $str;
+}
 
 /**
  * Check if exec() is allowed and not listed in disable_functions
@@ -116,7 +126,7 @@ function runGitCmd($cmd, $repoDir) {
         @exec($fullCmd . ' 2>&1', $output, $returnVar);
     } catch (\Throwable $e) {
         return [
-            'cmd' => $cmd,
+            'cmd' => maskGitSecrets($cmd),
             'output' => "Execution Error: " . $e->getMessage(),
             'code' => -1,
             'success' => false
@@ -124,8 +134,8 @@ function runGitCmd($cmd, $repoDir) {
     }
 
     return [
-        'cmd' => $cmd,
-        'output' => implode("\n", $output),
+        'cmd' => maskGitSecrets($cmd),
+        'output' => maskGitSecrets(implode("\n", $output)),
         'code' => $returnVar,
         'success' => ($returnVar === 0)
     ];
@@ -135,6 +145,9 @@ function runGitCmd($cmd, $repoDir) {
 if (empty($_SESSION['git_csrf_token'])) {
     $_SESSION['git_csrf_token'] = bin2hex(random_bytes(32));
 }
+
+// Load remembered GitHub token from constant or session
+$savedGithubToken = defined('GITHUB_PAT') ? GITHUB_PAT : ($_SESSION['github_token'] ?? '');
 
 $execAvailable = isExecCallable();
 $lastAction = null;
@@ -153,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!$execAvailable) {
         $actionResult = [
             'cmd' => 'Server Configuration Check',
-            'output' => "Cannot execute Git command: 'exec()' is in disable_functions on this server.\nTo enable it, remove 'exec' from disable_functions in your hosting PHP options (cPanel / Hostinger hPanel).",
+            'output' => "Cannot execute Git command: 'exec()' is currently in disable_functions.\nRemove 'exec' from disable_functions in Hostinger hPanel / cPanel PHP options.",
             'code' => 1,
             'success' => false
         ];
@@ -163,10 +176,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($branch) || !preg_match('/^[a-zA-Z0-9_\-\/]+$/', $branch)) {
             $branch = 'main';
         }
+
+        // GitHub Token from form or saved
+        $inputToken = trim($_POST['github_token'] ?? '');
+        $githubToken = !empty($inputToken) ? $inputToken : $savedGithubToken;
+
+        // Remember token in session if provided
+        if (!empty($githubToken) && !empty($_POST['save_token'])) {
+            $_SESSION['github_token'] = $githubToken;
+            $savedGithubToken = $githubToken;
+        }
+
+        // Ensure Git Author identity is configured on repo so commit never fails
+        runGitCmd('git config user.name "Bihar Election Admin"', $repoDir);
+        runGitCmd('git config user.email "contact@biharelection.com"', $repoDir);
+
+        // Determine remote target
+        $pushTarget = 'origin';
+        if (!empty($githubToken)) {
+            $pushTarget = 'https://oauth2:' . rawurlencode($githubToken) . '@github.com/kgauravindia/biharelection.git';
+            // Optionally update remote URL permanently if user checked remember
+            if (!empty($_POST['save_token'])) {
+                runGitCmd('git remote set-url origin ' . escapeshellarg($pushTarget), $repoDir);
+                $pushTarget = 'origin';
+            }
+        }
         
         if ($action === 'push') {
             $lastAction = "Git Push (origin {$branch})";
-            $actionResult = runGitCmd("git push origin " . escapeshellarg($branch), $repoDir);
+            $actionResult = runGitCmd("git push " . escapeshellarg($pushTarget) . " " . escapeshellarg($branch), $repoDir);
         } elseif ($action === 'commit_and_push') {
             $commitMsg = trim($_POST['commit_message'] ?? '');
             if (empty($commitMsg)) {
@@ -176,13 +214,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stageAll = !empty($_POST['stage_all']);
             $stageCmd = $stageAll ? "git add -A" : "git add -u";
             
+            // 1. Stage
             $r1 = runGitCmd($stageCmd, $repoDir);
-            $r2 = runGitCmd("git commit -m " . escapeshellarg($commitMsg), $repoDir);
-            $r3 = runGitCmd("git push origin " . escapeshellarg($branch), $repoDir);
+            
+            // 2. Commit with inline author config
+            $commitCmd = 'git -c user.name="Bihar Election Admin" -c user.email="contact@biharelection.com" commit -m ' . escapeshellarg($commitMsg);
+            $r2 = runGitCmd($commitCmd, $repoDir);
+            
+            // 3. Push with token if provided
+            $r3 = runGitCmd("git push " . escapeshellarg($pushTarget) . " " . escapeshellarg($branch), $repoDir);
             
             $combinedOutput = "=== 1. STAGING FILES ===\n" . ($r1['output'] ?: 'Files staged.') . "\n\n";
             $combinedOutput .= "=== 2. CREATING COMMIT ===\n" . ($r2['output'] ?: 'No new changes to commit.') . "\n\n";
-            $combinedOutput .= "=== 3. PUSHING TO GITHUB ===\n" . ($r3['output'] ?: 'No output.');
+            $combinedOutput .= "=== 3. PUSHING TO GITHUB ===\n" . ($r3['output'] ?: 'Push completed.');
             
             $lastAction = "Stage, Commit & Push";
             $actionResult = [
@@ -193,10 +237,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
         } elseif ($action === 'pull') {
             $lastAction = "Git Pull (origin {$branch})";
-            $actionResult = runGitCmd("git pull origin " . escapeshellarg($branch), $repoDir);
+            $pullTarget = !empty($githubToken) ? 'https://oauth2:' . rawurlencode($githubToken) . '@github.com/kgauravindia/biharelection.git' : 'origin';
+            $actionResult = runGitCmd("git pull " . escapeshellarg($pullTarget) . " " . escapeshellarg($branch), $repoDir);
         } elseif ($action === 'fetch') {
             $lastAction = "Git Fetch";
-            $actionResult = runGitCmd("git fetch origin", $repoDir);
+            $fetchTarget = !empty($githubToken) ? 'https://oauth2:' . rawurlencode($githubToken) . '@github.com/kgauravindia/biharelection.git' : 'origin';
+            $actionResult = runGitCmd("git fetch " . escapeshellarg($fetchTarget), $repoDir);
         }
     }
 }
@@ -231,7 +277,7 @@ if ($execAvailable && $hasGitDir) {
 
         $remoteResult = runGitCmd("git config --get remote.origin.url", $repoDir);
         if ($remoteResult['success'] && !empty(trim($remoteResult['output']))) {
-            $remoteUrl = trim($remoteResult['output']);
+            $remoteUrl = maskGitSecrets(trim($remoteResult['output']));
         }
 
         $lastCommitResult = runGitCmd('git log -1 --pretty=format:"%h|||%an|||%ar|||%s"', $repoDir);
@@ -280,7 +326,6 @@ if ($execAvailable && $hasGitDir) {
             }
         }
     } catch (\Throwable $ex) {
-        // Safe catch to ensure page always renders
         error_log("Git metadata query error: " . $ex->getMessage());
     }
 }
@@ -350,6 +395,12 @@ if ($execAvailable && $hasGitDir) {
             transform: translateY(-2px);
             box-shadow: 0 12px 20px -5px rgba(0,0,0,0.06);
         }
+        .token-input-box {
+            background-color: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -372,64 +423,11 @@ if ($execAvailable && $hasGitDir) {
                 <a href="git-push.php" class="btn btn-outline-secondary rounded-pill px-3 fw-semibold">
                     <i class="fas fa-arrows-rotate me-1"></i> Refresh Status
                 </a>
-                <a href="<?php echo htmlspecialchars($remoteUrl); ?>" target="_blank" class="btn btn-dark rounded-pill px-3 fw-semibold">
+                <a href="https://github.com/kgauravindia/biharelection" target="_blank" class="btn btn-dark rounded-pill px-3 fw-semibold">
                     <i class="fab fa-github me-1"></i> Open GitHub
                 </a>
             </div>
         </div>
-
-        <!-- Server Environment Alert if exec is disabled -->
-        <?php if (!$execAvailable): ?>
-            <div class="alert alert-warning border-warning rounded-4 shadow-sm mb-4 p-4">
-                <div class="d-flex align-items-start gap-3">
-                    <div class="fs-2 text-warning"><i class="fas fa-triangle-exclamation"></i></div>
-                    <div>
-                        <h5 class="fw-bold text-dark mb-1">Shell Execution (<code>exec()</code>) is Disabled on this Hosting Server</h5>
-                        <p class="mb-2 text-secondary">
-                            Your production hosting provider (Hostinger / cPanel) restricts the PHP <code>exec()</code> function by default in <code>disable_functions</code>.
-                        </p>
-                        <div class="p-3 bg-white rounded-3 border mb-3">
-                            <span class="fw-bold d-block mb-1 text-dark"><i class="fas fa-wrench me-1 text-primary"></i> How to enable Git Push on Hostinger / cPanel (takes 30 seconds):</span>
-                            <ol class="small text-muted mb-0 ps-3">
-                                <li>Log into <strong>Hostinger hPanel</strong> or <strong>cPanel</strong>.</li>
-                                <li>Navigate to <strong>Advanced &rarr; PHP Configuration</strong> (or <em>Select PHP Version &rarr; PHP Options</em>).</li>
-                                <li>Find the <strong><code>disable_functions</code></strong> directive.</li>
-                                <li>Remove <strong><code>exec</code></strong> from the list and click <strong>Save</strong>.</li>
-                                <li>Refresh this page, and <strong>Git Push</strong> will work seamlessly!</li>
-                            </ol>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a href="git-push.php?debug=1" class="btn btn-sm btn-outline-dark rounded-pill px-3 fw-semibold">
-                                <i class="fas fa-bug me-1"></i> View Server Diagnostics
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php elseif (!$hasGitDir): ?>
-            <div class="alert alert-info border-info rounded-4 shadow-sm mb-4 p-4">
-                <div class="d-flex align-items-start gap-3">
-                    <div class="fs-2 text-info"><i class="fas fa-info-circle"></i></div>
-                    <div>
-                        <h5 class="fw-bold text-dark mb-1">No <code>.git</code> Directory Detected on Production Server</h5>
-                        <p class="mb-0 text-secondary">
-                            The codebase was uploaded without the hidden <code>.git/</code> repository folder. To enable live Git commands on production, ensure the repository is cloned directly or upload the <code>.git</code> directory via FTP/SSH.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-
-        <?php if (isset($_GET['debug']) && $_GET['debug'] === '1'): ?>
-            <div class="card border-0 rounded-4 shadow-sm mb-4 bg-dark text-light p-3 font-monospace small">
-                <h6 class="fw-bold text-warning mb-2"><i class="fas fa-laptop-code me-2"></i> Diagnostics Log</h6>
-                <div>PHP Version: <?php echo PHP_VERSION; ?> (<?php echo PHP_OS; ?>)</div>
-                <div>Exec Function: <?php echo $execAvailable ? 'ENABLED' : 'DISABLED'; ?></div>
-                <div>Disabled Functions: <?php echo htmlspecialchars(ini_get('disable_functions') ?: 'None'); ?></div>
-                <div>Git Directory: <?php echo $hasGitDir ? 'EXISTS' : 'NOT FOUND (' . htmlspecialchars($repoDir . '/.git') . ')'; ?></div>
-                <div>Git Binary: <?php echo htmlspecialchars(getGitExecutable()); ?> (<?php echo htmlspecialchars($gitVersionStr); ?>)</div>
-            </div>
-        <?php endif; ?>
 
         <?php if ($actionResult !== null): ?>
             <div class="alert <?php echo $actionResult['success'] ? 'alert-success border-success' : 'alert-danger border-danger'; ?> rounded-4 shadow-sm mb-4">
@@ -525,6 +523,28 @@ if ($execAvailable && $hasGitDir) {
                                 <div class="form-text">Describe the changes being committed to the repository.</div>
                             </div>
 
+                            <!-- GitHub Token Box -->
+                            <div class="token-input-box mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <label class="form-label small fw-bold text-dark mb-0">
+                                        <i class="fab fa-github me-1 text-dark"></i> GitHub Personal Access Token (PAT)
+                                    </label>
+                                    <a href="https://github.com/settings/tokens/new?scopes=repo&description=BiharElection+Admin+Deploy" target="_blank" class="small fw-semibold text-danger text-decoration-none">
+                                        <i class="fas fa-arrow-up-right-from-square me-1"></i> Generate Token (1-Click)
+                                    </a>
+                                </div>
+                                <input type="password" name="github_token" class="form-control font-monospace" 
+                                       placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
+                                       value="<?php echo htmlspecialchars($savedGithubToken); ?>" autocomplete="new-password">
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <div class="form-check form-check-inline mb-0">
+                                        <input class="form-check-input" type="checkbox" id="saveToken" name="save_token" value="1" <?php echo !empty($savedGithubToken) ? 'checked' : ''; ?>>
+                                        <label class="form-check-label small text-muted" for="saveToken">Remember token on server</label>
+                                    </div>
+                                    <small class="text-muted"><i class="fas fa-lock me-1"></i>Required for HTTPS push</small>
+                                </div>
+                            </div>
+
                             <div class="mb-3">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" id="stageAll" name="stage_all" value="1" checked>
@@ -544,14 +564,9 @@ if ($execAvailable && $hasGitDir) {
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold rounded-pill shadow-sm py-2" <?php echo !$execAvailable ? 'disabled' : ''; ?>>
+                            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold rounded-pill shadow-sm py-2">
                                 <i class="fas fa-arrow-up-from-bracket me-2"></i> Commit & Git Push Now
                             </button>
-                            <?php if (!$execAvailable): ?>
-                                <small class="text-danger d-block text-center mt-2 fw-semibold">
-                                    <i class="fas fa-ban me-1"></i> Disabled until <code>exec</code> is enabled in your hosting PHP options.
-                                </small>
-                            <?php endif; ?>
                         </form>
                     </div>
                 </div>
@@ -565,22 +580,21 @@ if ($execAvailable && $hasGitDir) {
                         <span class="badge bg-primary text-white"><?php echo $aheadCount; ?> commits pending</span>
                     </div>
                     <div class="section-card-body p-4">
-                        <p class="text-muted small mb-3">If you have already committed changes locally and only want to send them to GitHub:</p>
+                        <p class="text-muted small mb-3">Push already committed changes or pull recent updates from GitHub:</p>
                         <form method="POST" action="git-push.php">
                             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['git_csrf_token']); ?>">
-                            <input type="hidden" name="action" value="push">
                             <input type="hidden" name="branch" value="<?php echo htmlspecialchars($currentBranch); ?>">
 
                             <div class="d-flex flex-wrap gap-2">
-                                <button type="submit" class="btn btn-outline-danger fw-bold rounded-pill px-4" <?php echo !$execAvailable ? 'disabled' : ''; ?>>
+                                <button type="submit" name="action" value="push" class="btn btn-outline-danger fw-bold rounded-pill px-4">
                                     <i class="fas fa-paper-plane me-1"></i> Push to origin/<?php echo htmlspecialchars($currentBranch); ?>
                                 </button>
                                 
-                                <button type="submit" name="action" value="pull" class="btn btn-outline-secondary fw-semibold rounded-pill px-3" <?php echo !$execAvailable ? 'disabled' : ''; ?>>
+                                <button type="submit" name="action" value="pull" class="btn btn-outline-secondary fw-semibold rounded-pill px-3">
                                     <i class="fas fa-cloud-arrow-down me-1"></i> Git Pull
                                 </button>
 
-                                <button type="submit" name="action" value="fetch" class="btn btn-outline-secondary fw-semibold rounded-pill px-3" <?php echo !$execAvailable ? 'disabled' : ''; ?>>
+                                <button type="submit" name="action" value="fetch" class="btn btn-outline-secondary fw-semibold rounded-pill px-3">
                                     <i class="fas fa-rotate me-1"></i> Git Fetch
                                 </button>
                             </div>
