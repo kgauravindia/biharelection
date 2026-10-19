@@ -19,6 +19,9 @@ $admin_initial = strtoupper(substr($admin_name, 0, 1));
     </div>
     
     <div class="top-bar-right">
+        <a href="git-push.php" class="top-bar-link shadow-sm" title="Git Push & GitHub Deployment">
+            <i class="fab fa-git-alt text-danger"></i>
+        </a>
         <a href="../index.php" class="top-bar-link shadow-sm" title="Visit Public Site" target="_blank">
             <i class="fas fa-globe"></i>
         </a>
@@ -40,6 +43,7 @@ $admin_initial = strtoupper(substr($admin_name, 0, 1));
                     <p class="mb-0 fw-bold small text-dark"><?php echo htmlspecialchars($admin_name); ?></p>
                     <small class="text-muted"><?php echo htmlspecialchars($_SESSION['admin_email'] ?? 'admin@biharelection.com'); ?></small>
                 </li>
+                <li><a class="dropdown-item py-2" href="git-push.php"><i class="fab fa-git-alt me-2 text-danger"></i> Git Push / Deploy</a></li>
                 <li><a class="dropdown-item py-2" href="change-password.php"><i class="fas fa-key me-2 text-warning"></i> Change Password</a></li>
                 <li><a class="dropdown-item py-2" href="users.php"><i class="fas fa-user-shield me-2 text-primary"></i> Admin Users</a></li>
                 <li><a class="dropdown-item py-2" href="settings.php"><i class="fas fa-cog me-2 text-secondary"></i> System Settings</a></li>

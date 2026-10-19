@@ -179,6 +179,27 @@ $error = '';
                         </div>
                     </div>
                 </div>
+
+                <div class="section-card mb-4">
+                    <div class="section-card-header">
+                        <h6 class="fw-bold mb-0 text-dark"><i class="fab fa-git-alt me-2 text-danger"></i> Git Repository & Deployment</h6>
+                    </div>
+                    <div class="section-card-body">
+                        <div class="mb-3">
+                            <span class="small text-muted text-uppercase fw-bold d-block">Remote Repository</span>
+                            <span class="small font-monospace text-dark text-break">https://github.com/kgauravindia/biharelection.git</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="small text-muted text-uppercase fw-bold d-block">Target Branch</span>
+                            <span class="badge bg-dark font-monospace">main</span>
+                        </div>
+                        <div class="border-top pt-3">
+                            <a href="git-push.php" class="btn btn-danger btn-sm w-100 fw-bold">
+                                <i class="fas fa-cloud-arrow-up me-1"></i> Open Git Push Console
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

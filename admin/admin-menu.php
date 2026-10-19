@@ -136,6 +136,9 @@ if ($db_menu) {
         </a>
 
         <div class="nav-section-title">System & SEO</div>
+        <a href="git-push.php" class="nav-link-custom <?php echo ($current_page == 'git-push.php') ? 'active' : ''; ?>" title="Git Push & GitHub Deployment Console">
+            <i class="fab fa-git-alt text-danger"></i> <span>Git Push / Deploy</span>
+        </a>
         <a href="sitemap.php" class="nav-link-custom <?php echo ($current_page == 'sitemap.php') ? 'active' : ''; ?>" title="XML Sitemap & SEO Tools">
             <i class="fas fa-sitemap text-warning"></i> <span>Sitemap & SEO</span>
         </a>
