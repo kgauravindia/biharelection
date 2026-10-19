@@ -134,6 +134,38 @@ function initAdminTables($conn) {
         INDEX (`block`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
+    // Panchayat Samiti Members (Tier-2 Territorial Members 2021) Table
+    $conn->query("CREATE TABLE IF NOT EXISTS `panchayat_samiti_member_2021` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `sl_no` INT DEFAULT NULL,
+        `post` VARCHAR(100) DEFAULT 'पंचायत समिति के सदस्य',
+        `district` VARCHAR(100) NOT NULL,
+        `district_hi` VARCHAR(100) DEFAULT NULL,
+        `district_slug` VARCHAR(100) DEFAULT NULL,
+        `block` VARCHAR(100) NOT NULL,
+        `panchayat` VARCHAR(150) NOT NULL,
+        `territory_no` VARCHAR(50) DEFAULT NULL,
+        `reservation_status` VARCHAR(100) DEFAULT NULL,
+        `candidate_name` VARCHAR(150) NOT NULL,
+        `father_husband_name` VARCHAR(150) DEFAULT NULL,
+        `gender` VARCHAR(20) DEFAULT NULL,
+        `age` INT DEFAULT NULL,
+        `category` VARCHAR(100) DEFAULT NULL,
+        `address` TEXT DEFAULT NULL,
+        `mobile` VARCHAR(50) DEFAULT NULL,
+        `photo_url` VARCHAR(255) DEFAULT NULL,
+        `affidavit_url` VARCHAR(255) DEFAULT NULL,
+        `tenure` VARCHAR(50) DEFAULT '2021-2026',
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX (`district`),
+        INDEX (`district_slug`),
+        INDEX (`block`),
+        INDEX (`panchayat`),
+        INDEX (`candidate_name`),
+        INDEX (`territory_no`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+
     // Public Registered Users / Citizens Table
     $conn->query("CREATE TABLE IF NOT EXISTS `users` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
