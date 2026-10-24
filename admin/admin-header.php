@@ -46,7 +46,7 @@ $admin_initial = strtoupper(substr($admin_name, 0, 1));
                 <li><a class="dropdown-item py-2" href="git-push.php"><i class="fab fa-git-alt me-2 text-danger"></i> Git Push / Deploy</a></li>
                 <li><a class="dropdown-item py-2" href="change-password.php"><i class="fas fa-key me-2 text-warning"></i> Change Password</a></li>
                 <li><a class="dropdown-item py-2" href="users.php"><i class="fas fa-user-shield me-2 text-primary"></i> Admin Users</a></li>
-                <li><a class="dropdown-item py-2" href="settings.php"><i class="fas fa-cog me-2 text-secondary"></i> System Settings</a></li>
+                <li><a class="dropdown-item py-2" href="settings.php"><i class="fas fa-bolt me-2 text-warning"></i> Cache & Settings</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item py-2 text-danger fw-bold" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i> Log Out</a></li>
             </ul>

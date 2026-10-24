@@ -4,6 +4,17 @@ requireAdmin();
 
 $message = '';
 $error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'clear_cache') {
+    if (class_exists('DataCache')) {
+        $cleared = DataCache::flush();
+        $message = "Cache successfully cleared! {$cleared} cache files were removed.";
+    } else {
+        $error = "Cache engine not initialized.";
+    }
+}
+
+$cacheStats = class_exists('DataCache') ? DataCache::stats() : ['count' => 0, 'size_kb' => 0];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +37,19 @@ $error = '';
     <main class="main-content">
         <?php include 'admin-header.php'; ?>
         
+        <?php if (!empty($message)): ?>
+            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-check-circle me-2"></i> <?php echo htmlspecialchars($message); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty($error)): ?>
+            <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i> <?php echo htmlspecialchars($error); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <div>
                 <h1 class="h3 fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">Platform Configurations</h1>
@@ -155,6 +179,34 @@ $error = '';
             </div>
 
             <div class="col-lg-4">
+                <div class="section-card mb-4">
+                    <div class="section-card-header">
+                        <h6 class="fw-bold mb-0 text-dark"><i class="fas fa-bolt me-2 text-warning"></i> Performance & Cache</h6>
+                    </div>
+                    <div class="section-card-body">
+                        <div class="mb-3">
+                            <span class="small text-muted text-uppercase fw-bold d-block">Cache Engine</span>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><i class="fas fa-microchip me-1"></i> DataCache (Disk & Memory)</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="small text-muted text-uppercase fw-bold d-block">Cached Objects</span>
+                            <span class="fw-bold text-dark fs-5"><?php echo number_format($cacheStats['count']); ?></span> <span class="small text-muted">files (<?php echo $cacheStats['size_kb']; ?> KB)</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="small text-muted text-uppercase fw-bold d-block">Query Acceleration</span>
+                            <p class="small text-muted mb-0">Reduces MySQL load by serving pre-computed districts, panchayats, mukhiyas, and census statistics directly from cache.</p>
+                        </div>
+                        <div class="border-top pt-3">
+                            <form method="POST" onsubmit="return confirm('Clear entire application cache? Cached DB queries will regenerate on next visitor request.');">
+                                <input type="hidden" name="action" value="clear_cache">
+                                <button type="submit" class="btn btn-outline-danger btn-sm w-100 fw-bold">
+                                    <i class="fas fa-broom me-1"></i> Clear System Cache
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="section-card mb-4">
                     <div class="section-card-header">
                         <h6 class="fw-bold mb-0 text-dark"><i class="fas fa-database me-2 text-warning"></i> Database Environment</h6>

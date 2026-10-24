@@ -94,7 +94,7 @@ if ($village) {
 
     if ($pdo && !empty($gpName)) {
         try {
-            $stmtP = $pdo->prepare("SELECT * FROM panchayats WHERE LOWER(district_slug) = :dslug AND (panchayat_name LIKE :pname OR slug LIKE :pslug) LIMIT 1");
+            $stmtP = $pdo->prepare("SELECT * FROM panchayats WHERE district_slug = :dslug AND (panchayat_name LIKE :pname OR slug LIKE :pslug) LIMIT 1");
             $stmtP->execute([':dslug' => $dSlug, ':pname' => '%' . $gpName . '%', ':pslug' => '%' . slugify($gpName) . '%']);
             $panchayatObj = $stmtP->fetch(PDO::FETCH_ASSOC) ?: null;
         } catch (Throwable $e) {}
@@ -103,7 +103,7 @@ if ($village) {
     // Fetch Block Samiti (Pramukh / Up-Pramukh)
     if ($pdo && !empty($bName)) {
         try {
-            $stmtS = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE LOWER(district_slug) = :dslug AND block LIKE :bname LIMIT 1");
+            $stmtS = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE district_slug = :dslug AND block LIKE :bname LIMIT 1");
             $stmtS->execute([':dslug' => $dSlug, ':bname' => '%' . $bName . '%']);
             $blockSamiti = $stmtS->fetch(PDO::FETCH_ASSOC) ?: null;
         } catch (Throwable $e) {}

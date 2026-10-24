@@ -179,6 +179,18 @@ AddDefaultCharset UTF-8
     # -------------------------------------------------------------
     # 9. Panchayat Samiti / Block Pramukh (e.g. /panchayat-samiti, /panchayat-samiti/saran, /panchayat-samiti/saran/chapra)
     # -------------------------------------------------------------
+    RewriteRule ^panchayat-samiti-members/?$ panchayat-samiti-members.php [L,QSA]
+    RewriteRule ^panchayat-samiti-members/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat-samiti-members.php?district=$1&block=$2 [L,QSA]
+    RewriteRule ^panchayat-samiti-members/([a-zA-Z0-9_-]+)/?$ panchayat-samiti-members.php?district=$1 [L,QSA]
+
+    RewriteRule ^panchayat-samiti-member/?$ panchayat-samiti-members.php [L,QSA]
+    RewriteRule ^panchayat-samiti-member/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat-samiti-members.php?district=$1&block=$2 [L,QSA]
+    RewriteRule ^panchayat-samiti-member/([a-zA-Z0-9_-]+)/?$ panchayat-samiti-members.php?district=$1 [L,QSA]
+
+    RewriteRule ^panchayat-samiti/members/?$ panchayat-samiti-members.php [L,QSA]
+    RewriteRule ^panchayat-samiti/members/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat-samiti-members.php?district=$1&block=$2 [L,QSA]
+    RewriteRule ^panchayat-samiti/members/([a-zA-Z0-9_-]+)/?$ panchayat-samiti-members.php?district=$1 [L,QSA]
+
     RewriteRule ^panchayat-samiti/?$ panchayat-samiti.php [L,QSA]
     RewriteRule ^panchayat-samiti/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ panchayat-samiti.php?district=$1&block=$2 [L,QSA]
     RewriteRule ^panchayat-samiti/([a-zA-Z0-9_-]+)/?$ panchayat-samiti.php?district=$1 [L,QSA]

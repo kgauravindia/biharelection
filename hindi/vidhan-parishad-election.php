@@ -167,7 +167,7 @@ $timeline = [
         'day' => 'Tuesday',
         'title' => 'Last Date for Making Nominations',
         'title_hi' => 'नामनिर्देशन करने की अंतिम तिथि',
-        'status' => 'current',
+        'status' => 'completed',
         'desc' => 'Candidates submit nomination papers along with required security deposit to the designated Returning Officer by 3:00 PM.'
     ],
     [
@@ -176,7 +176,7 @@ $timeline = [
         'day' => 'Wednesday',
         'title' => 'Scrutiny of Nominations',
         'title_hi' => 'नामनिर्देशनों की संवीक्षा',
-        'status' => 'upcoming',
+        'status' => 'completed',
         'desc' => 'Returning Officers examine validity of submitted nomination papers.'
     ],
     [
@@ -185,7 +185,7 @@ $timeline = [
         'day' => 'Friday',
         'title' => 'Last Date for Withdrawal of Candidatures',
         'title_hi' => 'उम्मीदवारी वापस लेने की अंतिम तिथि',
-        'status' => 'upcoming',
+        'status' => 'completed',
         'desc' => 'Final list of contesting candidates (Form 7B) published with allotted ballot positions.'
     ],
     [
@@ -194,17 +194,17 @@ $timeline = [
         'day' => 'Friday',
         'title' => 'Date of Poll (Voting Day)',
         'title_hi' => 'मतदान की तिथि (सुबह 8:00 से शाम 4:00)',
-        'status' => 'upcoming',
-        'desc' => 'Polling held across designated polling stations via ballot paper (PR-STV system). Voting hours: 8:00 AM to 4:00 PM.'
+        'status' => 'completed',
+        'desc' => 'Polling held across designated polling stations via ballot paper (PR-STV system). Strongrooms sealed.'
     ],
     [
         'step' => '6',
         'date' => '27 October 2026',
         'day' => 'Tuesday',
-        'title' => 'Counting of Votes & Declaration of Results',
-        'title_hi' => 'मतगणना एवं परिणाम घोषणा',
-        'status' => 'upcoming',
-        'desc' => 'Counting of preferential votes and quota calculation conducted at divisional headquarters.'
+        'title' => 'Counting of Votes & Declaration of Results (Starts 8:00 AM)',
+        'title_hi' => 'मतगणना एवं परिणाम घोषणा (सुबह 8:00 बजे से)',
+        'status' => 'current',
+        'desc' => 'Counting of preferential votes and quota calculation begins at 8:00 AM IST at divisional headquarters.'
     ],
     [
         'step' => '7',
@@ -386,34 +386,34 @@ $timeline = [
                 <div class="card border-0 shadow-lg rounded-4 overflow-hidden" style="background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15);">
                     <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 py-3 text-center">
                         <h6 class="text-uppercase small fw-bold text-warning mb-0">
-                            <i class="bi bi-stopwatch me-1"></i> Countdown to Polling Day
+                            <i class="bi bi-stopwatch me-1"></i> मतगणना एवं परिणाम उल्टी गिनती
                         </h6>
-                        <span class="text-white small fw-bold">Friday, 23 October 2026 (8 AM – 4 PM)</span>
+                        <span class="text-white small fw-bold">मंगलवार, 27 अक्टूबर 2026 (सुबह 08:00 बजे से)</span>
                     </div>
                     <div class="card-body p-4 text-center">
                         <div class="row g-2 text-center" id="pollingCountdown">
                             <div class="col-3">
                                 <div class="countdown-box">
                                     <div class="countdown-num" id="cdDays">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">Days</small>
+                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">दिन</small>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="countdown-box">
                                     <div class="countdown-num" id="cdHours">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">Hours</small>
+                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">घंटे</small>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="countdown-box">
                                     <div class="countdown-num" id="cdMinutes">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">Mins</small>
+                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">मिनट</small>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="countdown-box">
                                     <div class="countdown-num" id="cdSeconds">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">Secs</small>
+                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">सेकंड</small>
                                 </div>
                             </div>
                         </div>
@@ -422,13 +422,19 @@ $timeline = [
 
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90">
                             <div>
-                                <i class="bi bi-calendar-check text-success me-1"></i> <strong>Counting Day:</strong>
+                                <i class="bi bi-calendar-check text-success me-1"></i> <strong>मतगणना का समय:</strong>
                             </div>
-                            <span class="badge bg-success-subtle text-success fw-bold px-2 py-1">27 Oct 2026</span>
+                            <span class="badge bg-success text-white fw-bold px-2 py-1">27 Oct 2026, 08:00 AM</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
-                                <i class="bi bi-hourglass-bottom text-warning me-1"></i> <strong>Term Expiry of 8 MLCs:</strong>
+                                <i class="bi bi-check-circle-fill text-info me-1"></i> <strong>मतदान स्थिति:</strong>
+                            </div>
+                            <span class="text-light">सम्पन्न (23 Oct 2026)</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
+                            <div>
+                                <i class="bi bi-hourglass-bottom text-warning me-1"></i> <strong>8 एमएलसी का कार्यकाल समाप्ति:</strong>
                             </div>
                             <span class="text-light">16 Nov 2026</span>
                         </div>
@@ -1388,11 +1394,11 @@ $timeline = [
 </div>
 
 <script>
-// Countdown Timer to 23 October 2026, 08:00 AM IST
+// Countdown Timer to Counting Day: 27 October 2026, 08:00 AM IST
 function updateCountdown() {
-    const pollDate = new Date('2026-10-23T08:00:00+05:30').getTime();
+    const countingDate = new Date('2026-10-27T08:00:00+05:30').getTime();
     const now = new Date().getTime();
-    const distance = pollDate - now;
+    const distance = countingDate - now;
 
     if (distance < 0) {
         document.getElementById('cdDays').innerText = '00';

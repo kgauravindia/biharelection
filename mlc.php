@@ -437,13 +437,14 @@ require_once __DIR__ . '/header.php';
                     <div>
                         <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
                             <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">Active Biennial Election 2026</span>
-                            <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">Polling: 23 Oct 2026</span>
+                            <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">Polling: Concluded 23 Oct</span>
+                            <span class="badge bg-success text-white fw-semibold px-2.5 py-1 rounded-pill">Counting: 27 Oct 2026, 8:00 AM</span>
                             <span class="text-white-50 small">&bull; Notification: <?php echo htmlspecialchars($singleOngoingInfo['gazette']); ?></span>
                         </div>
                         <h4 class="fw-extrabold text-white mb-1">Elections Underway for <?php echo htmlspecialchars($const); ?></h4>
                         <p class="text-white-50 mb-0 small" style="max-width: 820px;">
                             This constituency is actively undergoing the <strong>Bihar Legislative Council Biennial Election 2026</strong>. 
-                            Counting of votes is scheduled for <strong>27 October 2026</strong>.
+                            Counting of votes commences on <strong>Tuesday, 27 October 2026 at 08:00 AM IST</strong>.
                         </p>
                     </div>
                 </div>
@@ -824,7 +825,7 @@ require_once __DIR__ . '/header.php';
                     </div>
                     <h4 class="fw-extrabold text-white mb-1">Bihar Vidhan Parishad Elections Underway (8 Seats)</h4>
                     <p class="text-white-50 mb-0 small" style="max-width: 820px;">
-                        Biennial elections are actively underway for <strong>4 Graduates'</strong> (Patna, Tirhut, Darbhanga, Kosi) &amp; <strong>4 Teachers'</strong> (Patna, Tirhut, Darbhanga, Saran) Constituencies. Polling on <strong>23 October 2026</strong>, Counting on <strong>27 October 2026</strong>.
+                        Biennial elections are actively underway for <strong>4 Graduates'</strong> (Patna, Tirhut, Darbhanga, Kosi) &amp; <strong>4 Teachers'</strong> (Patna, Tirhut, Darbhanga, Saran) Constituencies. Polling concluded on <strong>23 October 2026</strong>, Counting begins on <strong>27 October 2026 at 08:00 AM IST</strong>.
                     </p>
                 </div>
             </div>
@@ -1136,7 +1137,7 @@ require_once __DIR__ . '/header.php';
                                             <i class="bi bi-calendar-check me-1"></i>Voting: 23 Oct 2026 (8 AM-4 PM)
                                         </div>
                                         <div class="extra-small text-success fw-bold mb-0.5">
-                                            <i class="bi bi-bar-chart-fill me-1"></i>Counting: 27 Oct 2026
+                                            <i class="bi bi-bar-chart-fill me-1"></i>Counting: 27 Oct 2026 (8:00 AM)
                                         </div>
                                         <div class="extra-small text-muted">
                                             <i class="bi bi-file-earmark-text me-1"></i>Gazette: <?php echo htmlspecialchars($ongoingInfo['gazette']); ?>

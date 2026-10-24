@@ -179,6 +179,114 @@ class Database {
     }
 }
 
+/**
+ * DataCache - High Performance File & Memory Cache Engine
+ * Dramatically reduces database queries, eliminates duplicate lookups, and boosts page loads.
+ */
+class DataCache {
+    private static $cacheDir = null;
+    private static $memory = [];
+    private static $enabled = true;
+
+    public static function getCacheDir(): string {
+        if (self::$cacheDir === null) {
+            self::$cacheDir = __DIR__ . '/cache';
+            if (!is_dir(self::$cacheDir)) {
+                @mkdir(self::$cacheDir, 0755, true);
+                $htaccess = self::$cacheDir . '/.htaccess';
+                if (!file_exists($htaccess)) {
+                    @file_put_contents($htaccess, "<IfModule mod_authz_core.c>\n    Require all denied\n</IfModule>\n<IfModule !mod_authz_core.c>\n    Order allow,deny\n    Deny from all\n</IfModule>\n");
+                }
+            }
+        }
+        return self::$cacheDir;
+    }
+
+    public static function get(string $key, $default = null) {
+        if (!self::$enabled) return $default;
+        if (array_key_exists($key, self::$memory)) {
+            return self::$memory[$key];
+        }
+        $file = self::getCacheDir() . '/' . md5($key) . '.cache';
+        if (!file_exists($file)) {
+            return $default;
+        }
+        $content = @file_get_contents($file);
+        if ($content === false || strlen($content) < 10) {
+            return $default;
+        }
+        $expires = (int)substr($content, 0, 10);
+        if ($expires > 0 && time() > $expires) {
+            @unlink($file);
+            return $default;
+        }
+        $raw = substr($content, 10);
+        $data = @unserialize($raw);
+        if ($data === false && $raw !== serialize(false)) {
+            return $default;
+        }
+        self::$memory[$key] = $data;
+        return $data;
+    }
+
+    public static function set(string $key, $value, int $ttl = 86400): bool {
+        if (!self::$enabled) return false;
+        self::$memory[$key] = $value;
+        $file = self::getCacheDir() . '/' . md5($key) . '.cache';
+        $expires = $ttl > 0 ? (time() + $ttl) : 0;
+        $payload = sprintf('%010d', $expires) . serialize($value);
+        return (bool)@file_put_contents($file, $payload, LOCK_EX);
+    }
+
+    public static function remember(string $key, int $ttl, callable $callback) {
+        $cached = self::get($key);
+        if ($cached !== null) {
+            return $cached;
+        }
+        $value = $callback();
+        if ($value !== null) {
+            self::set($key, $value, $ttl);
+        }
+        return $value;
+    }
+
+    public static function delete(string $key): void {
+        unset(self::$memory[$key]);
+        $file = self::getCacheDir() . '/' . md5($key) . '.cache';
+        if (file_exists($file)) {
+            @unlink($file);
+        }
+    }
+
+    public static function flush(): int {
+        self::$memory = [];
+        $files = @glob(self::getCacheDir() . '/*.cache');
+        $count = 0;
+        if ($files) {
+            foreach ($files as $f) {
+                if (@unlink($f)) {
+                    $count++;
+                }
+            }
+        }
+        return $count;
+    }
+
+    public static function stats(): array {
+        $files = @glob(self::getCacheDir() . '/*.cache') ?: [];
+        $bytes = 0;
+        foreach ($files as $f) {
+            $bytes += (int)@filesize($f);
+        }
+        return [
+            'count' => count($files),
+            'bytes' => $bytes,
+            'size_kb' => round($bytes / 1024, 2),
+            'memory_items' => count(self::$memory)
+        ];
+    }
+}
+
 class DataProvider {
     private static $districts = null;
     private static $constituencies = null;
@@ -203,29 +311,31 @@ class DataProvider {
     private static $censusSubDistricts = null;
 
     public static function getDistricts() {
-        if (self::$districts === null) {
-            self::$districts = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
-                try {
-                    $stmt = $pdo->query("SELECT * FROM districts ORDER BY id ASC");
-                    if ($stmt) {
-                        $rows = $stmt->fetchAll();
-                        if (!empty($rows)) {
-                            foreach ($rows as &$r) {
-                                if (isset($r['ac_list']) && is_string($r['ac_list'])) {
-                                    $r['ac_list'] = json_decode($r['ac_list'], true) ?: [];
-                                }
-                            }
-                            self::$districts = $rows;
-                        }
-                    }
-                } catch (Throwable $e) {
-                    error_log("Error fetching districts: " . $e->getMessage());
-                }
-            }
+        if (self::$districts !== null) {
+            return self::$districts;
         }
-        return self::$districts;
+        self::$districts = DataCache::remember('provider_districts', 86400, function() {
+            $pdo = Database::getConnection();
+            if (!$pdo) return [];
+            try {
+                $stmt = $pdo->query("SELECT * FROM districts ORDER BY id ASC");
+                if ($stmt) {
+                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    if (!empty($rows)) {
+                        foreach ($rows as &$r) {
+                            if (isset($r['ac_list']) && is_string($r['ac_list'])) {
+                                $r['ac_list'] = json_decode($r['ac_list'], true) ?: [];
+                            }
+                        }
+                        return $rows;
+                    }
+                }
+            } catch (Throwable $e) {
+                error_log("Error fetching districts: " . $e->getMessage());
+            }
+            return [];
+        });
+        return self::$districts ?: [];
     }
 
     public static function getDistrictBySlug($slug) {
@@ -251,31 +361,33 @@ class DataProvider {
     }
 
     public static function getConstituencies() {
-        if (self::$constituencies === null) {
-            self::$constituencies = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
-                try {
-                    $stmt = $pdo->query("SELECT * FROM constituencies ORDER BY ac_no ASC");
-                    if ($stmt) {
-                        $rows = $stmt->fetchAll();
-                        if (!empty($rows)) {
-                            foreach ($rows as &$r) {
-                                if (isset($r['election_2020']) && is_string($r['election_2020'])) $r['election_2020'] = json_decode($r['election_2020'], true);
-                                if (isset($r['election_2015']) && is_string($r['election_2015'])) $r['election_2015'] = json_decode($r['election_2015'], true);
-                                if (isset($r['key_issues']) && is_string($r['key_issues'])) $r['key_issues'] = json_decode($r['key_issues'], true);
-                                if (isset($r['blocks']) && is_string($r['blocks'])) $r['blocks'] = json_decode($r['blocks'], true);
-                                if (isset($r['candidates_2026_expected']) && is_string($r['candidates_2026_expected'])) $r['candidates_2026_expected'] = json_decode($r['candidates_2026_expected'], true);
-                            }
-                            self::$constituencies = $rows;
-                        }
-                    }
-                } catch (Throwable $e) {
-                    error_log("Error fetching constituencies: " . $e->getMessage());
-                }
-            }
+        if (self::$constituencies !== null) {
+            return self::$constituencies;
         }
-        return self::$constituencies;
+        self::$constituencies = DataCache::remember('provider_constituencies', 86400, function() {
+            $pdo = Database::getConnection();
+            if (!$pdo) return [];
+            try {
+                $stmt = $pdo->query("SELECT * FROM constituencies ORDER BY ac_no ASC");
+                if ($stmt) {
+                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    if (!empty($rows)) {
+                        foreach ($rows as &$r) {
+                            if (isset($r['election_2020']) && is_string($r['election_2020'])) $r['election_2020'] = json_decode($r['election_2020'], true);
+                            if (isset($r['election_2015']) && is_string($r['election_2015'])) $r['election_2015'] = json_decode($r['election_2015'], true);
+                            if (isset($r['key_issues']) && is_string($r['key_issues'])) $r['key_issues'] = json_decode($r['key_issues'], true);
+                            if (isset($r['blocks']) && is_string($r['blocks'])) $r['blocks'] = json_decode($r['blocks'], true);
+                            if (isset($r['candidates_2026_expected']) && is_string($r['candidates_2026_expected'])) $r['candidates_2026_expected'] = json_decode($r['candidates_2026_expected'], true);
+                        }
+                        return $rows;
+                    }
+                }
+            } catch (Throwable $e) {
+                error_log("Error fetching constituencies: " . $e->getMessage());
+            }
+            return [];
+        });
+        return self::$constituencies ?: [];
     }
 
     public static function getConstituencyByAcNumber($acNumber) {
@@ -330,28 +442,30 @@ class DataProvider {
     }
 
     public static function getCandidates() {
-        if (self::$candidates === null) {
-            self::$candidates = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
-                try {
-                    $stmt = $pdo->query("SELECT * FROM candidates ORDER BY id ASC");
-                    if ($stmt) {
-                        $rows = $stmt->fetchAll();
-                        if (!empty($rows)) {
-                            foreach ($rows as &$r) {
-                                if (isset($r['social_links']) && is_string($r['social_links'])) $r['social_links'] = json_decode($r['social_links'], true);
-                                if (isset($r['election_record']) && is_string($r['election_record'])) $r['election_record'] = json_decode($r['election_record'], true);
-                            }
-                            self::$candidates = $rows;
-                        }
-                    }
-                } catch (Throwable $e) {
-                    error_log("Error fetching candidates: " . $e->getMessage());
-                }
-            }
+        if (self::$candidates !== null) {
+            return self::$candidates;
         }
-        return self::$candidates;
+        self::$candidates = DataCache::remember('provider_candidates', 86400, function() {
+            $pdo = Database::getConnection();
+            if (!$pdo) return [];
+            try {
+                $stmt = $pdo->query("SELECT * FROM candidates ORDER BY id ASC");
+                if ($stmt) {
+                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    if (!empty($rows)) {
+                        foreach ($rows as &$r) {
+                            if (isset($r['social_links']) && is_string($r['social_links'])) $r['social_links'] = json_decode($r['social_links'], true);
+                            if (isset($r['election_record']) && is_string($r['election_record'])) $r['election_record'] = json_decode($r['election_record'], true);
+                        }
+                        return $rows;
+                    }
+                }
+            } catch (Throwable $e) {
+                error_log("Error fetching candidates: " . $e->getMessage());
+            }
+            return [];
+        });
+        return self::$candidates ?: [];
     }
 
     public static function getCandidateBySlug($slug) {
@@ -483,33 +597,36 @@ class DataProvider {
     }
 
     public static function getPanchayats($districtSlug = null) {
-        if (self::$panchayats === null) {
-            self::$panchayats = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
+        if ($districtSlug !== null) {
+            $needle = strtolower(trim((string)$districtSlug));
+            return DataCache::remember('panchayats_dist_' . $needle, 86400, function() use ($needle) {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
                 try {
-                    $stmt = $pdo->query("SELECT * FROM panchayats ORDER BY id ASC");
-                    if ($stmt) {
-                        $rows = $stmt->fetchAll();
-                        if (!empty($rows)) {
-                            self::$panchayats = $rows;
-                        }
-                    }
+                    $stmt = $pdo->prepare("SELECT * FROM panchayats WHERE district_slug = :dslug OR district = :dname ORDER BY id ASC");
+                    $stmt->execute([':dslug' => $needle, ':dname' => $needle]);
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
                 } catch (Throwable $e) {
                     error_log("Error fetching panchayats: " . $e->getMessage());
+                    return [];
                 }
-            }
+            });
         }
 
-        if ($districtSlug === null) {
-            return self::$panchayats;
+        if (self::$panchayats === null) {
+            self::$panchayats = DataCache::remember('all_panchayats', 86400, function() {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
+                try {
+                    $stmt = $pdo->query("SELECT * FROM panchayats ORDER BY id ASC");
+                    return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
+                } catch (Throwable $e) {
+                    error_log("Error fetching panchayats: " . $e->getMessage());
+                    return [];
+                }
+            });
         }
-
-        $needle = strtolower(trim($districtSlug));
-        return array_values(array_filter(self::$panchayats, function($p) use ($needle) {
-            return strtolower($p['district_slug'] ?? '') === $needle
-                || strtolower($p['district'] ?? '') === $needle;
-        }));
+        return self::$panchayats ?: [];
     }
 
     public static function getPanchayatData($districtSlugOrName = null, $blockName = null) {
@@ -524,94 +641,89 @@ class DataProvider {
     }
 
     public static function getMukhiyaData($districtSlugOrName = null) {
+        if ($districtSlugOrName !== null) {
+            $needle = strtolower(trim((string)$districtSlugOrName));
+            return DataCache::remember('mukhiya_dist_' . $needle, 86400, function() use ($needle) {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
+                try {
+                    $stmt = $pdo->prepare("SELECT * FROM mukhiyas WHERE district_slug = :dslug OR district = :dname ORDER BY id ASC");
+                    $stmt->execute([':dslug' => $needle, ':dname' => $needle]);
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+                } catch (Throwable $e) {
+                    return [];
+                }
+            });
+        }
+
         if (self::$mukhiya === null) {
-            self::$mukhiya = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
+            self::$mukhiya = DataCache::remember('all_mukhiyas', 86400, function() {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
                 try {
                     $stmt = $pdo->query("SELECT * FROM mukhiyas ORDER BY id ASC");
-                    if ($stmt) {
-                        $rows = $stmt->fetchAll();
-                        if (!empty($rows)) {
-                            self::$mukhiya = $rows;
-                        }
-                    }
+                    return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
                 } catch (Throwable $e) {
-                    // Try alternative table name be_mukhiya
-                    try {
-                        $stmt = $pdo->query("SELECT * FROM be_mukhiya ORDER BY id ASC");
-                        if ($stmt) self::$mukhiya = $stmt->fetchAll() ?: [];
-                    } catch (Throwable $e2) {}
+                    return [];
                 }
-            }
+            });
         }
-
-        if ($districtSlugOrName === null) {
-            return self::$mukhiya;
-        }
-
-        $needle = strtolower(trim($districtSlugOrName));
-        return array_values(array_filter(self::$mukhiya, function($m) use ($needle) {
-            return strtolower($m['district_slug'] ?? '') === $needle
-                || strtolower($m['district'] ?? '') === $needle
-                || strtolower($m['district_hi'] ?? '') === $needle;
-        }));
+        return self::$mukhiya ?: [];
     }
 
     public static function getSarpanchData($districtSlugOrName = null) {
+        if ($districtSlugOrName !== null) {
+            $needle = strtolower(trim((string)$districtSlugOrName));
+            return DataCache::remember('sarpanch_dist_' . $needle, 86400, function() use ($needle) {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
+                try {
+                    $stmt = $pdo->prepare("SELECT * FROM sarpanchs WHERE district_slug = :dslug OR district = :dname ORDER BY id ASC");
+                    $stmt->execute([':dslug' => $needle, ':dname' => $needle]);
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+                } catch (Throwable $e) {
+                    return [];
+                }
+            });
+        }
+
         if (self::$sarpanch === null) {
-            self::$sarpanch = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
+            self::$sarpanch = DataCache::remember('all_sarpanchs', 86400, function() {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
                 try {
                     $stmt = $pdo->query("SELECT * FROM sarpanchs ORDER BY id ASC");
-                    if ($stmt) {
-                        $rows = $stmt->fetchAll();
-                        if (!empty($rows)) {
-                            self::$sarpanch = $rows;
-                        }
-                    }
+                    return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
                 } catch (Throwable $e) {
-                    // Try alternative table name be_sarpanch
-                    try {
-                        $stmt = $pdo->query("SELECT * FROM be_sarpanch ORDER BY id ASC");
-                        if ($stmt) self::$sarpanch = $stmt->fetchAll() ?: [];
-                    } catch (Throwable $e2) {}
+                    return [];
                 }
-            }
+            });
         }
-
-        if ($districtSlugOrName === null) {
-            return self::$sarpanch;
-        }
-
-        $needle = strtolower(trim($districtSlugOrName));
-        return array_values(array_filter(self::$sarpanch, function($s) use ($needle) {
-            return strtolower($s['district_slug'] ?? '') === $needle
-                || strtolower($s['district'] ?? '') === $needle
-                || strtolower($s['district_hi'] ?? '') === $needle;
-        }));
+        return self::$sarpanch ?: [];
     }
 
     public static function getPanchayatSummary($districtSlug = null) {
         if (self::$panchayatSummary === null) {
-            self::$panchayatSummary = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
-                try {
-                    $stmt = $pdo->query("SELECT * FROM be_panchayat_summary");
-                    if ($stmt) {
-                        while ($r = $stmt->fetch()) {
-                            $slugKey = strtolower($r['district_slug'] ?? $r['slug'] ?? '');
-                            if ($slugKey) self::$panchayatSummary[$slugKey] = $r;
+            self::$panchayatSummary = DataCache::remember('panchayat_summary', 86400, function() {
+                $pdo = Database::getConnection();
+                $res = [];
+                if ($pdo) {
+                    try {
+                        $stmt = $pdo->query("SELECT * FROM be_panchayat_summary");
+                        if ($stmt) {
+                            while ($r = $stmt->fetch()) {
+                                $slugKey = strtolower($r['district_slug'] ?? $r['slug'] ?? '');
+                                if ($slugKey) $res[$slugKey] = $r;
+                            }
                         }
-                    }
-                } catch (Throwable $e) {}
-            }
+                    } catch (Throwable $e) {}
+                }
+                return $res;
+            });
         }
 
         if ($districtSlug === null) {
-            return self::$panchayatSummary;
+            return self::$panchayatSummary ?: [];
         }
 
         $slug = strtolower(trim($districtSlug));
@@ -619,34 +731,34 @@ class DataProvider {
     }
 
     public static function getZilaParishadMembers($districtSlugOrName = null) {
+        if ($districtSlugOrName !== null) {
+            $needle = strtolower(trim((string)$districtSlugOrName));
+            return DataCache::remember('zp_members_dist_' . $needle, 86400, function() use ($needle) {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
+                try {
+                    $stmt = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE district_slug = :dslug OR district = :dname ORDER BY id ASC");
+                    $stmt->execute([':dslug' => $needle, ':dname' => $needle]);
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+                } catch (Throwable $e) {
+                    return [];
+                }
+            });
+        }
+
         if (self::$zilaMembers === null) {
-            self::$zilaMembers = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
+            self::$zilaMembers = DataCache::remember('all_zp_members', 86400, function() {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
                 try {
                     $stmt = $pdo->query("SELECT * FROM zila_parishad_members ORDER BY id ASC");
-                    if ($stmt) {
-                        $rows = $stmt->fetchAll();
-                        if (!empty($rows)) {
-                            self::$zilaMembers = $rows;
-                        }
-                    }
+                    return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
                 } catch (Throwable $e) {
-                    error_log("Error fetching ZP members: " . $e->getMessage());
+                    return [];
                 }
-            }
+            });
         }
-
-        if ($districtSlugOrName === null) {
-            return self::$zilaMembers;
-        }
-
-        $needle = strtolower(trim($districtSlugOrName));
-        return array_values(array_filter(self::$zilaMembers, function($m) use ($needle) {
-            return strtolower($m['district_slug'] ?? '') === $needle
-                || strtolower($m['district'] ?? '') === $needle
-                || strtolower($m['district_hi'] ?? '') === $needle;
-        }));
+        return self::$zilaMembers ?: [];
     }
 
     public static function getZilaParishadOfficials($districtSlugOrName = null) {
@@ -768,64 +880,63 @@ class DataProvider {
     }
 
     public static function getPanchayatSamitiMembers2021($districtSlugOrName = null, $block = null, $panchayat = null) {
-        $pdo = Database::getConnection();
-        if (!$pdo) return [];
-        try {
-            $sql = "SELECT * FROM panchayat_samiti_member_2021 WHERE 1=1";
-            $params = [];
-            if ($districtSlugOrName) {
-                $needle = strtolower(trim($districtSlugOrName));
-                $sql .= " AND (LOWER(district_slug) = :dslug OR LOWER(district) = :dname OR LOWER(district_hi) = :dhi)";
-                $params[':dslug'] = $needle;
-                $params[':dname'] = $needle;
-                $params[':dhi'] = $needle;
+        $key = 'psm2021_' . strtolower(trim((string)$districtSlugOrName)) . '_' . strtolower(trim((string)$block)) . '_' . strtolower(trim((string)$panchayat));
+        return DataCache::remember($key, 86400, function() use ($districtSlugOrName, $block, $panchayat) {
+            $pdo = Database::getConnection();
+            if (!$pdo) return [];
+            try {
+                $sql = "SELECT * FROM panchayat_samiti_member_2021 WHERE 1=1";
+                $params = [];
+                if ($districtSlugOrName) {
+                    $needle = strtolower(trim($districtSlugOrName));
+                    $sql .= " AND (district_slug = :dslug OR district = :dname OR district_hi = :dhi)";
+                    $params[':dslug'] = $needle;
+                    $params[':dname'] = $needle;
+                    $params[':dhi'] = $needle;
+                }
+                if ($block) {
+                    $sql .= " AND block = :block";
+                    $params[':block'] = trim($block);
+                }
+                if ($panchayat) {
+                    $sql .= " AND (panchayat = :pname OR panchayat LIKE :plike)";
+                    $params[':pname'] = trim($panchayat);
+                    $params[':plike'] = '%' . trim($panchayat) . '%';
+                }
+                $sql .= " ORDER BY CAST(territory_no AS UNSIGNED) ASC, id ASC";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($params);
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } catch (Throwable $e) {
+                error_log("Error fetching Panchayat Samiti Members 2021: " . $e->getMessage());
+                return [];
             }
-            if ($block) {
-                $sql .= " AND LOWER(block) = LOWER(:block)";
-                $params[':block'] = trim($block);
-            }
-            if ($panchayat) {
-                $sql .= " AND (LOWER(panchayat) = LOWER(:pname) OR LOWER(panchayat) LIKE LOWER(:plike))";
-                $params[':pname'] = trim($panchayat);
-                $params[':plike'] = '%' . trim($panchayat) . '%';
-            }
-            $sql .= " ORDER BY CAST(territory_no AS UNSIGNED) ASC, id ASC";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute($params);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Throwable $e) {
-            error_log("Error fetching Panchayat Samiti Members 2021: " . $e->getMessage());
-            return [];
-        }
+        }) ?: [];
     }
 
     public static function getMukhiyas2016($districtSlugOrName = null, $block = null) {
         if (self::$mukhiyas2016 === null) {
-            self::$mukhiyas2016 = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
+            self::$mukhiyas2016 = DataCache::remember('all_mukhiyas_2016', 86400, function() {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
                 try {
                     $stmt = $pdo->query("SELECT * FROM mukhiyas_2016 ORDER BY id ASC");
-                    if ($stmt) {
-                        $rows = $stmt->fetchAll();
-                        if (!empty($rows)) {
-                            self::$mukhiyas2016 = $rows;
-                        }
-                    }
+                    return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
                 } catch (Throwable $e) {
                     error_log("Error fetching Mukhiyas 2016: " . $e->getMessage());
+                    return [];
                 }
-            }
+            });
         }
 
         if ($districtSlugOrName === null && $block === null) {
-            return self::$mukhiyas2016;
+            return self::$mukhiyas2016 ?: [];
         }
 
         $needle = $districtSlugOrName ? strtolower(trim($districtSlugOrName)) : null;
         $needleBlock = $block ? strtolower(trim($block)) : null;
 
-        return array_values(array_filter(self::$mukhiyas2016, function($m) use ($needle, $needleBlock) {
+        return array_values(array_filter(self::$mukhiyas2016 ?: [], function($m) use ($needle, $needleBlock) {
             $matchD = true;
             if ($needle !== null) {
                 $matchD = strtolower($m['district_slug'] ?? '') === $needle
@@ -843,65 +954,76 @@ class DataProvider {
     }
 
     public static function getLokSabhaMps() {
-        if (self::$mpsLokSabha === null) {
-            self::$mpsLokSabha = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
-                try {
-                    $stmt = $pdo->query("SELECT * FROM mps_loksabha ORDER BY pc_no ASC");
-                    if ($stmt) self::$mpsLokSabha = $stmt->fetchAll() ?: [];
-                } catch (Throwable $e) {}
-            }
+        if (self::$mpsLokSabha !== null) {
+            return self::$mpsLokSabha;
         }
-        return self::$mpsLokSabha;
+        self::$mpsLokSabha = DataCache::remember('provider_mps_loksabha', 86400, function() {
+            $pdo = Database::getConnection();
+            if (!$pdo) return [];
+            try {
+                $stmt = $pdo->query("SELECT * FROM mps_loksabha ORDER BY pc_no ASC");
+                return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
+            } catch (Throwable $e) {
+                return [];
+            }
+        });
+        return self::$mpsLokSabha ?: [];
     }
 
     public static function getRajyaSabhaMps() {
-        if (self::$mpsRajyaSabha === null) {
-            self::$mpsRajyaSabha = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
-                try {
-                    $stmt = $pdo->query("SELECT * FROM mps_rajyasabha ORDER BY sno ASC");
-                    if ($stmt) self::$mpsRajyaSabha = $stmt->fetchAll() ?: [];
-                } catch (Throwable $e) {}
-            }
+        if (self::$mpsRajyaSabha !== null) {
+            return self::$mpsRajyaSabha;
         }
-        return self::$mpsRajyaSabha;
+        self::$mpsRajyaSabha = DataCache::remember('provider_mps_rajyasabha', 86400, function() {
+            $pdo = Database::getConnection();
+            if (!$pdo) return [];
+            try {
+                $stmt = $pdo->query("SELECT * FROM mps_rajyasabha ORDER BY sno ASC");
+                return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
+            } catch (Throwable $e) {
+                return [];
+            }
+        });
+        return self::$mpsRajyaSabha ?: [];
     }
 
     public static function getMlcs() {
-        if (self::$mlcs === null) {
-            self::$mlcs = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
-                try {
-                    $stmt = $pdo->query("SELECT * FROM mlcs ORDER BY id ASC");
-                    if ($stmt) self::$mlcs = $stmt->fetchAll() ?: [];
-                } catch (Throwable $e) {}
-            }
+        if (self::$mlcs !== null) {
+            return self::$mlcs;
         }
-        return self::$mlcs;
+        self::$mlcs = DataCache::remember('provider_mlcs', 86400, function() {
+            $pdo = Database::getConnection();
+            if (!$pdo) return [];
+            try {
+                $stmt = $pdo->query("SELECT * FROM mlcs ORDER BY id ASC");
+                return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
+            } catch (Throwable $e) {
+                return [];
+            }
+        });
+        return self::$mlcs ?: [];
     }
 
     public static function getMlas2015($acNoOrSlug = null) {
         if (self::$mlas2015 === null) {
-            self::$mlas2015 = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
+            self::$mlas2015 = DataCache::remember('provider_mlas2015', 86400, function() {
+                $pdo = Database::getConnection();
+                if (!$pdo) return [];
                 try {
                     $stmt = $pdo->query("SELECT * FROM mlas_2015 ORDER BY ac_no ASC");
-                    if ($stmt) self::$mlas2015 = $stmt->fetchAll() ?: [];
-                } catch (Throwable $e) {}
-            }
+                    return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
+                } catch (Throwable $e) {
+                    return [];
+                }
+            });
         }
 
         if ($acNoOrSlug === null) {
-            return self::$mlas2015;
+            return self::$mlas2015 ?: [];
         }
 
         $needle = strtolower(trim((string)$acNoOrSlug));
-        foreach (self::$mlas2015 as $m) {
+        foreach ((self::$mlas2015 ?: []) as $m) {
             if ((string)$m['ac_no'] === $needle || strtolower($m['slug'] ?? '') === $needle) {
                 return $m;
             }
@@ -916,7 +1038,7 @@ class DataProvider {
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM be_news ORDER BY published_date DESC LIMIT 50");
-                    if ($stmt) self::$news = $stmt->fetchAll() ?: [];
+                    if ($stmt) self::$news = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
                 } catch (Throwable $e) {}
             }
         }
@@ -924,36 +1046,43 @@ class DataProvider {
     }
 
     public static function getCensusBiharSummary() {
-        if (self::$censusBihar === null) {
-            self::$censusBihar = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
-                try {
-                    $stmt = $pdo->query("SELECT * FROM census_districts WHERE district_slug = 'bihar' OR slug = 'bihar' LIMIT 1");
-                    if ($stmt) self::$censusBihar = $stmt->fetch() ?: [];
-                } catch (Throwable $e) {}
-            }
+        if (self::$censusBihar !== null) {
+            return self::$censusBihar;
         }
-        return self::$censusBihar;
+        self::$censusBihar = DataCache::remember('census_bihar_summary', 86400, function() {
+            $pdo = Database::getConnection();
+            if (!$pdo) return [];
+            try {
+                $stmt = $pdo->query("SELECT * FROM census_districts WHERE district_slug = 'bihar' OR slug = 'bihar' LIMIT 1");
+                return $stmt ? ($stmt->fetch(PDO::FETCH_ASSOC) ?: []) : [];
+            } catch (Throwable $e) {
+                return [];
+            }
+        });
+        return self::$censusBihar ?: [];
     }
 
     public static function getCensusDistricts() {
-        if (self::$censusDistricts === null) {
-            self::$censusDistricts = [];
+        if (self::$censusDistricts !== null) {
+            return self::$censusDistricts;
+        }
+        self::$censusDistricts = DataCache::remember('census_districts_all', 86400, function() {
             $pdo = Database::getConnection();
+            $res = [];
             if ($pdo) {
                 try {
                     $stmt = $pdo->query("SELECT * FROM census_districts");
                     if ($stmt) {
-                        while ($r = $stmt->fetch()) {
+                        while ($r = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             $k = strtolower($r['district_slug'] ?? $r['slug'] ?? '');
-                            if ($k) self::$censusDistricts[$k] = $r;
+                            if ($k) $res[$k] = $r;
                         }
                     }
                 } catch (Throwable $e) {}
             }
-        }
-        return self::$censusDistricts;
+            return $res;
+        });
+        return self::$censusDistricts ?: [];
     }
 
     public static function getCensusDistrict($districtSlugOrName) {
@@ -969,27 +1098,30 @@ class DataProvider {
 
     public static function getCensusSubDistricts($districtSlugOrName = null) {
         if (self::$censusSubDistricts === null) {
-            self::$censusSubDistricts = [];
-            $pdo = Database::getConnection();
-            if ($pdo) {
-                try {
-                    $stmt = $pdo->query("SELECT * FROM census_subdistricts ORDER BY sub_district ASC");
-                    if ($stmt) {
-                        while ($r = $stmt->fetch()) {
-                            $dSlug = strtolower($r['district_slug'] ?? '');
-                            if ($dSlug) {
-                                self::$censusSubDistricts[$dSlug][] = $r;
+            self::$censusSubDistricts = DataCache::remember('census_subdistricts_grouped', 86400, function() {
+                $pdo = Database::getConnection();
+                $grouped = [];
+                if ($pdo) {
+                    try {
+                        $stmt = $pdo->query("SELECT * FROM census_subdistricts ORDER BY sub_district ASC");
+                        if ($stmt) {
+                            while ($r = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                $dSlug = strtolower($r['district_slug'] ?? '');
+                                if ($dSlug) {
+                                    $grouped[$dSlug][] = $r;
+                                }
                             }
                         }
-                    }
-                } catch (Throwable $e) {}
-            }
+                    } catch (Throwable $e) {}
+                }
+                return $grouped;
+            });
         }
         if ($districtSlugOrName === null) {
-            return self::$censusSubDistricts;
+            return self::$censusSubDistricts ?: [];
         }
         $needle = strtolower(trim((string)$districtSlugOrName));
-        return self::$censusSubDistricts[$needle] ?? [];
+        return (self::$censusSubDistricts ?: [])[$needle] ?? [];
     }
 
     public static function getCensusTownsList($districtSlug = null, $civicStatus = null, $search = null, $page = 1, $limit = 50) {

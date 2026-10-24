@@ -861,7 +861,7 @@ require_once __DIR__ . '/header.php';
                             </h3>
                             
                             <p class="text-light opacity-90 mb-4" style="line-height: 1.6; font-size: 0.95rem;">
-                                The Chief Electoral Officer, Bihar has notified biennial elections (Notification No. <strong>M2–03(TC&GC)/2026-5369</strong>) for <strong>8 out of 12 total Graduates' &amp; Teachers' seats</strong> across 30 districts of Bihar. Polling on <strong>23 October 2026</strong> and counting on <strong>27 October 2026</strong>.
+                                The Chief Electoral Officer, Bihar has notified biennial elections (Notification No. <strong>M2–03(TC&GC)/2026-5369</strong>) for <strong>8 out of 12 total Graduates' &amp; Teachers' seats</strong> across 30 districts of Bihar. Polling concluded on <strong>23 October 2026</strong> and counting begins on <strong>27 October 2026 at 08:00 AM IST</strong>.
                             </p>
 
                             <div class="row g-2 g-sm-3 mb-4">
@@ -938,9 +938,9 @@ require_once __DIR__ . '/header.php';
                                     <div class="p-2 bg-light rounded-3 d-flex justify-content-between align-items-center">
                                         <div>
                                             <div class="fw-bold text-dark">Counting of Votes &amp; Results</div>
-                                            <div class="text-muted" style="font-size: 0.75rem;">Quota &amp; Preference Calculation</div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">Starts 8:00 AM &bull; Preference Quota Calculation</div>
                                         </div>
-                                        <span class="badge bg-dark text-white">27 Oct 2026</span>
+                                        <span class="badge bg-success text-white fw-bold">27 Oct 2026, 8 AM</span>
                                     </div>
                                 </div>
 

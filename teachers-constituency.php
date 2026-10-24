@@ -249,7 +249,7 @@ require_once __DIR__ . '/header.php';
                     </div>
                     <h4 class="fw-extrabold text-white mb-1">4 Teachers' Constituencies Undergoing Polls in 2026</h4>
                     <p class="text-white-50 mb-0 small" style="max-width: 820px;">
-                        Elections are currently underway for <strong>Patna</strong>, <strong>Tirhut</strong>, <strong>Darbhanga</strong>, and <strong>Saran</strong> Teachers' Constituencies. Polling on <strong>23 October 2026</strong>, Counting on <strong>27 October 2026</strong>.
+                        Elections are currently underway for <strong>Patna</strong>, <strong>Tirhut</strong>, <strong>Darbhanga</strong>, and <strong>Saran</strong> Teachers' Constituencies. Polling concluded on <strong>23 October 2026</strong>, Counting begins on <strong>27 October 2026 at 08:00 AM IST</strong>.
                     </p>
                 </div>
             </div>

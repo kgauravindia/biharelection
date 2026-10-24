@@ -28,40 +28,49 @@ $singleBlockObj = null;
 $panchayatsInBlock = [];
 $panchayatsInSameBlock = [];
 $blockSamiti = null;
+$panchayatSamitiMembers = [];
+$blockSamitiMembers = [];
 $zilaParishadMembers = [];
 $isSpecificZilaTerritory = false;
 $allDistrictPanchayats = [];
 $blockPanchayatsMap = [];
 $districtBlocks = [];
+$districtSamitiMemberCounts = [];
 
 if ($districtObj && $pdo) {
     $targetPanchayatQuery = $panchayatInput ?: $slugInput;
 
-    // 1. Fetch all census blocks in this district
-    try {
-        $stmtB = $pdo->prepare("SELECT * FROM census_subdistricts WHERE LOWER(district_slug) = :dslug ORDER BY sub_district ASC");
-        $stmtB->execute([':dslug' => $selectedDistrictSlug]);
-        $districtBlocks = $stmtB->fetchAll(PDO::FETCH_ASSOC);
-    } catch (Throwable $e) {}
+    // 1. Fetch all census blocks in this district (cached)
+    $districtBlocks = DataCache::remember('census_blocks_' . $selectedDistrictSlug, 86400, function() use ($pdo, $selectedDistrictSlug) {
+        try {
+            $stmtB = $pdo->prepare("SELECT * FROM census_subdistricts WHERE district_slug = :dslug ORDER BY sub_district ASC");
+            $stmtB->execute([':dslug' => $selectedDistrictSlug]);
+            return $stmtB->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        } catch (Throwable $e) {
+            return [];
+        }
+    }) ?: [];
     
-    // 2. Fetch all panchayats in this district
-    try {
-        $stmtP = $pdo->prepare("SELECT * FROM panchayats WHERE LOWER(district_slug) = :dslug ORDER BY id ASC");
-        $stmtP->execute([':dslug' => $selectedDistrictSlug]);
-        $allDistrictPanchayats = $stmtP->fetchAll(PDO::FETCH_ASSOC);
+    // 2. Fetch all panchayats in this district (cached)
+    $allDistrictPanchayats = DataCache::remember('district_panchayats_' . $selectedDistrictSlug, 86400, function() use ($pdo, $selectedDistrictSlug) {
+        try {
+            $stmtP = $pdo->prepare("SELECT * FROM panchayats WHERE district_slug = :dslug ORDER BY id ASC");
+            $stmtP->execute([':dslug' => $selectedDistrictSlug]);
+            return $stmtP->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        } catch (Throwable $e) {
+            return [];
+        }
+    }) ?: [];
 
-        // Group panchayats by block
-        foreach ($districtBlocks as $blk) {
-            $bSlug = slugify($blk['sub_district']);
-            $blockPanchayatsMap[$bSlug] = [];
-            foreach ($allDistrictPanchayats as $p) {
-                if (isBlockMatch($p['block'], $blk['sub_district'])) {
-                    $blockPanchayatsMap[$bSlug][] = $p;
-                }
+    // Group panchayats by block
+    foreach ($districtBlocks as $blk) {
+        $bSlug = slugify($blk['sub_district']);
+        $blockPanchayatsMap[$bSlug] = [];
+        foreach ($allDistrictPanchayats as $p) {
+            if (isBlockMatch($p['block'], $blk['sub_district'])) {
+                $blockPanchayatsMap[$bSlug][] = $p;
             }
         }
-    } catch (Throwable $e) {
-        $allDistrictPanchayats = [];
     }
 
     if (!empty($targetPanchayatQuery)) {
@@ -123,7 +132,7 @@ if ($districtObj && $pdo) {
         // Tier-2 Panchayat Samiti (Pramukh / Up-Pramukh & Elected Member 2021-2026)
         $panchayatSamitiMembers = [];
         try {
-            $stmtSamiti = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE LOWER(district_slug) = :dslug");
+            $stmtSamiti = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE district_slug = :dslug");
             $stmtSamiti->execute([':dslug' => $selectedDistrictSlug]);
             $samitiRows = $stmtSamiti->fetchAll(PDO::FETCH_ASSOC);
             foreach ($samitiRows as $sr) {
@@ -136,7 +145,7 @@ if ($districtObj && $pdo) {
 
         // Elected Panchayat Samiti Member(s) (2021-2026) for this Gram Panchayat
         try {
-            $stmtPsm = $pdo->prepare("SELECT * FROM panchayat_samiti_member_2021 WHERE LOWER(district_slug) = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
+            $stmtPsm = $pdo->prepare("SELECT * FROM panchayat_samiti_member_2021 WHERE district_slug = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
             $stmtPsm->execute([':dslug' => $selectedDistrictSlug]);
             $allDistPsm = $stmtPsm->fetchAll(PDO::FETCH_ASSOC);
 
@@ -159,7 +168,7 @@ if ($districtObj && $pdo) {
         $terrNo = trim($singlePanchayat['zila_parishad_territory_no'] ?? '');
         if (!empty($terrNo)) {
             try {
-                $stmtZp = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE LOWER(district_slug) = :dslug AND (territory_no = :terr OR ward_no = :terr)");
+                $stmtZp = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE district_slug = :dslug AND (territory_no = :terr OR ward_no = :terr)");
                 $stmtZp->execute([':dslug' => $selectedDistrictSlug, ':terr' => $terrNo]);
                 $matchedZp = $stmtZp->fetchAll(PDO::FETCH_ASSOC);
                 if (!empty($matchedZp)) {
@@ -172,7 +181,7 @@ if ($districtObj && $pdo) {
         // If not specified or no territory matched, fetch ALL Zila Parishad members representing this block
         if (empty($zilaParishadMembers)) {
             try {
-                $stmtZpAll = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE LOWER(district_slug) = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
+                $stmtZpAll = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE district_slug = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
                 $stmtZpAll->execute([':dslug' => $selectedDistrictSlug]);
                 $allZpDist = $stmtZpAll->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($allZpDist as $zm) {
@@ -190,7 +199,7 @@ if ($districtObj && $pdo) {
         $bSlugClean = slugify($currentBlockName);
 
         try {
-            $stmtV = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE LOWER(district_slug) = :dslug AND (gram_panchayat_slug = :pslug OR gram_panchayat_name LIKE :pname) ORDER BY population DESC");
+            $stmtV = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE district_slug = :dslug AND (gram_panchayat_slug = :pslug OR gram_panchayat_name LIKE :pname) ORDER BY population DESC");
             $stmtV->execute([
                 ':dslug' => $selectedDistrictSlug,
                 ':pslug' => $pSlugClean,
@@ -200,7 +209,7 @@ if ($districtObj && $pdo) {
 
             // Fallback: If no exact GP matched, check for villages in this block with same name or related
             if (empty($panchayatVillages)) {
-                $stmtV2 = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE LOWER(district_slug) = :dslug AND (sub_district_slug = :bslug OR cd_block_name LIKE :bname) AND (village_slug LIKE :pslug OR village_name LIKE :pname) ORDER BY population DESC LIMIT 8");
+                $stmtV2 = $pdo->prepare("SELECT * FROM census_villages_2011 WHERE district_slug = :dslug AND (sub_district_slug = :bslug OR cd_block_name LIKE :bname) AND (village_slug LIKE :pslug OR village_name LIKE :pname) ORDER BY population DESC LIMIT 8");
                 $stmtV2->execute([
                     ':dslug' => $selectedDistrictSlug,
                     ':bslug' => $bSlugClean,
@@ -236,7 +245,7 @@ if ($districtObj && $pdo) {
                 $params1991 = array_merge([$selectedDistrictSlug, $bSlugClean, '%' . $currentBlockName . '%'], $v2011Slugs, ['%' . $pNameClean . '%']);
                 
                 $sql1991 = "SELECT * FROM census_villages_1991 
-                            WHERE LOWER(district_slug) = ? 
+                            WHERE district_slug = ? 
                             AND (sub_district_slug = ? OR sub_district_name LIKE ?) 
                             AND (village_slug IN ($inClause) OR village_name LIKE ?) 
                             ORDER BY population DESC";
@@ -246,7 +255,7 @@ if ($districtObj && $pdo) {
             }
 
             if (empty($panchayatVillages1991)) {
-                $stmt91_fb = $pdo->prepare("SELECT * FROM census_villages_1991 WHERE LOWER(district_slug) = :dslug AND (village_slug = :pslug OR village_name LIKE :pname) ORDER BY population DESC LIMIT 8");
+                $stmt91_fb = $pdo->prepare("SELECT * FROM census_villages_1991 WHERE district_slug = :dslug AND (village_slug = :pslug OR village_name LIKE :pname) ORDER BY population DESC LIMIT 8");
                 $stmt91_fb->execute([
                     ':dslug' => $selectedDistrictSlug,
                     ':pslug' => $pSlugClean,
@@ -278,7 +287,7 @@ if ($districtObj && $pdo) {
         $bName = $singleBlockObj['sub_district'];
         $blockSamitiMembers = [];
         try {
-            $stmtSamiti = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE LOWER(district_slug) = :dslug");
+            $stmtSamiti = $pdo->prepare("SELECT * FROM panchayat_samiti_2016 WHERE district_slug = :dslug");
             $stmtSamiti->execute([':dslug' => $selectedDistrictSlug]);
             $samitiRows = $stmtSamiti->fetchAll(PDO::FETCH_ASSOC);
             foreach ($samitiRows as $sr) {
@@ -291,7 +300,7 @@ if ($districtObj && $pdo) {
 
         // Gather all Panchayat Samiti members in this block
         try {
-            $stmtBlockPsm = $pdo->prepare("SELECT * FROM panchayat_samiti_member_2021 WHERE LOWER(district_slug) = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC, panchayat ASC");
+            $stmtBlockPsm = $pdo->prepare("SELECT * FROM panchayat_samiti_member_2021 WHERE district_slug = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC, panchayat ASC");
             $stmtBlockPsm->execute([':dslug' => $selectedDistrictSlug]);
             $allDistBlockPsm = $stmtBlockPsm->fetchAll(PDO::FETCH_ASSOC);
             foreach ($allDistBlockPsm as $pm) {
@@ -302,7 +311,7 @@ if ($districtObj && $pdo) {
         } catch (Throwable $e) {}
 
         try {
-            $stmtZpAll = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE LOWER(district_slug) = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
+            $stmtZpAll = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE district_slug = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
             $stmtZpAll->execute([':dslug' => $selectedDistrictSlug]);
             $allZpDist = $stmtZpAll->fetchAll(PDO::FETCH_ASSOC);
             foreach ($allZpDist as $zm) {
@@ -314,23 +323,35 @@ if ($districtObj && $pdo) {
     }
 }
 
-// Pre-fetch district-level aggregated statistics if browsing district or state
-$districtCensusStats = [];
-$districtPanchayatCounts = [];
+// Pre-fetch district-level aggregated statistics if browsing district or state (cached)
+$districtStatsBundle = DataCache::remember('panchayat_district_stats', 86400, function() use ($pdo) {
+    $census = [];
+    $panchayats = [];
+    $samiti = [];
+    if ($pdo) {
+        try {
+            $stmt = $pdo->query("SELECT district_slug, COUNT(*) as total_blocks, SUM(population) as total_pop, AVG(literacy_rate) as avg_literacy, SUM(households) as total_households FROM census_subdistricts GROUP BY district_slug");
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $census[strtolower($row['district_slug'])] = $row;
+            }
 
-if ($pdo) {
-    try {
-        $stmt = $pdo->query("SELECT district_slug, COUNT(*) as total_blocks, SUM(population) as total_pop, AVG(literacy_rate) as avg_literacy, SUM(households) as total_households FROM census_subdistricts GROUP BY district_slug");
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $districtCensusStats[strtolower($row['district_slug'])] = $row;
-        }
+            $stmt2 = $pdo->query("SELECT district_slug, COUNT(*) as total_panchayats FROM panchayats GROUP BY district_slug");
+            while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+                $panchayats[strtolower($row2['district_slug'])] = intval($row2['total_panchayats']);
+            }
 
-        $stmt2 = $pdo->query("SELECT district_slug, COUNT(*) as total_panchayats FROM panchayats GROUP BY district_slug");
-        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-            $districtPanchayatCounts[strtolower($row2['district_slug'])] = intval($row2['total_panchayats']);
-        }
-    } catch (Throwable $e) {}
-}
+            $stmt3 = $pdo->query("SELECT district_slug, COUNT(*) as total_samiti_members FROM panchayat_samiti_member_2021 GROUP BY district_slug");
+            while ($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)) {
+                $samiti[strtolower($row3['district_slug'])] = intval($row3['total_samiti_members']);
+            }
+        } catch (Throwable $e) {}
+    }
+    return ['census' => $census, 'panchayats' => $panchayats, 'samiti' => $samiti];
+}) ?: ['census' => [], 'panchayats' => [], 'samiti' => []];
+
+$districtCensusStats = $districtStatsBundle['census'] ?? [];
+$districtPanchayatCounts = $districtStatsBundle['panchayats'] ?? [];
+$districtSamitiMemberCounts = $districtStatsBundle['samiti'] ?? [];
 
 // State Totals
 $totalStateBlocks = 534;
@@ -640,42 +661,64 @@ require_once __DIR__ . '/includes/header.php';
         <div class="d-flex flex-wrap gap-2">
             <?php if ($singlePanchayat && $districtObj): ?>
                 <a href="<?php echo getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
-                    <i class="bi bi-building-check me-1"></i> All <?php echo htmlspecialchars($singlePanchayat['block']); ?> Panchayats
+                    <i class="bi bi-building-check me-1"></i> सभी <?php echo htmlspecialchars($singlePanchayat['block']); ?> पंचायतें
                 </a>
                 <a href="<?php echo getBlockUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
-                    <i class="bi bi-geo-alt-fill me-1"></i> <?php echo htmlspecialchars($singlePanchayat['block']); ?> Block Hub
+                    <i class="bi bi-geo-alt-fill me-1"></i> <?php echo htmlspecialchars($singlePanchayat['block']); ?> प्रखंड हब
                 </a>
-                <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
-                    <i class="bi bi-people-fill me-1"></i> Block Samiti
+                <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members?district=<?php echo urlencode($districtObj['slug']); ?>&block=<?php echo urlencode($singlePanchayat['block']); ?>" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-people-fill me-1"></i> समिति सदस्य
+                </a>
+                <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
+                    <i class="bi bi-award-fill me-1"></i> प्रखंड प्रमुख
                 </a>
                 <a href="<?php echo getZilaParishadUrl($districtObj['slug']); ?>" class="btn btn-info fw-bold px-3 py-2 text-dark shadow-sm">
-                    <i class="bi bi-bank me-1"></i> Zila Parishad
+                    <i class="bi bi-bank me-1"></i> जिला परिषद
                 </a>
             <?php elseif ($singleBlockObj && $districtObj): ?>
                 <a href="<?php echo getPanchayatUrl($districtObj['slug']); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
-                    <i class="bi bi-arrow-left me-1"></i> All <?php echo htmlspecialchars($districtObj['name']); ?> Blocks
+                    <i class="bi bi-arrow-left me-1"></i> सभी <?php echo htmlspecialchars($districtObj['name']); ?> प्रखंड
                 </a>
                 <a href="<?php echo getBlockUrl($districtObj['slug'], slugify($singleBlockObj['sub_district'])); ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
-                    <i class="bi bi-geo-alt-fill me-1"></i> Block Demographics
+                    <i class="bi bi-geo-alt-fill me-1"></i> प्रखंड जनसांख्यिकी
                 </a>
-                <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], slugify($singleBlockObj['sub_district'])); ?>" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
-                    <i class="bi bi-people me-1"></i> Samiti Pramukh
+                <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members?district=<?php echo urlencode($districtObj['slug']); ?>&block=<?php echo urlencode($singleBlockObj['sub_district']); ?>" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-people-fill me-1"></i> समिति सदस्य
+                </a>
+                <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], slugify($singleBlockObj['sub_district'])); ?>" class="btn btn-outline-light fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-award me-1"></i> प्रमुख रोस्टर
                 </a>
                 <a href="<?php echo getZilaParishadUrl($districtObj['slug']); ?>" class="btn btn-info fw-bold px-3 py-2 text-dark shadow-sm">
-                    <i class="bi bi-bank me-1"></i> Zila Parishad
+                    <i class="bi bi-bank me-1"></i> जिला परिषद
+                </a>
+            <?php elseif ($districtObj): ?>
+                <a href="<?php echo SITE_URL; ?>/blocks" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
+                    <i class="bi bi-geo-alt-fill me-1"></i> सभी 534 प्रखंड
+                </a>
+                <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members?district=<?php echo urlencode($selectedDistrictSlug); ?>" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-people-fill me-1"></i> समिति सदस्य (<?php echo number_format($districtSamitiMemberCounts[$selectedDistrictSlug] ?? 0); ?>)
+                </a>
+                <a href="<?php echo getPanchayatSamitiUrl($selectedDistrictSlug); ?>" class="btn btn-outline-light fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-award-fill me-1"></i> प्रखंड प्रमुख
+                </a>
+                <a href="<?php echo getZilaParishadUrl($selectedDistrictSlug); ?>" class="btn btn-info fw-bold px-3 py-2 text-dark shadow-sm">
+                    <i class="bi bi-bank me-1"></i> जिला परिषद
                 </a>
             <?php else: ?>
                 <a href="<?php echo SITE_URL; ?>/blocks" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
-                    <i class="bi bi-geo-alt-fill me-1"></i> All 534 Blocks Directory
+                    <i class="bi bi-geo-alt-fill me-1"></i> सभी 534 प्रखंड निर्देशिका
                 </a>
-                <a href="<?php echo getPanchayatSamitiUrl($selectedDistrictSlug); ?>" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
-                    <i class="bi bi-people-fill me-1"></i> Panchayat Samiti
+                <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members" class="btn btn-success fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-people-fill me-1"></i> समिति सदस्य (8,752)
+                </a>
+                <a href="<?php echo getPanchayatSamitiUrl($selectedDistrictSlug); ?>" class="btn btn-outline-light fw-bold px-3 py-2 text-white shadow-sm">
+                    <i class="bi bi-award-fill me-1"></i> प्रखंड प्रमुख
                 </a>
                 <a href="<?php echo getZilaParishadUrl($selectedDistrictSlug); ?>" class="btn btn-info fw-bold px-3 py-2 text-dark shadow-sm">
-                    <i class="bi bi-bank me-1"></i> Zila Parishad Boards
+                    <i class="bi bi-bank me-1"></i> जिला परिषद बोर्ड
                 </a>
                 <a href="<?php echo getCensusUrl($selectedDistrictSlug); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
-                    <i class="bi bi-bar-chart-fill me-1"></i> Census Demographics
+                    <i class="bi bi-bar-chart-fill me-1"></i> जनगणना विवरण
                 </a>
             <?php endif; ?>
         </div>
@@ -994,11 +1037,19 @@ require_once __DIR__ . '/includes/header.php';
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                        <div class="mb-3">
+                            <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members?district=<?php echo urlencode($districtObj['slug']); ?>&block=<?php echo urlencode($singlePanchayat['block']); ?>" class="btn btn-sm btn-outline-success rounded-pill px-3 fw-semibold">
+                                <i class="bi bi-people me-1"></i> सभी <?php echo htmlspecialchars($singlePanchayat['block']); ?> समिति सदस्य &rarr;
+                            </a>
+                        </div>
                     <?php else: ?>
                         <div class="p-3 bg-light rounded-3 mb-3 border">
                             <span class="text-muted small d-block">पंचायत समिति सदस्य (2021-2026)</span>
                             <div class="fw-bold text-dark fs-6"><?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?> के निर्वाचित सदस्य</div>
-                            <span class="small text-muted"><?php echo htmlspecialchars($singlePanchayat['block']); ?> प्रखंड निर्वाचन क्षेत्र</span>
+                            <span class="small text-muted d-block mb-2">इस ग्राम पंचायत के समिति सदस्य का रिकॉर्ड अद्यतन किया जा रहा है।</span>
+                            <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members?district=<?php echo urlencode($districtObj['slug']); ?>&block=<?php echo urlencode($singlePanchayat['block']); ?>" class="btn btn-sm btn-outline-success rounded-pill px-3 fw-semibold">
+                                <i class="bi bi-people me-1"></i> <?php echo htmlspecialchars($singlePanchayat['block']); ?> प्रखंड समिति सदस्य निर्देशिका
+                            </a>
                         </div>
                     <?php endif; ?>
 
@@ -1029,8 +1080,8 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
 
                     <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
-                        <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-sm btn-success rounded-pill px-3 text-white fw-semibold">
-                            सभी समिति सदस्य &rarr;
+                        <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members?district=<?php echo urlencode($districtObj['slug']); ?>&block=<?php echo urlencode($singlePanchayat['block']); ?>" class="btn btn-sm btn-success rounded-pill px-3 text-white fw-semibold">
+                            समिति सदस्य &rarr;
                         </a>
                         <a href="<?php echo getBlockUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold">
                             प्रखंड हब देखें
@@ -1493,8 +1544,8 @@ require_once __DIR__ . '/includes/header.php';
                     <span class="badge bg-success text-white fw-bold px-3 py-2 rounded-pill">
                         <?php echo count($blockSamitiMembers); ?> निर्वाचित सदस्य
                     </span>
-                    <a href="<?php echo getPanchayatSamitiUrl($districtObj['slug'], $bSlug); ?>" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-semibold">
-                        सम्पूर्ण समिति विवरण &rarr;
+                    <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members?district=<?php echo urlencode($districtObj['slug']); ?>&block=<?php echo urlencode($bName); ?>" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-semibold">
+                        सम्पूर्ण समिति रोस्टर &rarr;
                     </a>
                 </div>
             </div>
@@ -1765,12 +1816,15 @@ require_once __DIR__ . '/includes/header.php';
                                     🌾 View <?php echo $pCount ? $pCount : ''; ?> Panchayats <i class="bi bi-arrow-right ms-1"></i>
                                 </a>
                                 
-                                <div class="d-flex gap-1">
-                                    <a href="<?php echo getPanchayatSamitiUrl($selectedDistrictSlug, $bSlug); ?>" class="btn btn-sm btn-outline-secondary rounded-pill fw-semibold px-2.5 py-1.5 small text-truncate" title="Panchayat Samiti Pramukh">
-                                        <i class="bi bi-people me-1"></i> Samiti
+                                <div class="d-flex gap-1 flex-wrap">
+                                    <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members?district=<?php echo urlencode($selectedDistrictSlug); ?>&block=<?php echo urlencode($blk['sub_district']); ?>" class="btn btn-sm btn-outline-success rounded-pill fw-semibold px-2 py-1.5 small text-nowrap" title="Panchayat Samiti Members">
+                                        <i class="bi bi-people me-1"></i> समिति सदस्य
                                     </a>
-                                    <a href="<?php echo htmlspecialchars($bUrl); ?>" class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-2.5 py-1.5 small text-nowrap" title="CD Block Overview">
-                                        Block Hub
+                                    <a href="<?php echo getPanchayatSamitiUrl($selectedDistrictSlug, $bSlug); ?>" class="btn btn-sm btn-outline-secondary rounded-pill fw-semibold px-2 py-1.5 small text-nowrap" title="प्रखंड प्रमुख">
+                                        प्रमुख
+                                    </a>
+                                    <a href="<?php echo htmlspecialchars($bUrl); ?>" class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-2 py-1.5 small text-nowrap" title="प्रखंड हब">
+                                        प्रखंड हब
                                     </a>
                                 </div>
                             </div>
@@ -1997,17 +2051,17 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
 
                         <!-- Action Links -->
-                        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center gap-2">
-                            <div class="d-flex gap-2">
-                                <a href="<?php echo htmlspecialchars($districtHubUrl); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-2.5 py-1 small" title="District Hub">
-                                    <i class="bi bi-building"></i> Hub
+                        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center gap-2 flex-wrap">
+                            <div class="d-flex gap-1 flex-wrap">
+                                <a href="<?php echo SITE_URL; ?>/panchayat-samiti-members?district=<?php echo htmlspecialchars($dSlug); ?>" class="btn btn-sm btn-outline-success rounded-pill px-2.5 py-1 small" title="Panchayat Samiti Members">
+                                    <i class="bi bi-people"></i> समिति
                                 </a>
-                                <a href="<?php echo getZilaParishadUrl($dSlug); ?>" class="btn btn-sm btn-outline-info text-dark rounded-pill px-2.5 py-1 small" title="Zila Parishad">
-                                    <i class="bi bi-bank"></i> Zila Parishad
+                                <a href="<?php echo getZilaParishadUrl($dSlug); ?>" class="btn btn-sm btn-outline-info text-dark rounded-pill px-2.5 py-1 small" title="जिला परिषद">
+                                    <i class="bi bi-bank"></i> जिला परिषद
                                 </a>
                             </div>
                             <a href="<?php echo htmlspecialchars($districtPanchayatUrl); ?>" class="btn btn-sm btn-primary fw-bold text-white rounded-pill px-3 py-1.5 shadow-sm text-nowrap">
-                                View Blocks <i class="bi bi-arrow-right ms-1"></i>
+                                प्रखंड देखें <i class="bi bi-arrow-right ms-1"></i>
                             </a>
                         </div>
                     </div>
