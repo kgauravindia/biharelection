@@ -782,6 +782,259 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 
+    <!-- 8 Seats Biennial Election 2026: Live Voting Turnout & Incumbent MLCs Table (Hindi) -->
+    <?php
+    $ongoingElectionTurnoutHi = [
+        [
+            'quota' => 'Graduates',
+            'quota_hi' => 'स्नातक',
+            'constituency' => 'Patna Graduates',
+            'constituency_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
+            'hub_slug' => 'patna-graduate-constituency',
+            'turnout' => 36.19,
+            'remark' => 'स्नातकों में सबसे कम',
+            'badge' => 'bg-danger text-white',
+            'sitting_mlc' => 'नीरज कुमार',
+            'party' => 'JD(U)',
+            'term' => '16 नवंबर 2026'
+        ],
+        [
+            'quota' => 'Graduates',
+            'quota_hi' => 'स्नातक',
+            'constituency' => 'Tirhut Graduates',
+            'constituency_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
+            'hub_slug' => 'tirhut-graduate-constituency',
+            'turnout' => 42.15,
+            'remark' => 'सामान्य मतदान',
+            'badge' => 'bg-secondary text-white',
+            'sitting_mlc' => 'वंशीधर ब्रजवासी',
+            'party' => 'IND',
+            'term' => '16 नवंबर 2026'
+        ],
+        [
+            'quota' => 'Graduates',
+            'quota_hi' => 'स्नातक',
+            'constituency' => 'Darbhanga Graduates',
+            'constituency_hi' => 'दरभंगा स्नातक निर्वाचन क्षेत्र',
+            'hub_slug' => 'darbhanga-graduate-constituency',
+            'turnout' => 42.00,
+            'remark' => 'सामान्य मतदान',
+            'badge' => 'bg-secondary text-white',
+            'sitting_mlc' => 'सर्वेश कुमार',
+            'party' => 'BJP',
+            'term' => '16 नवंबर 2026'
+        ],
+        [
+            'quota' => 'Graduates',
+            'quota_hi' => 'स्नातक',
+            'constituency' => 'Kosi Graduates',
+            'constituency_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
+            'hub_slug' => 'kosi-graduate-constituency',
+            'turnout' => 52.51,
+            'remark' => 'स्नातकों में सर्वाधिक वोटिंग',
+            'badge' => 'bg-success text-white',
+            'sitting_mlc' => 'डॉ. एनके यादव',
+            'party' => 'BJP',
+            'term' => '16 नवंबर 2026'
+        ],
+        [
+            'quota' => 'Teachers',
+            'quota_hi' => 'शिक्षक',
+            'constituency' => 'Patna Teachers',
+            'constituency_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
+            'hub_slug' => 'patna-teacher-constituency',
+            'turnout' => 56.89,
+            'remark' => 'शिक्षकों में सबसे कम',
+            'badge' => 'bg-warning text-dark',
+            'sitting_mlc' => 'नवल किशोर यादव',
+            'party' => 'BJP',
+            'term' => '16 नवंबर 2026'
+        ],
+        [
+            'quota' => 'Teachers',
+            'quota_hi' => 'शिक्षक',
+            'constituency' => 'Tirhut Teachers',
+            'constituency_hi' => 'तिरहुत शिक्षक निर्वाचन क्षेत्र',
+            'hub_slug' => 'tirhut-teacher-constituency',
+            'turnout' => 78.10,
+            'remark' => 'भारी मतदान',
+            'badge' => 'bg-primary text-white',
+            'sitting_mlc' => 'संजय कुमार सिंह',
+            'party' => 'CPI',
+            'term' => '16 नवंबर 2026'
+        ],
+        [
+            'quota' => 'Teachers',
+            'quota_hi' => 'शिक्षक',
+            'constituency' => 'Darbhanga Teachers',
+            'constituency_hi' => 'दरभंगा शिक्षक निर्वाचन क्षेत्र',
+            'hub_slug' => 'darbhanga-teacher-constituency',
+            'turnout' => 79.00,
+            'remark' => 'भारी मतदान',
+            'badge' => 'bg-primary text-white',
+            'sitting_mlc' => 'डॉ. मदन मोहन झा',
+            'party' => 'INC',
+            'term' => '16 नवंबर 2026'
+        ],
+        [
+            'quota' => 'Teachers',
+            'quota_hi' => 'शिक्षक',
+            'constituency' => 'Saran Teachers',
+            'constituency_hi' => 'सारण शिक्षक निर्वाचन क्षेत्र',
+            'hub_slug' => 'saran-teacher-constituency',
+            'turnout' => 87.16,
+            'remark' => 'राज्य में रिकॉर्ड मतदान',
+            'badge' => 'bg-success text-white',
+            'sitting_mlc' => 'अफाक अहमद',
+            'party' => 'Jan Suraaj Party',
+            'term' => '16 नवंबर 2026'
+        ]
+    ];
+    ?>
+
+    <div class="card border-0 rounded-4 shadow-sm mb-4 bg-white overflow-hidden border-top border-4 border-danger">
+        <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-danger text-white fw-bold px-2.5 py-1 rounded-pill blink-anim">
+                        <i class="bi bi-broadcast me-1"></i> मतदान रिपोर्ट (Turnout Report)
+                    </span>
+                    <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill">
+                        शाम 4 बजे तक मतदान समाप्त
+                    </span>
+                </div>
+                <h5 class="fw-bold text-navy mb-0 mt-1.5 font-heading">
+                    बिहार विधान परिषद द्विवार्षिक चुनाव 2026: 8 सीटों पर मतदान प्रतिशत एवं वर्तमान विधान पार्षद
+                </h5>
+            </div>
+            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
+                <span>विस्तृत चुनाव हब देखें</span>
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- Highlight Metric Badges Row -->
+        <div class="p-3 bg-light border-bottom">
+            <div class="row g-2 text-center small">
+                <div class="col-6 col-md-3">
+                    <div class="p-2 bg-white rounded-3 border">
+                        <span class="text-muted extra-small d-block">कुल औसत मतदान</span>
+                        <strong class="text-danger fs-6">59%+</strong>
+                        <span class="text-muted extra-small d-block">औसत वोटिंग</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-2 bg-white rounded-3 border">
+                        <span class="text-muted extra-small d-block">शिक्षक सीटें औसत</span>
+                        <strong class="text-success fs-6">74.55%</strong>
+                        <span class="text-success extra-small d-block">शिक्षकों में भारी उत्साह</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-2 bg-white rounded-3 border">
+                        <span class="text-muted extra-small d-block">स्नातक सीटें औसत</span>
+                        <strong class="text-primary fs-6">43.87%</strong>
+                        <span class="text-muted extra-small d-block">स्नातकों में कम रुचि</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-2 bg-white rounded-3 border">
+                        <span class="text-muted extra-small d-block">मतगणना एवं परिणाम</span>
+                        <strong class="text-dark fs-6">27 अक्टूबर 2026</strong>
+                        <span class="text-muted extra-small d-block">सुबह 8 बजे से</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 small">
+                <thead class="table-light text-uppercase text-secondary" style="font-size: 11px;">
+                    <tr>
+                        <th class="ps-3.5 py-3">निर्वाचन क्षेत्र</th>
+                        <th class="py-3" style="min-width: 170px;">मतदान प्रतिशत (शाम 4 बजे तक)</th>
+                        <th class="py-3">वर्तमान विधान पार्षद (Sitting MLC)</th>
+                        <th class="py-3 text-center">दल / पार्टी</th>
+                        <th class="py-3">कार्यकाल समाप्ति</th>
+                        <th class="py-3 text-end pe-3.5">बूथ हब</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($ongoingElectionTurnoutHi as $item): 
+                        $hubUrl = SITE_URL . '/' . $item['hub_slug'];
+                        $partyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $item['party']));
+                    ?>
+                    <tr>
+                        <td class="ps-3.5">
+                            <a href="<?php echo $hubUrl; ?>" class="fw-bold text-navy text-decoration-none hover-primary d-block">
+                                <?php echo htmlspecialchars($item['constituency_hi']); ?>
+                            </a>
+                            <div class="text-muted extra-small">
+                                <?php echo htmlspecialchars($item['constituency']); ?>
+                            </div>
+                            <span class="badge <?php echo $item['quota'] === 'Graduates' ? 'bg-primary-subtle text-primary' : 'bg-success-subtle text-success'; ?> extra-small rounded-pill px-2 py-0.5 mt-0.5">
+                                <?php echo $item['quota_hi']; ?> कोटा
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="fs-6 fw-extrabold <?php echo $item['turnout'] >= 75 ? 'text-success' : ($item['turnout'] < 40 ? 'text-danger' : 'text-primary'); ?>">
+                                    <?php echo number_format($item['turnout'], 2); ?>%
+                                </span>
+                                <span class="badge <?php echo $item['badge']; ?> extra-small rounded-pill" style="font-size: 10px;">
+                                    <?php echo htmlspecialchars($item['remark']); ?>
+                                </span>
+                            </div>
+                            <div class="progress rounded-pill" style="height: 5px; background-color: #e2e8f0; max-width: 150px;">
+                                <div class="progress-bar <?php echo $item['turnout'] >= 75 ? 'bg-success' : ($item['turnout'] < 40 ? 'bg-danger' : 'bg-primary'); ?>" 
+                                     role="progressbar" 
+                                     style="width: <?php echo min(100, $item['turnout']); ?>%;" 
+                                     aria-valuenow="<?php echo $item['turnout']; ?>" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="fw-bold text-navy">
+                                <?php echo htmlspecialchars($item['sitting_mlc']); ?>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge-party <?php echo $partyClass; ?> px-2.5 py-1">
+                                <?php echo htmlspecialchars($item['party']); ?>
+                            </span>
+                        </td>
+                        <td class="small text-secondary">
+                            <i class="bi bi-clock-history me-1 text-muted"></i>
+                            <?php echo htmlspecialchars($item['term']); ?>
+                        </td>
+                        <td class="text-end pe-3.5">
+                            <a href="<?php echo $hubUrl; ?>" class="btn btn-outline-primary btn-sm rounded-pill px-2.5 py-1 extra-small fw-semibold" title="बूथ सूची एवं विवरण देखें">
+                                <i class="bi bi-box-arrow-up-right me-1"></i> हब
+                            </a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer bg-light py-2.5 px-3.5 border-top d-flex flex-wrap justify-content-between align-items-center gap-2 extra-small text-muted">
+            <div>
+                <i class="bi bi-info-circle text-primary me-1"></i>
+                कतार में लगे मतदाताओं के वोट डालने के बाद मतपेटियां सील होकर स्ट्रांग रूम भेजी गईं। परिणाम <strong>27 अक्टूबर 2026</strong> को मतगणना के बाद आएगा।
+            </div>
+            <a href="https://www.livehindustan.com/bihar/bihar-mlc-election-2026-voting-live-bjp-rjd-jdu-chunav-latest-updates-live-blog-201792729617020.html" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="text-primary fw-semibold text-decoration-none hover-underline d-inline-flex align-items-center gap-1">
+                <span>स्रोत: लाइव हिंदुस्तान रिपोर्ट (Live Blog)</span>
+                <i class="bi bi-box-arrow-up-right"></i>
+            </a>
+        </div>
+    </div>
+
     <!-- Highlight 5-Quota Command Metrics -->
     <div class="row g-2 g-md-3 row-cols-2 row-cols-md-3 row-cols-xl-5 mb-4">
         <!-- 1: Local Authorities -->

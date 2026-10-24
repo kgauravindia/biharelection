@@ -959,13 +959,23 @@ class DataProvider {
         }
         self::$mpsLokSabha = DataCache::remember('provider_mps_loksabha', 86400, function() {
             $pdo = Database::getConnection();
-            if (!$pdo) return [];
-            try {
-                $stmt = $pdo->query("SELECT * FROM mps_loksabha ORDER BY pc_no ASC");
-                return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
-            } catch (Throwable $e) {
-                return [];
+            if ($pdo) {
+                try {
+                    $stmt = $pdo->query("SELECT * FROM mps_loksabha ORDER BY pc_no ASC");
+                    $rows = $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
+                    if (!empty($rows)) {
+                        return $rows;
+                    }
+                } catch (Throwable $e) {}
             }
+            $jsonFile = __DIR__ . '/assets/data/mps_loksabha.json';
+            if (file_exists($jsonFile)) {
+                $decoded = json_decode(file_get_contents($jsonFile), true);
+                if (is_array($decoded)) {
+                    return $decoded;
+                }
+            }
+            return [];
         });
         return self::$mpsLokSabha ?: [];
     }

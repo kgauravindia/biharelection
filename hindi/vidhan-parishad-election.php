@@ -138,6 +138,122 @@ $seats = [
     ]
 ];
 
+// 8 निर्वाचन क्षेत्रों की लाइव मतदान रिपोर्ट (24 अक्टूबर 2026 - शाम 4 बजे तक)
+$turnoutReport = [
+    [
+        'category' => 'Graduates',
+        'category_hi' => 'स्नातक',
+        'name' => 'Patna Graduates',
+        'name_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'patna-graduates',
+        'turnout' => 36.19,
+        'turnout_rank' => 'स्नातकों में सबसे कम',
+        'rank_badge' => 'bg-danger text-white',
+        'sitting_mlc' => 'नीरज कुमार',
+        'party' => 'JD(U)',
+        'tenure' => '16 नवंबर 2026',
+        'booth_count' => 134
+    ],
+    [
+        'category' => 'Graduates',
+        'category_hi' => 'स्नातक',
+        'name' => 'Tirhut Graduates',
+        'name_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'tirhut-graduates',
+        'turnout' => 42.15,
+        'turnout_rank' => 'सामान्य मतदान',
+        'rank_badge' => 'bg-secondary text-white',
+        'sitting_mlc' => 'वंशीधर ब्रजवासी',
+        'party' => 'IND',
+        'tenure' => '16 नवंबर 2026',
+        'booth_count' => 145
+    ],
+    [
+        'category' => 'Graduates',
+        'category_hi' => 'स्नातक',
+        'name' => 'Darbhanga Graduates',
+        'name_hi' => 'दरभंगा स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'darbhanga-graduates',
+        'turnout' => 42.00,
+        'turnout_rank' => 'सामान्य मतदान',
+        'rank_badge' => 'bg-secondary text-white',
+        'sitting_mlc' => 'सर्वेश कुमार',
+        'party' => 'BJP',
+        'tenure' => '16 नवंबर 2026',
+        'booth_count' => 138
+    ],
+    [
+        'category' => 'Graduates',
+        'category_hi' => 'स्नातक',
+        'name' => 'Kosi Graduates',
+        'name_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'kosi-graduates',
+        'turnout' => 52.51,
+        'turnout_rank' => 'स्नातकों में सर्वाधिक वोटिंग',
+        'rank_badge' => 'bg-success text-white',
+        'sitting_mlc' => 'डॉ. एनके यादव',
+        'party' => 'BJP',
+        'tenure' => '16 नवंबर 2026',
+        'booth_count' => 181
+    ],
+    [
+        'category' => 'Teachers',
+        'category_hi' => 'शिक्षक',
+        'name' => 'Patna Teachers',
+        'name_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'patna-teachers',
+        'turnout' => 56.89,
+        'turnout_rank' => 'शिक्षकों में सबसे कम',
+        'rank_badge' => 'bg-warning text-dark',
+        'sitting_mlc' => 'नवल किशोर यादव',
+        'party' => 'BJP',
+        'tenure' => '16 नवंबर 2026',
+        'booth_count' => 80
+    ],
+    [
+        'category' => 'Teachers',
+        'category_hi' => 'शिक्षक',
+        'name' => 'Tirhut Teachers',
+        'name_hi' => 'तिरहुत शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'tirhut-teachers',
+        'turnout' => 78.10,
+        'turnout_rank' => 'भारी मतदान',
+        'rank_badge' => 'bg-primary text-white',
+        'sitting_mlc' => 'संजय कुमार सिंह',
+        'party' => 'CPI',
+        'tenure' => '16 नवंबर 2026',
+        'booth_count' => 58
+    ],
+    [
+        'category' => 'Teachers',
+        'category_hi' => 'शिक्षक',
+        'name' => 'Darbhanga Teachers',
+        'name_hi' => 'दरभंगा शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'darbhanga-teachers',
+        'turnout' => 79.00,
+        'turnout_rank' => 'भारी मतदान',
+        'rank_badge' => 'bg-primary text-white',
+        'sitting_mlc' => 'डॉ. मदन मोहन झा',
+        'party' => 'INC',
+        'tenure' => '16 नवंबर 2026',
+        'booth_count' => 99
+    ],
+    [
+        'category' => 'Teachers',
+        'category_hi' => 'शिक्षक',
+        'name' => 'Saran Teachers',
+        'name_hi' => 'सारण शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'saran-teachers',
+        'turnout' => 87.16,
+        'turnout_rank' => 'राज्य में रिकॉर्ड मतदान',
+        'rank_badge' => 'bg-success text-white',
+        'sitting_mlc' => 'अफाक अहमद',
+        'party' => 'Jan Suraaj Party',
+        'tenure' => '16 नवंबर 2026',
+        'booth_count' => 98
+    ]
+];
+
 // 8 निर्वाचन क्षेत्रों के मतदान केंद्र एवं समर्पित हब मैपिंग
 $boothPageMap = [
     'patna-graduates' => ['slug' => 'patna-graduate-constituency', 'count' => 134, 'code' => 1],
@@ -487,6 +603,182 @@ $timeline = [
     <div class="row g-5">
         <!-- Main Content Area (8 Cols) -->
         <div class="col-lg-8">
+
+            <!-- ============================================================= -->
+            <!-- 2.5 LIVE VOTING TURNOUT & INCUMBENT MLCS (HINDI) -->
+            <!-- ============================================================= -->
+            <div id="voting-turnout" class="mb-5">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                    <div>
+                        <span class="badge bg-danger text-white fw-bold text-uppercase px-2.5 py-1 mb-1 blink-anim">
+                            <i class="bi bi-broadcast me-1"></i> मतदान संपन्न &bull; लाइव टर्नआउट रिपोर्ट
+                        </span>
+                        <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
+                            8 सीटों का मतदान प्रतिशत एवं वर्तमान विधान पार्षद
+                        </h3>
+                        <div class="text-muted small">
+                            शाम 4 बजे तक मतदान प्रतिशत, वर्तमान विधान पार्षद एवं 27 अक्टूबर मतगणना विवरण
+                        </div>
+                    </div>
+                    <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                        <i class="bi bi-clock-history me-1"></i> शाम 4 बजे तक मतदान समाप्त
+                    </span>
+                </div>
+
+                <!-- Live Highlight Metrics Cards -->
+                <div class="row g-2 g-sm-3 mb-3">
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-4 bg-white shadow-sm border border-danger border-opacity-25 h-100 text-center">
+                            <span class="text-muted extra-small fw-bold text-uppercase d-block mb-1">कुल औसत मतदान</span>
+                            <div class="h3 fw-extrabold text-danger mb-0 font-monospace">59%+</div>
+                            <small class="text-muted" style="font-size: 11px;">औसत वोटिंग</small>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-4 bg-white shadow-sm border border-success border-opacity-25 h-100 text-center">
+                            <span class="text-muted extra-small fw-bold text-uppercase d-block mb-1">शिक्षक सीटें औसत</span>
+                            <div class="h3 fw-extrabold text-success mb-0 font-monospace">74.55%</div>
+                            <small class="text-success fw-semibold" style="font-size: 11px;">शिक्षकों में भारी उत्साह</small>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-4 bg-white shadow-sm border border-primary border-opacity-25 h-100 text-center">
+                            <span class="text-muted extra-small fw-bold text-uppercase d-block mb-1">स्नातक सीटें औसत</span>
+                            <div class="h3 fw-extrabold text-primary mb-0 font-monospace">43.87%</div>
+                            <small class="text-muted" style="font-size: 11px;">स्नातकों में कम रुचि</small>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-4 bg-white shadow-sm border border-warning border-opacity-50 h-100 text-center">
+                            <span class="text-muted extra-small fw-bold text-uppercase d-block mb-1">मतगणना एवं परिणाम</span>
+                            <div class="h4 fw-extrabold text-dark mb-0 font-monospace">27 Oct</div>
+                            <small class="text-muted" style="font-size: 11px;">सुबह 8 बजे से</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analysis Summary Alert -->
+                <div class="alert alert-light border border-secondary border-opacity-25 rounded-4 p-3 mb-4 shadow-sm" style="background-color: #fdfefe;">
+                    <div class="d-flex align-items-start gap-2.5">
+                        <i class="bi bi-info-circle-fill text-primary fs-5 mt-0.5"></i>
+                        <div class="small text-secondary" style="line-height: 1.55;">
+                            <strong class="text-dark">मुख्य विशेषताएं:</strong>
+                            शिक्षकों में मतदान को लेकर भारी उत्साह देखा गया जबकि स्नातकों में वोटिंग को लेकर उत्साह की कमी रही। 
+                            <strong>सारण शिक्षक (87.16%)</strong> एवं <strong>कोसी स्नातक (52.51%)</strong> अपने-अपने वर्ग में सबसे आगे रहे, जबकि 
+                            <strong>पटना</strong> दोनों ही श्रेणियों (स्नातक 36.19% एवं शिक्षक 56.89%) में सबसे फिसड्डी रहा। 
+                            शाम 4 बजे तक कतार में लगे मतदाताओं के वोट डालने के बाद मतपेटियां सील होकर स्ट्रांग रूम रवाना हुईं। 
+                            सभी सीटों का परिणाम <strong>27 अक्टूबर</strong> को मतगणना के बाद घोषित किया जाएगा।
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Turnout & Incumbent MLCs Table -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-3">
+                    <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-table text-primary fs-5"></i>
+                            <span class="fw-bold text-dark">सीटवार मतदान प्रतिशत एवं वर्तमान विधान पार्षद</span>
+                        </div>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Turnout Filter">
+                            <button type="button" class="btn btn-outline-dark active fw-semibold" onclick="filterTurnoutTable('all', this)">सभी (8)</button>
+                            <button type="button" class="btn btn-outline-primary fw-semibold" onclick="filterTurnoutTable('Graduates', this)">स्नातक (4)</button>
+                            <button type="button" class="btn btn-outline-success fw-semibold" onclick="filterTurnoutTable('Teachers', this)">शिक्षक (4)</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="turnoutReportTable">
+                            <thead class="table-light text-uppercase text-secondary small" style="font-size: 11px;">
+                                <tr>
+                                    <th class="ps-3.5 py-3">निर्वाचन क्षेत्र</th>
+                                    <th class="py-3" style="min-width: 170px;">मतदान प्रतिशत (शाम 4 बजे तक)</th>
+                                    <th class="py-3">वर्तमान विधान पार्षद (Sitting MLC)</th>
+                                    <th class="py-3 text-center">दल / पार्टी</th>
+                                    <th class="py-3">कार्यकाल समाप्ति</th>
+                                    <th class="py-3 text-end pe-3.5">बूथ हब</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($turnoutReport as $row): 
+                                    $bInfo = $boothPageMap[$row['slug']] ?? null;
+                                    $bUrl = $bInfo ? SITE_URL . '/' . $bInfo['slug'] : '#';
+                                    $partyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $row['party']));
+                                ?>
+                                <tr class="turnout-row" data-cat="<?php echo $row['category']; ?>">
+                                    <td class="ps-3.5">
+                                        <div class="fw-bold text-navy">
+                                            <a href="<?php echo $bUrl; ?>" class="text-decoration-none text-dark hover-primary">
+                                                <?php echo htmlspecialchars($row['name_hi']); ?>
+                                            </a>
+                                        </div>
+                                        <div class="text-muted extra-small">
+                                            <?php echo htmlspecialchars($row['name']); ?>
+                                        </div>
+                                        <span class="badge <?php echo $row['category'] === 'Graduates' ? 'bg-primary-subtle text-primary' : 'bg-success-subtle text-success'; ?> extra-small rounded-pill px-2 py-0.5 mt-1">
+                                            <?php echo $row['category_hi']; ?> कोटा
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="h5 fw-extrabold mb-0 <?php echo $row['turnout'] >= 75 ? 'text-success' : ($row['turnout'] < 40 ? 'text-danger' : 'text-primary'); ?>">
+                                                <?php echo number_format($row['turnout'], 2); ?>%
+                                            </span>
+                                            <span class="badge <?php echo $row['rank_badge']; ?> extra-small rounded-pill" style="font-size: 10px;">
+                                                <?php echo htmlspecialchars($row['turnout_rank']); ?>
+                                            </span>
+                                        </div>
+                                        <div class="progress rounded-pill" style="height: 6px; background-color: #e2e8f0; max-width: 160px;">
+                                            <div class="progress-bar <?php echo $row['turnout'] >= 75 ? 'bg-success' : ($row['turnout'] < 40 ? 'bg-danger' : 'bg-primary'); ?>" 
+                                                 role="progressbar" 
+                                                 style="width: <?php echo min(100, $row['turnout']); ?>%;" 
+                                                 aria-valuenow="<?php echo $row['turnout']; ?>" 
+                                                 aria-valuemin="0" 
+                                                 aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="fw-bold text-navy" style="font-size: 0.95rem;">
+                                            <?php echo htmlspecialchars($row['sitting_mlc']); ?>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge-party <?php echo $partyClass; ?> px-2.5 py-1">
+                                            <?php echo htmlspecialchars($row['party']); ?>
+                                        </span>
+                                    </td>
+                                    <td class="small text-secondary">
+                                        <i class="bi bi-calendar-event me-1 text-muted"></i>
+                                        <?php echo htmlspecialchars($row['tenure']); ?>
+                                    </td>
+                                    <td class="text-end pe-3.5">
+                                        <a href="<?php echo $bUrl; ?>" class="btn btn-outline-primary btn-sm rounded-pill px-2.5 py-1 extra-small fw-semibold text-nowrap" title="बूथ सूची देखें">
+                                            <i class="bi bi-geo-alt-fill text-danger me-1"></i>
+                                            <span><?php echo $row['booth_count']; ?> बूथ</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Source Citation & Counting Footer -->
+                    <div class="card-footer bg-light py-2.5 px-3.5 border-top d-flex flex-wrap justify-content-between align-items-center gap-2 small">
+                        <div class="text-muted">
+                            <i class="bi bi-newspaper text-danger me-1"></i>
+                            <strong>स्रोत / संदर्भ:</strong> लाइव हिंदुस्तान रिपोर्ट (Live Blog) &bull; अंतिम आंकड़े चुनाव आयोग की संवीक्षा के अधीन।
+                        </div>
+                        <a href="https://www.livehindustan.com/bihar/bihar-mlc-election-2026-voting-live-bjp-rjd-jdu-chunav-latest-updates-live-blog-201792729617020.html" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="text-primary fw-semibold text-decoration-none hover-underline d-inline-flex align-items-center gap-1">
+                            <span>लाइव हिंदुस्तान रिपोर्ट पढ़ें</span>
+                            <i class="bi bi-box-arrow-up-right" style="font-size: 10px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
             <!-- ============================================================= -->
             <!-- 3. OFFICIAL ELECTION SCHEDULE & TIMELINE -->
@@ -1513,6 +1805,21 @@ function lookupDistrictConstituency(district) {
     }
 
     box.classList.remove('d-none');
+}
+
+function filterTurnoutTable(cat, btn) {
+    if (btn) {
+        btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+    const rows = document.querySelectorAll('#turnoutReportTable .turnout-row');
+    rows.forEach(r => {
+        if (cat === 'all' || r.getAttribute('data-cat') === cat) {
+            r.style.display = '';
+        } else {
+            r.style.display = 'none';
+        }
+    });
 }
 </script>
 

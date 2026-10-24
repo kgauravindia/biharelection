@@ -600,6 +600,8 @@ CREATE TABLE IF NOT EXISTS `mps_loksabha` (
   `slug` VARCHAR(150) NOT NULL,
   `mp_name` VARCHAR(150) NOT NULL,
   `party` VARCHAR(100) NOT NULL,
+  `margin` INT DEFAULT 0,
+  `district` VARCHAR(100) DEFAULT NULL,
   `criminal_cases` INT DEFAULT 0,
   `house` VARCHAR(50) DEFAULT 'Lok Sabha',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -232,11 +232,13 @@ foreach ($mpsLs as $mp) {
         'slug' => $mp['slug'] ?? slugify($mp['pc_name'] ?? ''),
         'mp_name' => $mp['mp_name'] ?? '',
         'party' => $mp['party'] ?? '',
+        'margin' => $mp['margin'] ?? 0,
+        'district' => $mp['district'] ?? null,
         'criminal_cases' => $mp['criminal_cases'] ?? 0,
         'house' => 'Lok Sabha'
     ];
 }
-executeBatchInsert($pdo, 'mps_loksabha', ['pc_no', 'pc_name', 'slug', 'mp_name', 'party', 'criminal_cases', 'house'], $lsRows);
+executeBatchInsert($pdo, 'mps_loksabha', ['pc_no', 'pc_name', 'slug', 'mp_name', 'party', 'margin', 'district', 'criminal_cases', 'house'], $lsRows);
 echo "  ✓ " . count($lsRows) . " Lok Sabha MPs synced.\n\n";
 
 // 9. Sync Rajya Sabha MPs (15)
