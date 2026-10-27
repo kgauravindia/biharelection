@@ -411,33 +411,33 @@ $electionResults = [
         'name' => 'Patna Teachers',
         'name_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
         'slug' => 'patna-teachers',
-        'status' => 'राजद आगे (कांटे की टक्कर)',
-        'status_badge' => 'bg-danger text-white blink-anim',
+        'status' => 'भाजपा आगे (राउंड 3 में +145 की बढ़त)',
+        'status_badge' => 'bg-primary text-white blink-anim',
         'is_declared' => false,
         'turnout' => 56.89,
         'booths' => 80,
         'counting_centre' => 'कला एवं शिल्प महाविद्यालय, पटना',
         'returning_officer' => 'प्रमंडलीय आयुक्त, पटना',
         'leading' => [
-            'name' => 'डॉ. संजीव कुमार सिंह',
-            'party' => 'RJD',
-            'role' => 'महागठबंधन प्रत्याशी (शुरुआती चक्रों में आगे)'
-        ],
-        'trailing' => [
             'name' => 'नवल किशोर यादव',
             'party' => 'BJP',
-            'role' => 'वर्तमान विधान पार्षद (5 बार विजेता) / एनडीए'
+            'role' => 'वर्तमान विधान पार्षद (5 बार विजेता) / राउंड 3 में +145 मतों की बढ़त'
+        ],
+        'trailing' => [
+            'name' => 'डॉ. संजीव कुमार सिंह',
+            'party' => 'RJD',
+            'role' => 'महागठबंधन प्रत्याशी (राउंड 2 में आगे रहे, कुल 3,094 मत)'
         ],
         'other_key' => [
-            'name' => 'जन सुराज प्रत्याशी',
-            'party' => 'Jan Suraaj',
-            'role' => 'तृतीय दावेदार'
+            'name' => 'दिव्या ज्योति / डॉ. संजय यादव',
+            'party' => 'Jan Suraaj / INC',
+            'role' => 'जन सुराज व कांग्रेस प्रत्याशी'
         ],
-        'trend_analysis' => 'सनसनीखेज मुकाबला: 5 बार के भाजपा एमएलसी नवल किशोर यादव पर राजद के डॉ. संजीव कुमार सिंह ने बढ़त बनाई।',
+        'trend_analysis' => 'तीसरे राउंड के बाद बड़ा उलटफेर: 5 बार के भाजपा एमएलसी नवल किशोर यादव (3,239 मत) ने राजद के डॉ. संजीव कुमार सिंह (3,094 मत) पर 145 मतों की बढ़त बनाई।',
         'sources_cited' => [
-            'हिन्दुस्तान' => 'कॉलेज व माध्यमिक शिक्षक मतों के शुरुआती बंडलों में राजद के डॉ. संजीव कुमार सिंह ने नवल किशोर यादव पर बढ़त बनाई।',
-            'अमर उजाला' => 'पटना शिक्षक सीट पर राजद और 5 बार के भाजपा एमएलसी के बीच हर वोट के लिए कांटे का मुकाबला जारी।',
-            'प्रभात खबर' => '80 बूथों के मतपत्रों की जांच जारी; दूसरी वरीयता के मत मूल्य से ही अंतिम कोटा तय होगा।'
+            'अमर उजाला' => 'तीसरे राउंड की गिनती पूरी होने पर भाजपा के नवल किशोर यादव 3,239 मत पाकर राजद के डॉ. संजीव कुमार (3,094 मत) से 145 मतों से आगे निकले।',
+            'दैनिक जागरण' => 'राउंड 1 में नवल किशोर (+2 मत) और राउंड 2 में संजीव कुमार (+50 मत) के बाद राउंड 3 में भाजपा ने बढ़त बनाई।',
+            'हिन्दुस्तान' => 'पटना के राजकीय कन्या विद्यालय बांकीपुर केंद्र पर वरीयता मतों के स्थानांतरण की प्रक्रिया तेज; मुकाबला बेहद करीबी।'
         ]
     ],
     [
@@ -519,33 +519,33 @@ $electionResults = [
         'name' => 'Darbhanga Teachers',
         'name_hi' => 'दरभंगा शिक्षक निर्वाचन क्षेत्र',
         'slug' => 'darbhanga-teachers',
-        'status' => 'जन सुराज आगे (कांटे की टक्कर)',
-        'status_badge' => 'bg-warning text-dark',
-        'is_declared' => false,
+        'status' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
         'turnout' => 79.00,
         'booths' => 99,
         'counting_centre' => 'प्रमंडलीय आयुक्त परिसर, दरभंगा',
         'returning_officer' => 'प्रमंडलीय आयुक्त, दरभंगा',
         'leading' => [
-            'name' => 'सुरेश प्रसाद राय',
+            'name' => 'डॉ. सुरेश प्रसाद राय',
             'party' => 'Jan Suraaj',
-            'role' => 'जन सुराज प्रत्याशी (वरीयता मतों में आगे)'
+            'role' => 'विजयी घोषित (जन सुराज प्रत्याशी - ऐतिहासिक जीत)'
         ],
         'trailing' => [
             'name' => 'डॉ. मदन मोहन झा',
             'party' => 'INC',
-            'role' => 'वर्तमान विधान पार्षद (पूर्व कांग्रेस प्रदेश अध्यक्ष)'
+            'role' => 'उप-विजेता (निवर्तमान एमएलसी / पूर्व कांग्रेस प्रदेश अध्यक्ष)'
         ],
         'other_key' => [
             'name' => 'रामदेव राय',
             'party' => 'BJP',
             'role' => 'एनडीए समर्थित दावेदार'
         ],
-        'trend_analysis' => 'जन सुराज के सुरेश प्रसाद राय कांग्रेस के वरिष्ठ नेता डॉ. मदन मोहन झा के खिलाफ करीबी मुकाबले में बढ़त बनाए हुए हैं।',
+        'trend_analysis' => 'ऐतिहासिक परिणाम: जन सुराज पार्टी के डॉ. सुरेश प्रसाद राय ने कांग्रेस के दिग्गज नेता व 4 बार के एमएलसी डॉ. मदन मोहन झा को हराकर जन सुराज का पहला खाता खोला।',
         'sources_cited' => [
-            'द वीक' => 'दरभंगा शिक्षक सीट पर जन सुराज के सुरेश प्रसाद राय ने कांग्रेस दिग्गज मदन मोहन झा पर उल्लेखनीय बढ़त बनाई।',
-            'हिन्दुस्तान टाइम्स' => 'मिथिला शिक्षक क्षेत्र में जन सुराज पार्टी ने त्रिकोणीय मुकाबले में कांग्रेस को कड़ी चुनौती दी।',
-            'प्रभात खबर' => '79% भारी मतदान के मतपत्रों को 10 काउंटिंग टेबलों पर वरीयता क्रम में जांचा जा रहा है।'
+            'दैनिक जागरण' => 'दरभंगा शिक्षक सीट पर जन सुराज के सुरेश प्रसाद राय ने कांग्रेस दिग्गज डॉ. मदन मोहन झा को हराकर जीत दर्ज की।',
+            'हिन्दुस्तान' => 'प्रशांत किशोर की जन सुराज पार्टी ने विधान परिषद में दर्ज की पहली जीत; मिथिलांचल के शिक्षक मतों में बड़ा उलटफेर।',
+            'प्रभात खबर' => 'दरभंगा प्रमंडलीय आयुक्त द्वारा औपचारिक परिणाम की घोषणा; सुरेश राय को दिया गया जीत का प्रमाण पत्र।'
         ]
     ],
     [
@@ -897,13 +897,13 @@ $timeline = [
                             <div>
                                 <i class="bi bi-trophy-fill text-warning me-1"></i> <strong>घोषित परिणाम:</strong>
                             </div>
-                            <span class="badge bg-success text-white fw-bold px-2 py-1">2 सीटें घोषित (विजेता तय)</span>
+                            <span class="badge bg-success text-white fw-bold px-2 py-1">3 सीटें घोषित (विजेता तय)</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
                                 <i class="bi bi-hourglass-split text-danger me-1"></i> <strong>गणना जारी:</strong>
                             </div>
-                            <span class="text-warning fw-semibold">6 सीटों पर वरीयता छंटनी</span>
+                            <span class="text-warning fw-semibold">5 सीटों पर वरीयता छंटनी</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
@@ -931,16 +931,16 @@ $timeline = [
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">2 / 8</div>
+                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">3 / 8</div>
                     <div class="fw-semibold text-dark small">विजेता घोषित सीटें</div>
-                    <small class="text-muted">तिरहुत शिक्षक (BJP) &bull; सारण शिक्षक (IND)</small>
+                    <small class="text-muted">तिरहुत (BJP) &bull; सारण (IND) &bull; दरभंगा शिक्षक (JSP)</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">6 / 8</div>
+                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">5 / 8</div>
                     <div class="fw-semibold text-dark small">वरीयता कोटा गणना जारी</div>
-                    <small class="text-muted">पटना, तिरहुत, दर्भ., कोसी</small>
+                    <small class="text-muted">पटना (स्नातक व शिक्षक), तिरहुत, दर्भ. स्नातक, कोसी</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
@@ -981,7 +981,7 @@ $timeline = [
                                 <span class="live-pulse-dot" style="background:#fff;"></span> लाइव मतगणना परिणाम
                             </span>
                             <span class="badge bg-success text-white extra-small fw-semibold px-2 py-0.5 rounded-pill">
-                                2 सीटें घोषित
+                                3 सीटें घोषित
                             </span>
                         </div>
                         <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
@@ -993,9 +993,9 @@ $timeline = [
                     </div>
                     <div class="text-end">
                         <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
-                            <i class="bi bi-clock-history me-1"></i> अपडेट 09:15 PM IST
+                            <i class="bi bi-clock-history me-1"></i> अपडेट 10:00 PM IST
                         </span>
-                        <div class="extra-small text-muted mt-1">27 अक्टूबर 2026 विशेष बुलेटिन</div>
+                        <div class="extra-small text-muted mt-1">27 अक्टूबर 2026 रात्रि बुलेटिन</div>
                     </div>
                 </div>
 
@@ -1008,10 +1008,10 @@ $timeline = [
                                 <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
                                 <span class="small fw-bold text-success">विजयी</span>
                                 <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-primary">3</span>
+                                <span class="fs-4 fw-bold text-primary">4</span>
                                 <span class="extra-small text-muted">बढ़त</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">जीत: तिरहुत शिक्षक &bull; बढ़त: कोसी, पटना, तिरहुत स्नातक</div>
+                            <div class="extra-small text-muted mt-1">जीत: तिरहुत शिक्षक &bull; बढ़त: कोसी, पटना (स्नातक व शिक्षक), तिरहुत स्नातक</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
@@ -1021,23 +1021,23 @@ $timeline = [
                                 <span class="fs-3 fw-bolder text-secondary" style="font-family: 'Outfit', sans-serif;">0</span>
                                 <span class="small fw-bold text-secondary">विजयी</span>
                                 <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-success">2</span>
+                                <span class="fs-4 fw-bold text-success">1</span>
                                 <span class="extra-small text-muted">बढ़त</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">बढ़त: पटना शिक्षक, दरभंगा स्नातक</div>
+                            <div class="extra-small text-muted mt-1">बढ़त: दरभंगा स्नातक (अनिल झा)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #eab308 !important;">
                             <div class="text-uppercase extra-small fw-bold text-muted mb-1">जन सुराज पार्टी</div>
                             <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-secondary" style="font-family: 'Outfit', sans-serif;">0</span>
-                                <span class="small fw-bold text-secondary">विजयी</span>
+                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                                <span class="small fw-bold text-success">विजयी</span>
                                 <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-warning">1</span>
+                                <span class="fs-4 fw-bold text-secondary">0</span>
                                 <span class="extra-small text-muted">बढ़त</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">बढ़त: दरभंगा शिक्षक (सुरेश राय)</div>
+                            <div class="extra-small text-muted mt-1">जीत: दरभंगा शिक्षक (डॉ. सुरेश राय - पहला खाता)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">

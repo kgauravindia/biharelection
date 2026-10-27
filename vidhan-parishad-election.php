@@ -453,9 +453,9 @@ $electionResults = [
         'name' => 'Patna Teachers',
         'name_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
         'slug' => 'patna-teachers',
-        'status' => 'RJD Leading in Tight Battle',
-        'status_hi' => 'राजद आगे (कांटे की टक्कर)',
-        'status_badge' => 'bg-danger text-white blink-anim',
+        'status' => 'BJP Leading (+145 after Round 3)',
+        'status_hi' => 'भाजपा आगे (राउंड 3 में +145 की बढ़त)',
+        'status_badge' => 'bg-primary text-white blink-anim',
         'is_declared' => false,
         'turnout' => 56.89,
         'booths' => 80,
@@ -464,32 +464,32 @@ $electionResults = [
         'returning_officer' => 'Divisional Commissioner, Patna',
         'returning_officer_hi' => 'प्रमंडलीय आयुक्त, पटना',
         'leading' => [
-            'name' => 'Dr. Sanjeev Kumar Singh',
-            'name_hi' => 'डॉ. संजीव कुमार सिंह',
-            'party' => 'RJD',
-            'role' => 'Mahagathbandhan Challenger (Leading in Round 1/2)',
-            'role_hi' => 'महागठबंधन प्रत्याशी (शुरुआती चक्रों में आगे)'
-        ],
-        'trailing' => [
             'name' => 'Nawal Kishore Yadav',
             'name_hi' => 'नवल किशोर यादव',
             'party' => 'BJP',
-            'role' => 'Sitting MLC (5-time Winner) / NDA',
-            'role_hi' => 'वर्तमान विधान पार्षद (5 बार विजेता) / एनडीए'
+            'role' => 'Sitting MLC (5-time Winner) / Leading by +145 votes after Round 3',
+            'role_hi' => 'वर्तमान विधान पार्षद (5 बार विजेता) / राउंड 3 में +145 मतों की बढ़त'
+        ],
+        'trailing' => [
+            'name' => 'Dr. Sanjeev Kumar Singh',
+            'name_hi' => 'डॉ. संजीव कुमार सिंह',
+            'party' => 'RJD',
+            'role' => 'Mahagathbandhan Challenger (3,094 votes after Round 3)',
+            'role_hi' => 'महागठबंधन प्रत्याशी (राउंड 2 में आगे रहे, कुल 3,094 मत)'
         ],
         'other_key' => [
-            'name' => 'Jan Suraaj Nominee',
-            'name_hi' => 'जन सुराज प्रत्याशी',
-            'party' => 'Jan Suraaj',
-            'role' => 'Third Challenger',
-            'role_hi' => 'तृतीय दावेदार'
+            'name' => 'Divya Jyoti / Dr. Sanjay Yadav',
+            'name_hi' => 'दिव्या ज्योति / डॉ. संजय यादव',
+            'party' => 'Jan Suraaj / INC',
+            'role' => 'Third & Fourth Contenders',
+            'role_hi' => 'तृतीय व चतुर्थ दावेदार'
         ],
-        'trend_analysis' => 'Sensational battle: RJD-backed Dr. Sanjeev Kumar Singh establishes narrow edge over 5-time BJP veteran Nawal Kishore Yadav across collegiate faculty ballots.',
-        'trend_analysis_hi' => 'सनसनीखेज मुकाबला: 5 बार के भाजपा एमएलसी नवल किशोर यादव पर राजद के डॉ. संजीव कुमार सिंह ने बढ़त बनाई।',
+        'trend_analysis' => 'Round 3 turnaround: 5-time BJP veteran Nawal Kishore Yadav surged ahead with 3,239 votes against RJD\'s Dr. Sanjeev Kumar Singh (3,094 votes), securing a +145 lead in Bankipore counting hall.',
+        'trend_analysis_hi' => 'तीसरे राउंड के बाद बड़ा उलटफेर: 5 बार के भाजपा एमएलसी नवल किशोर यादव (3,239 मत) ने राजद के डॉ. संजीव कुमार सिंह (3,094 मत) पर 145 मतों की बढ़त बनाई।',
         'sources_cited' => [
-            'Live Hindustan' => 'RJD-backed Dr. Sanjeev Kumar Singh pulled ahead of veteran Nawal Kishore Yadav in collegiate teacher vote bundles.',
-            'Amar Ujala' => 'Razor-thin preferential duel underway at Arts College campus between RJD and 5-time sitting BJP MLC.',
-            'Prabhat Khabar' => 'Strict verification of teacher preference markings across 80 booths; 2nd preference value transfers may prove decisive.'
+            'Amar Ujala' => 'After Round 3 tally completion, BJP\'s Nawal Kishore Yadav reached 3,239 votes to lead RJD\'s Dr. Sanjeev Kumar (3,094 votes) by 145 votes.',
+            'Dainik Jagran' => 'High-drama pendulum: Nawal led R1 by +2, Sanjeev seized R2 by +50, before BJP reclaimed lead in R3.',
+            'Live Hindustan' => 'Counting progressing into late evening at Bankipur Girls High School; preferential ballot transfers remain decisive.'
         ]
     ],
     [
@@ -591,10 +591,10 @@ $electionResults = [
         'name' => 'Darbhanga Teachers',
         'name_hi' => 'दरभंगा शिक्षक निर्वाचन क्षेत्र',
         'slug' => 'darbhanga-teachers',
-        'status' => 'Jan Suraaj Leading in Close Contest',
-        'status_hi' => 'जन सुराज आगे (कांटे की टक्कर)',
-        'status_badge' => 'bg-warning text-dark',
-        'is_declared' => false,
+        'status' => 'WON (Declared MLC)',
+        'status_hi' => 'विजयी घोषित (परिणाम घोषित)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
         'turnout' => 79.00,
         'booths' => 99,
         'counting_centre' => 'Divisional Commissioner Campus, Darbhanga',
@@ -602,18 +602,18 @@ $electionResults = [
         'returning_officer' => 'Divisional Commissioner, Darbhanga',
         'returning_officer_hi' => 'प्रमंडलीय आयुक्त, दरभंगा',
         'leading' => [
-            'name' => 'Suresh Prasad Rai',
-            'name_hi' => 'सुरेश प्रसाद राय',
+            'name' => 'Dr. Suresh Prasad Rai',
+            'name_hi' => 'डॉ. सुरेश प्रसाद राय',
             'party' => 'Jan Suraaj',
-            'role' => 'Jan Suraaj Party Candidate (Ahead in Preference Count)',
-            'role_hi' => 'जन सुराज प्रत्याशी (वरीयता मतों में आगे)'
+            'role' => 'Declared Elected (Jan Suraaj Party - Historic Win)',
+            'role_hi' => 'विजयी घोषित (जन सुराज प्रत्याशी - ऐतिहासिक जीत)'
         ],
         'trailing' => [
             'name' => 'Dr. Madan Mohan Jha',
             'name_hi' => 'डॉ. मदन मोहन झा',
             'party' => 'INC',
-            'role' => 'Sitting MLC (Former BPCC Chief & Minister)',
-            'role_hi' => 'वर्तमान विधान पार्षद (पूर्व कांग्रेस प्रदेश अध्यक्ष)'
+            'role' => 'Runner-up (Sitting MLC / Former BPCC Chief & Minister)',
+            'role_hi' => 'उप-विजेता (निवर्तमान एमएलसी / पूर्व कांग्रेस प्रदेश अध्यक्ष)'
         ],
         'other_key' => [
             'name' => 'Ramdev Rai',
@@ -622,12 +622,12 @@ $electionResults = [
             'role' => 'NDA Supported Contender',
             'role_hi' => 'एनडीए समर्थित दावेदार'
         ],
-        'trend_analysis' => 'Jan Suraaj Party\'s Suresh Prasad Rai maintaining lead in tight contest against Congress heavyweight Dr. Madan Mohan Jha; preferential transfers crucial.',
-        'trend_analysis_hi' => 'जन सुराज के सुरेश प्रसाद राय कांग्रेस के वरिष्ठ नेता डॉ. मदन मोहन झा के खिलाफ करीबी मुकाबले में बढ़त बनाए हुए हैं।',
+        'trend_analysis' => 'RESULT DECLARED: Jan Suraaj Party\'s Dr. Suresh Prasad Rai won Darbhanga Teachers, defeating Congress veteran and 4-term MLC Dr. Madan Mohan Jha in a milestone breakthrough for Prashant Kishor\'s party.',
+        'trend_analysis_hi' => 'ऐतिहासिक परिणाम: जन सुराज पार्टी के डॉ. सुरेश प्रसाद राय ने कांग्रेस के दिग्गज नेता व 4 बार के एमएलसी डॉ. मदन मोहन झा को हराकर जन सुराज का पहला खाता खोला।',
         'sources_cited' => [
-            'The Week' => 'Jan Suraaj candidate Suresh Prasad Rai took significant lead over Congress veteran Madan Mohan Jha in Darbhanga Teachers.',
-            'Hindustan Times' => 'Darbhanga Teachers turns into fierce triangular battle where Jan Suraaj party makes strong inroads.',
-            'Prabhat Khabar' => 'High turnout (79%) being tabulated on 10 tables; 2nd preference markings expected to decide final winner.'
+            'Dainik Jagran' => 'Jan Suraaj candidate Dr. Suresh Prasad Rai officially declared winner over Congress heavyweight Dr. Madan Mohan Jha.',
+            'Live Hindustan' => 'Historic first legislative council victory for Jan Suraaj Party in Bihar; Mithila teacher fraternity backs Suresh Rai.',
+            'Prabhat Khabar' => 'Darbhanga Divisional Commissioner handed over election certificate following completion of quota verification.'
         ]
     ],
     [
@@ -960,22 +960,22 @@ $timeline = [
                     <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 py-3 text-center">
                         <div class="d-inline-flex align-items-center gap-1.5 px-3 py-1 bg-success text-white rounded-pill extra-small fw-bold mb-2 shadow-sm">
                             <i class="bi bi-check-circle-fill"></i>
-                            <span>2 RESULTS DECLARED &bull; 6 COUNTING</span>
+                            <span>3 RESULTS DECLARED &bull; 5 COUNTING</span>
                         </div>
                         <h6 class="text-uppercase small fw-bold text-warning mb-0">
                             <i class="bi bi-broadcast me-1"></i> Vote Counting &amp; Results Declared
                         </h6>
-                        <span class="text-white small fw-bold">Tuesday, 27 October 2026 (Evening Live Bulletin)</span>
+                        <span class="text-white small fw-bold">Tuesday, 27 October 2026 (Night Live Bulletin)</span>
                     </div>
                     <div class="card-body p-4 text-center">
                         <!-- Round Status Pulse -->
                         <div class="p-3 rounded-3 mb-3 text-start" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35);">
                             <div class="d-flex align-items-center gap-2 mb-1">
                                 <span class="live-pulse-dot" style="background:#22c55e;"></span>
-                                <strong class="text-warning small text-uppercase">Status: 2 Declared &bull; Elimination Rounds Underway</strong>
+                                <strong class="text-warning small text-uppercase">Status: 3 Declared &bull; 5 in Quota Elimination</strong>
                             </div>
                             <p class="small text-light opacity-90 mb-0" style="font-size: 12px; line-height: 1.45;">
-                                BJP's Dr. Narendra Prasad Singh declared winner in Tirhut Teachers. Independent Rahul Raj won Saran Teachers. High-stakes elimination rounds active across Patna, Darbhanga, Tirhut, and Kosi.
+                                BJP won Tirhut Teachers. Independent Rahul Raj won Saran Teachers. Jan Suraaj's Dr. Suresh Prasad Rai won Darbhanga Teachers. Elimination rounds active across Patna, Tirhut, Darbhanga, and Kosi.
                             </p>
                         </div>
 
@@ -989,13 +989,13 @@ $timeline = [
                             <div>
                                 <i class="bi bi-trophy-fill text-warning me-1"></i> <strong>Declared Seats:</strong>
                             </div>
-                            <span class="badge bg-success text-white fw-bold px-2 py-1">2 of 8 Seats Won</span>
+                            <span class="badge bg-success text-white fw-bold px-2 py-1">3 of 8 Seats Won</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
                                 <i class="bi bi-hourglass-split text-danger me-1"></i> <strong>In Progress:</strong>
                             </div>
-                            <span class="text-warning fw-semibold">6 Seats in Quota Rounds</span>
+                            <span class="text-warning fw-semibold">5 Seats in Quota Rounds</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
@@ -1023,16 +1023,16 @@ $timeline = [
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">2 / 8</div>
+                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">3 / 8</div>
                     <div class="fw-semibold text-dark small">Results Declared Won</div>
-                    <small class="text-muted">Tirhut Teach (BJP) &bull; Saran Teach (IND)</small>
+                    <small class="text-muted">Tirhut (BJP) &bull; Saran (IND) &bull; Darbhanga Teach (JSP)</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">6 / 8</div>
+                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">5 / 8</div>
                     <div class="fw-semibold text-dark small">Preferential Rounds Active</div>
-                    <small class="text-muted">Patna, Tirhut, Dbg, Kosi</small>
+                    <small class="text-muted">Patna (Grad &amp; Teach), Tirhut, Dbg, Kosi</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
@@ -1073,7 +1073,7 @@ $timeline = [
                                 <span class="live-pulse-dot" style="background:#fff;"></span> LIVE COUNTING RESULTS
                             </span>
                             <span class="badge bg-success text-white extra-small fw-semibold px-2 py-0.5 rounded-pill">
-                                2 Winners Declared
+                                3 Winners Declared
                             </span>
                         </div>
                         <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
@@ -1085,9 +1085,9 @@ $timeline = [
                     </div>
                     <div class="text-end">
                         <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
-                            <i class="bi bi-clock-history me-1"></i> Updated 09:15 PM IST
+                            <i class="bi bi-clock-history me-1"></i> Updated 10:00 PM IST
                         </span>
-                        <div class="extra-small text-muted mt-1">27 October 2026 Evening</div>
+                        <div class="extra-small text-muted mt-1">27 October 2026 Night Bulletin</div>
                     </div>
                 </div>
 
@@ -1100,10 +1100,10 @@ $timeline = [
                                 <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
                                 <span class="small fw-bold text-success">Won</span>
                                 <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-primary">3</span>
+                                <span class="fs-4 fw-bold text-primary">4</span>
                                 <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Won: Tirhut Teach &bull; Lead: Kosi, Patna, Tirhut Grad</div>
+                            <div class="extra-small text-muted mt-1">Won: Tirhut Teach &bull; Lead: Kosi, Patna (Grad &amp; Teach), Tirhut Grad</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
@@ -1113,23 +1113,23 @@ $timeline = [
                                 <span class="fs-3 fw-bolder text-secondary" style="font-family: 'Outfit', sans-serif;">0</span>
                                 <span class="small fw-bold text-secondary">Won</span>
                                 <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-success">2</span>
+                                <span class="fs-4 fw-bold text-success">1</span>
                                 <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Lead: Patna Teachers, Darbhanga Graduates</div>
+                            <div class="extra-small text-muted mt-1">Lead: Darbhanga Graduates (Anil Jha)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #eab308 !important;">
                             <div class="text-uppercase extra-small fw-bold text-muted mb-1">Jan Suraaj Party</div>
                             <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-secondary" style="font-family: 'Outfit', sans-serif;">0</span>
-                                <span class="small fw-bold text-secondary">Won</span>
+                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                                <span class="small fw-bold text-success">Won</span>
                                 <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-warning">1</span>
+                                <span class="fs-4 fw-bold text-secondary">0</span>
                                 <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Lead: Darbhanga Teachers (Suresh Rai)</div>
+                            <div class="extra-small text-muted mt-1">Won: Darbhanga Teachers (Dr. Suresh Rai - First Seat)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
