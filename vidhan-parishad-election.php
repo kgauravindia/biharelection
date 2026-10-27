@@ -262,6 +262,422 @@ $turnoutReport = [
     ]
 ];
 
+// Verified Media Outlets & Official Sources Reporting on Election Results 2026
+$newsSources = [
+    [
+        'id' => 'jagran',
+        'name' => 'Dainik Jagran',
+        'name_hi' => 'दैनिक जागरण',
+        'badge' => 'bg-warning text-dark',
+        'icon' => 'bi-newspaper',
+        'url' => 'https://www.jagran.com/bihar',
+        'coverage' => 'Ground counting hall reports, CCTV transparency dispute at Patna Arts College centre, security cordon at MIT Muzaffarpur.',
+        'coverage_hi' => 'मतगणना केंद्र से ग्राउंड रिपोर्ट, पटना केंद्र पर सीसीटीवी मॉनिटर व्यवस्था पर आपत्ति, मुजफ्फरपुर व दरभंगा में सुरक्षा बंदोबस्त।'
+    ],
+    [
+        'id' => 'hindustan',
+        'name' => 'Live Hindustan',
+        'name_hi' => 'हिन्दुस्तान',
+        'badge' => 'bg-danger text-white',
+        'icon' => 'bi-broadcast',
+        'url' => 'https://www.livehindustan.com/bihar/bihar-mlc-election-2026-voting-live-bjp-rjd-jdu-chunav-latest-updates-live-blog-201792729617020.html',
+        'coverage' => 'Continuous live blog, preferential round tallies, candidate reactions, Mokama political stakes and turnout benchmarks.',
+        'coverage_hi' => 'निरंतर लाइव ब्लॉग, वरीयता मतों के चक्र, उम्मीदवार प्रतिक्रियाएं, मोकामा राजनीतिक प्रतिष्ठा एवं मतदान प्रतिशत।'
+    ],
+    [
+        'id' => 'prabhat',
+        'name' => 'Prabhat Khabar',
+        'name_hi' => 'प्रभात खबर',
+        'badge' => 'bg-info text-dark',
+        'icon' => 'bi-journal-check',
+        'url' => 'https://www.prabhatkhabar.com/state/bihar',
+        'coverage' => 'Divisional counting updates across Tirhut, Darbhanga, Kosi and Saran; postal ballot segregation and PR-STV quota analysis.',
+        'coverage_hi' => 'तिरहुत, दरभंगा, कोसी एवं सारण प्रमंडलीय मतगणना केंद्र, डाक मतपत्र छंटनी व एकल संक्रमणीय मत कोटा विश्लेषण।'
+    ],
+    [
+        'id' => 'ceo_bihar',
+        'name' => 'CEO Bihar / ECI',
+        'name_hi' => 'मुख्य निर्वाचन पदाधिकारी, बिहार',
+        'badge' => 'bg-success text-white',
+        'icon' => 'bi-patch-check-fill',
+        'url' => 'https://ceoelection.bihar.gov.in/',
+        'coverage' => 'Statutory Gazette Notification No. M2–03(TC&GC)/2026-5369, Returning Officer oversight, Form 21C / 21D formal certifications.',
+        'coverage_hi' => 'आधिकारिक गजट अधिसूचना, प्रमंडलीय आयुक्त पर्यवेक्षण एवं प्ररूप 21C / 21D वैधानिक परिणाम प्रमाणीकरण।'
+    ]
+];
+
+// 8 Seats Live Counting Status, Candidate Positions & Multi-Source Intelligence (Updated 27 Oct 2026)
+$electionResults = [
+    [
+        'id' => 'tirhut-teachers',
+        'type' => 'Teachers',
+        'type_hi' => 'शिक्षक',
+        'name' => 'Tirhut Teachers',
+        'name_hi' => 'तिरहुत शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'tirhut-teachers',
+        'status' => 'DECLARED WON (विजेता घोषित)',
+        'status_hi' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
+        'turnout' => 78.10,
+        'booths' => 58,
+        'counting_centre' => 'MIT Campus, Muzaffarpur',
+        'counting_centre_hi' => 'एमआईटी परिसर, मुजफ्फरपुर',
+        'returning_officer' => 'Divisional Commissioner, Tirhut',
+        'returning_officer_hi' => 'प्रमंडलीय आयुक्त, तिरहुत',
+        'leading' => [
+            'name' => 'Dr. Narendra Prasad Singh',
+            'name_hi' => 'डॉ. नरेंद्र प्रसाद सिंह',
+            'party' => 'BJP',
+            'role' => 'Elected MLC (Won by 594 Votes) / NDA Candidate',
+            'role_hi' => 'विजयी घोषित (594 मतों से जीते) / एनडीए प्रत्याशी'
+        ],
+        'trailing' => [
+            'name' => 'Bhushan Jha',
+            'name_hi' => 'भूषण झा',
+            'party' => 'IND',
+            'role' => 'Runner-up (Independent - 2,351 Votes)',
+            'role_hi' => 'मुख्य प्रतिद्वंद्वी (निर्दलीय - 2,351 मत)'
+        ],
+        'other_key' => [
+            'name' => 'Sanjay Kumar Singh',
+            'name_hi' => 'संजय कुमार सिंह',
+            'party' => 'CPI',
+            'role' => 'Sitting MLC (3rd Position - Eliminated in Earlier Rounds)',
+            'role_hi' => 'निवर्तमान एमएलसी (तीसरे स्थान पर रहे)'
+        ],
+        'trend_analysis' => 'OFFICIAL RESULT DECLARED: Dr. Narendra Prasad Singh (BJP/NDA) elected MLC with 2,945 votes, defeating Independent Bhushan Jha (2,351 votes) by 594 votes.',
+        'trend_analysis_hi' => 'आधिकारिक परिणाम घोषित: भाजपा के डॉ. नरेंद्र प्रसाद सिंह 594 मतों से विजयी घोषित (2,945 मत पाकर निर्दलीय भूषण झा को हराया)।',
+        'sources_cited' => [
+            'Live Hindustan' => 'Official certification: BJP candidate Dr. Narendra Prasad Singh won Tirhut Teachers seat by 594 votes margin.',
+            'Dainik Jagran' => 'Senior BJP leadership congratulated Dr. Narendra Prasad Singh as official victory certificate handed over at MIT Muzaffarpur.',
+            'Prabhat Khabar' => 'Independent Bhushan Jha secured 2,351 votes; CPI sitting MLC Sanjay Kumar Singh bowed out in quota race.'
+        ]
+    ],
+    [
+        'id' => 'saran-teachers',
+        'type' => 'Teachers',
+        'type_hi' => 'शिक्षक',
+        'name' => 'Saran Teachers',
+        'name_hi' => 'सारण शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'saran-teachers',
+        'status' => 'DECLARED WON (विजेता घोषित)',
+        'status_hi' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
+        'turnout' => 87.16,
+        'booths' => 98,
+        'counting_centre' => 'Saran Divisional HQ, Chapra',
+        'counting_centre_hi' => 'सारण प्रमंडलीय मुख्यालय, छपरा',
+        'returning_officer' => 'Divisional Commissioner, Saran (Chapra)',
+        'returning_officer_hi' => 'प्रमंडलीय आयुक्त, सारण (छपरा)',
+        'leading' => [
+            'name' => 'Rahul Raj',
+            'name_hi' => 'राहुल राज',
+            'party' => 'IND',
+            'role' => 'Elected MLC (Independent / BJP Rebel)',
+            'role_hi' => 'विजयी घोषित (निर्दलीय / बागी प्रत्याशी)'
+        ],
+        'trailing' => [
+            'name' => 'Afaq Ahmad',
+            'name_hi' => 'अफाक अहमद',
+            'party' => 'Jan Suraaj',
+            'role' => 'Sitting MLC / Runner-up in Elimination Rounds',
+            'role_hi' => 'निवर्तमान एमएलसी / उप-विजेता (जन सुराज)'
+        ],
+        'other_key' => [
+            'name' => 'Anand Pushkar',
+            'name_hi' => 'आनंद पुष्कर',
+            'party' => 'JD(U)',
+            'role' => 'NDA Candidate (Son of Late Kedar Nath Pandey)',
+            'role_hi' => 'एनडीए प्रत्याशी (स्व. केदार नाथ पांडेय के पुत्र)'
+        ],
+        'trend_analysis' => 'RESULT DECLARED: Independent candidate Rahul Raj pulled off historic upset by 800+ votes in 2nd preference value transfers, defeating Jan Suraaj sitting MLC Afaq Ahmad and JD(U)\'s Anand Pushkar.',
+        'trend_analysis_hi' => 'परिणाम घोषित: द्वितीय वरीयता मतों के हस्तांतरण के बाद निर्दलीय राहुल राज 800+ मतों से विजयी घोषित; जन सुराज के मौजूदा एमएलसी अफाक अहमद पराजित।',
+        'sources_cited' => [
+            'Live Hindustan' => 'Independent candidate and BJP rebel Rahul Raj secured victory by over 800 votes after decisive second-preference transfers.',
+            'Dainik Jagran' => 'Record 87.16% turnout in Saran resulted in prolonged elimination rounds where Rahul Raj outpaced Afaq Ahmad and Anand Pushkar.',
+            'Prabhat Khabar' => 'Formal announcement completed by Returning Officer Saran at Chapra counting hall under heavy security.'
+        ]
+    ],
+    [
+        'id' => 'patna-graduates',
+        'type' => 'Graduates',
+        'type_hi' => 'स्नातक',
+        'name' => 'Patna Graduates',
+        'name_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'patna-graduates',
+        'status' => 'JD(U) Leading (Ahead in Trends)',
+        'status_hi' => 'जदयू बढ़त पर (रुझान में आगे)',
+        'status_badge' => 'bg-warning text-dark',
+        'is_declared' => false,
+        'turnout' => 36.19,
+        'booths' => 134,
+        'counting_centre' => 'College of Arts & Crafts, Patna',
+        'counting_centre_hi' => 'कला एवं शिल्प महाविद्यालय, पटना',
+        'returning_officer' => 'Divisional Commissioner, Patna',
+        'returning_officer_hi' => 'प्रमंडलीय आयुक्त, पटना',
+        'leading' => [
+            'name' => 'Neeraj Kumar',
+            'name_hi' => 'नीरज कुमार',
+            'party' => 'JD(U)',
+            'role' => 'Sitting MLC / NDA Candidate',
+            'role_hi' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी'
+        ],
+        'trailing' => [
+            'name' => 'Anuj Singh',
+            'name_hi' => 'अनुज सिंह',
+            'party' => 'Jan Suraaj',
+            'role' => 'Jan Suraaj Supported (Backed by Anant Singh)',
+            'role_hi' => 'जन सुराज समर्थित (अनंत सिंह समर्थित)'
+        ],
+        'other_key' => [
+            'name' => 'Dilip Kumar',
+            'name_hi' => 'दिलीप कुमार',
+            'party' => 'RJD',
+            'role' => 'Mahagathbandhan Candidate',
+            'role_hi' => 'महागठबंधन प्रत्याशी'
+        ],
+        'trend_analysis' => 'High-profile prestige duel: Ruling JD(U)\'s Neeraj Kumar maintaining edge against Jan Suraaj-supported Anuj Singh amidst rigorous table supervision at Arts College.',
+        'trend_analysis_hi' => 'प्रतिष्ठापूर्ण मुकाबला: जदयू के नीरज कुमार जन सुराज समर्थित अनुज सिंह के खिलाफ कला एवं शिल्प महाविद्यालय केंद्र पर बढ़त बनाए हुए हैं।',
+        'sources_cited' => [
+            'Dainik Jagran' => 'Reported candidate Anuj Singh raising objections over CCTV monitor visibility; counting progressing under direct Divisional Commissioner vigil.',
+            'Live Hindustan' => 'Mokama political stakes high as Anant Singh camp closely tracks ballot bundles; Neeraj Kumar holds early round advantage.',
+            'Prabhat Khabar' => 'Patna, Nalanda, and Nawada bundles segregated; multi-round preferential quota counting extending into late evening.'
+        ]
+    ],
+    [
+        'id' => 'patna-teachers',
+        'type' => 'Teachers',
+        'type_hi' => 'शिक्षक',
+        'name' => 'Patna Teachers',
+        'name_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'patna-teachers',
+        'status' => 'RJD Leading in Tight Battle',
+        'status_hi' => 'राजद आगे (कांटे की टक्कर)',
+        'status_badge' => 'bg-danger text-white blink-anim',
+        'is_declared' => false,
+        'turnout' => 56.89,
+        'booths' => 80,
+        'counting_centre' => 'College of Arts & Crafts, Patna',
+        'counting_centre_hi' => 'कला एवं शिल्प महाविद्यालय, पटना',
+        'returning_officer' => 'Divisional Commissioner, Patna',
+        'returning_officer_hi' => 'प्रमंडलीय आयुक्त, पटना',
+        'leading' => [
+            'name' => 'Dr. Sanjeev Kumar Singh',
+            'name_hi' => 'डॉ. संजीव कुमार सिंह',
+            'party' => 'RJD',
+            'role' => 'Mahagathbandhan Challenger (Leading in Round 1/2)',
+            'role_hi' => 'महागठबंधन प्रत्याशी (शुरुआती चक्रों में आगे)'
+        ],
+        'trailing' => [
+            'name' => 'Nawal Kishore Yadav',
+            'name_hi' => 'नवल किशोर यादव',
+            'party' => 'BJP',
+            'role' => 'Sitting MLC (5-time Winner) / NDA',
+            'role_hi' => 'वर्तमान विधान पार्षद (5 बार विजेता) / एनडीए'
+        ],
+        'other_key' => [
+            'name' => 'Jan Suraaj Nominee',
+            'name_hi' => 'जन सुराज प्रत्याशी',
+            'party' => 'Jan Suraaj',
+            'role' => 'Third Challenger',
+            'role_hi' => 'तृतीय दावेदार'
+        ],
+        'trend_analysis' => 'Sensational battle: RJD-backed Dr. Sanjeev Kumar Singh establishes narrow edge over 5-time BJP veteran Nawal Kishore Yadav across collegiate faculty ballots.',
+        'trend_analysis_hi' => 'सनसनीखेज मुकाबला: 5 बार के भाजपा एमएलसी नवल किशोर यादव पर राजद के डॉ. संजीव कुमार सिंह ने बढ़त बनाई।',
+        'sources_cited' => [
+            'Live Hindustan' => 'RJD-backed Dr. Sanjeev Kumar Singh pulled ahead of veteran Nawal Kishore Yadav in collegiate teacher vote bundles.',
+            'Amar Ujala' => 'Razor-thin preferential duel underway at Arts College campus between RJD and 5-time sitting BJP MLC.',
+            'Prabhat Khabar' => 'Strict verification of teacher preference markings across 80 booths; 2nd preference value transfers may prove decisive.'
+        ]
+    ],
+    [
+        'id' => 'tirhut-graduates',
+        'type' => 'Graduates',
+        'type_hi' => 'स्नातक',
+        'name' => 'Tirhut Graduates',
+        'name_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'tirhut-graduates',
+        'status' => 'JD(U) Leading in Multi-Cornered Tally',
+        'status_hi' => 'जदयू आगे (त्रिकोणीय मुकाबला)',
+        'status_badge' => 'bg-warning text-dark',
+        'is_declared' => false,
+        'turnout' => 42.15,
+        'booths' => 145,
+        'counting_centre' => 'MIT Campus, Muzaffarpur',
+        'counting_centre_hi' => 'एमआईटी परिसर, मुजफ्फरपुर',
+        'returning_officer' => 'Divisional Commissioner, Tirhut',
+        'returning_officer_hi' => 'प्रमंडलीय आयुक्त, तिरहुत',
+        'leading' => [
+            'name' => 'Abhishek Jha',
+            'name_hi' => 'अभिषेक झा',
+            'party' => 'JD(U)',
+            'role' => 'NDA Candidate',
+            'role_hi' => 'एनडीए प्रत्याशी'
+        ],
+        'trailing' => [
+            'name' => 'Dr. Vimohan Kumar',
+            'name_hi' => 'डॉ. विमोहन कुमार',
+            'party' => 'Jan Suraaj',
+            'role' => 'Jan Suraaj Party Contender',
+            'role_hi' => 'जन सुराज प्रत्याशी'
+        ],
+        'other_key' => [
+            'name' => 'Banshidhar Brajwasi / Dr. Rashmi Gautam',
+            'name_hi' => 'वंशीधर ब्रजवासी / डॉ. रश्मि गौतम',
+            'party' => 'IND / RJD',
+            'role' => 'Outgoing Independent MLC & RJD Nominee',
+            'role_hi' => 'निवर्तमान एमएलसी एवं राजद प्रत्याशी'
+        ],
+        'trend_analysis' => 'Abhishek Jha (JD-U) holds narrow edge in multi-cornered contest with Jan Suraaj contender Dr. Vimohan and outgoing MLC Banshidhar Brajwasi across 4 Tirhut districts.',
+        'trend_analysis_hi' => 'जदयू के अभिषेक झा जन सुराज के डॉ. विमोहन और निर्दलीय वंशीधर ब्रजवासी के त्रिकोणीय मुकाबले में मामूली बढ़त पर।',
+        'sources_cited' => [
+            'Prabhat Khabar' => '145 booth boxes being counted across 14 tables under 3-tier security at MIT Muzaffarpur.',
+            'Dainik Jagran' => 'Abhishek Jha establishes initial edge in Muzaffarpur and Vaishali bundles; Jan Suraaj polling strongly in rural belts.',
+            'Live Hindustan' => 'Due to 42.15% turnout, elimination rounds will be required before any candidate crosses the statutory quota.'
+        ]
+    ],
+    [
+        'id' => 'darbhanga-graduates',
+        'type' => 'Graduates',
+        'type_hi' => 'स्नातक',
+        'name' => 'Darbhanga Graduates',
+        'name_hi' => 'दरभंगा स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'darbhanga-graduates',
+        'status' => 'RJD Leading over BJP',
+        'status_hi' => 'राजद बढ़त पर (प्रथम चक्र)',
+        'status_badge' => 'bg-primary text-white',
+        'is_declared' => false,
+        'turnout' => 42.00,
+        'booths' => 138,
+        'counting_centre' => 'Divisional Commissioner Campus, Darbhanga',
+        'counting_centre_hi' => 'प्रमंडलीय आयुक्त परिसर, दरभंगा',
+        'returning_officer' => 'Divisional Commissioner, Darbhanga',
+        'returning_officer_hi' => 'प्रमंडलीय आयुक्त, दरभंगा',
+        'leading' => [
+            'name' => 'Anil Kumar Jha',
+            'name_hi' => 'अनिल कुमार झा',
+            'party' => 'RJD',
+            'role' => 'Mahagathbandhan Candidate (Leading)',
+            'role_hi' => 'महागठबंधन प्रत्याशी (बढ़त पर)'
+        ],
+        'trailing' => [
+            'name' => 'Dr. Sarvesh Kumar',
+            'name_hi' => 'डॉ. सर्वेश कुमार',
+            'party' => 'BJP',
+            'role' => 'Sitting MLC / NDA Candidate',
+            'role_hi' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी'
+        ],
+        'other_key' => [
+            'name' => 'Mohammad Imteyaz (Noorani)',
+            'name_hi' => 'मोहम्मद इम्तियाज (नूरानी)',
+            'party' => 'Jan Suraaj',
+            'role' => 'Jan Suraaj Party Nominee',
+            'role_hi' => 'जन सुराज प्रत्याशी'
+        ],
+        'trend_analysis' => 'Major upset brewing: RJD\'s Anil Kumar Jha holding solid lead over incumbent Dr. Sarvesh Kumar (BJP) across Darbhanga, Madhubani, Samastipur, and Begusarai.',
+        'trend_analysis_hi' => 'बड़ा उलटफेर: राजद के अनिल कुमार झा मिथिलांचल के स्नातक मतों में मौजूदा भाजपा एमएलसी डॉ. सर्वेश कुमार पर बढ़त बनाए हुए हैं।',
+        'sources_cited' => [
+            'Amar Ujala' => 'RJD candidate Anil Kumar Jha ahead of sitting BJP MLC Dr. Sarvesh Kumar in initial Darbhanga graduate trends.',
+            'Live Hindustan' => 'Counting proceeding smoothly across 138 booths; RJD leading in Samastipur and Madhubani rural bundles.',
+            'Prabhat Khabar' => 'Strict 3-tier security deployed under Darbhanga Commissioner; bundle segregation advancing to round 2.'
+        ]
+    ],
+    [
+        'id' => 'darbhanga-teachers',
+        'type' => 'Teachers',
+        'type_hi' => 'शिक्षक',
+        'name' => 'Darbhanga Teachers',
+        'name_hi' => 'दरभंगा शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'darbhanga-teachers',
+        'status' => 'Jan Suraaj Leading in Close Contest',
+        'status_hi' => 'जन सुराज आगे (कांटे की टक्कर)',
+        'status_badge' => 'bg-warning text-dark',
+        'is_declared' => false,
+        'turnout' => 79.00,
+        'booths' => 99,
+        'counting_centre' => 'Divisional Commissioner Campus, Darbhanga',
+        'counting_centre_hi' => 'प्रमंडलीय आयुक्त परिसर, दरभंगा',
+        'returning_officer' => 'Divisional Commissioner, Darbhanga',
+        'returning_officer_hi' => 'प्रमंडलीय आयुक्त, दरभंगा',
+        'leading' => [
+            'name' => 'Suresh Prasad Rai',
+            'name_hi' => 'सुरेश प्रसाद राय',
+            'party' => 'Jan Suraaj',
+            'role' => 'Jan Suraaj Party Candidate (Ahead in Preference Count)',
+            'role_hi' => 'जन सुराज प्रत्याशी (वरीयता मतों में आगे)'
+        ],
+        'trailing' => [
+            'name' => 'Dr. Madan Mohan Jha',
+            'name_hi' => 'डॉ. मदन मोहन झा',
+            'party' => 'INC',
+            'role' => 'Sitting MLC (Former BPCC Chief & Minister)',
+            'role_hi' => 'वर्तमान विधान पार्षद (पूर्व कांग्रेस प्रदेश अध्यक्ष)'
+        ],
+        'other_key' => [
+            'name' => 'Ramdev Rai',
+            'name_hi' => 'रामदेव राय',
+            'party' => 'BJP',
+            'role' => 'NDA Supported Contender',
+            'role_hi' => 'एनडीए समर्थित दावेदार'
+        ],
+        'trend_analysis' => 'Jan Suraaj Party\'s Suresh Prasad Rai maintaining lead in tight contest against Congress heavyweight Dr. Madan Mohan Jha; preferential transfers crucial.',
+        'trend_analysis_hi' => 'जन सुराज के सुरेश प्रसाद राय कांग्रेस के वरिष्ठ नेता डॉ. मदन मोहन झा के खिलाफ करीबी मुकाबले में बढ़त बनाए हुए हैं।',
+        'sources_cited' => [
+            'The Week' => 'Jan Suraaj candidate Suresh Prasad Rai took significant lead over Congress veteran Madan Mohan Jha in Darbhanga Teachers.',
+            'Hindustan Times' => 'Darbhanga Teachers turns into fierce triangular battle where Jan Suraaj party makes strong inroads.',
+            'Prabhat Khabar' => 'High turnout (79%) being tabulated on 10 tables; 2nd preference markings expected to decide final winner.'
+        ]
+    ],
+    [
+        'id' => 'kosi-graduates',
+        'type' => 'Graduates',
+        'type_hi' => 'स्नातक',
+        'name' => 'Kosi Graduates',
+        'name_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'kosi-graduates',
+        'status' => 'BJP Leading with Solid Margin',
+        'status_hi' => 'भाजपा मजबूत बढ़त पर',
+        'status_badge' => 'bg-primary text-white',
+        'is_declared' => false,
+        'turnout' => 52.51,
+        'booths' => 181,
+        'counting_centre' => 'Purnia / Saharsa Counting Complex',
+        'counting_centre_hi' => 'पूर्णिया / सहरसा मतगणना केंद्र',
+        'returning_officer' => 'Divisional Commissioner, Kosi / Purnia',
+        'returning_officer_hi' => 'प्रमंडलीय आयुक्त, कोसी / पूर्णिया',
+        'leading' => [
+            'name' => 'Dr. N.K. Yadav',
+            'name_hi' => 'डॉ. एनके यादव',
+            'party' => 'BJP',
+            'role' => 'Sitting MLC / NDA Candidate',
+            'role_hi' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी'
+        ],
+        'trailing' => [
+            'name' => 'Rajnish Ranjan',
+            'name_hi' => 'रजनीश रंजन',
+            'party' => 'Jan Suraaj',
+            'role' => 'Jan Suraaj Party Nominee',
+            'role_hi' => 'जन सुराज प्रत्याशी'
+        ],
+        'other_key' => [
+            'name' => 'Nitesh Kumar',
+            'name_hi' => 'नितेश कुमार',
+            'party' => 'RJD',
+            'role' => 'Mahagathbandhan Challenger',
+            'role_hi' => 'महागठबंधन प्रत्याशी'
+        ],
+        'trend_analysis' => 'Incumbent Dr. N.K. Yadav (BJP) establishing commanding lead across 14-district collegiate bundles (181 booths) over Jan Suraaj\'s Rajnish Ranjan.',
+        'trend_analysis_hi' => 'भाजपा के मौजूदा एमएलसी डॉ. एनके यादव 14 जिलों के 181 बूथों की छंटनी में जन सुराज के रजनीश रंजन पर मजबूत बढ़त बनाए हुए हैं।',
+        'sources_cited' => [
+            'Live Hindustan' => 'BJP candidate Dr. N.K. Yadav established a commanding lead across Kosi and Purnia divisions through initial counting rounds.',
+            'ETV Bharat' => 'Dr. N.K. Yadav consolidating strong frontline position across 14 districts in the largest constituency.',
+            'Dainik Jagran' => 'Bundle compilation advancing smoothly at Purnia/Saharsa complex with Dr. Yadav comfortably leading.'
+        ]
+    ]
+];
+
 // 8 Constituencies Polling Booth & Dedicated Hub Mapping (Created Oct 2026)
 $boothPageMap = [
     'patna-graduates' => ['slug' => 'patna-graduate-constituency', 'count' => 134, 'code' => 1],
@@ -454,6 +870,38 @@ $timeline = [
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
 }
+.live-pulse-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ef4444;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    animation: pulseRing 1.5s infinite;
+}
+@keyframes pulseRing {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+.source-pill-link {
+    transition: all 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+.source-pill-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.candidate-lead-box {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-left: 4px solid #2563eb;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+.candidate-lead-box.winner-bjp { border-left-color: #f97316; }
+.candidate-lead-box.winner-jdu { border-left-color: #16a34a; }
+.candidate-lead-box.winner-jsp { border-left-color: #eab308; }
+.candidate-lead-box.winner-inc { border-left-color: #0284c7; }
 </style>
 
 <!-- ========================================================================= -->
@@ -464,106 +912,101 @@ $timeline = [
         <div class="row align-items-center g-4">
             <div class="col-lg-8">
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                    <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
-                        <i class="bi bi-broadcast me-1 text-danger"></i> LIVE ELECTION NOTIFICATION
+                    <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-1.5">
+                        <span class="live-pulse-dot" style="background:#fff;"></span> LIVE COUNTING &bull; 27 OCT 2026
+                    </span>
+                    <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold">
+                        Multi-Source Ground Intelligence
                     </span>
                     <span class="badge bg-light text-dark px-3 py-1.5 rounded-pill fw-semibold">
-                        Gazette Ref: M2–03(TC&GC)/2026-5369
-                    </span>
-                    <span class="badge bg-danger text-white px-3 py-1.5 rounded-pill fw-semibold">
-                        8 of 12 Seats (4 Graduates + 4 Teachers)
+                        8 Seats (4 Grad + 4 Teach)
                     </span>
                 </div>
 
                 <h1 class="display-6 fw-bold mb-2" style="font-family: 'Outfit', sans-serif;">
-                    Bihar Vidhan Parishad Biennial Election 2026
+                    Bihar Vidhan Parishad Election Results 2026
                 </h1>
                 <h2 class="h5 fw-normal text-light opacity-90 mb-3" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                    बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 8 सीटें (4 स्नातक + 4 शिक्षक निर्वाचन क्षेत्र)
+                    बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 8 सीटों की मतगणना एवं चुनाव परिणाम (लाइव अपडेट्स)
                 </h2>
                 
                 <p class="lead fs-6 text-light opacity-90 mb-4" style="max-width: 720px; line-height: 1.6;">
-                    Official election schedule and gazette notifications for <strong>8 out of 12 total Graduates' &amp; Teachers' constituencies</strong> in Bihar Legislative Council (covering 30 districts). Polling on <strong>23 October 2026</strong>.
+                    Live vote counting trends, preferential round tallies, and cross-verified reports from <strong>Dainik Jagran, Live Hindustan, Prabhat Khabar &amp; Chief Electoral Officer Bihar</strong> for 8 contested Graduates' and Teachers' constituencies.
                 </p>
 
                 <div class="d-flex flex-wrap gap-2 pt-1">
-                    <a href="#voting-turnout" class="btn btn-danger px-3.5 py-2.5 rounded-3 fw-bold text-white shadow-sm">
-                        <i class="bi bi-pie-chart-fill me-1"></i> Live Voting Turnout (मतदान प्रतिशत) &rarr;
+                    <a href="#election-results" class="btn btn-danger px-3.5 py-2.5 rounded-3 fw-bold text-white shadow-sm d-inline-flex align-items-center gap-2">
+                        <i class="bi bi-trophy-fill"></i>
+                        <span>Live Results &amp; Trends (मतगणना परिणाम) &rarr;</span>
                     </a>
-                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/ImportantInstructionsAndLetters/TCGCGajat2026.pdf" target="_blank" rel="noopener" class="btn gazette-btn px-4 py-2.5 rounded-3 fw-bold">
-                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> View Official Gazette PDF (TCGCGajat2026.pdf) &rarr;
+                    <a href="#media-sources" class="btn btn-warning px-3 py-2.5 rounded-3 fw-bold text-dark d-inline-flex align-items-center gap-1.5">
+                        <i class="bi bi-newspaper"></i> Verified Sources (स्रोत संदर्भ)
                     </a>
-                    <a href="#voter-guide" class="btn btn-success px-3.5 py-2.5 rounded-3 fw-bold text-white shadow-sm">
-                        <i class="bi bi-person-check-fill me-1"></i> Voter List &amp; Electoral Roll (मतदाता सूची)
+                    <a href="#voting-turnout" class="btn btn-outline-light px-3 py-2.5 rounded-3 fw-semibold">
+                        <i class="bi bi-pie-chart-fill me-1"></i> Voting Turnout (मतदान प्रतिशत)
                     </a>
-                    <a href="#nomination-details" class="btn btn-warning px-3 py-2.5 rounded-3 fw-bold text-dark">
-                        <i class="bi bi-file-earmark-person-fill me-1"></i> Nomination Details (प्ररूप 2E / 26)
+                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/ImportantInstructionsAndLetters/TCGCGajat2026.pdf" target="_blank" rel="noopener" class="btn gazette-btn px-3.5 py-2.5 rounded-3 fw-bold">
+                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> Official Gazette PDF &rarr;
                     </a>
                     <a href="#schedule" class="btn btn-outline-light px-3 py-2.5 rounded-3 fw-semibold">
-                        <i class="bi bi-calendar-event me-1"></i> Full Schedule
-                    </a>
-                    <a href="#district-finder" class="btn btn-outline-info px-3 py-2.5 rounded-3 fw-semibold">
-                        <i class="bi bi-search me-1"></i> Check Your District Status
+                        <i class="bi bi-calendar-event me-1"></i> Timeline
                     </a>
                 </div>
             </div>
 
-            <!-- Countdown Card -->
+            <!-- Countdown / Live Counting Status Card -->
             <div class="col-lg-4">
-                <div class="card border-0 shadow-lg rounded-4 overflow-hidden" style="background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15);">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden" style="background: rgba(15, 23, 42, 0.90); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.18);">
                     <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 py-3 text-center">
+                        <div class="d-inline-flex align-items-center gap-1.5 px-3 py-1 bg-success text-white rounded-pill extra-small fw-bold mb-2 shadow-sm">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>2 RESULTS DECLARED &bull; 6 COUNTING</span>
+                        </div>
                         <h6 class="text-uppercase small fw-bold text-warning mb-0">
-                            <i class="bi bi-stopwatch me-1"></i> Countdown to Vote Counting & Results
+                            <i class="bi bi-broadcast me-1"></i> Vote Counting &amp; Results Declared
                         </h6>
-                        <span class="text-white small fw-bold">Tuesday, 27 October 2026 (Starts 08:00 AM IST)</span>
+                        <span class="text-white small fw-bold">Tuesday, 27 October 2026 (Evening Live Bulletin)</span>
                     </div>
                     <div class="card-body p-4 text-center">
-                        <div class="row g-2 text-center" id="pollingCountdown">
-                            <div class="col-3">
-                                <div class="countdown-box">
-                                    <div class="countdown-num" id="cdDays">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">Days</small>
-                                </div>
+                        <!-- Round Status Pulse -->
+                        <div class="p-3 rounded-3 mb-3 text-start" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35);">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="live-pulse-dot" style="background:#22c55e;"></span>
+                                <strong class="text-warning small text-uppercase">Status: 2 Declared &bull; Elimination Rounds Underway</strong>
                             </div>
-                            <div class="col-3">
-                                <div class="countdown-box">
-                                    <div class="countdown-num" id="cdHours">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">Hours</small>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="countdown-box">
-                                    <div class="countdown-num" id="cdMinutes">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">Mins</small>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="countdown-box">
-                                    <div class="countdown-num" id="cdSeconds">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">Secs</small>
-                                </div>
-                            </div>
+                            <p class="small text-light opacity-90 mb-0" style="font-size: 12px; line-height: 1.45;">
+                                BJP's Dr. Narendra Prasad Singh declared winner in Tirhut Teachers. Independent Rahul Raj won Saran Teachers. High-stakes elimination rounds active across Patna, Darbhanga, Tirhut, and Kosi.
+                            </p>
                         </div>
-
-                        <hr class="border-secondary border-opacity-25 my-3">
 
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90">
                             <div>
-                                <i class="bi bi-calendar-check text-success me-1"></i> <strong>Counting Time:</strong>
+                                <i class="bi bi-clock-history text-info me-1"></i> <strong>Counting Started:</strong>
                             </div>
-                            <span class="badge bg-success text-white fw-bold px-2 py-1">27 Oct 2026, 08:00 AM</span>
+                            <span class="badge bg-secondary text-white fw-bold px-2 py-1">27 Oct 2026, 08:00 AM</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
-                                <i class="bi bi-check-circle-fill text-info me-1"></i> <strong>Polling Status:</strong>
+                                <i class="bi bi-trophy-fill text-warning me-1"></i> <strong>Declared Seats:</strong>
                             </div>
-                            <span class="text-light">Concluded (23 Oct 2026)</span>
+                            <span class="badge bg-success text-white fw-bold px-2 py-1">2 of 8 Seats Won</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
-                                <i class="bi bi-hourglass-bottom text-warning me-1"></i> <strong>Term Expiry of 8 MLCs:</strong>
+                                <i class="bi bi-hourglass-split text-danger me-1"></i> <strong>In Progress:</strong>
                             </div>
-                            <span class="text-light">16 Nov 2026</span>
+                            <span class="text-warning fw-semibold">6 Seats in Quota Rounds</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
+                            <div>
+                                <i class="bi bi-newspaper text-info me-1"></i> <strong>Multi-Sources:</strong>
+                            </div>
+                            <span class="text-light fw-semibold">Jagran, Hindustan, Prabhat, CEO</span>
+                        </div>
+                        <div class="mt-3 pt-2 border-top border-secondary border-opacity-25">
+                            <a href="#election-results" class="btn btn-warning btn-sm w-100 fw-bold rounded-pill text-dark shadow-sm">
+                                <i class="bi bi-arrow-down-circle-fill me-1"></i> View Live Results &amp; Trends
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -580,30 +1023,33 @@ $timeline = [
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-primary fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">8 / 12</div>
-                    <div class="fw-semibold text-dark small">Contested Quota Seats</div>
-                    <small class="text-muted">4 of 6 Grad + 4 of 6 Teach</small>
+                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">2 / 8</div>
+                    <div class="fw-semibold text-dark small">Results Declared Won</div>
+                    <small class="text-muted">Tirhut Teach (BJP) &bull; Saran Teach (IND)</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">30</div>
-                    <div class="fw-semibold text-dark small">Districts in this Poll</div>
-                    <small class="text-muted">Out of 38 Bihar Districts</small>
+                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">6 / 8</div>
+                    <div class="fw-semibold text-dark small">Preferential Rounds Active</div>
+                    <small class="text-muted">Patna, Tirhut, Dbg, Kosi</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">5</div>
-                    <div class="fw-semibold text-dark small">Divisional Commissioners</div>
-                    <small class="text-muted">Designated Returning Officers</small>
+                    <div class="text-primary fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">150</div>
+                    <div class="fw-semibold text-dark small">Total Contenders</div>
+                    <small class="text-muted">90 Grad + 60 Teachers</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-danger fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">STV</div>
-                    <div class="fw-semibold text-dark small">Voting System</div>
-                    <small class="text-muted">Single Transferable Vote</small>
+                    <div class="text-danger fw-bold display-6 mb-1 d-flex align-items-center justify-content-center gap-1.5" style="font-family: 'Outfit', sans-serif;">
+                        <span class="live-pulse-dot"></span>
+                        <span>LIVE</span>
+                    </div>
+                    <div class="fw-semibold text-dark small">PR-STV Counting Active</div>
+                    <small class="text-muted">Single Transferable Quota System</small>
                 </div>
             </div>
         </div>
@@ -614,6 +1060,404 @@ $timeline = [
     <div class="row g-5">
         <!-- Main Content Area (8 Cols) -->
         <div class="col-lg-8">
+
+            <!-- ============================================================= -->
+            <!-- 2.4 LIVE ELECTION RESULTS & COUNTING TRENDS (MULTI-SOURCE) -->
+            <!-- ============================================================= -->
+            <div id="election-results" class="mb-5">
+                <!-- Section Header -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-danger text-white fw-bold text-uppercase px-2.5 py-1 d-inline-flex align-items-center gap-1.5 shadow-sm">
+                                <span class="live-pulse-dot" style="background:#fff;"></span> LIVE COUNTING RESULTS
+                            </span>
+                            <span class="badge bg-success text-white extra-small fw-semibold px-2 py-0.5 rounded-pill">
+                                2 Winners Declared
+                            </span>
+                        </div>
+                        <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
+                            Vidhan Parishad 8-Seat Election Results &amp; Trends
+                        </h3>
+                        <div class="text-muted small" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                            बिहार विधान परिषद् 8 सीटों (4 स्नातक + 4 शिक्षक) के आधिकारिक परिणाम, बढ़त एवं प्रमुख मीडिया स्रोतों की ग्राउंड रिपोर्ट
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            <i class="bi bi-clock-history me-1"></i> Updated 09:15 PM IST
+                        </span>
+                        <div class="extra-small text-muted mt-1">27 October 2026 Evening</div>
+                    </div>
+                </div>
+
+                <!-- Live Results Party Scoreboard Summary -->
+                <div class="row g-2 mb-4">
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #f97316 !important;">
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">NDA (BJP / JDU)</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1">
+                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                                <span class="small fw-bold text-success">Won</span>
+                                <span class="text-muted mx-1">|</span>
+                                <span class="fs-4 fw-bold text-primary">3</span>
+                                <span class="extra-small text-muted">Lead</span>
+                            </div>
+                            <div class="extra-small text-muted mt-1">Won: Tirhut Teach &bull; Lead: Kosi, Patna, Tirhut Grad</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #16a34a !important;">
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">MGB (RJD / INC)</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1">
+                                <span class="fs-3 fw-bolder text-secondary" style="font-family: 'Outfit', sans-serif;">0</span>
+                                <span class="small fw-bold text-secondary">Won</span>
+                                <span class="text-muted mx-1">|</span>
+                                <span class="fs-4 fw-bold text-success">2</span>
+                                <span class="extra-small text-muted">Lead</span>
+                            </div>
+                            <div class="extra-small text-muted mt-1">Lead: Patna Teachers, Darbhanga Graduates</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #eab308 !important;">
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">Jan Suraaj Party</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1">
+                                <span class="fs-3 fw-bolder text-secondary" style="font-family: 'Outfit', sans-serif;">0</span>
+                                <span class="small fw-bold text-secondary">Won</span>
+                                <span class="text-muted mx-1">|</span>
+                                <span class="fs-4 fw-bold text-warning">1</span>
+                                <span class="extra-small text-muted">Lead</span>
+                            </div>
+                            <div class="extra-small text-muted mt-1">Lead: Darbhanga Teachers (Suresh Rai)</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #64748b !important;">
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">Independents / Others</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1">
+                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                                <span class="small fw-bold text-success">Won</span>
+                                <span class="text-muted mx-1">|</span>
+                                <span class="fs-4 fw-bold text-secondary">0</span>
+                                <span class="extra-small text-muted">Lead</span>
+                            </div>
+                            <div class="extra-small text-muted mt-1">Won: Saran Teachers (Rahul Raj)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verified Multi-Source Coverage Bar -->
+                <div id="media-sources" class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff;">
+                    <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 py-2.5 px-3.5 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-shield-check text-warning fs-5"></i>
+                            <span class="fw-bold small text-uppercase tracking-wider">Multi-Source Verification &amp; Citations (प्रमुख मीडिया एवं आधिकारिक स्रोत)</span>
+                        </div>
+                        <span class="badge bg-light text-dark extra-small rounded-pill fw-bold">4 Verified Outlets</span>
+                    </div>
+                    <div class="card-body p-3.5">
+                        <p class="small text-light opacity-90 mb-3" style="line-height: 1.5;">
+                            Results and preferential trends for this Single Transferable Vote (PR-STV) election are cross-verified and aggregated from ground reports by premier state news bureaus and official Election Commission notifications:
+                        </p>
+                        <div class="row g-2">
+                            <?php foreach ($newsSources as $src): ?>
+                            <div class="col-sm-6">
+                                <a href="<?php echo htmlspecialchars($src['url']); ?>" target="_blank" rel="noopener noreferrer" class="text-decoration-none d-block h-100 source-pill-link">
+                                    <div class="p-2.5 rounded-3 h-100" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <i class="<?php echo $src['icon']; ?> text-warning fs-6"></i>
+                                                <strong class="text-white small"><?php echo htmlspecialchars($src['name']); ?></strong>
+                                                <span class="text-light opacity-75 extra-small" style="font-family: 'Noto Sans Devanagari', sans-serif;">(<?php echo htmlspecialchars($src['name_hi']); ?>)</span>
+                                            </div>
+                                            <i class="bi bi-box-arrow-up-right text-light opacity-50 extra-small"></i>
+                                        </div>
+                                        <p class="mb-0 text-light opacity-75 extra-small" style="line-height: 1.35;">
+                                            <?php echo htmlspecialchars($src['coverage']); ?>
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ground Intelligence Alert Banner -->
+                <div class="alert alert-light border border-secondary border-opacity-25 rounded-4 p-3 mb-4 shadow-sm" style="background-color: #f8fafc;">
+                    <div class="d-flex align-items-start gap-2.5">
+                        <i class="bi bi-info-circle-fill text-danger fs-5 mt-0.5"></i>
+                        <div class="small text-secondary" style="line-height: 1.55;">
+                            <strong class="text-dark">Key Ground Intelligence &amp; Verified Declarations (प्रमुख परिणाम एवं रुझान):</strong>
+                            <ul class="mb-0 ps-3 mt-1">
+                                <li>
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Tirhut Teachers (Live Hindustan / प्रभात खबर):</strong> NDA-backed BJP candidate <strong>Dr. Narendra Prasad Singh</strong> officially declared elected MLC with 2,945 votes, defeating Independent Bhushan Jha (2,351 votes) by 594 votes. Sitting CPI MLC Sanjay Kumar Singh finished third.
+                                </li>
+                                <li>
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Saran Teachers (दैनिक जागरण / Live Hindustan):</strong> Independent candidate and BJP rebel <strong>Rahul Raj</strong> pulled off an 800+ vote victory in the decisive 2nd preference value transfers, defeating Jan Suraaj sitting MLC Afaq Ahmad and JD(U)'s Anand Pushkar.
+                                </li>
+                                <li>
+                                    <strong>Patna Teachers (Amar Ujala / Live Hindustan):</strong> High-voltage battle at College of Arts &amp; Crafts where RJD-backed <strong>Dr. Sanjeev Kumar Singh</strong> holds a narrow edge over veteran 5-time BJP MLC Nawal Kishore Yadav in tight preferential bundles.
+                                </li>
+                                <li>
+                                    <strong>Darbhanga Constituencies (The Week / Hindustan Times):</strong> Major political shifts emerging in Mithila. Jan Suraaj Party nominee <strong>Suresh Prasad Rai</strong> leads Congress leader Dr. Madan Mohan Jha in Teachers seat; RJD's <strong>Anil Kumar Jha</strong> leads BJP incumbent Dr. Sarvesh Kumar in Graduates.
+                                </li>
+                                <li>
+                                    <strong>Kosi &amp; Patna Graduates (दैनिक जागरण / प्रभात खबर):</strong> BJP's <strong>Dr. N.K. Yadav</strong> consolidating strong lead across 14 Kosi/Purnia districts; JD(U)'s <strong>Neeraj Kumar</strong> maintains edge against Jan Suraaj-supported Anuj Singh in Patna.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Results Table Card -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-4">
+                    <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-trophy text-danger fs-5"></i>
+                            <span class="fw-bold text-dark">Constituency-Wise Live Counting Status &amp; Leading Candidates</span>
+                        </div>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Results Filter">
+                            <button type="button" class="btn btn-outline-dark active fw-semibold" onclick="filterResultsTable('all', this)">All (8)</button>
+                            <button type="button" class="btn btn-outline-primary fw-semibold" onclick="filterResultsTable('Graduates', this)">Graduates (4)</button>
+                            <button type="button" class="btn btn-outline-success fw-semibold" onclick="filterResultsTable('Teachers', this)">Teachers (4)</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="resultsReportTable">
+                            <thead class="table-light text-uppercase text-secondary small" style="font-size: 11px;">
+                                <tr>
+                                    <th class="ps-3.5 py-3">Constituency</th>
+                                    <th class="py-3">Winner / Leading</th>
+                                    <th class="py-3">Key Challenger / Runner-up</th>
+                                    <th class="py-3">Status / Round</th>
+                                    <th class="py-3">Counting Venue &amp; RO</th>
+                                    <th class="py-3 text-end pe-3.5">Verified By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($electionResults as $row): 
+                                    $bInfo = $boothPageMap[$row['slug']] ?? null;
+                                    $bUrl = $bInfo ? SITE_URL . '/' . $bInfo['slug'] : '#';
+                                    $leadPartyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $row['leading']['party']));
+                                    $trailPartyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $row['trailing']['party']));
+                                    $isWon = !empty($row['is_declared']);
+                                ?>
+                                <tr class="results-row <?php echo $isWon ? 'table-success bg-opacity-25' : ''; ?>" data-cat="<?php echo $row['type']; ?>">
+                                    <td class="ps-3.5">
+                                        <div class="fw-bold text-navy">
+                                            <a href="<?php echo $bUrl; ?>" class="text-decoration-none text-dark hover-primary">
+                                                <?php echo htmlspecialchars($row['name']); ?>
+                                            </a>
+                                            <?php if ($isWon): ?>
+                                                <span class="badge bg-success text-white extra-small ms-1 rounded-pill px-2 py-0.5"><i class="bi bi-check-circle-fill me-1"></i>Won</span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="text-muted extra-small" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                                            <?php echo htmlspecialchars($row['name_hi']); ?>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-1.5 mt-1">
+                                            <span class="badge <?php echo $row['type'] === 'Graduates' ? 'bg-primary-subtle text-primary' : 'bg-success-subtle text-success'; ?> extra-small rounded-pill px-2 py-0.5">
+                                                <?php echo $row['type']; ?>
+                                            </span>
+                                            <span class="extra-small text-muted">
+                                                <?php echo number_format($row['turnout'], 2); ?>% Turnout
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div>
+                                                <div class="fw-bold text-dark d-flex align-items-center gap-1" style="font-size: 0.95rem;">
+                                                    <?php if ($isWon): ?><i class="bi bi-trophy-fill text-warning"></i><?php endif; ?>
+                                                    <span><?php echo htmlspecialchars($row['leading']['name']); ?></span>
+                                                </div>
+                                                <div class="text-muted extra-small" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                                                    <?php echo htmlspecialchars($row['leading']['name_hi']); ?>
+                                                </div>
+                                                <span class="badge-party <?php echo $leadPartyClass; ?> px-2 py-0.5 extra-small rounded-pill mt-0.5 d-inline-block">
+                                                    <?php echo htmlspecialchars($row['leading']['party']); ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="fw-semibold text-secondary" style="font-size: 0.9rem;">
+                                            <?php echo htmlspecialchars($row['trailing']['name']); ?>
+                                        </div>
+                                        <div class="text-muted extra-small" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                                            <?php echo htmlspecialchars($row['trailing']['name_hi']); ?>
+                                        </div>
+                                        <span class="badge-party <?php echo $trailPartyClass; ?> px-2 py-0.5 extra-small rounded-pill mt-0.5 d-inline-block">
+                                            <?php echo htmlspecialchars($row['trailing']['party']); ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge <?php echo $row['status_badge']; ?> extra-small rounded-pill px-2.5 py-1">
+                                            <?php echo htmlspecialchars($row['status']); ?>
+                                        </span>
+                                        <div class="text-muted extra-small mt-1" style="max-width: 200px; font-size: 11px;">
+                                            <?php echo htmlspecialchars($row['trend_analysis']); ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="small fw-semibold text-dark">
+                                            <i class="bi bi-geo-alt-fill text-danger me-1"></i><?php echo htmlspecialchars($row['counting_centre']); ?>
+                                        </div>
+                                        <div class="text-muted extra-small">
+                                            RO: <?php echo htmlspecialchars($row['returning_officer']); ?>
+                                        </div>
+                                    </td>
+                                    <td class="text-end pe-3.5">
+                                        <div class="d-flex flex-column align-items-end gap-1">
+                                            <?php foreach (array_keys($row['sources_cited']) as $srcName): ?>
+                                                <span class="badge bg-light text-dark border extra-small px-2 py-0.5 rounded-pill" style="font-size: 10px;">
+                                                    <i class="bi bi-check2 text-success me-1"></i><?php echo htmlspecialchars($srcName); ?>
+                                                </span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Multi-Source Disclaimer Footer -->
+                    <div class="card-footer bg-light py-2.5 px-3.5 border-top d-flex flex-wrap justify-content-between align-items-center gap-2 small">
+                        <div class="text-muted">
+                            <i class="bi bi-patch-check-fill text-success me-1"></i>
+                            <strong>Source Attribution:</strong> Compiled from Live Hindustan, Dainik Jagran, Prabhat Khabar &amp; CEO Bihar. Final certificates issued by Returning Officers under ECI Rule 75.
+                        </div>
+                        <a href="#seat-deep-dive" class="text-primary fw-semibold text-decoration-none hover-underline d-inline-flex align-items-center gap-1">
+                            <span>Explore Seat-by-Seat Media Reports</span>
+                            <i class="bi bi-arrow-down-circle"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Seat-by-Seat Media Ground Intelligence Breakdown -->
+                <div id="seat-deep-dive" class="mb-4">
+                    <h5 class="fw-bold text-dark mb-3" style="font-family: 'Outfit', sans-serif;">
+                        <i class="bi bi-chat-square-text-fill text-primary me-2"></i>
+                        Seat-by-Seat Media Intelligence &amp; Ground Reports (8 सीटें विस्तृत विश्लेषण)
+                    </h5>
+
+                    <div class="row g-3">
+                        <?php foreach ($electionResults as $row): 
+                            $bInfo = $boothPageMap[$row['slug']] ?? null;
+                            $bUrl = $bInfo ? SITE_URL . '/' . $bInfo['slug'] : '#';
+                            $leadPartyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $row['leading']['party']));
+                            $trailPartyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $row['trailing']['party']));
+                            $isWon = !empty($row['is_declared']);
+                        ?>
+                        <div class="col-md-6">
+                            <div class="card border rounded-4 shadow-sm h-100 bg-white <?php echo $isWon ? 'border-success border-2' : ''; ?>">
+                                <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex justify-content-between align-items-start gap-2">
+                                    <div>
+                                        <div class="fw-bold text-dark h6 mb-0 d-flex align-items-center gap-1.5">
+                                            <?php if ($isWon): ?><i class="bi bi-trophy-fill text-warning"></i><?php endif; ?>
+                                            <a href="<?php echo $bUrl; ?>" class="text-decoration-none text-dark hover-primary">
+                                                <?php echo htmlspecialchars($row['name']); ?>
+                                            </a>
+                                        </div>
+                                        <div class="text-muted extra-small" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                                            <?php echo htmlspecialchars($row['name_hi']); ?>
+                                        </div>
+                                    </div>
+                                    <span class="badge <?php echo $row['status_badge']; ?> extra-small rounded-pill px-2.5 py-1">
+                                        <?php echo htmlspecialchars($row['status']); ?>
+                                    </span>
+                                </div>
+                                <div class="card-body p-3.5">
+                                    <!-- Contender Comparison Box -->
+                                    <div class="candidate-lead-box mb-3 <?php echo $isWon ? 'border-success bg-success bg-opacity-10' : ''; ?>">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="extra-small text-uppercase fw-bold <?php echo $isWon ? 'text-success' : 'text-primary'; ?>">
+                                                <?php echo $isWon ? 'ELECTED MLC / WINNER (विजेता घोषित):' : 'Ahead / Leading in Trend:'; ?>
+                                            </span>
+                                            <span class="badge-party <?php echo $leadPartyClass; ?> extra-small px-2 py-0.5 rounded-pill">
+                                                <?php echo htmlspecialchars($row['leading']['party']); ?>
+                                            </span>
+                                        </div>
+                                        <div class="fw-bold text-dark" style="font-size: 1.05rem;">
+                                            <?php echo htmlspecialchars($row['leading']['name']); ?>
+                                            <span class="text-muted fs-6 fw-normal" style="font-family: 'Noto Sans Devanagari', sans-serif;">(<?php echo htmlspecialchars($row['leading']['name_hi']); ?>)</span>
+                                        </div>
+                                        <small class="text-muted d-block"><?php echo htmlspecialchars($row['leading']['role']); ?></small>
+                                        
+                                        <hr class="my-2 border-secondary border-opacity-25">
+                                        
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="extra-small text-uppercase fw-bold text-secondary">
+                                                <?php echo $isWon ? 'Nearest Contender / Runner-Up:' : 'Chief Challenger:'; ?>
+                                            </span>
+                                            <span class="badge-party <?php echo $trailPartyClass; ?> extra-small px-2 py-0.5 rounded-pill">
+                                                <?php echo htmlspecialchars($row['trailing']['party']); ?>
+                                            </span>
+                                        </div>
+                                        <div class="fw-semibold text-secondary">
+                                            <?php echo htmlspecialchars($row['trailing']['name']); ?>
+                                            <span class="extra-small text-muted" style="font-family: 'Noto Sans Devanagari', sans-serif;">(<?php echo htmlspecialchars($row['trailing']['name_hi']); ?>)</span>
+                                        </div>
+                                        <small class="text-muted d-block"><?php echo htmlspecialchars($row['trailing']['role']); ?></small>
+                                    </div>
+
+                                    <!-- Media Specific Reporting Points -->
+                                    <div class="bg-light p-2.5 rounded-3 mb-3 border">
+                                        <span class="extra-small fw-bold text-uppercase text-secondary d-block mb-1.5">
+                                            <i class="bi bi-newspaper text-danger me-1"></i> What Different Sources Report:
+                                        </span>
+                                        <ul class="mb-0 ps-3 extra-small text-muted" style="line-height: 1.45;">
+                                            <?php foreach ($row['sources_cited'] as $src => $txt): ?>
+                                                <li class="mb-1">
+                                                    <strong class="text-dark"><?php echo htmlspecialchars($src); ?>:</strong> 
+                                                    <?php echo htmlspecialchars($txt); ?>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Venue & Turnout Metadata -->
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center text-muted extra-small pt-1 border-top">
+                                        <div>
+                                            <i class="bi bi-building me-1 text-primary"></i>
+                                            <span><?php echo htmlspecialchars($row['counting_centre']); ?></span>
+                                        </div>
+                                        <div>
+                                            <a href="<?php echo $bUrl; ?>" class="text-decoration-none text-primary fw-semibold">
+                                                <span><?php echo $row['booths']; ?> Booths Data &rarr;</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Single Transferable Vote (PR-STV) Quota Explainer -->
+                <div class="card border-0 shadow-sm rounded-4 p-3.5 mb-4" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-left: 4px solid #2563eb !important;">
+                    <div class="d-flex align-items-start gap-3">
+                        <i class="bi bi-calculator-fill text-primary fs-3 mt-1"></i>
+                        <div>
+                            <h6 class="fw-bold text-primary mb-1">How Vidhan Parishad PR-STV Quota Is Calculated (एकल संक्रमणीय मत प्रणाली)</h6>
+                            <p class="small text-secondary mb-2" style="line-height: 1.5;">
+                                Under the Representation of the People Act, 1951 and the Conduct of Elections Rules, 1961 (Rule 75), biennial elections to the Legislative Council use <strong>Proportional Representation by means of the Single Transferable Vote (PR-STV)</strong> via paper ballot. Unlike direct assembly polls (where first-past-the-post applies), a candidate must achieve the <strong>Statutory Quota</strong> of first-preference votes to be declared elected:
+                            </p>
+                            <div class="bg-white p-2.5 rounded-3 d-inline-block border shadow-sm mb-2 font-monospace text-dark small fw-bold">
+                                Quota = [ Total Valid Preference Ballots / (1 + 1) ] + 1
+                            </div>
+                            <p class="extra-small text-muted mb-0">
+                                If no candidate crosses this threshold on 1st preferences, the candidate with the lowest tally is eliminated, and their 2nd preference markings are transferred at full value. This continues round-by-round until a candidate reaches the quota.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- ============================================================= -->
             <!-- 2.5 LIVE VOTING TURNOUT & INCUMBENT MLCS (4 PM UPDATE) -->
@@ -1815,8 +2659,24 @@ function lookupDistrictConstituency(district) {
         } else {
             badgeEl.className = 'badge bg-secondary';
             badgeEl.innerText = info.statusText;
+        }
     }
     box.classList.remove('d-none');
+}
+
+function filterResultsTable(cat, btn) {
+    if (btn) {
+        btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+    const rows = document.querySelectorAll('#resultsReportTable .results-row');
+    rows.forEach(r => {
+        if (cat === 'all' || r.getAttribute('data-cat') === cat) {
+            r.style.display = '';
+        } else {
+            r.style.display = 'none';
+        }
+    });
 }
 
 function filterTurnoutTable(cat, btn) {
@@ -1836,3 +2696,4 @@ function filterTurnoutTable(cat, btn) {
 </script>
 
 <?php include 'footer.php'; ?>
+

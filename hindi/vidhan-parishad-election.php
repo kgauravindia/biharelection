@@ -254,6 +254,338 @@ $turnoutReport = [
     ]
 ];
 
+// विभिन्न मीडिया एवं आधिकारिक स्रोतों की सूची (Multi-Source Verification)
+$newsSources = [
+    [
+        'id' => 'jagran',
+        'name' => 'दैनिक जागरण',
+        'name_en' => 'Dainik Jagran',
+        'badge' => 'bg-warning text-dark',
+        'icon' => 'bi-newspaper',
+        'url' => 'https://www.jagran.com/bihar',
+        'coverage' => 'मतगणना केंद्र से ग्राउंड रिपोर्ट, पटना केंद्र पर सीसीटीवी मॉनिटर व्यवस्था पर आपत्ति, मुजफ्फरपुर व दरभंगा में सुरक्षा बंदोबस्त।'
+    ],
+    [
+        'id' => 'hindustan',
+        'name' => 'हिन्दुस्तान',
+        'name_en' => 'Live Hindustan',
+        'badge' => 'bg-danger text-white',
+        'icon' => 'bi-broadcast',
+        'url' => 'https://www.livehindustan.com/bihar/bihar-mlc-election-2026-voting-live-bjp-rjd-jdu-chunav-latest-updates-live-blog-201792729617020.html',
+        'coverage' => 'निरंतर लाइव ब्लॉग, वरीयता मतों के चक्र, उम्मीदवार प्रतिक्रियाएं, मोकामा राजनीतिक प्रतिष्ठा एवं मतदान प्रतिशत।'
+    ],
+    [
+        'id' => 'prabhat',
+        'name' => 'प्रभात खबर',
+        'name_en' => 'Prabhat Khabar',
+        'badge' => 'bg-info text-dark',
+        'icon' => 'bi-journal-check',
+        'url' => 'https://www.prabhatkhabar.com/state/bihar',
+        'coverage' => 'तिरहुत, दरभंगा, कोसी एवं सारण प्रमंडलीय मतगणना केंद्र, डाक मतपत्र छंटनी व एकल संक्रमणीय मत कोटा विश्लेषण।'
+    ],
+    [
+        'id' => 'ceo_bihar',
+        'name' => 'मुख्य निर्वाचन पदाधिकारी, बिहार',
+        'name_en' => 'CEO Bihar / ECI',
+        'badge' => 'bg-success text-white',
+        'icon' => 'bi-patch-check-fill',
+        'url' => 'https://ceoelection.bihar.gov.in/',
+        'coverage' => 'आधिकारिक गजट अधिसूचना (TCGCGajat2026.pdf), प्रमंडलीय आयुक्त पर्यवेक्षण एवं प्ररूप 21C / 21D वैधानिक परिणाम प्रमाणीकरण।'
+    ]
+];
+
+// 8 सीटों का लाइव मतगणना विवरण, प्रत्याशी स्थिति एवं मीडिया स्रोत इनपुट (27 अक्टूबर 2026 अपडेटेड)
+$electionResults = [
+    [
+        'id' => 'tirhut-teachers',
+        'type' => 'Teachers',
+        'type_hi' => 'शिक्षक',
+        'name' => 'Tirhut Teachers',
+        'name_hi' => 'तिरहुत शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'tirhut-teachers',
+        'status' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
+        'turnout' => 78.10,
+        'booths' => 58,
+        'counting_centre' => 'एमआईटी परिसर, मुजफ्फरपुर',
+        'returning_officer' => 'प्रमंडलीय आयुक्त, तिरहुत',
+        'leading' => [
+            'name' => 'डॉ. नरेंद्र प्रसाद सिंह',
+            'party' => 'BJP',
+            'role' => 'विजयी घोषित (594 मतों से जीते) / एनडीए प्रत्याशी'
+        ],
+        'trailing' => [
+            'name' => 'भूषण झा',
+            'party' => 'IND',
+            'role' => 'मुख्य प्रतिद्वंद्वी (निर्दलीय - 2,351 मत)'
+        ],
+        'other_key' => [
+            'name' => 'संजय कुमार सिंह',
+            'party' => 'CPI',
+            'role' => 'निवर्तमान एमएलसी (तीसरे स्थान पर रहे)'
+        ],
+        'trend_analysis' => 'आधिकारिक परिणाम घोषित: भाजपा के डॉ. नरेंद्र प्रसाद सिंह 594 मतों से विजयी घोषित (2,945 मत पाकर निर्दलीय भूषण झा को हराया)।',
+        'sources_cited' => [
+            'हिन्दुस्तान' => 'आधिकारिक प्रमाण पत्र जारी: भाजपा प्रत्याशी डॉ. नरेंद्र प्रसाद सिंह ने तिरहुत शिक्षक सीट 594 मतों के अंतर से जीत ली।',
+            'दैनिक जागरण' => 'एमआईटी मुजफ्फरपुर केंद्र पर रिटर्निंग ऑफिसर द्वारा डॉ. नरेंद्र प्रसाद सिंह को जीत का प्रमाण पत्र सौंपा गया।',
+            'प्रभात खबर' => 'निर्दलीय भूषण झा को 2,351 मत मिले; वाम दल के मौजूदा एमएलसी संजय कुमार सिंह रेस से बाहर हो गए।'
+        ]
+    ],
+    [
+        'id' => 'saran-teachers',
+        'type' => 'Teachers',
+        'type_hi' => 'शिक्षक',
+        'name' => 'Saran Teachers',
+        'name_hi' => 'सारण शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'saran-teachers',
+        'status' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
+        'turnout' => 87.16,
+        'booths' => 98,
+        'counting_centre' => 'सारण प्रमंडलीय मुख्यालय, छपरा',
+        'returning_officer' => 'प्रमंडलीय आयुक्त, सारण (छपरा)',
+        'leading' => [
+            'name' => 'राहुल राज',
+            'party' => 'IND',
+            'role' => 'विजयी घोषित (निर्दलीय / बागी प्रत्याशी)'
+        ],
+        'trailing' => [
+            'name' => 'अफाक अहमद',
+            'party' => 'Jan Suraaj',
+            'role' => 'निवर्तमान एमएलसी / उप-विजेता (जन सुराज)'
+        ],
+        'other_key' => [
+            'name' => 'आनंद पुष्कर',
+            'party' => 'JD(U)',
+            'role' => 'एनडीए प्रत्याशी (स्व. केदार नाथ पांडेय के पुत्र)'
+        ],
+        'trend_analysis' => 'परिणाम घोषित: द्वितीय वरीयता मतों के हस्तांतरण के बाद निर्दलीय राहुल राज 800+ मतों से विजयी घोषित; जन सुराज के मौजूदा एमएलसी अफाक अहमद पराजित।',
+        'sources_cited' => [
+            'हिन्दुस्तान' => 'निर्दलीय उम्मीदवार एवं भाजपा बागी राहुल राज ने दूसरी वरीयता के मतों के बाद 800 से अधिक वोटों से जीत दर्ज की।',
+            'दैनिक जागरण' => 'सारण में 87.16% के रिकॉर्ड मतदान के बाद लंबी चली छंटनी में राहुल राज ने अफाक अहमद और आनंद पुष्कर को पछाड़ा।',
+            'प्रभात खबर' => 'छपरा मतगणना केंद्र पर सारण आयुक्त द्वारा औपचारिक परिणाम की घोषणा की गई।'
+        ]
+    ],
+    [
+        'id' => 'patna-graduates',
+        'type' => 'Graduates',
+        'type_hi' => 'स्नातक',
+        'name' => 'Patna Graduates',
+        'name_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'patna-graduates',
+        'status' => 'जदयू बढ़त पर (रुझान में आगे)',
+        'status_badge' => 'bg-warning text-dark',
+        'is_declared' => false,
+        'turnout' => 36.19,
+        'booths' => 134,
+        'counting_centre' => 'कला एवं शिल्प महाविद्यालय, पटना',
+        'returning_officer' => 'प्रमंडलीय आयुक्त, पटना',
+        'leading' => [
+            'name' => 'नीरज कुमार',
+            'party' => 'JD(U)',
+            'role' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी'
+        ],
+        'trailing' => [
+            'name' => 'अनुज सिंह',
+            'party' => 'Jan Suraaj',
+            'role' => 'जन सुराज समर्थित (अनंत सिंह समर्थित)'
+        ],
+        'other_key' => [
+            'name' => 'दिलीप कुमार',
+            'party' => 'RJD',
+            'role' => 'महागठबंधन प्रत्याशी'
+        ],
+        'trend_analysis' => 'प्रतिष्ठापूर्ण मुकाबला: जदयू के नीरज कुमार जन सुराज समर्थित अनुज सिंह के खिलाफ कला एवं शिल्प महाविद्यालय केंद्र पर बढ़त बनाए हुए हैं।',
+        'sources_cited' => [
+            'दैनिक जागरण' => 'प्रत्याशी अनुज सिंह ने सीसीटीवी मॉनिटर व्यवस्था पर आपत्ति जताई; आयुक्त की सीधी निगरानी में वरीयता मतों की गिनती जारी।',
+            'हिन्दुस्तान' => 'मोकामा राजनीति का असर; पूर्व विधायक अनंत सिंह खेमा मुस्तैद, शुरुआती राउंड में नीरज कुमार को बढ़त।',
+            'प्रभात खबर' => 'पटना, नालंदा व नवादा के मतपत्र बंडलों की छंटनी जारी; रात तक अंतिम कोटा स्पष्ट होने की संभावना।'
+        ]
+    ],
+    [
+        'id' => 'patna-teachers',
+        'type' => 'Teachers',
+        'type_hi' => 'शिक्षक',
+        'name' => 'Patna Teachers',
+        'name_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'patna-teachers',
+        'status' => 'राजद आगे (कांटे की टक्कर)',
+        'status_badge' => 'bg-danger text-white blink-anim',
+        'is_declared' => false,
+        'turnout' => 56.89,
+        'booths' => 80,
+        'counting_centre' => 'कला एवं शिल्प महाविद्यालय, पटना',
+        'returning_officer' => 'प्रमंडलीय आयुक्त, पटना',
+        'leading' => [
+            'name' => 'डॉ. संजीव कुमार सिंह',
+            'party' => 'RJD',
+            'role' => 'महागठबंधन प्रत्याशी (शुरुआती चक्रों में आगे)'
+        ],
+        'trailing' => [
+            'name' => 'नवल किशोर यादव',
+            'party' => 'BJP',
+            'role' => 'वर्तमान विधान पार्षद (5 बार विजेता) / एनडीए'
+        ],
+        'other_key' => [
+            'name' => 'जन सुराज प्रत्याशी',
+            'party' => 'Jan Suraaj',
+            'role' => 'तृतीय दावेदार'
+        ],
+        'trend_analysis' => 'सनसनीखेज मुकाबला: 5 बार के भाजपा एमएलसी नवल किशोर यादव पर राजद के डॉ. संजीव कुमार सिंह ने बढ़त बनाई।',
+        'sources_cited' => [
+            'हिन्दुस्तान' => 'कॉलेज व माध्यमिक शिक्षक मतों के शुरुआती बंडलों में राजद के डॉ. संजीव कुमार सिंह ने नवल किशोर यादव पर बढ़त बनाई।',
+            'अमर उजाला' => 'पटना शिक्षक सीट पर राजद और 5 बार के भाजपा एमएलसी के बीच हर वोट के लिए कांटे का मुकाबला जारी।',
+            'प्रभात खबर' => '80 बूथों के मतपत्रों की जांच जारी; दूसरी वरीयता के मत मूल्य से ही अंतिम कोटा तय होगा।'
+        ]
+    ],
+    [
+        'id' => 'tirhut-graduates',
+        'type' => 'Graduates',
+        'type_hi' => 'स्नातक',
+        'name' => 'Tirhut Graduates',
+        'name_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'tirhut-graduates',
+        'status' => 'जदयू आगे (त्रिकोणीय मुकाबला)',
+        'status_badge' => 'bg-warning text-dark',
+        'is_declared' => false,
+        'turnout' => 42.15,
+        'booths' => 145,
+        'counting_centre' => 'एमआईटी परिसर, मुजफ्फरपुर',
+        'returning_officer' => 'प्रमंडलीय आयुक्त, तिरहुत',
+        'leading' => [
+            'name' => 'अभिषेक झा',
+            'party' => 'JD(U)',
+            'role' => 'एनडीए प्रत्याशी'
+        ],
+        'trailing' => [
+            'name' => 'डॉ. विमोहन कुमार',
+            'party' => 'Jan Suraaj',
+            'role' => 'जन सुराज प्रत्याशी'
+        ],
+        'other_key' => [
+            'name' => 'वंशीधर ब्रजवासी / डॉ. रश्मि गौतम',
+            'party' => 'IND / RJD',
+            'role' => 'निवर्तमान एमएलसी एवं राजद प्रत्याशी'
+        ],
+        'trend_analysis' => 'जदयू के अभिषेक झा जन सुराज के डॉ. विमोहन और निर्दलीय वंशीधर ब्रजवासी के त्रिकोणीय मुकाबले में मामूली बढ़त पर।',
+        'sources_cited' => [
+            'प्रभात खबर' => 'एमआईटी मुजफ्फरपुर में त्रिस्तरीय सुरक्षा घेरे में 145 बूथों के बॉक्स की गिनती जारी।',
+            'दैनिक जागरण' => 'मुजफ्फरपुर एवं वैशाली के शहरी बंडलों में अभिषेक झा को बढ़त; ग्रामीण इलाकों में जन सुराज की मजबूत मौजूदगी।',
+            'हिन्दुस्तान' => '42.15% मतदान के मद्देनजर कई चरणों के एलिमिनेशन के बाद ही कोटा संभव।'
+        ]
+    ],
+    [
+        'id' => 'darbhanga-graduates',
+        'type' => 'Graduates',
+        'type_hi' => 'स्नातक',
+        'name' => 'Darbhanga Graduates',
+        'name_hi' => 'दरभंगा स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'darbhanga-graduates',
+        'status' => 'राजद बढ़त पर (प्रथम चक्र)',
+        'status_badge' => 'bg-primary text-white',
+        'is_declared' => false,
+        'turnout' => 42.00,
+        'booths' => 138,
+        'counting_centre' => 'प्रमंडलीय आयुक्त परिसर, दरभंगा',
+        'returning_officer' => 'प्रमंडलीय आयुक्त, दरभंगा',
+        'leading' => [
+            'name' => 'अनिल कुमार झा',
+            'party' => 'RJD',
+            'role' => 'महागठबंधन प्रत्याशी (बढ़त पर)'
+        ],
+        'trailing' => [
+            'name' => 'डॉ. सर्वेश कुमार',
+            'party' => 'BJP',
+            'role' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी'
+        ],
+        'other_key' => [
+            'name' => 'मोहम्मद इम्तियाज (नूरानी)',
+            'party' => 'Jan Suraaj',
+            'role' => 'जन सुराज प्रत्याशी'
+        ],
+        'trend_analysis' => 'बड़ा उलटफेर: राजद के अनिल कुमार झा मिथिलांचल के स्नातक मतों में मौजूदा भाजपा एमएलसी डॉ. सर्वेश कुमार पर बढ़त बनाए हुए हैं।',
+        'sources_cited' => [
+            'अमर उजाला' => 'दरभंगा स्नातक सीट पर शुरुआती रुझानों में राजद के अनिल कुमार झा ने भाजपा के मौजूदा एमएलसी डॉ. सर्वेश कुमार को पीछे छोड़ा।',
+            'हिन्दुस्तान' => 'समस्तीपुर व मधुबनी के ग्रामीण बूथों से राजद को बढ़त; 138 बूथों की गणना जारी।',
+            'प्रभात खबर' => 'दरभंगा प्रमंडलीय परिसर में कड़े सुरक्षा इंतजामों के बीच द्वितीय चक्र की छंटनी शुरू।'
+        ]
+    ],
+    [
+        'id' => 'darbhanga-teachers',
+        'type' => 'Teachers',
+        'type_hi' => 'शिक्षक',
+        'name' => 'Darbhanga Teachers',
+        'name_hi' => 'दरभंगा शिक्षक निर्वाचन क्षेत्र',
+        'slug' => 'darbhanga-teachers',
+        'status' => 'जन सुराज आगे (कांटे की टक्कर)',
+        'status_badge' => 'bg-warning text-dark',
+        'is_declared' => false,
+        'turnout' => 79.00,
+        'booths' => 99,
+        'counting_centre' => 'प्रमंडलीय आयुक्त परिसर, दरभंगा',
+        'returning_officer' => 'प्रमंडलीय आयुक्त, दरभंगा',
+        'leading' => [
+            'name' => 'सुरेश प्रसाद राय',
+            'party' => 'Jan Suraaj',
+            'role' => 'जन सुराज प्रत्याशी (वरीयता मतों में आगे)'
+        ],
+        'trailing' => [
+            'name' => 'डॉ. मदन मोहन झा',
+            'party' => 'INC',
+            'role' => 'वर्तमान विधान पार्षद (पूर्व कांग्रेस प्रदेश अध्यक्ष)'
+        ],
+        'other_key' => [
+            'name' => 'रामदेव राय',
+            'party' => 'BJP',
+            'role' => 'एनडीए समर्थित दावेदार'
+        ],
+        'trend_analysis' => 'जन सुराज के सुरेश प्रसाद राय कांग्रेस के वरिष्ठ नेता डॉ. मदन मोहन झा के खिलाफ करीबी मुकाबले में बढ़त बनाए हुए हैं।',
+        'sources_cited' => [
+            'द वीक' => 'दरभंगा शिक्षक सीट पर जन सुराज के सुरेश प्रसाद राय ने कांग्रेस दिग्गज मदन मोहन झा पर उल्लेखनीय बढ़त बनाई।',
+            'हिन्दुस्तान टाइम्स' => 'मिथिला शिक्षक क्षेत्र में जन सुराज पार्टी ने त्रिकोणीय मुकाबले में कांग्रेस को कड़ी चुनौती दी।',
+            'प्रभात खबर' => '79% भारी मतदान के मतपत्रों को 10 काउंटिंग टेबलों पर वरीयता क्रम में जांचा जा रहा है।'
+        ]
+    ],
+    [
+        'id' => 'kosi-graduates',
+        'type' => 'Graduates',
+        'type_hi' => 'स्नातक',
+        'name' => 'Kosi Graduates',
+        'name_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
+        'slug' => 'kosi-graduates',
+        'status' => 'भाजपा मजबूत बढ़त पर',
+        'status_badge' => 'bg-primary text-white',
+        'is_declared' => false,
+        'turnout' => 52.51,
+        'booths' => 181,
+        'counting_centre' => 'पूर्णिया / सहरसा मतगणना केंद्र',
+        'returning_officer' => 'प्रमंडलीय आयुक्त, कोसी / पूर्णिया',
+        'leading' => [
+            'name' => 'डॉ. एनके यादव',
+            'party' => 'BJP',
+            'role' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी'
+        ],
+        'trailing' => [
+            'name' => 'रजनीश रंजन',
+            'party' => 'Jan Suraaj',
+            'role' => 'जन सुराज प्रत्याशी'
+        ],
+        'other_key' => [
+            'name' => 'नितेश कुमार',
+            'party' => 'RJD',
+            'role' => 'महागठबंधन प्रत्याशी'
+        ],
+        'trend_analysis' => 'भाजपा के मौजूदा एमएलसी डॉ. एनके यादव 14 जिलों के 181 बूथों की छंटनी में जन सुराज के रजनीश रंजन पर मजबूत बढ़त बनाए हुए हैं।',
+        'sources_cited' => [
+            'हिन्दुस्तान' => 'कोसी-पूर्णिया स्नातक सीट पर भाजपा प्रत्याशी डॉ. एनके यादव ने शुरुआती राउंड से ही मजबूत बढ़त बना रखी है।',
+            'ईटीवी भारत' => '14 जिलों में फैले सबसे बड़े क्षेत्र में डॉ. एनके यादव जन सुराज के रजनीश रंजन से काफी आगे।',
+            'दैनिक जागरण' => 'सहरसा/पूर्णिया केंद्र पर मतपत्रों के बंडल संकलन में भाजपा प्रत्याशी को लगातार बढ़त।'
+        ]
+    ]
+];
+
 // 8 निर्वाचन क्षेत्रों के मतदान केंद्र एवं समर्पित हब मैपिंग
 $boothPageMap = [
     'patna-graduates' => ['slug' => 'patna-graduate-constituency', 'count' => 134, 'code' => 1],
@@ -446,6 +778,38 @@ $timeline = [
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
 }
+.live-pulse-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ef4444;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    animation: pulseRing 1.5s infinite;
+}
+@keyframes pulseRing {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+.source-pill-link {
+    transition: all 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+.source-pill-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.candidate-lead-box {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-left: 4px solid #2563eb;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+.candidate-lead-box.winner-bjp { border-left-color: #f97316; }
+.candidate-lead-box.winner-jdu { border-left-color: #16a34a; }
+.candidate-lead-box.winner-jsp { border-left-color: #eab308; }
+.candidate-lead-box.winner-inc { border-left-color: #0284c7; }
 </style>
 
 <!-- ========================================================================= -->
@@ -456,103 +820,101 @@ $timeline = [
         <div class="row align-items-center g-4">
             <div class="col-lg-8">
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                    <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
-                        <i class="bi bi-broadcast me-1 text-danger"></i> LIVE ELECTION NOTIFICATION
+                    <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-1.5">
+                        <span class="live-pulse-dot" style="background:#fff;"></span> मतगणना लाइव &bull; 27 अक्टूबर 2026
+                    </span>
+                    <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold">
+                        विभिन्न मीडिया स्रोतों से प्राप्त रुझान
                     </span>
                     <span class="badge bg-light text-dark px-3 py-1.5 rounded-pill fw-semibold">
-                        Gazette Ref: M2–03(TC&GC)/2026-5369
-                    </span>
-                    <span class="badge bg-danger text-white px-3 py-1.5 rounded-pill fw-semibold">
-                        8 of 12 Seats (4 Graduates + 4 Teachers)
+                        8 सीटें (4 स्नातक + 4 शिक्षक)
                     </span>
                 </div>
 
                 <h1 class="display-6 fw-bold mb-2" style="font-family: 'Outfit', sans-serif;">
-                    Bihar Vidhan Parishad Biennial Election 2026
+                    बिहार विधान परिषद् चुनाव परिणाम 2026
                 </h1>
                 <h2 class="h5 fw-normal text-light opacity-90 mb-3" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                    बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 8 सीटें (4 स्नातक + 4 शिक्षक निर्वाचन क्षेत्र)
+                    8 सीटों (4 स्नातक एवं 4 शिक्षक निर्वाचन क्षेत्र) की लाइव मतगणना, रुझान एवं परिणाम
                 </h2>
                 
                 <p class="lead fs-6 text-light opacity-90 mb-4" style="max-width: 720px; line-height: 1.6;">
-                    Official election schedule and gazette notifications for <strong>8 out of 12 total Graduates' &amp; Teachers' constituencies</strong> in Bihar Legislative Council (covering 30 districts). Polling on <strong>23 October 2026</strong>.
+                    <strong>दैनिक जागरण, हिन्दुस्तान, प्रभात खबर एवं मुख्य निर्वाचन पदाधिकारी (CEO Bihar)</strong> द्वारा जारी आधिकारिक अधिसूचनाओं के आधार पर लाइव मतगणना आंकड़े, वरीयता चक्र एवं सीटवार स्थिति।
                 </p>
 
                 <div class="d-flex flex-wrap gap-2 pt-1">
-                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/ImportantInstructionsAndLetters/TCGCGajat2026.pdf" target="_blank" rel="noopener" class="btn gazette-btn px-4 py-2.5 rounded-3 fw-bold">
-                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> आधिकारिक गजट PDF (TCGCGajat2026.pdf) देखें &rarr;
+                    <a href="#election-results" class="btn btn-danger px-3.5 py-2.5 rounded-3 fw-bold text-white shadow-sm d-inline-flex align-items-center gap-2">
+                        <i class="bi bi-trophy-fill"></i>
+                        <span>लाइव परिणाम एवं रुझान (Election Results) &rarr;</span>
                     </a>
-                    <a href="#voter-guide" class="btn btn-success px-3.5 py-2.5 rounded-3 fw-bold text-white shadow-sm">
-                        <i class="bi bi-person-check-fill me-1"></i> मतदाता सूची एवं निर्वाचक नामावली
+                    <a href="#media-sources" class="btn btn-warning px-3 py-2.5 rounded-3 fw-bold text-dark d-inline-flex align-items-center gap-1.5">
+                        <i class="bi bi-newspaper"></i> विभिन्न स्रोत संदर्भ (Sources Cited)
                     </a>
-                    <a href="#nomination-details" class="btn btn-warning px-3 py-2.5 rounded-3 fw-bold text-dark">
-                        <i class="bi bi-file-earmark-person-fill me-1"></i> नामांकन विवरण (प्ररूप 2E / 26)
+                    <a href="#voting-turnout" class="btn btn-outline-light px-3 py-2.5 rounded-3 fw-semibold">
+                        <i class="bi bi-pie-chart-fill me-1"></i> मतदान प्रतिशत रिपोर्ट
+                    </a>
+                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/ImportantInstructionsAndLetters/TCGCGajat2026.pdf" target="_blank" rel="noopener" class="btn gazette-btn px-3.5 py-2.5 rounded-3 fw-bold">
+                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> आधिकारिक गजट PDF &rarr;
                     </a>
                     <a href="#schedule" class="btn btn-outline-light px-3 py-2.5 rounded-3 fw-semibold">
-                        <i class="bi bi-calendar-event me-1"></i> संपूर्ण चुनाव कार्यक्रम
-                    </a>
-                    <a href="#district-finder" class="btn btn-outline-info px-3 py-2.5 rounded-3 fw-semibold">
-                        <i class="bi bi-search me-1"></i> अपने जिले की स्थिति जांचें
+                        <i class="bi bi-calendar-event me-1"></i> समय सारिणी
                     </a>
                 </div>
             </div>
 
-            <!-- Countdown Card -->
+            <!-- Countdown / Live Counting Status Card -->
             <div class="col-lg-4">
-                <div class="card border-0 shadow-lg rounded-4 overflow-hidden" style="background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15);">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden" style="background: rgba(15, 23, 42, 0.90); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.18);">
                     <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 py-3 text-center">
+                        <div class="d-inline-flex align-items-center gap-1.5 px-3 py-1 bg-success text-white rounded-pill extra-small fw-bold mb-2 shadow-sm">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>2 परिणाम घोषित &bull; 6 सीटों पर मतगणना जारी</span>
+                        </div>
                         <h6 class="text-uppercase small fw-bold text-warning mb-0">
-                            <i class="bi bi-stopwatch me-1"></i> मतगणना एवं परिणाम उल्टी गिनती
+                            <i class="bi bi-broadcast me-1"></i> वोटों की गिनती व परिणाम घोषणा
                         </h6>
-                        <span class="text-white small fw-bold">मंगलवार, 27 अक्टूबर 2026 (सुबह 08:00 बजे से)</span>
+                        <span class="text-white small fw-bold">मंगलवार, 27 अक्टूबर 2026 (शाम का विशेष बुलेटिन)</span>
                     </div>
                     <div class="card-body p-4 text-center">
-                        <div class="row g-2 text-center" id="pollingCountdown">
-                            <div class="col-3">
-                                <div class="countdown-box">
-                                    <div class="countdown-num" id="cdDays">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">दिन</small>
-                                </div>
+                        <!-- Round Status Pulse -->
+                        <div class="p-3 rounded-3 mb-3 text-start" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35);">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="live-pulse-dot" style="background:#22c55e;"></span>
+                                <strong class="text-warning small text-uppercase">स्थिति: 2 विजेता घोषित &bull; 6 सीटों पर एलिमिनेशन राउंड जारी</strong>
                             </div>
-                            <div class="col-3">
-                                <div class="countdown-box">
-                                    <div class="countdown-num" id="cdHours">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">घंटे</small>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="countdown-box">
-                                    <div class="countdown-num" id="cdMinutes">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">मिनट</small>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="countdown-box">
-                                    <div class="countdown-num" id="cdSeconds">--</div>
-                                    <small class="text-light opacity-75 d-block text-uppercase" style="font-size: 10px;">सेकंड</small>
-                                </div>
-                            </div>
+                            <p class="small text-light opacity-90 mb-0" style="font-size: 12px; line-height: 1.45;">
+                                तिरहुत शिक्षक से भाजपा के डॉ. नरेंद्र प्रसाद सिंह विजयी घोषित। सारण शिक्षक से निर्दलीय राहुल राज विजयी। पटना, दरभंगा, तिरहुत और कोसी में कोटा राउंड्स जारी।
+                            </p>
                         </div>
-
-                        <hr class="border-secondary border-opacity-25 my-3">
 
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90">
                             <div>
-                                <i class="bi bi-calendar-check text-success me-1"></i> <strong>मतगणना का समय:</strong>
+                                <i class="bi bi-clock-history text-info me-1"></i> <strong>मतगणना प्रारंभ:</strong>
                             </div>
-                            <span class="badge bg-success text-white fw-bold px-2 py-1">27 Oct 2026, 08:00 AM</span>
+                            <span class="badge bg-secondary text-white fw-bold px-2 py-1">27 Oct 2026, 08:00 AM</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
-                                <i class="bi bi-check-circle-fill text-info me-1"></i> <strong>मतदान स्थिति:</strong>
+                                <i class="bi bi-trophy-fill text-warning me-1"></i> <strong>घोषित परिणाम:</strong>
                             </div>
-                            <span class="text-light">सम्पन्न (23 Oct 2026)</span>
+                            <span class="badge bg-success text-white fw-bold px-2 py-1">2 सीटें घोषित (विजेता तय)</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
-                                <i class="bi bi-hourglass-bottom text-warning me-1"></i> <strong>8 एमएलसी का कार्यकाल समाप्ति:</strong>
+                                <i class="bi bi-hourglass-split text-danger me-1"></i> <strong>गणना जारी:</strong>
                             </div>
-                            <span class="text-light">16 Nov 2026</span>
+                            <span class="text-warning fw-semibold">6 सीटों पर वरीयता छंटनी</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
+                            <div>
+                                <i class="bi bi-newspaper text-info me-1"></i> <strong>स्रोतों का उल्लेख:</strong>
+                            </div>
+                            <span class="text-light fw-semibold">जागरण, हिन्दुस्तान, प्रभात, मुख्य निर्वाचन पदाधिकारी</span>
+                        </div>
+                        <div class="mt-3 pt-2 border-top border-secondary border-opacity-25">
+                            <a href="#election-results" class="btn btn-warning btn-sm w-100 fw-bold rounded-pill text-dark shadow-sm">
+                                <i class="bi bi-arrow-down-circle-fill me-1"></i> लाइव परिणाम व रुझान देखें
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -569,30 +931,33 @@ $timeline = [
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-primary fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">8 / 12</div>
-                    <div class="fw-semibold text-dark small">Contested Quota Seats</div>
-                    <small class="text-muted">4 of 6 Grad + 4 of 6 Teach</small>
+                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">2 / 8</div>
+                    <div class="fw-semibold text-dark small">विजेता घोषित सीटें</div>
+                    <small class="text-muted">तिरहुत शिक्षक (BJP) &bull; सारण शिक्षक (IND)</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">30</div>
-                    <div class="fw-semibold text-dark small">Districts in this Poll</div>
-                    <small class="text-muted">Out of 38 Bihar Districts</small>
+                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">6 / 8</div>
+                    <div class="fw-semibold text-dark small">वरीयता कोटा गणना जारी</div>
+                    <small class="text-muted">पटना, तिरहुत, दर्भ., कोसी</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">5</div>
-                    <div class="fw-semibold text-dark small">Divisional Commissioners</div>
-                    <small class="text-muted">Designated Returning Officers</small>
+                    <div class="text-primary fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">150</div>
+                    <div class="fw-semibold text-dark small">कुल प्रत्याशी मैदान में</div>
+                    <small class="text-muted">90 स्नातक + 60 शिक्षक</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-danger fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">STV</div>
-                    <div class="fw-semibold text-dark small">Voting System</div>
-                    <small class="text-muted">Single Transferable Vote</small>
+                    <div class="text-danger fw-bold display-6 mb-1 d-flex align-items-center justify-content-center gap-1.5" style="font-family: 'Outfit', sans-serif;">
+                        <span class="live-pulse-dot"></span>
+                        <span>LIVE</span>
+                    </div>
+                    <div class="fw-semibold text-dark small">एकल संक्रमणीय मत पद्धति</div>
+                    <small class="text-muted">PR-STV नियम 75 के तहत गणना</small>
                 </div>
             </div>
         </div>
@@ -603,6 +968,396 @@ $timeline = [
     <div class="row g-5">
         <!-- Main Content Area (8 Cols) -->
         <div class="col-lg-8">
+
+            <!-- ============================================================= -->
+            <!-- 2.4 LIVE ELECTION RESULTS & COUNTING TRENDS (MULTI-SOURCE HINDI) -->
+            <!-- ============================================================= -->
+            <div id="election-results" class="mb-5">
+                <!-- Section Header -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-danger text-white fw-bold text-uppercase px-2.5 py-1 d-inline-flex align-items-center gap-1.5 shadow-sm">
+                                <span class="live-pulse-dot" style="background:#fff;"></span> लाइव मतगणना परिणाम
+                            </span>
+                            <span class="badge bg-success text-white extra-small fw-semibold px-2 py-0.5 rounded-pill">
+                                2 सीटें घोषित
+                            </span>
+                        </div>
+                        <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
+                            विधान परिषद 8 सीटों के आधिकारिक चुनाव परिणाम एवं रुझान
+                        </h3>
+                        <div class="text-muted small">
+                            दैनिक जागरण, हिन्दुस्तान, प्रभात खबर एवं मुख्य निर्वाचन पदाधिकारी बिहार द्वारा प्राप्त ताज़ा आंकड़े
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            <i class="bi bi-clock-history me-1"></i> अपडेट 09:15 PM IST
+                        </span>
+                        <div class="extra-small text-muted mt-1">27 अक्टूबर 2026 विशेष बुलेटिन</div>
+                    </div>
+                </div>
+
+                <!-- Live Results Party Scoreboard Summary (Hindi) -->
+                <div class="row g-2 mb-4">
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #f97316 !important;">
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">एनडीए (BJP / JDU)</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1">
+                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                                <span class="small fw-bold text-success">विजयी</span>
+                                <span class="text-muted mx-1">|</span>
+                                <span class="fs-4 fw-bold text-primary">3</span>
+                                <span class="extra-small text-muted">बढ़त</span>
+                            </div>
+                            <div class="extra-small text-muted mt-1">जीत: तिरहुत शिक्षक &bull; बढ़त: कोसी, पटना, तिरहुत स्नातक</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #16a34a !important;">
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">महागठबंधन (RJD / INC)</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1">
+                                <span class="fs-3 fw-bolder text-secondary" style="font-family: 'Outfit', sans-serif;">0</span>
+                                <span class="small fw-bold text-secondary">विजयी</span>
+                                <span class="text-muted mx-1">|</span>
+                                <span class="fs-4 fw-bold text-success">2</span>
+                                <span class="extra-small text-muted">बढ़त</span>
+                            </div>
+                            <div class="extra-small text-muted mt-1">बढ़त: पटना शिक्षक, दरभंगा स्नातक</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #eab308 !important;">
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">जन सुराज पार्टी</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1">
+                                <span class="fs-3 fw-bolder text-secondary" style="font-family: 'Outfit', sans-serif;">0</span>
+                                <span class="small fw-bold text-secondary">विजयी</span>
+                                <span class="text-muted mx-1">|</span>
+                                <span class="fs-4 fw-bold text-warning">1</span>
+                                <span class="extra-small text-muted">बढ़त</span>
+                            </div>
+                            <div class="extra-small text-muted mt-1">बढ़त: दरभंगा शिक्षक (सुरेश राय)</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #64748b !important;">
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">निर्दलीय / अन्य</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1">
+                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                                <span class="small fw-bold text-success">विजयी</span>
+                                <span class="text-muted mx-1">|</span>
+                                <span class="fs-4 fw-bold text-secondary">0</span>
+                                <span class="extra-small text-muted">बढ़त</span>
+                            </div>
+                            <div class="extra-small text-muted mt-1">जीत: सारण शिक्षक (राहुल राज)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verified Multi-Source Coverage Bar -->
+                <div id="media-sources" class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff;">
+                    <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 py-2.5 px-3.5 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-shield-check text-warning fs-5"></i>
+                            <span class="fw-bold small text-uppercase tracking-wider">विभिन्न मीडिया एवं आधिकारिक स्रोतों का संदर्भ (Multi-Source Verification)</span>
+                        </div>
+                        <span class="badge bg-light text-dark extra-small rounded-pill fw-bold">4 अधिकृत स्रोत</span>
+                    </div>
+                    <div class="card-body p-3.5">
+                        <p class="small text-light opacity-90 mb-3" style="line-height: 1.5;">
+                            इस चुनाव में मतों की गिनती वरीयता क्रम (Single Transferable Vote) के आधार पर हो रही है। सभी रुझान एवं तथ्य राज्य के प्रतिष्ठित समाचार पत्रों व निर्वाचन आयोग के दिशा-निर्देशों से सत्यापित हैं:
+                        </p>
+                        <div class="row g-2">
+                            <?php foreach ($newsSources as $src): ?>
+                            <div class="col-sm-6">
+                                <a href="<?php echo htmlspecialchars($src['url']); ?>" target="_blank" rel="noopener noreferrer" class="text-decoration-none d-block h-100 source-pill-link">
+                                    <div class="p-2.5 rounded-3 h-100" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <i class="<?php echo $src['icon']; ?> text-warning fs-6"></i>
+                                                <strong class="text-white small"><?php echo htmlspecialchars($src['name']); ?></strong>
+                                                <span class="text-light opacity-75 extra-small">(<?php echo htmlspecialchars($src['name_en']); ?>)</span>
+                                            </div>
+                                            <i class="bi bi-box-arrow-up-right text-light opacity-50 extra-small"></i>
+                                        </div>
+                                        <p class="mb-0 text-light opacity-75 extra-small" style="line-height: 1.35;">
+                                            <?php echo htmlspecialchars($src['coverage']); ?>
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ground Intelligence Alert Banner -->
+                <div class="alert alert-light border border-secondary border-opacity-25 rounded-4 p-3 mb-4 shadow-sm" style="background-color: #f8fafc;">
+                    <div class="d-flex align-items-start gap-2.5">
+                        <i class="bi bi-info-circle-fill text-danger fs-5 mt-0.5"></i>
+                        <div class="small text-secondary" style="line-height: 1.55;">
+                            <strong class="text-dark">ताज़ा आधिकारिक परिणाम एवं महत्वपूर्ण ग्राउंड इनपुट्स (Key Highlights):</strong>
+                            <ul class="mb-0 ps-3 mt-1">
+                                <li>
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>तिरहुत शिक्षक (हिन्दुस्तान / प्रभात खबर):</strong> एनडीए समर्थित भाजपा प्रत्याशी <strong>डॉ. नरेंद्र प्रसाद सिंह</strong> आधिकारिक रूप से 594 मतों से विजयी घोषित किए गए (2,945 मत प्राप्त कर निर्दलीय भूषण झा के 2,351 मतों को पछाड़ा)। वाम दल के मौजूदा एमएलसी संजय कुमार सिंह तीसरे स्थान पर रहे।
+                                </li>
+                                <li>
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>सारण शिक्षक (दैनिक जागरण / हिन्दुस्तान):</strong> निर्दलीय प्रत्याशी एवं भाजपा बागी <strong>राहुल राज</strong> ने दूसरी वरीयता के मतों के हस्तांतरण के बाद 800+ मतों से ऐतिहासिक जीत दर्ज की; जन सुराज के मौजूदा एमएलसी अफाक अहमद और जदयू के आनंद पुष्कर पराजित।
+                                </li>
+                                <li>
+                                    <strong>पटना शिक्षक (अमर उजाला / हिन्दुस्तान):</strong> कला एवं शिल्प महाविद्यालय केंद्र पर 5 बार के भाजपा एमएलसी नवल किशोर यादव पर राजद समर्थित <strong>डॉ. संजीव कुमार सिंह</strong> ने करीबी वरीयता बंडलों में बढ़त बनाई।
+                                </li>
+                                <li>
+                                    <strong>दरभंगा निर्वाचन क्षेत्र (द वीक / हिन्दुस्तान टाइम्स):</strong> मिथिलांचल में बड़े राजनीतिक समीकरण; शिक्षक सीट पर जन सुराज के <strong>सुरेश प्रसाद राय</strong> कांग्रेस दिग्गज डॉ. मदन मोहन झा पर आगे, जबकि स्नातक सीट पर राजद के <strong>अनिल कुमार झा</strong> भाजपा के मौजूदा एमएलसी डॉ. सर्वेश कुमार पर बढ़त बनाए हुए हैं।
+                                </li>
+                                <li>
+                                    <strong>कोसी एवं पटना स्नातक (दैनिक जागरण / प्रभात खबर):</strong> 14 जिलों में फैले कोसी क्षेत्र में भाजपा के <strong>डॉ. एनके यादव</strong> मजबूत बढ़त पर; पटना स्नातक में जदयू के <strong>नीरज कुमार</strong> जन सुराज समर्थित अनुज सिंह के खिलाफ आगे चल रहे हैं।
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Results Table Card -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-4">
+                    <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-trophy text-danger fs-5"></i>
+                            <span class="fw-bold text-dark">सीटवार लाइव मतगणना स्थिति एवं प्रमुख दावेदार</span>
+                        </div>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Results Filter">
+                            <button type="button" class="btn btn-outline-dark active fw-semibold" onclick="filterResultsTable('all', this)">सभी (8)</button>
+                            <button type="button" class="btn btn-outline-primary fw-semibold" onclick="filterResultsTable('Graduates', this)">स्नातक (4)</button>
+                            <button type="button" class="btn btn-outline-success fw-semibold" onclick="filterResultsTable('Teachers', this)">शिक्षक (4)</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="resultsReportTable">
+                            <thead class="table-light text-uppercase text-secondary small" style="font-size: 11px;">
+                                <tr>
+                                    <th class="ps-3.5 py-3">निर्वाचन क्षेत्र</th>
+                                    <th class="py-3">विजेता / आगे</th>
+                                    <th class="py-3">निकटतम प्रतिद्वंद्वी / उप-विजेता</th>
+                                    <th class="py-3">स्थिति / राउंड</th>
+                                    <th class="py-3">मतगणना स्थल एवं आरओ</th>
+                                    <th class="py-3 text-end pe-3.5">स्रोतों का संदर्भ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($electionResults as $row): 
+                                    $bInfo = $boothPageMap[$row['slug']] ?? null;
+                                    $bUrl = $bInfo ? SITE_URL . '/' . $bInfo['slug'] : '#';
+                                    $leadPartyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $row['leading']['party']));
+                                    $trailPartyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $row['trailing']['party']));
+                                    $isWon = !empty($row['is_declared']);
+                                ?>
+                                <tr class="results-row <?php echo $isWon ? 'table-success bg-opacity-25' : ''; ?>" data-cat="<?php echo $row['type']; ?>">
+                                    <td class="ps-3.5">
+                                        <div class="fw-bold text-navy">
+                                            <a href="<?php echo $bUrl; ?>" class="text-decoration-none text-dark hover-primary">
+                                                <?php echo htmlspecialchars($row['name_hi']); ?>
+                                            </a>
+                                            <?php if ($isWon): ?>
+                                                <span class="badge bg-success text-white extra-small ms-1 rounded-pill px-2 py-0.5"><i class="bi bi-check-circle-fill me-1"></i>विजयी घोषित</span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="text-muted extra-small">
+                                            <?php echo htmlspecialchars($row['name']); ?>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-1.5 mt-1">
+                                            <span class="badge <?php echo $row['type'] === 'Graduates' ? 'bg-primary-subtle text-primary' : 'bg-success-subtle text-success'; ?> extra-small rounded-pill px-2 py-0.5">
+                                                <?php echo $row['type_hi']; ?> कोटा
+                                            </span>
+                                            <span class="extra-small text-muted">
+                                                <?php echo number_format($row['turnout'], 2); ?>% मतदान
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div>
+                                                <div class="fw-bold text-dark d-flex align-items-center gap-1" style="font-size: 0.95rem;">
+                                                    <?php if ($isWon): ?><i class="bi bi-trophy-fill text-warning"></i><?php endif; ?>
+                                                    <span><?php echo htmlspecialchars($row['leading']['name']); ?></span>
+                                                </div>
+                                                <span class="badge-party <?php echo $leadPartyClass; ?> px-2 py-0.5 extra-small rounded-pill mt-0.5 d-inline-block">
+                                                    <?php echo htmlspecialchars($row['leading']['party']); ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="fw-semibold text-secondary" style="font-size: 0.9rem;">
+                                            <?php echo htmlspecialchars($row['trailing']['name']); ?>
+                                        </div>
+                                        <span class="badge-party <?php echo $trailPartyClass; ?> px-2 py-0.5 extra-small rounded-pill mt-0.5 d-inline-block">
+                                            <?php echo htmlspecialchars($row['trailing']['party']); ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge <?php echo $row['status_badge']; ?> extra-small rounded-pill px-2.5 py-1">
+                                            <?php echo htmlspecialchars($row['status']); ?>
+                                        </span>
+                                        <div class="text-muted extra-small mt-1" style="max-width: 200px; font-size: 11px;">
+                                            <?php echo htmlspecialchars($row['trend_analysis']); ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="small fw-semibold text-dark">
+                                            <i class="bi bi-geo-alt-fill text-danger me-1"></i><?php echo htmlspecialchars($row['counting_centre']); ?>
+                                        </div>
+                                        <div class="text-muted extra-small">
+                                            आरओ: <?php echo htmlspecialchars($row['returning_officer']); ?>
+                                        </div>
+                                    </td>
+                                    <td class="text-end pe-3.5">
+                                        <div class="d-flex flex-column align-items-end gap-1">
+                                            <?php foreach (array_keys($row['sources_cited']) as $srcName): ?>
+                                                <span class="badge bg-light text-dark border extra-small px-2 py-0.5 rounded-pill" style="font-size: 10px;">
+                                                    <i class="bi bi-check2 text-success me-1"></i><?php echo htmlspecialchars($srcName); ?>
+                                                </span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Multi-Source Disclaimer Footer -->
+                    <div class="card-footer bg-light py-2.5 px-3.5 border-top d-flex flex-wrap justify-content-between align-items-center gap-2 small">
+                        <div class="text-muted">
+                            <i class="bi bi-patch-check-fill text-success me-1"></i>
+                            <strong>स्रोत संदर्भ:</strong> लाइव हिन्दुस्तान, दैनिक जागरण, प्रभात खबर एवं मुख्य निर्वाचन पदाधिकारी कार्यालय द्वारा जारी ब्यौरा। अंतिम विजेता प्रमाण पत्र रिटर्निंग ऑफिसर द्वारा जारी किया जाता है।
+                        </div>
+                        <a href="#seat-deep-dive" class="text-primary fw-semibold text-decoration-none hover-underline d-inline-flex align-items-center gap-1">
+                            <span>सीटवार मीडिया रिपोर्ट देखें</span>
+                            <i class="bi bi-arrow-down-circle"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Seat-by-Seat Media Ground Intelligence Breakdown -->
+                <div id="seat-deep-dive" class="mb-4">
+                    <h5 class="fw-bold text-dark mb-3" style="font-family: 'Outfit', sans-serif;">
+                        <i class="bi bi-chat-square-text-fill text-primary me-2"></i>
+                        सीटवार मीडिया विश्लेषण एवं ग्राउंड रिपोर्ट (8 सीटें)
+                    </h5>
+
+                    <div class="row g-3">
+                        <?php foreach ($electionResults as $row): 
+                            $bInfo = $boothPageMap[$row['slug']] ?? null;
+                            $bUrl = $bInfo ? SITE_URL . '/' . $bInfo['slug'] : '#';
+                            $leadPartyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $row['leading']['party']));
+                            $trailPartyClass = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $row['trailing']['party']));
+                            $isWon = !empty($row['is_declared']);
+                        ?>
+                        <div class="col-md-6">
+                            <div class="card border rounded-4 shadow-sm h-100 bg-white <?php echo $isWon ? 'border-success border-2' : ''; ?>">
+                                <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex justify-content-between align-items-start gap-2">
+                                    <div>
+                                        <div class="fw-bold text-dark h6 mb-0 d-flex align-items-center gap-1.5">
+                                            <?php if ($isWon): ?><i class="bi bi-trophy-fill text-warning"></i><?php endif; ?>
+                                            <a href="<?php echo $bUrl; ?>" class="text-decoration-none text-dark hover-primary">
+                                                <?php echo htmlspecialchars($row['name_hi']); ?>
+                                            </a>
+                                        </div>
+                                        <div class="text-muted extra-small">
+                                            <?php echo htmlspecialchars($row['name']); ?>
+                                        </div>
+                                    </div>
+                                    <span class="badge <?php echo $row['status_badge']; ?> extra-small rounded-pill px-2.5 py-1">
+                                        <?php echo htmlspecialchars($row['status']); ?>
+                                    </span>
+                                </div>
+                                <div class="card-body p-3.5">
+                                    <!-- Contender Comparison Box -->
+                                    <div class="candidate-lead-box mb-3 <?php echo $isWon ? 'border-success bg-success bg-opacity-10' : ''; ?>">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="extra-small text-uppercase fw-bold <?php echo $isWon ? 'text-success' : 'text-primary'; ?>">
+                                                <?php echo $isWon ? 'विजयी घोषित (ELECTED MLC):' : 'रुझान में आगे / बढ़त:'; ?>
+                                            </span>
+                                            <span class="badge-party <?php echo $leadPartyClass; ?> extra-small px-2 py-0.5 rounded-pill">
+                                                <?php echo htmlspecialchars($row['leading']['party']); ?>
+                                            </span>
+                                        </div>
+                                        <div class="fw-bold text-dark" style="font-size: 1.05rem;">
+                                            <?php echo htmlspecialchars($row['leading']['name']); ?>
+                                        </div>
+                                        <small class="text-muted d-block"><?php echo htmlspecialchars($row['leading']['role']); ?></small>
+                                        
+                                        <hr class="my-2 border-secondary border-opacity-25">
+                                        
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="extra-small text-uppercase fw-bold text-secondary">
+                                                <?php echo $isWon ? 'निकटतम प्रतिद्वंद्वी / उप-विजेता:' : 'प्रमुख प्रतिद्वंद्वी:'; ?>
+                                            </span>
+                                            <span class="badge-party <?php echo $trailPartyClass; ?> extra-small px-2 py-0.5 rounded-pill">
+                                                <?php echo htmlspecialchars($row['trailing']['party']); ?>
+                                            </span>
+                                        </div>
+                                        <div class="fw-semibold text-secondary">
+                                            <?php echo htmlspecialchars($row['trailing']['name']); ?>
+                                        </div>
+                                        <small class="text-muted d-block"><?php echo htmlspecialchars($row['trailing']['role']); ?></small>
+                                    </div>
+
+                                    <!-- Media Specific Reporting Points -->
+                                    <div class="bg-light p-2.5 rounded-3 mb-3 border">
+                                        <span class="extra-small fw-bold text-uppercase text-secondary d-block mb-1.5">
+                                            <i class="bi bi-newspaper text-danger me-1"></i> विभिन्न स्रोतों की रिपोर्ट:
+                                        </span>
+                                        <ul class="mb-0 ps-3 extra-small text-muted" style="line-height: 1.45;">
+                                            <?php foreach ($row['sources_cited'] as $src => $txt): ?>
+                                                <li class="mb-1">
+                                                    <strong class="text-dark"><?php echo htmlspecialchars($src); ?>:</strong> 
+                                                    <?php echo htmlspecialchars($txt); ?>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Venue & Turnout Metadata -->
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center text-muted extra-small pt-1 border-top">
+                                        <div>
+                                            <i class="bi bi-building me-1 text-primary"></i>
+                                            <span><?php echo htmlspecialchars($row['counting_centre']); ?></span>
+                                        </div>
+                                        <div>
+                                            <a href="<?php echo $bUrl; ?>" class="text-decoration-none text-primary fw-semibold">
+                                                <span><?php echo $row['booths']; ?> बूथ डेटा देखें &rarr;</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Single Transferable Vote (PR-STV) Quota Explainer -->
+                <div class="card border-0 shadow-sm rounded-4 p-3.5 mb-4" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-left: 4px solid #2563eb !important;">
+                    <div class="d-flex align-items-start gap-3">
+                        <i class="bi bi-calculator-fill text-primary fs-3 mt-1"></i>
+                        <div>
+                            <h6 class="fw-bold text-primary mb-1">विधान परिषद चुनाव में कोटा निर्धारण का नियम (Rule 75)</h6>
+                            <p class="small text-secondary mb-2" style="line-height: 1.5;">
+                                लोक प्रतिनिधित्व अधिनियम 1951 एवं निर्वाचन संचालन नियमावली 1961 के नियम 75 के अंतर्गत, विधान परिषद के स्नातक एवं शिक्षक क्षेत्रों में <strong>आनुपातिक प्रतिनिधित्व की एकल संक्रमणीय मत प्रणाली (PR-STV)</strong> द्वारा मतपत्रों से चुनाव होता है। जीत के लिए उम्मीदवार को निर्धारित कोटा हासिल करना अनिवार्य होता है:
+                            </p>
+                            <div class="bg-white p-2.5 rounded-3 d-inline-block border shadow-sm mb-2 font-monospace text-dark small fw-bold">
+                                विजयी कोटा = [ कुल वैध प्रथम वरीयता मतपत्र / (1 + 1) ] + 1
+                            </div>
+                            <p class="extra-small text-muted mb-0">
+                                यदि कोई प्रत्याशी प्रथम वरीयता में यह कोटा प्राप्त नहीं कर पाता, तो सबसे कम मत पाने वाले प्रत्याशी को हटाकर उसके मतपत्रों की द्वितीय वरीयता (Second Preference) के मत अन्य प्रत्याशियों को हस्तांतरित किए जाते हैं।
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- ============================================================= -->
             <!-- 2.5 LIVE VOTING TURNOUT & INCUMBENT MLCS (HINDI) -->
@@ -1805,6 +2560,21 @@ function lookupDistrictConstituency(district) {
     }
 
     box.classList.remove('d-none');
+}
+
+function filterResultsTable(cat, btn) {
+    if (btn) {
+        btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+    const rows = document.querySelectorAll('#resultsReportTable .results-row');
+    rows.forEach(r => {
+        if (cat === 'all' || r.getAttribute('data-cat') === cat) {
+            r.style.display = '';
+        } else {
+            r.style.display = 'none';
+        }
+    });
 }
 
 function filterTurnoutTable(cat, btn) {
