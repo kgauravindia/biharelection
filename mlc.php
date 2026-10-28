@@ -849,9 +849,9 @@ require_once __DIR__ . '/header.php';
             'constituency' => 'Patna Graduates',
             'constituency_hi' => 'पटना स्नातक',
             'hub_slug' => 'patna-graduate-constituency',
-            'turnout' => 36.19,
-            'remark' => 'Lowest in Graduates / सबसे कम',
-            'badge' => 'bg-danger text-white',
+            'turnout' => 57.56,
+            'remark' => 'Highest in Graduates / स्नातकों में सर्वाधिक',
+            'badge' => 'bg-success text-white',
             'sitting_mlc' => 'Neeraj Kumar',
             'sitting_mlc_hi' => 'नीरज कुमार',
             'party' => 'JD(U)',
@@ -862,8 +862,8 @@ require_once __DIR__ . '/header.php';
             'constituency' => 'Tirhut Graduates',
             'constituency_hi' => 'तिरहुत स्नातक',
             'hub_slug' => 'tirhut-graduate-constituency',
-            'turnout' => 42.15,
-            'remark' => 'Moderate / सामान्य',
+            'turnout' => 48.51,
+            'remark' => 'Lowest in Graduates / स्नातकों में न्यूनतम',
             'badge' => 'bg-secondary text-white',
             'sitting_mlc' => 'Banshidhar Brajwasi',
             'sitting_mlc_hi' => 'वंशीधर ब्रजवासी',
@@ -875,9 +875,9 @@ require_once __DIR__ . '/header.php';
             'constituency' => 'Darbhanga Graduates',
             'constituency_hi' => 'दरभंगा स्नातक',
             'hub_slug' => 'darbhanga-graduate-constituency',
-            'turnout' => 42.00,
-            'remark' => 'Moderate / सामान्य',
-            'badge' => 'bg-secondary text-white',
+            'turnout' => 54.73,
+            'remark' => 'Strong Voting / मजबूत मतदान',
+            'badge' => 'bg-primary text-white',
             'sitting_mlc' => 'Sarvesh Kumar',
             'sitting_mlc_hi' => 'सर्वेश कुमार',
             'party' => 'BJP',
@@ -888,9 +888,9 @@ require_once __DIR__ . '/header.php';
             'constituency' => 'Kosi Graduates',
             'constituency_hi' => 'कोसी स्नातक',
             'hub_slug' => 'kosi-graduate-constituency',
-            'turnout' => 52.51,
-            'remark' => 'Highest in Graduates / स्नातकों में सर्वाधिक',
-            'badge' => 'bg-success text-white',
+            'turnout' => 54.73,
+            'remark' => 'Strong Voting / मजबूत मतदान',
+            'badge' => 'bg-primary text-white',
             'sitting_mlc' => 'Dr. N.K. Yadav',
             'sitting_mlc_hi' => 'डॉ. एनके यादव',
             'party' => 'BJP',
@@ -901,7 +901,7 @@ require_once __DIR__ . '/header.php';
             'constituency' => 'Patna Teachers',
             'constituency_hi' => 'पटना शिक्षक',
             'hub_slug' => 'patna-teacher-constituency',
-            'turnout' => 56.89,
+            'turnout' => 74.75,
             'remark' => 'Lowest in Teachers / शिक्षकों में कम',
             'badge' => 'bg-warning text-dark',
             'sitting_mlc' => 'Nawal Kishore Yadav',
@@ -914,7 +914,7 @@ require_once __DIR__ . '/header.php';
             'constituency' => 'Tirhut Teachers',
             'constituency_hi' => 'तिरहुत शिक्षक',
             'hub_slug' => 'tirhut-teacher-constituency',
-            'turnout' => 78.10,
+            'turnout' => 82.99,
             'remark' => 'Heavy Voting / भारी मतदान',
             'badge' => 'bg-primary text-white',
             'sitting_mlc' => 'Sanjay Kumar Singh',
@@ -927,7 +927,7 @@ require_once __DIR__ . '/header.php';
             'constituency' => 'Darbhanga Teachers',
             'constituency_hi' => 'दरभंगा शिक्षक',
             'hub_slug' => 'darbhanga-teacher-constituency',
-            'turnout' => 79.00,
+            'turnout' => 85.87,
             'remark' => 'Heavy Voting / भारी मतदान',
             'badge' => 'bg-primary text-white',
             'sitting_mlc' => 'Dr. Madan Mohan Jha',
@@ -940,7 +940,7 @@ require_once __DIR__ . '/header.php';
             'constituency' => 'Saran Teachers',
             'constituency_hi' => 'सारण शिक्षक',
             'hub_slug' => 'saran-teacher-constituency',
-            'turnout' => 87.16,
+            'turnout' => 89.05,
             'remark' => 'Highest in Bihar / राज्य में रिकॉर्ड',
             'badge' => 'bg-success text-white',
             'sitting_mlc' => 'Afaq Ahmad',
@@ -956,23 +956,31 @@ require_once __DIR__ . '/header.php';
             <div>
                 <div class="d-flex align-items-center gap-2">
                     <span class="badge bg-danger text-white fw-bold px-2.5 py-1 rounded-pill blink-anim">
-                        <i class="bi bi-broadcast me-1"></i> Live Turnout Report
+                        <i class="bi bi-broadcast me-1"></i> Official Final Turnout Report
                     </span>
-                    <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill">
-                        4:00 PM Poll Close
+                    <span class="badge bg-success text-white fw-bold px-2.5 py-1 rounded-pill">
+                        CEO Bihar Final VTR
+                    </span>
+                    <span class="badge bg-white bg-opacity-25 border text-dark fw-semibold px-2.5 py-1 rounded-pill extra-small">
+                        Gazette: TCGCGajat2026
                     </span>
                 </div>
                 <h5 class="fw-bold text-navy mb-0 mt-1.5 font-heading">
-                    Bihar Vidhan Parishad 8 Seats Biennial Election 2026: Polling Turnout &amp; Sitting MLCs
+                    Bihar Vidhan Parishad 8 Seats Biennial Election 2026: Official Voting Turnout &amp; Incumbents
                 </h5>
                 <div class="text-muted small" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                    बिहार विधान परिषद की शिक्षक और स्नातक कोटे की 8 सीटों का मतदान प्रतिशत एवं वर्तमान विधान पार्षद
+                    बिहार विधान परिषद की शिक्षक और स्नातक कोटे की 8 सीटों का आधिकारिक अंतिम मतदान प्रतिशत (स्रोत: CEO Bihar Final VTR PDF)
                 </div>
             </div>
-            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
-                <span>View Full Election Hub</span>
-                <i class="bi bi-arrow-right"></i>
-            </a>
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/VTR/Final%20VTR%20in%20TC%20GC%20Election%202026.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
+                    <i class="bi bi-file-earmark-pdf-fill"></i> Final VTR PDF
+                </a>
+                <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
+                    <span>Full Election Hub</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
         </div>
 
         <!-- Highlight Metric Badges Row -->
@@ -981,29 +989,29 @@ require_once __DIR__ . '/header.php';
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
                         <span class="text-muted extra-small d-block">Overall Turnout</span>
-                        <strong class="text-danger fs-6">59%+</strong>
-                        <span class="text-muted extra-small d-block">Average Voting</span>
+                        <strong class="text-danger fs-6">55.64%</strong>
+                        <span class="text-muted extra-small d-block">2,96,494 Votes Polled</span>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
                         <span class="text-muted extra-small d-block">Teachers Average</span>
-                        <strong class="text-success fs-6">74.55%</strong>
-                        <span class="text-success extra-small d-block">High Enthusiasm</span>
+                        <strong class="text-success fs-6">82.85%</strong>
+                        <span class="text-success extra-small d-block">Record Voting (40,253 Voters)</span>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
                         <span class="text-muted extra-small d-block">Graduates Average</span>
-                        <strong class="text-primary fs-6">43.87%</strong>
-                        <span class="text-muted extra-small d-block">Subdued Voting</span>
+                        <strong class="text-primary fs-6">53.42%</strong>
+                        <span class="text-primary extra-small d-block">Strong Voting (4,92,594 Voters)</span>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
-                        <span class="text-muted extra-small d-block">Counting of Votes</span>
-                        <strong class="text-dark fs-6">27 Oct 2026</strong>
-                        <span class="text-muted extra-small d-block">Results from 8 AM</span>
+                        <span class="text-muted extra-small d-block">Result Status</span>
+                        <strong class="text-dark fs-6">7 Declared Won &bull; 1 Count</strong>
+                        <span class="text-success extra-small d-block">Form 21C Certifications</span>
                     </div>
                 </div>
             </div>
@@ -1014,7 +1022,7 @@ require_once __DIR__ . '/header.php';
                 <thead class="table-light text-uppercase text-secondary" style="font-size: 11px;">
                     <tr>
                         <th class="ps-3.5 py-3">Constituency &amp; Quota</th>
-                        <th class="py-3" style="min-width: 170px;">Turnout % (शाम 4 बजे तक)</th>
+                        <th class="py-3" style="min-width: 170px;">Final Turnout % (CEO Bihar VTR)</th>
                         <th class="py-3">Current Sitting MLC (वर्तमान विधान पार्षद)</th>
                         <th class="py-3 text-center">Party</th>
                         <th class="py-3">Tenure Expiry</th>

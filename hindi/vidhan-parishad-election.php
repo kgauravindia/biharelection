@@ -138,7 +138,7 @@ $seats = [
     ]
 ];
 
-// 8 निर्वाचन क्षेत्रों की लाइव मतदान रिपोर्ट (24 अक्टूबर 2026 - शाम 4 बजे तक)
+// 8 निर्वाचन क्षेत्रों की आधिकारिक अंतिम मतदान रिपोर्ट (CEO Bihar Final VTR & Press Note 23-10-2026)
 $turnoutReport = [
     [
         'category' => 'Graduates',
@@ -146,13 +146,15 @@ $turnoutReport = [
         'name' => 'Patna Graduates',
         'name_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
         'slug' => 'patna-graduates',
-        'turnout' => 36.19,
-        'turnout_rank' => 'स्नातकों में सबसे कम',
-        'rank_badge' => 'bg-danger text-white',
-        'sitting_mlc' => 'नीरज कुमार',
+        'turnout' => 57.56,
+        'turnout_rank' => 'स्नातकों में सर्वाधिक',
+        'rank_badge' => 'bg-success text-white',
+        'sitting_mlc' => 'नीरज कुमार (विजेता - 4थी बार)',
         'party' => 'JD(U)',
         'tenure' => '16 नवंबर 2026',
-        'booth_count' => 134
+        'booth_count' => 134,
+        'candidates_count' => 18,
+        'electors' => ['male' => 66462, 'female' => 21117, 'third' => 4, 'total' => 87583]
     ],
     [
         'category' => 'Graduates',
@@ -160,13 +162,15 @@ $turnoutReport = [
         'name' => 'Tirhut Graduates',
         'name_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
         'slug' => 'tirhut-graduates',
-        'turnout' => 42.15,
-        'turnout_rank' => 'सामान्य मतदान',
+        'turnout' => 48.51,
+        'turnout_rank' => 'स्नातकों में न्यूनतम',
         'rank_badge' => 'bg-secondary text-white',
-        'sitting_mlc' => 'वंशीधर ब्रजवासी',
+        'sitting_mlc' => 'वंशीधर ब्रजवासी (अग्रणी)',
         'party' => 'IND',
         'tenure' => '16 नवंबर 2026',
-        'booth_count' => 145
+        'booth_count' => 145,
+        'candidates_count' => 17,
+        'electors' => ['male' => 97998, 'female' => 45970, 'third' => 20, 'total' => 143988]
     ],
     [
         'category' => 'Graduates',
@@ -174,13 +178,15 @@ $turnoutReport = [
         'name' => 'Darbhanga Graduates',
         'name_hi' => 'दरभंगा स्नातक निर्वाचन क्षेत्र',
         'slug' => 'darbhanga-graduates',
-        'turnout' => 42.00,
-        'turnout_rank' => 'सामान्य मतदान',
-        'rank_badge' => 'bg-secondary text-white',
-        'sitting_mlc' => 'सर्वेश कुमार',
+        'turnout' => 54.73,
+        'turnout_rank' => 'मजबूत मतदान',
+        'rank_badge' => 'bg-primary text-white',
+        'sitting_mlc' => 'डॉ. सर्वेश कुमार (विजेता - BJP)',
         'party' => 'BJP',
         'tenure' => '16 नवंबर 2026',
-        'booth_count' => 138
+        'booth_count' => 138,
+        'candidates_count' => 40,
+        'electors' => ['male' => 90006, 'female' => 36938, 'third' => 7, 'total' => 126951]
     ],
     [
         'category' => 'Graduates',
@@ -188,13 +194,15 @@ $turnoutReport = [
         'name' => 'Kosi Graduates',
         'name_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
         'slug' => 'kosi-graduates',
-        'turnout' => 52.51,
-        'turnout_rank' => 'स्नातकों में सर्वाधिक वोटिंग',
-        'rank_badge' => 'bg-success text-white',
-        'sitting_mlc' => 'डॉ. एनके यादव',
+        'turnout' => 54.73,
+        'turnout_rank' => 'मजबूत मतदान',
+        'rank_badge' => 'bg-primary text-white',
+        'sitting_mlc' => 'डॉ. एनके यादव (विजेता - हैट्रिक)',
         'party' => 'BJP',
         'tenure' => '16 नवंबर 2026',
-        'booth_count' => 181
+        'booth_count' => 181,
+        'candidates_count' => 15,
+        'electors' => ['male' => 101056, 'female' => 33013, 'third' => 3, 'total' => 134072]
     ],
     [
         'category' => 'Teachers',
@@ -202,13 +210,15 @@ $turnoutReport = [
         'name' => 'Patna Teachers',
         'name_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
         'slug' => 'patna-teachers',
-        'turnout' => 56.89,
-        'turnout_rank' => 'शिक्षकों में सबसे कम',
+        'turnout' => 74.75,
+        'turnout_rank' => 'शिक्षकों में कम मतदान',
         'rank_badge' => 'bg-warning text-dark',
-        'sitting_mlc' => 'नवल किशोर यादव',
-        'party' => 'BJP',
+        'sitting_mlc' => 'डॉ. संजीव कुमार (विजेता - RJD)',
+        'party' => 'RJD',
         'tenure' => '16 नवंबर 2026',
-        'booth_count' => 80
+        'booth_count' => 80,
+        'candidates_count' => 18,
+        'electors' => ['male' => 8413, 'female' => 3306, 'third' => 0, 'total' => 11719]
     ],
     [
         'category' => 'Teachers',
@@ -216,13 +226,15 @@ $turnoutReport = [
         'name' => 'Tirhut Teachers',
         'name_hi' => 'तिरहुत शिक्षक निर्वाचन क्षेत्र',
         'slug' => 'tirhut-teachers',
-        'turnout' => 78.10,
+        'turnout' => 82.99,
         'turnout_rank' => 'भारी मतदान',
         'rank_badge' => 'bg-primary text-white',
-        'sitting_mlc' => 'संजय कुमार सिंह',
-        'party' => 'CPI',
+        'sitting_mlc' => 'डॉ. नरेंद्र प्रसाद सिंह (विजेता - BJP)',
+        'party' => 'BJP',
         'tenure' => '16 नवंबर 2026',
-        'booth_count' => 58
+        'booth_count' => 58,
+        'candidates_count' => 11,
+        'electors' => ['male' => 6507, 'female' => 2250, 'third' => 3, 'total' => 8760]
     ],
     [
         'category' => 'Teachers',
@@ -230,13 +242,15 @@ $turnoutReport = [
         'name' => 'Darbhanga Teachers',
         'name_hi' => 'दरभंगा शिक्षक निर्वाचन क्षेत्र',
         'slug' => 'darbhanga-teachers',
-        'turnout' => 79.00,
+        'turnout' => 85.87,
         'turnout_rank' => 'भारी मतदान',
         'rank_badge' => 'bg-primary text-white',
-        'sitting_mlc' => 'डॉ. मदन मोहन झा',
-        'party' => 'INC',
+        'sitting_mlc' => 'डॉ. सुरेश प्रसाद राय (विजेता - JSP)',
+        'party' => 'Jan Suraaj Party',
         'tenure' => '16 नवंबर 2026',
-        'booth_count' => 99
+        'booth_count' => 99,
+        'candidates_count' => 13,
+        'electors' => ['male' => 6958, 'female' => 2068, 'third' => 0, 'total' => 9026]
     ],
     [
         'category' => 'Teachers',
@@ -244,13 +258,15 @@ $turnoutReport = [
         'name' => 'Saran Teachers',
         'name_hi' => 'सारण शिक्षक निर्वाचन क्षेत्र',
         'slug' => 'saran-teachers',
-        'turnout' => 87.16,
+        'turnout' => 89.05,
         'turnout_rank' => 'राज्य में रिकॉर्ड मतदान',
         'rank_badge' => 'bg-success text-white',
-        'sitting_mlc' => 'अफाक अहमद',
-        'party' => 'Jan Suraaj Party',
+        'sitting_mlc' => 'राहुल राज (विजेता - निर्दलीय)',
+        'party' => 'IND',
         'tenure' => '16 नवंबर 2026',
-        'booth_count' => 98
+        'booth_count' => 98,
+        'candidates_count' => 18,
+        'electors' => ['male' => 8799, 'female' => 1949, 'third' => 0, 'total' => 10748]
     ]
 ];
 
@@ -306,7 +322,7 @@ $electionResults = [
         'status' => 'विजयी घोषित (Elected MLC)',
         'status_badge' => 'bg-success text-white',
         'is_declared' => true,
-        'turnout' => 78.10,
+        'turnout' => 82.99,
         'booths' => 58,
         'counting_centre' => 'एमआईटी परिसर, मुजफ्फरपुर',
         'returning_officer' => 'प्रमंडलीय आयुक्त, तिरहुत',
@@ -342,7 +358,7 @@ $electionResults = [
         'status' => 'विजयी घोषित (Elected MLC)',
         'status_badge' => 'bg-success text-white',
         'is_declared' => true,
-        'turnout' => 87.16,
+        'turnout' => 89.05,
         'booths' => 98,
         'counting_centre' => 'सारण प्रमंडलीय मुख्यालय, छपरा',
         'returning_officer' => 'प्रमंडलीय आयुक्त, सारण (छपरा)',
@@ -364,7 +380,7 @@ $electionResults = [
         'trend_analysis' => 'परिणाम घोषित: द्वितीय वरीयता मतों के हस्तांतरण के बाद निर्दलीय राहुल राज 800+ मतों से विजयी घोषित; जन सुराज के मौजूदा एमएलसी अफाक अहमद पराजित।',
         'sources_cited' => [
             'हिन्दुस्तान' => 'निर्दलीय उम्मीदवार एवं भाजपा बागी राहुल राज ने दूसरी वरीयता के मतों के बाद 800 से अधिक वोटों से जीत दर्ज की।',
-            'दैनिक जागरण' => 'सारण में 87.16% के रिकॉर्ड मतदान के बाद लंबी चली छंटनी में राहुल राज ने अफाक अहमद और आनंद पुष्कर को पछाड़ा।',
+            'दैनिक जागरण' => 'सारण में 89.05% के रिकॉर्ड मतदान के बाद लंबी चली छंटनी में राहुल राज ने अफाक अहमद और आनंद पुष्कर को पछाड़ा।',
             'प्रभात खबर' => 'छपरा मतगणना केंद्र पर सारण आयुक्त द्वारा औपचारिक परिणाम की घोषणा की गई।'
         ]
     ],
@@ -375,33 +391,33 @@ $electionResults = [
         'name' => 'Patna Graduates',
         'name_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
         'slug' => 'patna-graduates',
-        'status' => 'जदयू बढ़त पर (रुझान में आगे)',
-        'status_badge' => 'bg-warning text-dark',
+        'status' => 'जदयू आगे (त्रिकोणीय कड़ा मुकाबला)',
+        'status_badge' => 'bg-warning text-dark blink-anim',
         'is_declared' => false,
-        'turnout' => 36.19,
+        'turnout' => 57.56,
         'booths' => 134,
         'counting_centre' => 'कला एवं शिल्प महाविद्यालय, पटना',
         'returning_officer' => 'प्रमंडलीय आयुक्त, पटना',
         'leading' => [
             'name' => 'नीरज कुमार',
             'party' => 'JD(U)',
-            'role' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी'
+            'role' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी (बढ़त पर)'
         ],
         'trailing' => [
+            'name' => 'दिलीप पटेल (कुमार)',
+            'party' => 'RJD',
+            'role' => 'महागठबंधन प्रत्याशी (कड़ा मुकाबला)'
+        ],
+        'other_key' => [
             'name' => 'अनुज सिंह',
             'party' => 'Jan Suraaj',
             'role' => 'जन सुराज समर्थित (अनंत सिंह समर्थित)'
         ],
-        'other_key' => [
-            'name' => 'दिलीप कुमार',
-            'party' => 'RJD',
-            'role' => 'महागठबंधन प्रत्याशी'
-        ],
-        'trend_analysis' => 'प्रतिष्ठापूर्ण मुकाबला: जदयू के नीरज कुमार जन सुराज समर्थित अनुज सिंह के खिलाफ कला एवं शिल्प महाविद्यालय केंद्र पर बढ़त बनाए हुए हैं।',
+        'trend_analysis' => 'प्रतिष्ठापूर्ण मुकाबला: 3 बार के जदयू विधान पार्षद नीरज कुमार राजद के दिलीप पटेल और जन सुराज समर्थित अनुज सिंह के खिलाफ कला एवं शिल्प महाविद्यालय केंद्र पर बढ़त बनाए हुए हैं।',
         'sources_cited' => [
-            'दैनिक जागरण' => 'प्रत्याशी अनुज सिंह ने सीसीटीवी मॉनिटर व्यवस्था पर आपत्ति जताई; आयुक्त की सीधी निगरानी में वरीयता मतों की गिनती जारी।',
-            'हिन्दुस्तान' => 'मोकामा राजनीति का असर; पूर्व विधायक अनंत सिंह खेमा मुस्तैद, शुरुआती राउंड में नीरज कुमार को बढ़त।',
-            'प्रभात खबर' => 'पटना, नालंदा व नवादा के मतपत्र बंडलों की छंटनी जारी; रात तक अंतिम कोटा स्पष्ट होने की संभावना।'
+            'द वीक' => 'शुरुआती चक्रों में जदयू के नीरज कुमार और राजद के दिलीप पटेल के बीच पटना और नालंदा के मतपत्रों में करीबी मुकाबला।',
+            'दैनिक जागरण' => 'प्रमंडलीय आयुक्त की सीधी निगरानी में टेबल-दर-टेबल वरीयता मतपत्रों की छंटनी व सत्यापन जारी।',
+            'हिन्दुस्तान' => 'मोकामा की राजनीतिक सरगर्मियों के बीच जन सुराज समर्थित अनुज सिंह को भी महत्वपूर्ण मत; कोटा छंटनी जारी।'
         ]
     ],
     [
@@ -411,33 +427,33 @@ $electionResults = [
         'name' => 'Patna Teachers',
         'name_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
         'slug' => 'patna-teachers',
-        'status' => 'भाजपा आगे (राउंड 3 में +145 की बढ़त)',
-        'status_badge' => 'bg-primary text-white blink-anim',
-        'is_declared' => false,
-        'turnout' => 56.89,
+        'status' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
+        'turnout' => 74.75,
         'booths' => 80,
         'counting_centre' => 'कला एवं शिल्प महाविद्यालय, पटना',
         'returning_officer' => 'प्रमंडलीय आयुक्त, पटना',
         'leading' => [
-            'name' => 'नवल किशोर यादव',
-            'party' => 'BJP',
-            'role' => 'वर्तमान विधान पार्षद (5 बार विजेता) / राउंड 3 में +145 मतों की बढ़त'
+            'name' => 'डॉ. संजीव कुमार (सिंह)',
+            'party' => 'RJD',
+            'role' => 'विजयी घोषित (800+ मतों से जीते) / महागठबंधन प्रत्याशी'
         ],
         'trailing' => [
-            'name' => 'डॉ. संजीव कुमार सिंह',
-            'party' => 'RJD',
-            'role' => 'महागठबंधन प्रत्याशी (राउंड 2 में आगे रहे, कुल 3,094 मत)'
+            'name' => 'नवल किशोर यादव',
+            'party' => 'BJP',
+            'role' => 'उप-विजेता (5 बार के पूर्व विधान पार्षद / एनडीए प्रत्याशी)'
         ],
         'other_key' => [
             'name' => 'दिव्या ज्योति / डॉ. संजय यादव',
             'party' => 'Jan Suraaj / INC',
             'role' => 'जन सुराज व कांग्रेस प्रत्याशी'
         ],
-        'trend_analysis' => 'तीसरे राउंड के बाद बड़ा उलटफेर: 5 बार के भाजपा एमएलसी नवल किशोर यादव (3,239 मत) ने राजद के डॉ. संजीव कुमार सिंह (3,094 मत) पर 145 मतों की बढ़त बनाई।',
+        'trend_analysis' => 'आधिकारिक परिणाम घोषित: राजद के डॉ. संजीव कुमार ने ऐतिहासिक जीत दर्ज करते हुए 5 बार के भाजपा एमएलसी नवल किशोर यादव को 800+ मतों से पराजित कर पटना शिक्षक सीट जीती।',
         'sources_cited' => [
-            'अमर उजाला' => 'तीसरे राउंड की गिनती पूरी होने पर भाजपा के नवल किशोर यादव 3,239 मत पाकर राजद के डॉ. संजीव कुमार (3,094 मत) से 145 मतों से आगे निकले।',
-            'दैनिक जागरण' => 'राउंड 1 में नवल किशोर (+2 मत) और राउंड 2 में संजीव कुमार (+50 मत) के बाद राउंड 3 में भाजपा ने बढ़त बनाई।',
-            'हिन्दुस्तान' => 'पटना के राजकीय कन्या विद्यालय बांकीपुर केंद्र पर वरीयता मतों के स्थानांतरण की प्रक्रिया तेज; मुकाबला बेहद करीबी।'
+            'ईटीवी भारत' => 'राजद प्रत्याशी डॉ. संजीव कुमार ने भाजपा के वरिष्ठ नेता व 5 बार के एमएलसी नवल किशोर यादव को 800 से अधिक वोटों से हराया।',
+            'हिन्दुस्तान' => 'पटना शिक्षक सीट पर बड़ा उलटफेर: नवल किशोर यादव को पछाड़कर राजद उम्मीदवार ने जीत का प्रमाण पत्र हासिल किया।',
+            'दैनिक जागरण' => 'बांकीपुर/आर्ट्स कॉलेज केंद्र पर अंतिम सत्यापन के बाद निर्वाची पदाधिकारी द्वारा जीत की विधिवत घोषणा।'
         ]
     ],
     [
@@ -447,33 +463,33 @@ $electionResults = [
         'name' => 'Tirhut Graduates',
         'name_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
         'slug' => 'tirhut-graduates',
-        'status' => 'जदयू आगे (त्रिकोणीय मुकाबला)',
-        'status_badge' => 'bg-warning text-dark',
+        'status' => 'निर्दलीय मजबूत बढ़त पर (अंतिम कोटा चक्र)',
+        'status_badge' => 'bg-warning text-dark blink-anim',
         'is_declared' => false,
-        'turnout' => 42.15,
+        'turnout' => 48.51,
         'booths' => 145,
         'counting_centre' => 'एमआईटी परिसर, मुजफ्फरपुर',
         'returning_officer' => 'प्रमंडलीय आयुक्त, तिरहुत',
         'leading' => [
-            'name' => 'अभिषेक झा',
-            'party' => 'JD(U)',
-            'role' => 'एनडीए प्रत्याशी'
+            'name' => 'वंशीधर ब्रजवासी',
+            'party' => 'IND',
+            'role' => 'निवर्तमान एमएलसी (निर्दलीय) / कोटा निर्धारण चक्र में आगे'
         ],
         'trailing' => [
-            'name' => 'डॉ. विमोहन कुमार',
-            'party' => 'Jan Suraaj',
-            'role' => 'जन सुराज प्रत्याशी'
+            'name' => 'अभिषेक झा',
+            'party' => 'JD(U)',
+            'role' => 'एनडीए प्रत्याशी (कोटा चक्र में संघर्षरत)'
         ],
         'other_key' => [
-            'name' => 'वंशीधर ब्रजवासी / डॉ. रश्मि गौतम',
-            'party' => 'IND / RJD',
-            'role' => 'निवर्तमान एमएलसी एवं राजद प्रत्याशी'
+            'name' => 'डॉ. रश्मि गौतम / डॉ. विमोहन',
+            'party' => 'RJD / Jan Suraaj',
+            'role' => 'राजद प्रत्याशी व जन सुराज उम्मीदवार'
         ],
-        'trend_analysis' => 'जदयू के अभिषेक झा जन सुराज के डॉ. विमोहन और निर्दलीय वंशीधर ब्रजवासी के त्रिकोणीय मुकाबले में मामूली बढ़त पर।',
+        'trend_analysis' => 'अंतिम चक्र जारी: एमआईटी मुजफ्फरपुर में निवर्तमान एमएलसी वंशीधर ब्रजवासी (निर्दलीय) जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम के खिलाफ निर्णायक बढ़त बनाए हुए हैं।',
         'sources_cited' => [
-            'प्रभात खबर' => 'एमआईटी मुजफ्फरपुर में त्रिस्तरीय सुरक्षा घेरे में 145 बूथों के बॉक्स की गिनती जारी।',
-            'दैनिक जागरण' => 'मुजफ्फरपुर एवं वैशाली के शहरी बंडलों में अभिषेक झा को बढ़त; ग्रामीण इलाकों में जन सुराज की मजबूत मौजूदगी।',
-            'हिन्दुस्तान' => '42.15% मतदान के मद्देनजर कई चरणों के एलिमिनेशन के बाद ही कोटा संभव।'
+            'इंडिया टीवी' => 'शुरुआती रुझानों में निर्दलीय वंशीधर ब्रजवासी 2,813 मतों के साथ जदयू के अभिषेक झा (1,739) और डॉ. रश्मि गौतम (1,407) से आगे।',
+            'दैनिक जागरण' => 'एमआईटी मुजफ्फरपुर में 14 टेबलों पर 145 बूथों के मतपेटियों की छंटनी जारी।',
+            'हिन्दुस्तान' => 'तिरहुत प्रमंडल के 4 जिलों में जीत का कोटा हासिल करने के लिए कई चक्रों का एलिमिनेशन जारी।'
         ]
     ],
     [
@@ -483,33 +499,33 @@ $electionResults = [
         'name' => 'Darbhanga Graduates',
         'name_hi' => 'दरभंगा स्नातक निर्वाचन क्षेत्र',
         'slug' => 'darbhanga-graduates',
-        'status' => 'राजद बढ़त पर (प्रथम चक्र)',
-        'status_badge' => 'bg-primary text-white',
-        'is_declared' => false,
-        'turnout' => 42.00,
+        'status' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
+        'turnout' => 54.73,
         'booths' => 138,
         'counting_centre' => 'प्रमंडलीय आयुक्त परिसर, दरभंगा',
         'returning_officer' => 'प्रमंडलीय आयुक्त, दरभंगा',
         'leading' => [
-            'name' => 'अनिल कुमार झा',
-            'party' => 'RJD',
-            'role' => 'महागठबंधन प्रत्याशी (बढ़त पर)'
-        ],
-        'trailing' => [
             'name' => 'डॉ. सर्वेश कुमार',
             'party' => 'BJP',
-            'role' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी'
+            'role' => 'विजयी घोषित (237 मतों से सीट बरकरार रखी) / एनडीए प्रत्याशी'
+        ],
+        'trailing' => [
+            'name' => 'अनिल कुमार झा',
+            'party' => 'RJD',
+            'role' => 'उप-विजेता (महागठबंधन प्रत्याशी)'
         ],
         'other_key' => [
             'name' => 'मोहम्मद इम्तियाज (नूरानी)',
             'party' => 'Jan Suraaj',
             'role' => 'जन सुराज प्रत्याशी'
         ],
-        'trend_analysis' => 'बड़ा उलटफेर: राजद के अनिल कुमार झा मिथिलांचल के स्नातक मतों में मौजूदा भाजपा एमएलसी डॉ. सर्वेश कुमार पर बढ़त बनाए हुए हैं।',
+        'trend_analysis' => 'आधिकारिक परिणाम घोषित: भाजपा के मौजूदा एमएलसी डॉ. सर्वेश कुमार ने कांटे के मुकाबले में राजद के अनिल कुमार झा को 237 मतों से हराकर दरभंगा स्नातक सीट जीत ली।',
         'sources_cited' => [
-            'अमर उजाला' => 'दरभंगा स्नातक सीट पर शुरुआती रुझानों में राजद के अनिल कुमार झा ने भाजपा के मौजूदा एमएलसी डॉ. सर्वेश कुमार को पीछे छोड़ा।',
-            'हिन्दुस्तान' => 'समस्तीपुर व मधुबनी के ग्रामीण बूथों से राजद को बढ़त; 138 बूथों की गणना जारी।',
-            'प्रभात खबर' => 'दरभंगा प्रमंडलीय परिसर में कड़े सुरक्षा इंतजामों के बीच द्वितीय चक्र की छंटनी शुरू।'
+            'हिन्दुस्तान टाइम्स' => 'भाजपा प्रत्याशी सर्वेश कुमार ने कांटे की टक्कर में राजद के अनिल झा को 237 मतों से हराकर दरभंगा स्नातक सीट जीत ली।',
+            'हिन्दुस्तान' => 'दरभंगा प्रमंडलीय आयुक्त परिसर में पूरी गणना के बाद सर्वेश कुमार को जीत का प्रमाण पत्र दिया गया।',
+            'प्रभात खबर' => 'दरभंगा, मधुबनी, समस्तीपुर व बेगूसराय के सभी 138 बूथों की मतगणना का काम पूरा।'
         ]
     ],
     [
@@ -522,7 +538,7 @@ $electionResults = [
         'status' => 'विजयी घोषित (Elected MLC)',
         'status_badge' => 'bg-success text-white',
         'is_declared' => true,
-        'turnout' => 79.00,
+        'turnout' => 85.87,
         'booths' => 99,
         'counting_centre' => 'प्रमंडलीय आयुक्त परिसर, दरभंगा',
         'returning_officer' => 'प्रमंडलीय आयुक्त, दरभंगा',
@@ -555,33 +571,33 @@ $electionResults = [
         'name' => 'Kosi Graduates',
         'name_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
         'slug' => 'kosi-graduates',
-        'status' => 'भाजपा मजबूत बढ़त पर',
-        'status_badge' => 'bg-primary text-white',
+        'status' => 'भाजपा भारी बढ़त पर (24,075 प्रथम वरीयता मत)',
+        'status_badge' => 'bg-primary text-white blink-anim',
         'is_declared' => false,
-        'turnout' => 52.51,
+        'turnout' => 54.73,
         'booths' => 181,
         'counting_centre' => 'पूर्णिया / सहरसा मतगणना केंद्र',
         'returning_officer' => 'प्रमंडलीय आयुक्त, कोसी / पूर्णिया',
         'leading' => [
             'name' => 'डॉ. एनके यादव',
             'party' => 'BJP',
-            'role' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी'
+            'role' => 'वर्तमान विधान पार्षद (11 राउंड में 24,075 प्रथम वरीयता मत / कोटा: 32,201)'
         ],
         'trailing' => [
-            'name' => 'रजनीश रंजन',
-            'party' => 'Jan Suraaj',
-            'role' => 'जन सुराज प्रत्याशी'
-        ],
-        'other_key' => [
             'name' => 'नितेश कुमार',
             'party' => 'RJD',
-            'role' => 'महागठबंधन प्रत्याशी'
+            'role' => 'महागठबंधन प्रत्याशी (राउंड 11 के बाद 18,535 मत)'
         ],
-        'trend_analysis' => 'भाजपा के मौजूदा एमएलसी डॉ. एनके यादव 14 जिलों के 181 बूथों की छंटनी में जन सुराज के रजनीश रंजन पर मजबूत बढ़त बनाए हुए हैं।',
+        'other_key' => [
+            'name' => 'रजनीश रंजन',
+            'party' => 'Jan Suraaj',
+            'role' => 'जन सुराज प्रत्याशी (राउंड 11 के बाद 15,306 मत)'
+        ],
+        'trend_analysis' => 'भाजपा के डॉ. एनके यादव 11 राउंड की प्रथम वरीयता गणना में 24,075 मतों के साथ राजद के नितेश कुमार (18,535) और जन सुराज के रजनीश रंजन (15,306) से आगे; 32,201 कोटा हेतु दूसरी वरीयता गिनती जारी।',
         'sources_cited' => [
-            'हिन्दुस्तान' => 'कोसी-पूर्णिया स्नातक सीट पर भाजपा प्रत्याशी डॉ. एनके यादव ने शुरुआती राउंड से ही मजबूत बढ़त बना रखी है।',
-            'ईटीवी भारत' => '14 जिलों में फैले सबसे बड़े क्षेत्र में डॉ. एनके यादव जन सुराज के रजनीश रंजन से काफी आगे।',
-            'दैनिक जागरण' => 'सहरसा/पूर्णिया केंद्र पर मतपत्रों के बंडल संकलन में भाजपा प्रत्याशी को लगातार बढ़त।'
+            'दैनिक जागरण' => '11 राउंड की पहली वरीयता गिनती में डॉ. एनके यादव ने 24,075 मत पाकर 32,201 कोटे की ओर मजबूत बढ़त बनाई; दूसरी वरीयता की गिनती जारी।',
+            'हिन्दुस्तान' => 'भाजपा प्रत्याशी ने राजद के नितेश कुमार (18,535) और जन सुराज के रजनीश रंजन (15,306) पर 5,500+ मतों की ठोस बढ़त कायम रखी।',
+            'ईटीवी भारत' => 'सहरसा/पूर्णिया मतगणना केंद्र पर कड़ी सुरक्षा के बीच द्वितीय वरीयता की छंटनी जारी।'
         ]
     ]
 ];
@@ -821,10 +837,10 @@ $timeline = [
             <div class="col-lg-8">
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
                     <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-1.5">
-                        <span class="live-pulse-dot" style="background:#fff;"></span> मतगणना लाइव &bull; 27 अक्टूबर 2026
+                        <span class="live-pulse-dot" style="background:#fff;"></span> मतगणना लाइव &bull; 28 अक्टूबर 2026
                     </span>
                     <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold">
-                        विभिन्न मीडिया स्रोतों से प्राप्त रुझान
+                        5 परिणाम घोषित &bull; 3 सीटों पर गणना
                     </span>
                     <span class="badge bg-light text-dark px-3 py-1.5 rounded-pill fw-semibold">
                         8 सीटें (4 स्नातक + 4 शिक्षक)
@@ -851,10 +867,10 @@ $timeline = [
                         <i class="bi bi-newspaper"></i> विभिन्न स्रोत संदर्भ (Sources Cited)
                     </a>
                     <a href="#voting-turnout" class="btn btn-outline-light px-3 py-2.5 rounded-3 fw-semibold">
-                        <i class="bi bi-pie-chart-fill me-1"></i> मतदान प्रतिशत रिपोर्ट
+                        <i class="bi bi-pie-chart-fill me-1"></i> मतदान प्रतिशत रिपोर्ट (VTR)
                     </a>
-                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/ImportantInstructionsAndLetters/TCGCGajat2026.pdf" target="_blank" rel="noopener" class="btn gazette-btn px-3.5 py-2.5 rounded-3 fw-bold">
-                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> आधिकारिक गजट PDF &rarr;
+                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/VTR/Final%20VTR%20in%20TC%20GC%20Election%202026.pdf" target="_blank" rel="noopener" class="btn gazette-btn px-3.5 py-2.5 rounded-3 fw-bold">
+                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> CEO Final VTR PDF &rarr;
                     </a>
                     <a href="#schedule" class="btn btn-outline-light px-3 py-2.5 rounded-3 fw-semibold">
                         <i class="bi bi-calendar-event me-1"></i> समय सारिणी
@@ -868,22 +884,22 @@ $timeline = [
                     <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 py-3 text-center">
                         <div class="d-inline-flex align-items-center gap-1.5 px-3 py-1 bg-success text-white rounded-pill extra-small fw-bold mb-2 shadow-sm">
                             <i class="bi bi-check-circle-fill"></i>
-                            <span>2 परिणाम घोषित &bull; 6 सीटों पर मतगणना जारी</span>
+                            <span>5 परिणाम घोषित &bull; 3 सीटों पर कोटा गणना जारी</span>
                         </div>
                         <h6 class="text-uppercase small fw-bold text-warning mb-0">
-                            <i class="bi bi-broadcast me-1"></i> वोटों की गिनती व परिणाम घोषणा
+                            <i class="bi bi-broadcast me-1"></i> वोटों की गिनती व परिणाम बुलेटिन
                         </h6>
-                        <span class="text-white small fw-bold">मंगलवार, 27 अक्टूबर 2026 (शाम का विशेष बुलेटिन)</span>
+                        <span class="text-white small fw-bold">बुधवार, 28 अक्टूबर 2026 (सुबह का विशेष बुलेटिन)</span>
                     </div>
                     <div class="card-body p-4 text-center">
                         <!-- Round Status Pulse -->
                         <div class="p-3 rounded-3 mb-3 text-start" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35);">
                             <div class="d-flex align-items-center gap-2 mb-1">
                                 <span class="live-pulse-dot" style="background:#22c55e;"></span>
-                                <strong class="text-warning small text-uppercase">स्थिति: 2 विजेता घोषित &bull; 6 सीटों पर एलिमिनेशन राउंड जारी</strong>
+                                <strong class="text-warning small text-uppercase">स्थिति: 5 सीटें घोषित &bull; 3 पर द्वितीय वरीयता छंटनी</strong>
                             </div>
                             <p class="small text-light opacity-90 mb-0" style="font-size: 12px; line-height: 1.45;">
-                                तिरहुत शिक्षक से भाजपा के डॉ. नरेंद्र प्रसाद सिंह विजयी घोषित। सारण शिक्षक से निर्दलीय राहुल राज विजयी। पटना, दरभंगा, तिरहुत और कोसी में कोटा राउंड्स जारी।
+                                सभी 4 शिक्षक सीटों के नतीजे तय (भाजपा, निर्दलीय, जन सुराज व राजद को 1-1 सीट)। दरभंगा स्नातक में भाजपा के डॉ. सर्वेश कुमार विजयी। कोसी, पटना एवं तिरहुत स्नातक में कोटा राउंड्स जारी।
                             </p>
                         </div>
 
@@ -897,13 +913,13 @@ $timeline = [
                             <div>
                                 <i class="bi bi-trophy-fill text-warning me-1"></i> <strong>घोषित परिणाम:</strong>
                             </div>
-                            <span class="badge bg-success text-white fw-bold px-2 py-1">3 सीटें घोषित (विजेता तय)</span>
+                            <span class="badge bg-success text-white fw-bold px-2 py-1">5 सीटें घोषित (विजेता तय)</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
                                 <i class="bi bi-hourglass-split text-danger me-1"></i> <strong>गणना जारी:</strong>
                             </div>
-                            <span class="text-warning fw-semibold">5 सीटों पर वरीयता छंटनी</span>
+                            <span class="text-warning fw-semibold">3 सीटों पर वरीयता छंटनी</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
@@ -931,23 +947,23 @@ $timeline = [
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">3 / 8</div>
+                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">5 / 8</div>
                     <div class="fw-semibold text-dark small">विजेता घोषित सीटें</div>
-                    <small class="text-muted">तिरहुत (BJP) &bull; सारण (IND) &bull; दरभंगा शिक्षक (JSP)</small>
+                    <small class="text-muted">4 शिक्षक (BJP, IND, JSP, RJD) + दर्भ. स्नातक (BJP)</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">5 / 8</div>
+                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">3 / 8</div>
                     <div class="fw-semibold text-dark small">वरीयता कोटा गणना जारी</div>
-                    <small class="text-muted">पटना (स्नातक व शिक्षक), तिरहुत, दर्भ. स्नातक, कोसी</small>
+                    <small class="text-muted">कोसी, पटना स्नातक, तिरहुत स्नातक</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
                     <div class="text-primary fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">150</div>
                     <div class="fw-semibold text-dark small">कुल प्रत्याशी मैदान में</div>
-                    <small class="text-muted">90 स्नातक + 60 शिक्षक</small>
+                    <small class="text-muted">90 स्नातक + 60 शिक्षक (5,32,847 मतदाता)</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
@@ -981,7 +997,7 @@ $timeline = [
                                 <span class="live-pulse-dot" style="background:#fff;"></span> लाइव मतगणना परिणाम
                             </span>
                             <span class="badge bg-success text-white extra-small fw-semibold px-2 py-0.5 rounded-pill">
-                                3 सीटें घोषित
+                                5 सीटें घोषित
                             </span>
                         </div>
                         <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
@@ -993,9 +1009,9 @@ $timeline = [
                     </div>
                     <div class="text-end">
                         <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
-                            <i class="bi bi-clock-history me-1"></i> अपडेट 10:00 PM IST
+                            <i class="bi bi-clock-history me-1"></i> अपडेट 07:30 AM IST
                         </span>
-                        <div class="extra-small text-muted mt-1">27 अक्टूबर 2026 रात्रि बुलेटिन</div>
+                        <div class="extra-small text-muted mt-1">28 October 2026 Morning Bulletin</div>
                     </div>
                 </div>
 
@@ -1003,54 +1019,54 @@ $timeline = [
                 <div class="row g-2 mb-4">
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #f97316 !important;">
-                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">एनडीए (BJP / JDU)</div>
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">NDA (BJP / JDU)</div>
                             <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
-                                <span class="small fw-bold text-success">विजयी</span>
+                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">2</span>
+                                <span class="small fw-bold text-success">Won</span>
                                 <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-primary">4</span>
-                                <span class="extra-small text-muted">बढ़त</span>
+                                <span class="fs-4 fw-bold text-primary">2</span>
+                                <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">जीत: तिरहुत शिक्षक &bull; बढ़त: कोसी, पटना (स्नातक व शिक्षक), तिरहुत स्नातक</div>
+                            <div class="extra-small text-muted mt-1">Won: Tirhut Teach &amp; Dbg Grad &bull; Lead: Kosi, Patna Grad</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #16a34a !important;">
-                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">महागठबंधन (RJD / INC)</div>
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">MGB (RJD / INC)</div>
                             <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-secondary" style="font-family: 'Outfit', sans-serif;">0</span>
-                                <span class="small fw-bold text-secondary">विजयी</span>
+                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                                <span class="small fw-bold text-success">Won</span>
                                 <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-success">1</span>
-                                <span class="extra-small text-muted">बढ़त</span>
+                                <span class="fs-4 fw-bold text-secondary">0</span>
+                                <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">बढ़त: दरभंगा स्नातक (अनिल झा)</div>
+                            <div class="extra-small text-muted mt-1">Won: Patna Teachers (Dr. Sanjeev Kumar unseats BJP)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #eab308 !important;">
-                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">जन सुराज पार्टी</div>
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">Jan Suraaj Party</div>
                             <div class="d-flex align-items-baseline justify-content-center gap-1">
                                 <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
-                                <span class="small fw-bold text-success">विजयी</span>
+                                <span class="small fw-bold text-success">Won</span>
                                 <span class="text-muted mx-1">|</span>
                                 <span class="fs-4 fw-bold text-secondary">0</span>
-                                <span class="extra-small text-muted">बढ़त</span>
+                                <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">जीत: दरभंगा शिक्षक (डॉ. सुरेश राय - पहला खाता)</div>
+                            <div class="extra-small text-muted mt-1">Won: Darbhanga Teachers (Dr. Suresh Rai - First Seat)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #64748b !important;">
-                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">निर्दलीय / अन्य</div>
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">Independents / Others</div>
                             <div class="d-flex align-items-baseline justify-content-center gap-1">
                                 <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
-                                <span class="small fw-bold text-success">विजयी</span>
+                                <span class="small fw-bold text-success">Won</span>
                                 <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-secondary">0</span>
-                                <span class="extra-small text-muted">बढ़त</span>
+                                <span class="fs-4 fw-bold text-primary">1</span>
+                                <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">जीत: सारण शिक्षक (राहुल राज)</div>
+                            <div class="extra-small text-muted mt-1">Won: Saran Teach (Rahul Raj) &bull; Lead: Tirhut Grad (Brajwasi)</div>
                         </div>
                     </div>
                 </div>
@@ -1097,22 +1113,28 @@ $timeline = [
                     <div class="d-flex align-items-start gap-2.5">
                         <i class="bi bi-info-circle-fill text-danger fs-5 mt-0.5"></i>
                         <div class="small text-secondary" style="line-height: 1.55;">
-                            <strong class="text-dark">ताज़ा आधिकारिक परिणाम एवं महत्वपूर्ण ग्राउंड इनपुट्स (Key Highlights):</strong>
+                            <strong class="text-dark">ताज़ा आधिकारिक परिणाम एवं महत्वपूर्ण ग्राउंड इनपुट्स (Key Ground Intelligence &amp; Verified Declarations):</strong>
                             <ul class="mb-0 ps-3 mt-1">
                                 <li>
-                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>तिरहुत शिक्षक (हिन्दुस्तान / प्रभात खबर):</strong> एनडीए समर्थित भाजपा प्रत्याशी <strong>डॉ. नरेंद्र प्रसाद सिंह</strong> आधिकारिक रूप से 594 मतों से विजयी घोषित किए गए (2,945 मत प्राप्त कर निर्दलीय भूषण झा के 2,351 मतों को पछाड़ा)। वाम दल के मौजूदा एमएलसी संजय कुमार सिंह तीसरे स्थान पर रहे।
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>पटना शिक्षक (ईटीवी भारत / लाइव हिन्दुस्तान / एनडीटीवी):</strong> बांकीपुर / कला एवं शिल्प महाविद्यालय केंद्र पर बड़ा उलटफेर! राजद समर्थित प्रत्याशी <strong>डॉ. संजीव कुमार</strong> ने 800 से अधिक मतों के अंतर से ऐतिहासिक जीत दर्ज की; 5 बार के वरिष्ठ भाजपा एमएलसी नवल किशोर यादव को पराजित किया।
                                 </li>
                                 <li>
-                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>सारण शिक्षक (दैनिक जागरण / हिन्दुस्तान):</strong> निर्दलीय प्रत्याशी एवं भाजपा बागी <strong>राहुल राज</strong> ने दूसरी वरीयता के मतों के हस्तांतरण के बाद 800+ मतों से ऐतिहासिक जीत दर्ज की; जन सुराज के मौजूदा एमएलसी अफाक अहमद और जदयू के आनंद पुष्कर पराजित।
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>दरभंगा स्नातक (हिन्दुस्तान टाइम्स / दैनिक जागरण):</strong> भाजपा के मौजूदा एमएलसी <strong>डॉ. सर्वेश कुमार</strong> ने अंतिम कोटा गणना के बाद कड़े मुकाबले में राजद के अनिल कुमार झा को 237 मतों से हराकर अपनी सीट बरकरार रखी।
                                 </li>
                                 <li>
-                                    <strong>पटना शिक्षक (अमर उजाला / हिन्दुस्तान):</strong> कला एवं शिल्प महाविद्यालय केंद्र पर 5 बार के भाजपा एमएलसी नवल किशोर यादव पर राजद समर्थित <strong>डॉ. संजीव कुमार सिंह</strong> ने करीबी वरीयता बंडलों में बढ़त बनाई।
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>दरभंगा शिक्षक (दैनिक जागरण / लाइव हिन्दुस्तान):</strong> प्रशांत किशोर की पार्टी का विधान परिषद् में ऐतिहासिक खाता खुला। जन सुराज पार्टी के <strong>डॉ. सुरेश प्रसाद राय</strong> आधिकारिक रूप से विजयी घोषित, कांग्रेस के दिग्गज एवं 4 बार के एमएलसी डॉ. मदन मोहन झा पराजित।
                                 </li>
                                 <li>
-                                    <strong>दरभंगा निर्वाचन क्षेत्र (द वीक / हिन्दुस्तान टाइम्स):</strong> मिथिलांचल में बड़े राजनीतिक समीकरण; शिक्षक सीट पर जन सुराज के <strong>सुरेश प्रसाद राय</strong> कांग्रेस दिग्गज डॉ. मदन मोहन झा पर आगे, जबकि स्नातक सीट पर राजद के <strong>अनिल कुमार झा</strong> भाजपा के मौजूदा एमएलसी डॉ. सर्वेश कुमार पर बढ़त बनाए हुए हैं।
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>तिरहुत शिक्षक (लाइव हिन्दुस्तान / प्रभात खबर):</strong> एनडीए समर्थित भाजपा प्रत्याशी <strong>डॉ. नरेंद्र प्रसाद सिंह</strong> 2,945 मत प्राप्त कर 594 मतों के अंतर से आधिकारिक रूप से विजयी घोषित; निर्दलीय भूषण झा (2,351 मत) पराजित। भाकपा के मौजूदा एमएलसी संजय कुमार सिंह तीसरे स्थान पर रहे।
                                 </li>
                                 <li>
-                                    <strong>कोसी एवं पटना स्नातक (दैनिक जागरण / प्रभात खबर):</strong> 14 जिलों में फैले कोसी क्षेत्र में भाजपा के <strong>डॉ. एनके यादव</strong> मजबूत बढ़त पर; पटना स्नातक में जदयू के <strong>नीरज कुमार</strong> जन सुराज समर्थित अनुज सिंह के खिलाफ आगे चल रहे हैं।
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>सारण शिक्षक (दैनिक जागरण / लाइव हिन्दुस्तान):</strong> निर्दलीय प्रत्याशी एवं भाजपा बागी <strong>राहुल राज</strong> ने दूसरी वरीयता के मतों के हस्तांतरण के बाद 4,965 मत प्राप्त कर 800+ मतों से शानदार जीत दर्ज की; जन सुराज के मौजूदा एमएलसी अफाक अहमद और जदयू के आनंद पुष्कर पराजित।
+                                </li>
+                                <li>
+                                    <strong>कोसी स्नातक (दैनिक जागरण / लाइव हिन्दुस्तान):</strong> 14 जिलों में फेली कोसी सीट पर सभी 11 राउंड की प्रथम वरीयता गणना के बाद भाजपा के <strong>डॉ. एन.के. यादव</strong> 24,075 मतों के साथ मजबूत बढ़त पर (राजद के नीतीश कुमार 18,535 और जन सुराज के रजनीश रंजन 15,306)। वर्तमान में 32,201 के विजयी कोटा हेतु दूसरी वरीयता के मतों की गणना जारी।
+                                </li>
+                                <li>
+                                    <strong>पटना एवं तिरहुत स्नातक (द वीक / प्रभात खबर):</strong> पटना स्नातक में जदयू के <strong>नीरज कुमार</strong> राजद के दिलीप पटेल और जन सुराज के अनुज सिंह के खिलाफ कड़े त्रिकोणीय मुकाबले में बढ़त बनाए हुए हैं। तिरहुत स्नातक में मौजूदा निर्दलीय एमएलसी <strong>वंशीधर ब्रजवासी</strong> प्रारंभिक दौर में 2,813 मतों के साथ जदयू के अभिषेक झा (1,739) और राजद की डॉ. रश्मी गौतम (1,407) से आगे चल रहे हैं।
                                 </li>
                             </ul>
                         </div>

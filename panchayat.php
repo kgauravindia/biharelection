@@ -36,6 +36,17 @@ $allDistrictPanchayats = [];
 $blockPanchayatsMap = [];
 $districtBlocks = [];
 $districtSamitiMemberCounts = [];
+$panchayatWardMembers = [];
+$panchayatPanchMembers = [];
+$wardMembersByNo = [];
+$panchMembersByNo = [];
+$allWardNumbers = [];
+$blockWardCountsByPanchayat = [];
+$blockPanchCountsByPanchayat = [];
+$blockWardCount = 0;
+$blockPanchCount = 0;
+$districtWardCounts = [];
+$districtPanchCounts = [];
 
 if ($districtObj && $pdo) {
     $targetPanchayatQuery = $panchayatInput ?: $slugInput;
@@ -162,6 +173,76 @@ if ($districtObj && $pdo) {
                 }
             }
         } catch (Throwable $e) {}
+
+        // Gram Panchayat Ward Members (2021-2026) from `ward_21_26`
+        $panchayatWardMembers = [];
+        try {
+            $pTargetName = trim($singlePanchayat['panchayat_name'] ?? '');
+            $stmtW = $pdo->prepare("SELECT * FROM ward_21_26 WHERE district_slug = :dslug AND (block = :bname OR block LIKE :blike) AND (panchayat = :pname OR panchayat LIKE :plike) ORDER BY CAST(ward_no AS UNSIGNED) ASC, id ASC");
+            $stmtW->execute([
+                ':dslug' => $selectedDistrictSlug,
+                ':bname' => $currentBlockName,
+                ':blike' => '%' . trim($currentBlockName) . '%',
+                ':pname' => $pTargetName,
+                ':plike' => '%' . trim($pTargetName) . '%'
+            ]);
+            $panchayatWardMembers = $stmtW->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($panchayatWardMembers)) {
+                $stmtWAll = $pdo->prepare("SELECT * FROM ward_21_26 WHERE district_slug = :dslug ORDER BY CAST(ward_no AS UNSIGNED) ASC, id ASC");
+                $stmtWAll->execute([':dslug' => $selectedDistrictSlug]);
+                $allW = $stmtWAll->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($allW as $w) {
+                    if (isBlockMatch($w['block'], $currentBlockName) && isPanchayatMatch($w['panchayat'], $pTargetName)) {
+                        $panchayatWardMembers[] = $w;
+                    }
+                }
+            }
+        } catch (Throwable $e) {}
+
+        // Gram Kutchery Panch Members (2021-2026) from `panch_21_26`
+        $panchayatPanchMembers = [];
+        try {
+            $pTargetName = trim($singlePanchayat['panchayat_name'] ?? '');
+            $stmtP = $pdo->prepare("SELECT * FROM panch_21_26 WHERE district_slug = :dslug AND (block = :bname OR block LIKE :blike) AND (panchayat = :pname OR panchayat LIKE :plike) ORDER BY CAST(ward_no AS UNSIGNED) ASC, id ASC");
+            $stmtP->execute([
+                ':dslug' => $selectedDistrictSlug,
+                ':bname' => $currentBlockName,
+                ':blike' => '%' . trim($currentBlockName) . '%',
+                ':pname' => $pTargetName,
+                ':plike' => '%' . trim($pTargetName) . '%'
+            ]);
+            $panchayatPanchMembers = $stmtP->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($panchayatPanchMembers)) {
+                $stmtPAll = $pdo->prepare("SELECT * FROM panch_21_26 WHERE district_slug = :dslug ORDER BY CAST(ward_no AS UNSIGNED) ASC, id ASC");
+                $stmtPAll->execute([':dslug' => $selectedDistrictSlug]);
+                $allP = $stmtPAll->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($allP as $p) {
+                    if (isBlockMatch($p['block'], $currentBlockName) && isPanchayatMatch($p['panchayat'], $pTargetName)) {
+                        $panchayatPanchMembers[] = $p;
+                    }
+                }
+            }
+        } catch (Throwable $e) {}
+
+        // Index Ward Members & Panch by ward_no
+        foreach ($panchayatWardMembers as $w) {
+            $wn = trim($w['ward_no'] ?? '');
+            if ($wn !== '') {
+                $wardMembersByNo[$wn] = $w;
+            }
+        }
+        foreach ($panchayatPanchMembers as $p) {
+            $wn = trim($p['ward_no'] ?? '');
+            if ($wn !== '') {
+                $panchMembersByNo[$wn] = $p;
+            }
+        }
+        $allWardNumbers = array_unique(array_merge(array_keys($wardMembersByNo), array_keys($panchMembersByNo)));
+        usort($allWardNumbers, function($a, $b) {
+            return intval($a) - intval($b);
+        });
 
         // Tier-3 Zila Parishad representation
         // User rule: "If jila parisad not specified show all zila parisad of block"
@@ -310,6 +391,25 @@ if ($districtObj && $pdo) {
             }
         } catch (Throwable $e) {}
 
+        // Block-level Ward and Panch counts from ward_21_26 and panch_21_26
+        try {
+            $stmtBw = $pdo->prepare("SELECT panchayat, COUNT(*) as cnt FROM ward_21_26 WHERE district_slug = :dslug AND (block = :bname OR block LIKE :blike) GROUP BY panchayat");
+            $stmtBw->execute([':dslug' => $selectedDistrictSlug, ':bname' => $bName, ':blike' => '%' . trim($bName) . '%']);
+            while ($r = $stmtBw->fetch(PDO::FETCH_ASSOC)) {
+                $blockWardCountsByPanchayat[trim($r['panchayat'])] = (int)$r['cnt'];
+            }
+            $blockWardCount = array_sum($blockWardCountsByPanchayat);
+        } catch (Throwable $e) {}
+
+        try {
+            $stmtBp = $pdo->prepare("SELECT panchayat, COUNT(*) as cnt FROM panch_21_26 WHERE district_slug = :dslug AND (block = :bname OR block LIKE :blike) GROUP BY panchayat");
+            $stmtBp->execute([':dslug' => $selectedDistrictSlug, ':bname' => $bName, ':blike' => '%' . trim($bName) . '%']);
+            while ($r = $stmtBp->fetch(PDO::FETCH_ASSOC)) {
+                $blockPanchCountsByPanchayat[trim($r['panchayat'])] = (int)$r['cnt'];
+            }
+            $blockPanchCount = array_sum($blockPanchCountsByPanchayat);
+        } catch (Throwable $e) {}
+
         try {
             $stmtZpAll = $pdo->prepare("SELECT * FROM zila_parishad_members WHERE district_slug = :dslug ORDER BY CAST(territory_no AS UNSIGNED) ASC");
             $stmtZpAll->execute([':dslug' => $selectedDistrictSlug]);
@@ -324,10 +424,12 @@ if ($districtObj && $pdo) {
 }
 
 // Pre-fetch district-level aggregated statistics if browsing district or state (cached)
-$districtStatsBundle = DataCache::remember('panchayat_district_stats', 86400, function() use ($pdo) {
+$districtStatsBundle = DataCache::remember('panchayat_district_stats_v2', 86400, function() use ($pdo) {
     $census = [];
     $panchayats = [];
     $samiti = [];
+    $wards = [];
+    $panch = [];
     if ($pdo) {
         try {
             $stmt = $pdo->query("SELECT district_slug, COUNT(*) as total_blocks, SUM(population) as total_pop, AVG(literacy_rate) as avg_literacy, SUM(households) as total_households FROM census_subdistricts GROUP BY district_slug");
@@ -344,18 +446,32 @@ $districtStatsBundle = DataCache::remember('panchayat_district_stats', 86400, fu
             while ($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)) {
                 $samiti[strtolower($row3['district_slug'])] = intval($row3['total_samiti_members']);
             }
+
+            $stmt4 = $pdo->query("SELECT district_slug, COUNT(*) as total_wards FROM ward_21_26 GROUP BY district_slug");
+            while ($row4 = $stmt4->fetch(PDO::FETCH_ASSOC)) {
+                $wards[strtolower($row4['district_slug'])] = intval($row4['total_wards']);
+            }
+
+            $stmt5 = $pdo->query("SELECT district_slug, COUNT(*) as total_panch FROM panch_21_26 GROUP BY district_slug");
+            while ($row5 = $stmt5->fetch(PDO::FETCH_ASSOC)) {
+                $panch[strtolower($row5['district_slug'])] = intval($row5['total_panch']);
+            }
         } catch (Throwable $e) {}
     }
-    return ['census' => $census, 'panchayats' => $panchayats, 'samiti' => $samiti];
-}) ?: ['census' => [], 'panchayats' => [], 'samiti' => []];
+    return ['census' => $census, 'panchayats' => $panchayats, 'samiti' => $samiti, 'wards' => $wards, 'panch' => $panch];
+}) ?: ['census' => [], 'panchayats' => [], 'samiti' => [], 'wards' => [], 'panch' => []];
 
 $districtCensusStats = $districtStatsBundle['census'] ?? [];
 $districtPanchayatCounts = $districtStatsBundle['panchayats'] ?? [];
 $districtSamitiMemberCounts = $districtStatsBundle['samiti'] ?? [];
+$districtWardCounts = $districtStatsBundle['wards'] ?? [];
+$districtPanchCounts = $districtStatsBundle['panch'] ?? [];
 
 // State Totals
 $totalStateBlocks = 534;
 $totalStatePanchayats = array_sum($districtPanchayatCounts) ?: 8406;
+$totalStateWards = array_sum($districtWardCounts) ?: 101075;
+$totalStatePanch = array_sum($districtPanchCounts) ?: 96938;
 $totalStatePopulation = 104099452;
 
 // Page Meta & SEO
@@ -585,6 +701,11 @@ require_once __DIR__ . '/header.php';
                 <span class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
                     🏢 <?php echo htmlspecialchars($districtObj['name']); ?> District
                 </span>
+                <?php if (!empty($allWardNumbers)): ?>
+                    <span class="badge bg-warning bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                        🗳️ <?php echo count($allWardNumbers); ?> Wards
+                    </span>
+                <?php endif; ?>
                 <?php if (!empty($singlePanchayat['delimitation_status'])): ?>
                     <span class="badge bg-info bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
                         ✅ <?php echo htmlspecialchars($singlePanchayat['delimitation_status']); ?>
@@ -660,7 +781,10 @@ require_once __DIR__ . '/header.php';
 
         <div class="d-flex flex-wrap gap-2">
             <?php if ($singlePanchayat && $districtObj): ?>
-                <a href="<?php echo getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
+                <a href="#ward-roster" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
+                    <i class="bi bi-grid-3x3-gap-fill me-1"></i> Ward Members &amp; Panch<?php echo !empty($allWardNumbers) ? ' (' . count($allWardNumbers) . ')' : ''; ?>
+                </a>
+                <a href="<?php echo getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
                     <i class="bi bi-building-check me-1"></i> All <?php echo htmlspecialchars($singlePanchayat['block']); ?> Panchayats
                 </a>
                 <a href="<?php echo getBlockUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-outline-light fw-bold px-3 py-2 shadow-sm">
@@ -748,6 +872,11 @@ require_once __DIR__ . '/header.php';
                         <span class="badge bg-light text-muted border px-2.5 py-1 rounded-pill small">
                             District HQ: <?php echo htmlspecialchars($districtObj['headquarters'] ?? $districtObj['name']); ?>
                         </span>
+                        <?php if (!empty($allWardNumbers)): ?>
+                            <a href="#ward-roster" class="badge bg-primary text-white text-decoration-none px-2.5 py-1 rounded-pill small">
+                                🗳️ <?php echo count($allWardNumbers); ?> Wards Directory &darr;
+                            </a>
+                        <?php endif; ?>
                     </div>
                     <h2 class="fw-bold font-heading text-navy fs-3 mb-1">
                         <?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?>
@@ -830,13 +959,9 @@ require_once __DIR__ . '/header.php';
                         <?php endif; ?>
 
                         <div class="profile-prop-row">
-                            <span class="text-muted"><i class="bi bi-gender-ambiguous me-1"></i> Gender &amp; Age:</span>
+                            <span class="text-muted"><i class="bi bi-gender-ambiguous me-1"></i> Gender:</span>
                             <span class="fw-semibold text-dark">
-                                <?php 
-                                $mGen = $singlePanchayat['mukhiya_gender_hi'] ?: $singlePanchayat['mukhiya_gender'] ?: 'N/A';
-                                $mAge = !empty($singlePanchayat['mukhiya_age']) ? "{$singlePanchayat['mukhiya_age']} Years" : '';
-                                echo htmlspecialchars(trim("{$mGen} " . ($mAge ? "({$mAge})" : ''))); 
-                                ?>
+                                <?php echo htmlspecialchars($singlePanchayat['mukhiya_gender_hi'] ?: $singlePanchayat['mukhiya_gender'] ?: 'N/A'); ?>
                             </span>
                         </div>
 
@@ -930,13 +1055,9 @@ require_once __DIR__ . '/header.php';
                         <?php endif; ?>
 
                         <div class="profile-prop-row">
-                            <span class="text-muted"><i class="bi bi-gender-ambiguous me-1"></i> Gender &amp; Age:</span>
+                            <span class="text-muted"><i class="bi bi-gender-ambiguous me-1"></i> Gender:</span>
                             <span class="fw-semibold text-dark">
-                                <?php 
-                                $sGen = $singlePanchayat['sarpanch_gender_hi'] ?: $singlePanchayat['sarpanch_gender'] ?: 'N/A';
-                                $sAge = !empty($singlePanchayat['sarpanch_age']) ? "{$singlePanchayat['sarpanch_age']} Years" : '';
-                                echo htmlspecialchars(trim("{$sGen} " . ($sAge ? "({$sAge})" : ''))); 
-                                ?>
+                                <?php echo htmlspecialchars($singlePanchayat['sarpanch_gender_hi'] ?: $singlePanchayat['sarpanch_gender'] ?: 'N/A'); ?>
                             </span>
                         </div>
 
@@ -1018,10 +1139,10 @@ require_once __DIR__ . '/header.php';
                                 </div>
 
                                 <div class="row g-2 pt-2 border-top small text-muted">
-                                    <?php if (!empty($sm['gender']) || !empty($sm['age'])): ?>
+                                    <?php if (!empty($sm['gender'])): ?>
                                         <div class="col-6">
                                             <i class="bi bi-person me-1"></i>
-                                            <?php echo htmlspecialchars(($sm['gender'] ?? '') . ($sm['age'] ? ' (' . $sm['age'] . ' yrs)' : '')); ?>
+                                            <?php echo htmlspecialchars($sm['gender']); ?>
                                         </div>
                                     <?php endif; ?>
                                     <?php if (!empty($sm['category'])): ?>
@@ -1167,6 +1288,413 @@ require_once __DIR__ . '/header.php';
                         <a href="<?php echo getZilaParishadUrl($districtObj['slug']); ?>" class="btn btn-sm btn-primary rounded-pill px-3 fw-semibold shadow-sm">
                             District ZP Board &rarr;
                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================= -->
+        <!-- WARD-LEVEL REPRESENTATIVES: WARD MEMBERS & PANCH (2021–2026) -->
+        <!-- ============================================================= -->
+        <div id="ward-roster" class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white border-top border-4 border-primary">
+            <!-- Header & Summary Metrics -->
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4 pb-3 border-bottom">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                        <span class="badge bg-primary bg-opacity-15 text-primary fw-bold px-2.5 py-1 rounded-pill small">
+                            🗳️ Ward-Level Grassroots Roster
+                        </span>
+                        <span class="badge bg-success bg-opacity-15 text-success fw-bold px-2 py-0.5 rounded-pill small">
+                            Tenure: 2021–2026
+                        </span>
+                        <span class="badge bg-light text-muted border px-2 py-0.5 rounded-pill small">
+                            SEC Bihar Verified
+                        </span>
+                    </div>
+                    <h3 class="fw-bold font-heading text-navy fs-4 mb-1">
+                        Elected Ward Members &amp; Gram Kutchery Panch (2021–2026)
+                    </h3>
+                    <p class="text-muted small mb-0">
+                        Official directory of Gram Panchayat Ward Members (वार्ड सदस्य) and Gram Kutchery Panch (ग्राम कचहरी पंच) across all wards of <strong><?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?></strong> Gram Panchayat.
+                    </p>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-primary text-white fw-bold px-3 py-2 rounded-pill fs-6 shadow-sm">
+                        <?php echo count($allWardNumbers); ?> Wards
+                    </span>
+                    <span class="badge bg-success text-white fw-bold px-3 py-2 rounded-pill fs-6 shadow-sm">
+                        <?php echo count($panchayatWardMembers); ?> Ward Members
+                    </span>
+                    <span class="badge bg-info text-dark fw-bold px-3 py-2 rounded-pill fs-6 shadow-sm">
+                        <?php echo count($panchayatPanchMembers); ?> Panch
+                    </span>
+                </div>
+            </div>
+
+            <?php if (!empty($allWardNumbers)): 
+                // Calculate quick stats
+                $totalWardReps = count($panchayatWardMembers) + count($panchayatPanchMembers);
+                $femaleCount = 0;
+                $maleCount = 0;
+                $catCounts = [];
+                $resCounts = [];
+                foreach (array_merge($panchayatWardMembers, $panchayatPanchMembers) as $rep) {
+                    if (strcasecmp($rep['gender'] ?? '', 'Female') === 0 || stripos($rep['gender'] ?? '', 'महिला') !== false) {
+                        $femaleCount++;
+                    } elseif (strcasecmp($rep['gender'] ?? '', 'Male') === 0 || stripos($rep['gender'] ?? '', 'पुरुष') !== false) {
+                        $maleCount++;
+                    }
+                    if (!empty($rep['category'])) {
+                        $catCounts[$rep['category']] = ($catCounts[$rep['category']] ?? 0) + 1;
+                    }
+                    if (!empty($rep['reservation_status'])) {
+                        $resCounts[$rep['reservation_status']] = ($resCounts[$rep['reservation_status']] ?? 0) + 1;
+                    }
+                }
+                $femalePct = $totalWardReps > 0 ? round(($femaleCount / $totalWardReps) * 100, 1) : 0;
+            ?>
+
+            <!-- Quick Demographics Highlight Strip -->
+            <div class="row g-2 mb-4">
+                <div class="col-6 col-md-3">
+                    <div class="p-2.5 rounded-3 bg-light border text-center h-100">
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Total Wards</span>
+                        <strong class="fs-5 text-navy"><?php echo count($allWardNumbers); ?> Wards</strong>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-2.5 rounded-3 bg-light border text-center h-100">
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Women Leadership</span>
+                        <strong class="fs-5 text-success"><?php echo $femaleCount; ?> / <?php echo $totalWardReps; ?> (<?php echo $femalePct; ?>%)</strong>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-2.5 rounded-3 bg-light border text-center h-100">
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Ward Members (WIMC)</span>
+                        <strong class="fs-5 text-primary"><?php echo count($panchayatWardMembers); ?> Elected</strong>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="p-2.5 rounded-3 bg-light border text-center h-100">
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Gram Kutchery Panch</span>
+                        <strong class="fs-5 text-dark"><?php echo count($panchayatPanchMembers); ?> Judicial Bench</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls: Search & Tabs -->
+            <div class="row g-3 align-items-center justify-content-between mb-4">
+                <div class="col-12 col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 rounded-start-pill ps-3"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" id="wardSearchInput" class="form-control bg-light border-start-0 rounded-end-pill px-2" placeholder="Search ward number, candidate name, category..." onkeyup="filterWardRoster(this.value)">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 text-md-end">
+                    <ul class="nav nav-pills justify-content-md-end gap-1" id="wardRosterTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active rounded-pill px-3 py-1.5 fw-semibold small" id="tab-combined-btn" data-bs-toggle="pill" data-bs-target="#tab-combined" type="button" role="tab">
+                                <i class="bi bi-grid-3x3-gap-fill me-1"></i> Ward Comparison
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link rounded-pill px-3 py-1.5 fw-semibold small" id="tab-wards-btn" data-bs-toggle="pill" data-bs-target="#tab-wards" type="button" role="tab">
+                                🗳️ Ward Members (<?php echo count($panchayatWardMembers); ?>)
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link rounded-pill px-3 py-1.5 fw-semibold small" id="tab-panch-btn" data-bs-toggle="pill" data-bs-target="#tab-panch" type="button" role="tab">
+                                ⚖️ Panch (<?php echo count($panchayatPanchMembers); ?>)
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="wardRosterTabContent">
+                
+                <!-- TAB 1: COMBINED WARD-BY-WARD COMPARISON -->
+                <div class="tab-pane fade show active" id="tab-combined" role="tabpanel">
+                    <div class="row g-3" id="combinedWardsGrid">
+                        <?php foreach ($allWardNumbers as $wn): 
+                            $w = $wardMembersByNo[$wn] ?? null;
+                            $p = $panchMembersByNo[$wn] ?? null;
+                            $searchText = strtolower("ward {$wn} वार्ड {$wn} " . ($w['candidate_name'] ?? '') . ' ' . ($w['father_husband_name'] ?? '') . ' ' . ($w['category'] ?? '') . ' ' . ($w['reservation_status'] ?? '') . ' ' . ($p['candidate_name'] ?? '') . ' ' . ($p['father_husband_name'] ?? '') . ' ' . ($p['category'] ?? '') . ' ' . ($p['reservation_status'] ?? ''));
+                        ?>
+                            <div class="col-12 col-xl-6 ward-roster-item" data-search="<?php echo htmlspecialchars($searchText, ENT_QUOTES); ?>">
+                                <div class="p-3.5 rounded-4 border bg-white shadow-sm h-100 d-flex flex-column justify-content-between hover-shadow transition" style="border-left: 5px solid #0284c7 !important;">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom flex-wrap gap-2">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="badge bg-primary text-white fw-bold px-3 py-1.5 rounded-pill fs-6">
+                                                    Ward / वार्ड: <?php echo htmlspecialchars($wn); ?>
+                                                </span>
+                                                <span class="text-muted extra-small">Gram Panchayat &amp; Gram Kutchery</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted border extra-small px-2 py-0.5 rounded-pill">
+                                                Tenure: 2021–2026
+                                            </span>
+                                        </div>
+
+                                        <div class="row g-3">
+                                            <!-- Ward Member (Executive) -->
+                                            <div class="col-12 col-sm-6">
+                                                <div class="p-3 rounded-3 bg-light bg-opacity-75 border h-100 d-flex flex-column">
+                                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                                        <span class="badge bg-primary-subtle text-primary fw-bold extra-small text-uppercase">
+                                                            🗳️ Ward Member (वार्ड सदस्य)
+                                                        </span>
+                                                    </div>
+                                                    <?php if ($w): ?>
+                                                        <h5 class="fw-bold text-navy mb-1 fs-6 mt-1">
+                                                            <?php echo htmlspecialchars($w['candidate_name']); ?>
+                                                        </h5>
+                                                        <?php if (!empty($w['father_husband_name'])): ?>
+                                                            <div class="text-muted extra-small mb-1">
+                                                                पिता / पति: <?php echo htmlspecialchars($w['father_husband_name']); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        
+                                                        <div class="mb-2">
+                                                            <?php if (!empty($w['reservation_status'])): ?>
+                                                                <span class="badge bg-warning bg-opacity-25 text-dark fw-bold extra-small rounded-pill d-inline-block">
+                                                                    <?php echo htmlspecialchars($w['reservation_status']); ?>
+                                                                </span>
+                                                            <?php endif; ?>
+                                                        </div>
+
+                                                        <div class="extra-small text-muted mb-2">
+                                                            <?php if (!empty($w['gender'])): ?>
+                                                                <div><i class="bi bi-person me-1"></i><?php echo htmlspecialchars($w['gender']); ?></div>
+                                                            <?php endif; ?>
+                                                            <?php if (!empty($w['category'])): ?>
+                                                                <div><i class="bi bi-tag me-1"></i><?php echo htmlspecialchars($w['category']); ?></div>
+                                                            <?php endif; ?>
+                                                            <?php if (!empty($w['address'])): ?>
+                                                                <div class="text-truncate" title="<?php echo htmlspecialchars($w['address']); ?>"><i class="bi bi-geo-alt me-1 text-danger"></i><?php echo htmlspecialchars($w['address']); ?></div>
+                                                            <?php endif; ?>
+                                                        </div>
+
+                                                        <div class="mt-auto pt-2 border-top">
+                                                            <?php if (!empty($w['mobile'])): ?>
+                                                                <?php echo renderMaskedPhoneButton($w['mobile'], $w['candidate_name'] . ' (Ward ' . $wn . ' Member)'); ?>
+                                                            <?php else: ?>
+                                                                <span class="text-muted extra-small"><i class="bi bi-check-circle-fill text-success me-1"></i>Elected Member</span>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <div class="text-muted small my-auto py-2">
+                                                            <em>Member details pending update</em>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+
+                                            <!-- Gram Kutchery Panch (Judiciary) -->
+                                            <div class="col-12 col-sm-6">
+                                                <div class="p-3 rounded-3 bg-light bg-opacity-75 border h-100 d-flex flex-column">
+                                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                                        <span class="badge bg-success-subtle text-success fw-bold extra-small text-uppercase">
+                                                            ⚖️ Gram Panch (कचहरी पंच)
+                                                        </span>
+                                                    </div>
+                                                    <?php if ($p): ?>
+                                                        <h5 class="fw-bold text-navy mb-1 fs-6 mt-1">
+                                                            <?php echo htmlspecialchars($p['candidate_name']); ?>
+                                                        </h5>
+                                                        <?php if (!empty($p['father_husband_name'])): ?>
+                                                            <div class="text-muted extra-small mb-1">
+                                                                पिता / पति: <?php echo htmlspecialchars($p['father_husband_name']); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+
+                                                        <div class="mb-2">
+                                                            <?php if (!empty($p['reservation_status'])): ?>
+                                                                <span class="badge bg-info bg-opacity-25 text-navy fw-bold extra-small rounded-pill d-inline-block">
+                                                                    <?php echo htmlspecialchars($p['reservation_status']); ?>
+                                                                </span>
+                                                            <?php endif; ?>
+                                                        </div>
+
+                                                        <div class="extra-small text-muted mb-2">
+                                                            <?php if (!empty($p['gender'])): ?>
+                                                                <div><i class="bi bi-person me-1"></i><?php echo htmlspecialchars($p['gender']); ?></div>
+                                                            <?php endif; ?>
+                                                            <?php if (!empty($p['category'])): ?>
+                                                                <div><i class="bi bi-tag me-1"></i><?php echo htmlspecialchars($p['category']); ?></div>
+                                                            <?php endif; ?>
+                                                            <?php if (!empty($p['address'])): ?>
+                                                                <div class="text-truncate" title="<?php echo htmlspecialchars($p['address']); ?>"><i class="bi bi-geo-alt me-1 text-danger"></i><?php echo htmlspecialchars($p['address']); ?></div>
+                                                            <?php endif; ?>
+                                                        </div>
+
+                                                        <div class="mt-auto pt-2 border-top">
+                                                            <?php if (!empty($p['mobile'])): ?>
+                                                                <?php echo renderMaskedPhoneButton($p['mobile'], $p['candidate_name'] . ' (Ward ' . $wn . ' Panch)'); ?>
+                                                            <?php else: ?>
+                                                                <span class="text-muted extra-small"><i class="bi bi-check-circle-fill text-success me-1"></i>Elected Panch</span>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <div class="text-muted small my-auto py-2">
+                                                            <em>Panch details pending update</em>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- TAB 2: WARD MEMBERS (TABLE VIEW) -->
+                <div class="tab-pane fade" id="tab-wards" role="tabpanel">
+                    <div class="table-responsive border rounded-3 bg-white">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light extra-small text-uppercase text-secondary">
+                                <tr>
+                                    <th class="ps-3 py-3" style="width: 100px;">Ward No.</th>
+                                    <th class="py-3">Ward Member Name</th>
+                                    <th class="py-3">Father / Husband</th>
+                                    <th class="py-3">Reservation Status</th>
+                                    <th class="py-3">Category</th>
+                                    <th class="py-3">Gender</th>
+                                    <th class="py-3">Address</th>
+                                    <th class="py-3 text-end pe-3">Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($panchayatWardMembers as $w): 
+                                    $wSearch = strtolower("ward {$w['ward_no']} वार्ड {$w['ward_no']} {$w['candidate_name']} {$w['father_husband_name']} {$w['category']} {$w['reservation_status']}");
+                                ?>
+                                    <tr class="ward-roster-item" data-search="<?php echo htmlspecialchars($wSearch, ENT_QUOTES); ?>">
+                                        <td class="ps-3">
+                                            <span class="badge bg-primary text-white fw-bold px-2.5 py-1 rounded-pill small">
+                                                Ward <?php echo htmlspecialchars($w['ward_no']); ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="fw-bold text-navy fs-6"><?php echo htmlspecialchars($w['candidate_name']); ?></div>
+                                            <span class="text-muted extra-small">ग्राम पंचायत सदस्य</span>
+                                        </td>
+                                        <td class="small text-muted"><?php echo htmlspecialchars($w['father_husband_name'] ?: '—'); ?></td>
+                                        <td>
+                                            <span class="badge bg-warning bg-opacity-25 text-dark fw-bold extra-small rounded-pill">
+                                                <?php echo htmlspecialchars($w['reservation_status'] ?: 'General'); ?>
+                                            </span>
+                                        </td>
+                                        <td class="small text-dark"><?php echo htmlspecialchars($w['category'] ?: '—'); ?></td>
+                                        <td class="small text-muted">
+                                            <?php echo htmlspecialchars($w['gender'] ?? '—'); ?>
+                                        </td>
+                                        <td class="extra-small text-muted" style="max-width: 220px;">
+                                            <?php echo htmlspecialchars($w['address'] ?: '—'); ?>
+                                        </td>
+                                        <td class="text-end pe-3">
+                                            <?php if (!empty($w['mobile'])): ?>
+                                                <?php echo renderMaskedPhoneButton($w['mobile'], $w['candidate_name'] . ' (Ward ' . $w['ward_no'] . ' Member)'); ?>
+                                            <?php else: ?>
+                                                <span class="badge bg-light text-muted border extra-small">Verified</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 3: GRAM KUTCHERY PANCH (TABLE VIEW) -->
+                <div class="tab-pane fade" id="tab-panch" role="tabpanel">
+                    <div class="table-responsive border rounded-3 bg-white">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light extra-small text-uppercase text-secondary">
+                                <tr>
+                                    <th class="ps-3 py-3" style="width: 100px;">Ward No.</th>
+                                    <th class="py-3">Gram Panch Name</th>
+                                    <th class="py-3">Father / Husband</th>
+                                    <th class="py-3">Reservation Status</th>
+                                    <th class="py-3">Category</th>
+                                    <th class="py-3">Gender</th>
+                                    <th class="py-3">Address</th>
+                                    <th class="py-3 text-end pe-3">Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($panchayatPanchMembers as $p): 
+                                    $pSearch = strtolower("ward {$p['ward_no']} वार्ड {$p['ward_no']} {$p['candidate_name']} {$p['father_husband_name']} {$p['category']} {$p['reservation_status']}");
+                                ?>
+                                    <tr class="ward-roster-item" data-search="<?php echo htmlspecialchars($pSearch, ENT_QUOTES); ?>">
+                                        <td class="ps-3">
+                                            <span class="badge bg-success text-white fw-bold px-2.5 py-1 rounded-pill small">
+                                                Ward <?php echo htmlspecialchars($p['ward_no']); ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="fw-bold text-navy fs-6"><?php echo htmlspecialchars($p['candidate_name']); ?></div>
+                                            <span class="text-muted extra-small">ग्राम कचहरी पंच</span>
+                                        </td>
+                                        <td class="small text-muted"><?php echo htmlspecialchars($p['father_husband_name'] ?: '—'); ?></td>
+                                        <td>
+                                            <span class="badge bg-info bg-opacity-25 text-navy fw-bold extra-small rounded-pill">
+                                                <?php echo htmlspecialchars($p['reservation_status'] ?: 'General'); ?>
+                                            </span>
+                                        </td>
+                                        <td class="small text-dark"><?php echo htmlspecialchars($p['category'] ?: '—'); ?></td>
+                                        <td class="small text-muted">
+                                            <?php echo htmlspecialchars($p['gender'] ?? '—'); ?>
+                                        </td>
+                                        <td class="extra-small text-muted" style="max-width: 220px;">
+                                            <?php echo htmlspecialchars($p['address'] ?: '—'); ?>
+                                        </td>
+                                        <td class="text-end pe-3">
+                                            <?php if (!empty($p['mobile'])): ?>
+                                                <?php echo renderMaskedPhoneButton($p['mobile'], $p['candidate_name'] . ' (Ward ' . $p['ward_no'] . ' Panch)'); ?>
+                                            <?php else: ?>
+                                                <span class="badge bg-light text-muted border extra-small">Verified</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <script>
+            function filterWardRoster(query) {
+                const q = (query || '').toLowerCase().trim();
+                const items = document.querySelectorAll('.ward-roster-item');
+                items.forEach(el => {
+                    const search = (el.getAttribute('data-search') || '').toLowerCase();
+                    if (!q || search.includes(q)) {
+                        el.classList.remove('d-none');
+                    } else {
+                        el.classList.add('d-none');
+                    }
+                });
+            }
+            </script>
+
+            <?php else: ?>
+                <div class="p-4 bg-light rounded-4 text-center border">
+                    <i class="bi bi-grid-3x3-gap text-muted fs-1 d-block mb-2"></i>
+                    <h5 class="fw-bold text-navy mb-1">Ward Members &amp; Panch Directory</h5>
+                    <p class="text-muted small mb-3" style="max-width: 580px; margin: 0 auto;">
+                        Official ward member rosters for <strong><?php echo htmlspecialchars($singlePanchayat['panchayat_name']); ?></strong> Gram Panchayat are currently being mapped from the State Election Commission Bihar records.
+                    </p>
+                    <a href="<?php echo getPanchayatUrl($districtObj['slug'], slugify($singlePanchayat['block'])); ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold">
+                        View All <?php echo htmlspecialchars($singlePanchayat['block']); ?> Panchayats &rarr;
+                    </a>
+                </div>
+            <?php endif; ?>
         </div>
 
         <!-- Constituent Census Villages Section -->
@@ -1411,32 +1939,46 @@ require_once __DIR__ . '/header.php';
 
             <!-- Block Quick Metrics -->
             <div class="row g-3">
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-4 col-lg-2">
                     <div class="bg-light rounded-3 p-3 border text-center h-100">
                         <i class="bi bi-building-check text-success fs-4 d-block mb-1"></i>
-                        <span class="text-muted small fw-bold text-uppercase d-block">Gram Panchayats</span>
-                        <span class="fs-4 fw-bold text-success"><?php echo count($panchayatsInBlock); ?></span>
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Panchayats</span>
+                        <span class="fs-5 fw-bold text-success"><?php echo count($panchayatsInBlock); ?></span>
                     </div>
                 </div>
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-4 col-lg-2">
                     <div class="bg-light rounded-3 p-3 border text-center h-100">
-                        <i class="bi bi-people-fill text-primary fs-4 d-block mb-1"></i>
-                        <span class="text-muted small fw-bold text-uppercase d-block">Population</span>
-                        <span class="fs-4 fw-bold text-dark"><?php echo number_format($bPop); ?></span>
+                        <i class="bi bi-grid-3x3-gap-fill text-primary fs-4 d-block mb-1"></i>
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Ward Members</span>
+                        <span class="fs-5 fw-bold text-primary"><?php echo $blockWardCount ? number_format($blockWardCount) : 'Mapped'; ?></span>
                     </div>
                 </div>
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="bg-light rounded-3 p-3 border text-center h-100">
+                        <i class="bi bi-award-fill text-warning-emphasis fs-4 d-block mb-1"></i>
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Kutchery Panch</span>
+                        <span class="fs-5 fw-bold text-dark"><?php echo $blockPanchCount ? number_format($blockPanchCount) : 'Mapped'; ?></span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="bg-light rounded-3 p-3 border text-center h-100">
+                        <i class="bi bi-people-fill text-info fs-4 d-block mb-1"></i>
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Population</span>
+                        <span class="fs-5 fw-bold text-dark"><?php echo number_format($bPop); ?></span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
                     <div class="bg-light rounded-3 p-3 border text-center h-100">
                         <i class="bi bi-book-half text-warning fs-4 d-block mb-1"></i>
-                        <span class="text-muted small fw-bold text-uppercase d-block">Literacy Rate</span>
-                        <span class="fs-4 fw-bold text-dark"><?php echo $bLit ? "{$bLit}%" : 'N/A'; ?></span>
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Avg Literacy</span>
+                        <span class="fs-5 fw-bold text-dark"><?php echo $bLit ? "{$bLit}%" : 'N/A'; ?></span>
                     </div>
                 </div>
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-4 col-lg-2">
                     <div class="bg-light rounded-3 p-3 border text-center h-100">
-                        <i class="bi bi-house-door-fill text-info fs-4 d-block mb-1"></i>
-                        <span class="text-muted small fw-bold text-uppercase d-block">Households</span>
-                        <span class="fs-4 fw-bold text-dark"><?php echo number_format($bHouseholds); ?></span>
+                        <i class="bi bi-house-door-fill text-secondary fs-4 d-block mb-1"></i>
+                        <span class="text-muted extra-small fw-bold text-uppercase d-block">Households</span>
+                        <span class="fs-5 fw-bold text-dark"><?php echo number_format($bHouseholds); ?></span>
                     </div>
                 </div>
             </div>
@@ -1512,11 +2054,26 @@ require_once __DIR__ . '/header.php';
                         </div>
 
                         <!-- Card Action Link -->
-                        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
-                            <span class="small text-muted">Tier 1 PRI Body</span>
-                            <a href="<?php echo htmlspecialchars($pProfileUrl); ?>" class="btn btn-sm btn-primary fw-bold text-white rounded-pill px-3 py-1.5 shadow-sm">
-                                View Profile <i class="bi bi-arrow-right ms-1"></i>
-                            </a>
+                        <div class="mt-auto pt-3 border-top">
+                            <?php 
+                            $pWCount = $blockWardCountsByPanchayat[trim($p['panchayat_name'])] ?? 0;
+                            $pPCount = $blockPanchCountsByPanchayat[trim($p['panchayat_name'])] ?? 0;
+                            if ($pWCount > 0 || $pPCount > 0): ?>
+                                <div class="d-flex align-items-center gap-1.5 mb-2 extra-small flex-wrap">
+                                    <span class="badge bg-primary-subtle text-primary px-2 py-0.5 rounded-pill">
+                                        <i class="bi bi-grid-3x3-gap-fill me-1"></i><?php echo $pWCount; ?> Wards
+                                    </span>
+                                    <span class="badge bg-success-subtle text-success px-2 py-0.5 rounded-pill">
+                                        <i class="bi bi-award-fill me-1"></i><?php echo $pPCount; ?> Panch
+                                    </span>
+                                </div>
+                            <?php endif; ?>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small text-muted">Tier 1 PRI Body</span>
+                                <a href="<?php echo htmlspecialchars($pProfileUrl); ?>" class="btn btn-sm btn-primary fw-bold text-white rounded-pill px-3 py-1.5 shadow-sm">
+                                    View Profile <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1580,7 +2137,7 @@ require_once __DIR__ . '/header.php';
                                 </td>
                                 <td class="px-3">
                                     <strong class="text-dark d-block"><?php echo htmlspecialchars($bm['candidate_name']); ?></strong>
-                                    <small class="text-muted"><?php echo htmlspecialchars(($bm['gender'] ?? '') . ($bm['age'] ? ' • ' . $bm['age'] . ' yrs' : '')); ?></small>
+                                    <small class="text-muted"><?php echo htmlspecialchars($bm['gender'] ?? ''); ?></small>
                                 </td>
                                 <td class="px-3 text-muted small">
                                     <?php echo htmlspecialchars($bm['father_husband_name'] ?: '—'); ?>
@@ -1702,6 +2259,25 @@ require_once __DIR__ . '/header.php';
                         <span class="text-muted small fw-bold text-uppercase d-block">Avg Literacy</span>
                         <span class="fs-4 fw-bold text-dark"><?php echo $dLit ? "{$dLit}%" : "N/A"; ?></span>
                     </div>
+                </div>
+            </div>
+
+            <?php 
+            $distWards = $districtWardCounts[$selectedDistrictSlug] ?? 0;
+            $distPanch = $districtPanchCounts[$selectedDistrictSlug] ?? 0;
+            ?>
+            <div class="row g-2 mt-2 pt-2 border-top">
+                <div class="col-6 col-md-4">
+                    <span class="text-muted extra-small d-block">Elected Ward Members:</span>
+                    <strong class="text-primary small"><?php echo $distWards ? number_format($distWards) : '1,500+'; ?> Members</strong>
+                </div>
+                <div class="col-6 col-md-4">
+                    <span class="text-muted extra-small d-block">Gram Kutchery Panch:</span>
+                    <strong class="text-success small"><?php echo $distPanch ? number_format($distPanch) : '1,500+'; ?> Members</strong>
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="text-muted extra-small d-block">Panchayat Samiti Members:</span>
+                    <strong class="text-navy small"><?php echo number_format($districtSamitiMemberCounts[$selectedDistrictSlug] ?? 0); ?> Members</strong>
                 </div>
             </div>
         </div>
@@ -1904,44 +2480,64 @@ require_once __DIR__ . '/header.php';
         
         <!-- State Overview Highlights -->
         <div class="row g-3 g-lg-4 mb-4">
-            <div class="col-6 col-md-3">
-                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-primary">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white border-start border-4 border-primary">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-muted fw-bold text-uppercase">Districts</small>
-                        <i class="bi bi-building text-primary fs-4"></i>
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem;">Districts</small>
+                        <i class="bi bi-building text-primary fs-5"></i>
                     </div>
-                    <div class="fs-3 fw-bold text-navy">38</div>
-                    <small class="text-muted">Administrative Districts</small>
+                    <div class="fs-4 fw-bold text-navy">38</div>
+                    <small class="text-muted extra-small">Administrative</small>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-warning">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white border-start border-4 border-warning">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-muted fw-bold text-uppercase">CD Blocks</small>
-                        <i class="bi bi-geo-alt-fill text-warning fs-4"></i>
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem;">CD Blocks</small>
+                        <i class="bi bi-geo-alt-fill text-warning fs-5"></i>
                     </div>
-                    <div class="fs-3 fw-bold text-dark"><?php echo number_format($totalStateBlocks); ?></div>
-                    <small class="text-muted">Sub-District Units</small>
+                    <div class="fs-4 fw-bold text-dark"><?php echo number_format($totalStateBlocks); ?></div>
+                    <small class="text-muted extra-small">Sub-Districts</small>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-success">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white border-start border-4 border-success">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-muted fw-bold text-uppercase">Gram Panchayats</small>
-                        <i class="bi bi-building-check text-success fs-4"></i>
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem;">Panchayats</small>
+                        <i class="bi bi-building-check text-success fs-5"></i>
                     </div>
-                    <div class="fs-3 fw-bold text-success"><?php echo number_format($totalStatePanchayats); ?></div>
-                    <small class="text-muted">Local Village Bodies</small>
+                    <div class="fs-4 fw-bold text-success"><?php echo number_format($totalStatePanchayats); ?></div>
+                    <small class="text-muted extra-small">Village Bodies</small>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-info">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white border-start border-4 border-primary">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-muted fw-bold text-uppercase">Total Population</small>
-                        <i class="bi bi-people-fill text-info fs-4"></i>
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem;">Ward Members</small>
+                        <i class="bi bi-grid-3x3-gap-fill text-primary fs-5"></i>
                     </div>
-                    <div class="fs-3 fw-bold text-dark">10.41 Cr</div>
-                    <small class="text-muted">Census Demographics</small>
+                    <div class="fs-4 fw-bold text-primary"><?php echo number_format($totalStateWards); ?></div>
+                    <small class="text-muted extra-small">WIMC Heads</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white border-start border-4 border-info">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem;">Kutchery Panch</small>
+                        <i class="bi bi-award-fill text-info fs-5"></i>
+                    </div>
+                    <div class="fs-4 fw-bold text-dark"><?php echo number_format($totalStatePanch); ?></div>
+                    <small class="text-muted extra-small">Judicial Ward Reps</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white border-start border-4 border-secondary">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem;">Population</small>
+                        <i class="bi bi-people-fill text-secondary fs-5"></i>
+                    </div>
+                    <div class="fs-4 fw-bold text-dark">10.41 Cr</div>
+                    <small class="text-muted extra-small">Census Total</small>
                 </div>
             </div>
         </div>
@@ -2028,7 +2624,7 @@ require_once __DIR__ . '/header.php';
                             </div>
 
                             <!-- Micro-Metrics Dashboard -->
-                            <div class="row g-2 my-3">
+                            <div class="row g-2 my-2">
                                 <div class="col-4">
                                     <div class="metric-mini-box">
                                         <span class="text-muted d-block" style="font-size: 0.72rem;">CD Blocks</span>
@@ -2048,6 +2644,15 @@ require_once __DIR__ . '/header.php';
                                     </div>
                                 </div>
                             </div>
+                            <?php 
+                            $dWards = $districtWardCounts[$dSlug] ?? 0;
+                            $dPanch = $districtPanchCounts[$dSlug] ?? 0;
+                            if ($dWards > 0 || $dPanch > 0): ?>
+                                <div class="d-flex align-items-center justify-content-between extra-small bg-light rounded-3 px-2.5 py-1.5 mb-2 border">
+                                    <span class="text-muted"><i class="bi bi-grid-3x3-gap-fill text-primary me-1"></i><strong><?php echo number_format($dWards); ?></strong> Wards</span>
+                                    <span class="text-muted"><i class="bi bi-award-fill text-success me-1"></i><strong><?php echo number_format($dPanch); ?></strong> Panch</span>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                         <!-- Action Links -->

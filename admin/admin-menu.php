@@ -78,6 +78,14 @@ if ($db_menu) {
             <i class="fas fa-people-roof text-danger"></i> <span>Samiti Members</span>
             <span class="badge rounded-pill bg-danger text-white">8.7K</span>
         </a>
+        <a href="ward-members.php" class="nav-link-custom <?php echo in_array($current_page, ['ward-members.php', 'ward-member.php']) ? 'active' : ''; ?>" title="Gram Panchayat Ward Members Directory 2021-2026 (101,075 Members)">
+            <i class="fas fa-house-user text-warning"></i> <span>Ward Members</span>
+            <span class="badge rounded-pill bg-warning text-dark">101K</span>
+        </a>
+        <a href="panch-members.php" class="nav-link-custom <?php echo in_array($current_page, ['panch-members.php', 'panch-member.php']) ? 'active' : ''; ?>" title="Gram Kutchery Panch Directory 2021-2026 (96,938 Members)">
+            <i class="fas fa-scale-unbalanced text-info"></i> <span>Panch Members</span>
+            <span class="badge rounded-pill bg-info text-dark">97K</span>
+        </a>
         <a href="zila-parishad.php" class="nav-link-custom <?php echo ($current_page == 'zila-parishad.php') ? 'active' : ''; ?>" title="Zila Parishad Members & Chiefs">
             <i class="fas fa-building-columns text-primary"></i> <span>Zila Parishad</span>
         </a>

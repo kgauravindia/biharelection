@@ -456,28 +456,109 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 
-    <!-- Active 2026 Election Notice for Teachers -->
-    <div class="card border-0 rounded-4 shadow-sm mb-5 text-white overflow-hidden" style="background: linear-gradient(135deg, #065f46 0%, #059669 50%, #047857 100%);">
-        <div class="p-4 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
-            <div class="d-flex align-items-start gap-3">
-                <div class="rounded-circle bg-white text-success d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 50px; height: 50px; font-size: 1.5rem;">
-                    <i class="bi bi-book-half"></i>
-                </div>
-                <div>
-                    <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
-                        <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">2026 द्विवार्षिक चुनाव</span>
-                        <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">गजट: TCGCGajat2026</span>
+    <!-- Active 2026 Election Notice & Official Poll Turnout for Teachers (Hindi) -->
+    <div class="card border-0 rounded-4 shadow-sm mb-5 text-white overflow-hidden" style="background: linear-gradient(135deg, #064e3b 0%, #059669 50%, #047857 100%);">
+        <div class="p-4">
+            <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-3 pb-3 border-bottom border-white border-opacity-15">
+                <div class="d-flex align-items-start gap-3">
+                    <div class="rounded-circle bg-white text-success d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                        <i class="bi bi-book-half"></i>
                     </div>
-                    <h4 class="fw-extrabold text-white mb-1">4 शिक्षक सीटों पर चुनाव प्रक्रिया जारी</h4>
-                    <p class="text-white-50 mb-0 small" style="max-width: 820px;">
-                        <strong>पटना</strong>, <strong>तिरहुत</strong>, <strong>दरभंगा</strong> एवं <strong>सारण</strong> शिक्षक निर्वाचन क्षेत्रों में कार्यकाल समाप्त होने के कारण चुनाव जारी है। मतदान <strong>23 अक्टूबर 2026</strong> और मतगणना <strong>27 अक्टूबर 2026</strong> को होगी।
-                    </p>
+                    <div>
+                        <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                            <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">2026 द्विवार्षिक चुनाव</span>
+                            <span class="badge bg-success text-white fw-bold px-2.5 py-1 rounded-pill">आधिकारिक अंतिम मतदान: 82.85%</span>
+                            <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">गजट: TCGCGajat2026</span>
+                        </div>
+                        <h4 class="fw-extrabold text-white mb-1">4 शिक्षक निर्वाचन क्षेत्रों का आधिकारिक मतदान प्रतिशत व परिणाम बुलेटिन</h4>
+                        <p class="text-white-50 mb-0 small" style="max-width: 820px;">
+                            मुख्य निर्वाचन पदाधिकारी (CEO) बिहार की आधिकारिक रिपोर्ट के अनुसार 335 मतदान केंद्रों पर मतदान संपन्न। कुल पंजीकृत शिक्षक मतदाता: <strong>40,253</strong> (पुरुष: 30,677 | महिला: 9,573 | थर्ड जेंडर: 3)। चारों सीटों पर परिणाम घोषित हो चुके हैं।
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-warning fw-bold text-dark rounded-pill px-4 py-2.5 shadow-sm text-nowrap d-inline-flex align-items-center gap-2">
+                        <span>लाइव परिणाम हब देखें</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
-            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-warning fw-bold text-dark rounded-pill px-4 py-2.5 shadow-sm text-nowrap d-inline-flex align-items-center gap-2">
-                <span>संपूर्ण चुनाव विवरण देखें</span>
-                <i class="bi bi-arrow-right"></i>
-            </a>
+
+            <!-- 4 Seats Poll Metrics Grid (Hindi) -->
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">सारण शिक्षक</span>
+                            <span class="badge bg-success text-white extra-small">निर्दलीय विजयी</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">89.05%</span>
+                            <span class="text-white-50 extra-small">(राज्य में रिकॉर्ड)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">मतदाता: 10,748 &bull; 98 बूथ &bull; 18 प्रत्याशी</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">निर्वाचित: राहुल राज (निर्दलीय)</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">दरभंगा शिक्षक</span>
+                            <span class="badge bg-success text-white extra-small">जन सुराज विजयी</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">85.87%</span>
+                            <span class="text-white-50 extra-small">(भारी मतदान)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">मतदाता: 9,026 &bull; 99 बूथ &bull; 13 प्रत्याशी</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">निर्वाचित: डॉ. सुरेश प्रसाद राय (JSP)</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">तिरहुत शिक्षक</span>
+                            <span class="badge bg-success text-white extra-small">भाजपा विजयी</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">82.99%</span>
+                            <span class="text-white-50 extra-small">(भारी मतदान)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">मतदाता: 8,760 &bull; 58 बूथ &bull; 11 प्रत्याशी</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">निर्वाचित: डॉ. नरेंद्र प्रसाद सिंह (भाजपा)</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">पटना शिक्षक</span>
+                            <span class="badge bg-success text-white extra-small">राजद विजयी</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">74.75%</span>
+                            <span class="text-white-50 extra-small">(बड़ा उलटफेर)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">मतदाता: 11,719 &bull; 80 बूथ &bull; 18 प्रत्याशी</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">निर्वाचित: डॉ. संजीव कुमार (राजद)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Official PDF Citations (Hindi) -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-3 mt-3 border-top border-white border-opacity-10 extra-small">
+                <span class="text-white-50">
+                    <i class="bi bi-file-earmark-check-fill text-warning me-1"></i> मुख्य निर्वाचन पदाधिकारी (CEO), बिहार के आधिकारिक दस्तावेज:
+                </span>
+                <div class="d-flex gap-2">
+                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/VTR/Final%20VTR%20in%20TC%20GC%20Election%202026.pdf" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none fw-semibold">
+                        <i class="bi bi-file-pdf text-danger me-0.5"></i> अंतिम मतदान रिपोर्ट (Final VTR PDF)
+                    </a>
+                    <span class="text-white-50">&bull;</span>
+                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/PressRelease2026/Press%20Note%2023-10-2026.pdf" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none fw-semibold">
+                        <i class="bi bi-file-earmark-text text-info me-0.5"></i> प्रेस विज्ञप्ति 23-10-2026 (PDF)
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -357,7 +357,7 @@ require_once __DIR__ . '/header.php';
                                         <td class="px-3">
                                             <strong class="text-navy d-block fs-6"><?php echo htmlspecialchars($m['candidate_name']); ?></strong>
                                             <small class="text-muted">
-                                                <?php echo htmlspecialchars(($m['gender'] ?? '') . ($m['age'] ? ' • ' . $m['age'] . ' yrs' : '')); ?>
+                                                <?php echo htmlspecialchars($m['gender'] ?? ''); ?>
                                             </small>
                                         </td>
                                         <td class="px-3 text-muted small">

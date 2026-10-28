@@ -456,28 +456,109 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 
-    <!-- Active 2026 Election Notice for Graduates -->
+    <!-- Active 2026 Election Notice & Official Poll Turnout for Graduates (Hindi) -->
     <div class="card border-0 rounded-4 shadow-sm mb-5 text-white overflow-hidden" style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #1d4ed8 100%);">
-        <div class="p-4 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
-            <div class="d-flex align-items-start gap-3">
-                <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 50px; height: 50px; font-size: 1.5rem;">
-                    <i class="bi bi-award-fill"></i>
-                </div>
-                <div>
-                    <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
-                        <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">2026 द्विवार्षिक चुनाव</span>
-                        <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">गजट: TCGCGajat2026</span>
+        <div class="p-4">
+            <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-3 pb-3 border-bottom border-white border-opacity-15">
+                <div class="d-flex align-items-start gap-3">
+                    <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                        <i class="bi bi-award-fill"></i>
                     </div>
-                    <h4 class="fw-extrabold text-white mb-1">4 स्नातक सीटों पर चुनाव प्रक्रिया जारी</h4>
-                    <p class="text-white-50 mb-0 small" style="max-width: 820px;">
-                        <strong>पटना</strong>, <strong>तिरहुत</strong>, <strong>दरभंगा</strong> एवं <strong>कोसी</strong> स्नातक निर्वाचन क्षेत्रों में वर्तमान सदस्यों का कार्यकाल पूर्ण होने के कारण चुनाव जारी है। मतदान <strong>23 अक्टूबर 2026</strong> को और मतगणना <strong>27 अक्टूबर 2026</strong> को होगी।
-                    </p>
+                    <div>
+                        <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                            <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">2026 द्विवार्षिक चुनाव</span>
+                            <span class="badge bg-success text-white fw-bold px-2.5 py-1 rounded-pill">आधिकारिक अंतिम मतदान: 53.42%</span>
+                            <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">गजट: TCGCGajat2026</span>
+                        </div>
+                        <h4 class="fw-extrabold text-white mb-1">4 स्नातक निर्वाचन क्षेत्रों का आधिकारिक मतदान प्रतिशत व परिणाम बुलेटिन</h4>
+                        <p class="text-white-50 mb-0 small" style="max-width: 820px;">
+                            मुख्य निर्वाचन पदाधिकारी (CEO) बिहार द्वारा जारी आधिकारिक अंतिम रिपोर्ट (Final VTR) के अनुसार कुल 598 मतदान केंद्रों पर मतदान संपन्न। कुल पंजीकृत स्नातक मतदाता: <strong>4,92,594</strong> (पुरुष: 3,55,522 | महिला: 1,37,038 | थर्ड जेंडर: 34)। कुल 90 उम्मीदवार मैदान में थे।
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-warning fw-bold text-dark rounded-pill px-4 py-2.5 shadow-sm text-nowrap d-inline-flex align-items-center gap-2">
+                        <span>लाइव परिणाम हब देखें</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
-            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-warning fw-bold text-dark rounded-pill px-4 py-2.5 shadow-sm text-nowrap d-inline-flex align-items-center gap-2">
-                <span>संपूर्ण चुनाव विवरण देखें</span>
-                <i class="bi bi-arrow-right"></i>
-            </a>
+
+            <!-- 4 Seats Poll Metrics Grid (Hindi) -->
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">पटना स्नातक</span>
+                            <span class="badge bg-success text-white extra-small">जदयू विजयी</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">57.56%</span>
+                            <span class="text-white-50 extra-small">(स्नातकों में सर्वाधिक)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">मतदाता: 87,583 &bull; 134 बूथ &bull; 18 प्रत्याशी</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">निर्वाचित: नीरज कुमार (जदयू)</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">तिरहुत स्नातक</span>
+                            <span class="badge bg-warning text-dark extra-small blink-anim">निर्दलीय आगे</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-white">48.51%</span>
+                            <span class="text-white-50 extra-small">(स्नातकों में न्यूनतम)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">मतदाता: 1,43,988 &bull; 145 बूथ &bull; 17 प्रत्याशी</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">बढ़त: वंशीधर ब्रजवासी (निर्दलीय)</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">दरभंगा स्नातक</span>
+                            <span class="badge bg-success text-white extra-small">भाजपा विजयी</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">54.73%</span>
+                            <span class="text-white-50 extra-small">(मजबूत मतदान)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">मतदाता: 1,26,951 &bull; 138 बूथ &bull; 40 प्रत्याशी</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">निर्वाचित: डॉ. सर्वेश कुमार (भाजपा)</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">कोसी स्नातक</span>
+                            <span class="badge bg-success text-white extra-small">भाजपा विजयी</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">54.73%</span>
+                            <span class="text-white-50 extra-small">(मजबूत मतदान)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">मतदाता: 1,34,072 &bull; 181 बूथ &bull; 15 प्रत्याशी</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">निर्वाचित: डॉ. एनके यादव (भाजपा)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Official PDF Citations (Hindi) -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-3 mt-3 border-top border-white border-opacity-10 extra-small">
+                <span class="text-white-50">
+                    <i class="bi bi-file-earmark-check-fill text-warning me-1"></i> मुख्य निर्वाचन पदाधिकारी (CEO), बिहार के आधिकारिक दस्तावेज:
+                </span>
+                <div class="d-flex gap-2">
+                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/VTR/Final%20VTR%20in%20TC%20GC%20Election%202026.pdf" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none fw-semibold">
+                        <i class="bi bi-file-pdf text-danger me-0.5"></i> अंतिम मतदान रिपोर्ट (Final VTR PDF)
+                    </a>
+                    <span class="text-white-50">&bull;</span>
+                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/PressRelease2026/Press%20Note%2023-10-2026.pdf" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none fw-semibold">
+                        <i class="bi bi-file-earmark-text text-info me-0.5"></i> प्रेस विज्ञप्ति 23-10-2026 (PDF)
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

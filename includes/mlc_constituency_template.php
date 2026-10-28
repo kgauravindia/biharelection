@@ -42,6 +42,131 @@ if (!empty($cData['candidates'])) {
 }
 $activeNav = 'mlc';
 
+// Official 2026 Biennial Election Poll & Turnout Data (CEO Bihar Final VTR & Press Note 23-10-2026)
+$officialPollStats = [
+    'patna-graduate-constituency' => [
+        'turnout_final' => 57.56,
+        'turnout_interim_4pm' => 36.19,
+        'candidates_count' => 18,
+        'electors' => ['male' => 66462, 'female' => 21117, 'third' => 4, 'total' => 87583],
+        'booths_total' => 134,
+        'result_status' => 'DECLARED WON (विजेता घोषित)',
+        'result_badge' => 'bg-success text-white',
+        'winner_name' => 'Neeraj Kumar',
+        'winner_name_hi' => 'नीरज कुमार',
+        'party' => 'JD(U)',
+        'alliance' => 'NDA',
+        'verdict' => 'Retained seat for 4th consecutive term, defeating Dilip Patel (RJD) & Dr. Anuj Singh (Jan Suraaj supported).',
+        'verdict_hi' => 'लगातार चौथी बार ऐतिहासिक जीत दर्ज की; राजद के दिलीप पटेल और जन सुराज समर्थित अनुज सिंह को पछाड़ा।'
+    ],
+    'tirhut-graduate-constituency' => [
+        'turnout_final' => 48.51,
+        'turnout_interim_4pm' => 42.15,
+        'candidates_count' => 17,
+        'electors' => ['male' => 97998, 'female' => 45970, 'third' => 20, 'total' => 143988],
+        'booths_total' => 145,
+        'result_status' => 'COUNTING IN PROGRESS (अंतिम कोटा चक्र)',
+        'result_badge' => 'bg-warning text-dark blink-anim',
+        'winner_name' => 'Banshidhar Brajwasi',
+        'winner_name_hi' => 'वंशीधर ब्रजवासी',
+        'party' => 'IND',
+        'alliance' => 'Independent (Incumbent)',
+        'verdict' => 'Sitting MLC leading towards statutory quota over Abhishek Jha (JD[U]) and Dr. Rashmi Gautam (RJD).',
+        'verdict_hi' => 'निवर्तमान निर्दलीय एमएलसी वंशीधर ब्रजवासी जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम के खिलाफ अंतिम कोटा चक्र में मजबूत बढ़त पर।'
+    ],
+    'darbhanga-graduate-constituency' => [
+        'turnout_final' => 54.73,
+        'turnout_interim_4pm' => 42.00,
+        'candidates_count' => 40,
+        'electors' => ['male' => 90006, 'female' => 36938, 'third' => 7, 'total' => 126951],
+        'booths_total' => 138,
+        'result_status' => 'DECLARED WON (विजेता घोषित)',
+        'result_badge' => 'bg-success text-white',
+        'winner_name' => 'Dr. Sarvesh Kumar',
+        'winner_name_hi' => 'डॉ. सर्वेश कुमार',
+        'party' => 'BJP',
+        'alliance' => 'NDA',
+        'verdict' => 'Retained seat by 237 votes margin over challenger Anil Kumar Jha (RJD) after exhaustive elimination rounds.',
+        'verdict_hi' => 'कांटे के मुकाबले में राजद के अनिल कुमार झा को 237 मतों से हराकर दरभंगा स्नातक सीट जीती।'
+    ],
+    'kosi-graduate-constituency' => [
+        'turnout_final' => 54.73,
+        'turnout_interim_4pm' => 52.51,
+        'candidates_count' => 15,
+        'electors' => ['male' => 101056, 'female' => 33013, 'third' => 3, 'total' => 134072],
+        'booths_total' => 181,
+        'result_status' => 'DECLARED WON (विजेता घोषित)',
+        'result_badge' => 'bg-success text-white',
+        'winner_name' => 'Dr. N.K. Yadav',
+        'winner_name_hi' => 'डॉ. एनके यादव',
+        'party' => 'BJP',
+        'alliance' => 'NDA',
+        'verdict' => 'Secured hat-trick 3rd consecutive term victory across 14 districts of Kosi, Purnia, Bhagalpur, and Munger.',
+        'verdict_hi' => 'लगातार तीसरी बार हैट्रिक जीत दर्ज की; राजद के नितेश कुमार और जन सुराज के रजनीश रंजन को पराजित किया।'
+    ],
+    'patna-teacher-constituency' => [
+        'turnout_final' => 74.75,
+        'turnout_interim_4pm' => 56.89,
+        'candidates_count' => 18,
+        'electors' => ['male' => 8413, 'female' => 3306, 'third' => 0, 'total' => 11719],
+        'booths_total' => 80,
+        'result_status' => 'DECLARED WON (विजेता घोषित)',
+        'result_badge' => 'bg-success text-white',
+        'winner_name' => 'Dr. Sanjeev Kumar',
+        'winner_name_hi' => 'डॉ. संजीव कुमार (सिंह)',
+        'party' => 'RJD',
+        'alliance' => 'Mahagathbandhan',
+        'verdict' => 'Historic upset victory by 800+ votes, unseating 5-term BJP veteran Nawal Kishore Yadav.',
+        'verdict_hi' => 'बड़ा उलटफेर: राजद के डॉ. संजीव कुमार ने 5 बार के भाजपा एमएलसी नवल किशोर यादव को 800+ मतों से हराकर जीत हासिल की।'
+    ],
+    'tirhut-teacher-constituency' => [
+        'turnout_final' => 82.99,
+        'turnout_interim_4pm' => 78.10,
+        'candidates_count' => 11,
+        'electors' => ['male' => 6507, 'female' => 2250, 'third' => 3, 'total' => 8760],
+        'booths_total' => 58,
+        'result_status' => 'DECLARED WON (विजेता घोषित)',
+        'result_badge' => 'bg-success text-white',
+        'winner_name' => 'Dr. Narendra Prasad Singh',
+        'winner_name_hi' => 'डॉ. नरेंद्र प्रसाद सिंह',
+        'party' => 'BJP',
+        'alliance' => 'NDA',
+        'verdict' => 'Declared elected by 594 votes margin (2,945 votes) over Independent Bhushan Jha (2,351 votes).',
+        'verdict_hi' => 'भाजपा के डॉ. नरेंद्र प्रसाद सिंह 594 मतों से विजयी घोषित (निर्दलीय भूषण झा को हराया)।'
+    ],
+    'darbhanga-teacher-constituency' => [
+        'turnout_final' => 85.87,
+        'turnout_interim_4pm' => 79.00,
+        'candidates_count' => 13,
+        'electors' => ['male' => 6958, 'female' => 2068, 'third' => 0, 'total' => 9026],
+        'booths_total' => 99,
+        'result_status' => 'DECLARED WON (विजेता घोषित)',
+        'result_badge' => 'bg-success text-white',
+        'winner_name' => 'Dr. Suresh Prasad Rai',
+        'winner_name_hi' => 'डॉ. सुरेश प्रसाद राय',
+        'party' => 'Jan Suraaj',
+        'alliance' => 'Jan Suraaj Party',
+        'verdict' => 'Landmark first legislative council win for Jan Suraaj Party, defeating Congress heavyweight Dr. Madan Mohan Jha.',
+        'verdict_hi' => 'जन सुराज पार्टी की पहली ऐतिहासिक जीत: 4 बार के एमएलसी व पूर्व मंत्री डॉ. मदन मोहन झा को पराजित किया।'
+    ],
+    'saran-teacher-constituency' => [
+        'turnout_final' => 89.05,
+        'turnout_interim_4pm' => 87.16,
+        'candidates_count' => 18,
+        'electors' => ['male' => 8799, 'female' => 1949, 'third' => 0, 'total' => 10748],
+        'booths_total' => 98,
+        'result_status' => 'DECLARED WON (विजेता घोषित)',
+        'result_badge' => 'bg-success text-white',
+        'winner_name' => 'Rahul Raj',
+        'winner_name_hi' => 'राहुल राज',
+        'party' => 'IND',
+        'alliance' => 'Independent (Rebel)',
+        'verdict' => 'Independent Rahul Raj secured historic victory by 800+ votes in state-record 89.05% turnout poll, defeating Afaq Ahmad & Anand Pushkar.',
+        'verdict_hi' => 'राज्य में रिकॉर्ड 89.05% मतदान के बीच निर्दलीय राहुल राज 800+ मतों से विजयी; अफाक अहमद व आनंद पुष्कर पराजित।'
+    ]
+];
+$currPoll = $officialPollStats[$cData['slug']] ?? null;
+
 // All 8 constituencies for inter-linking
 $allConstituencies = getMlcAllConstituenciesData();
 
@@ -434,6 +559,120 @@ require_once __DIR__ . '/../header.php';
             </div>
         </div>
     </div>
+
+    <?php if ($currPoll): ?>
+    <!-- Official 2026 Poll Turnout, Electorate & Election Status (CEO Bihar Final VTR & Press Note) -->
+    <div class="card border-0 rounded-4 shadow-sm mb-5 overflow-hidden" style="border: 2px solid #cbd5e1;">
+        <div class="p-4" style="background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 50%, #0f172a 100%); color: #ffffff;">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill text-uppercase">
+                        <i class="bi bi-patch-check-fill text-dark me-1"></i> CEO Bihar Official Turnout Report
+                    </span>
+                    <span class="badge <?php echo $currPoll['result_badge']; ?> fw-bold px-3 py-1.5 rounded-pill">
+                        <?php echo $currPoll['result_status']; ?>
+                    </span>
+                    <span class="badge bg-white bg-opacity-20 text-white fw-semibold px-2.5 py-1 rounded-pill extra-small">
+                        Gazette: TCGCGajat2026
+                    </span>
+                </div>
+                <div class="text-white-50 extra-small">
+                    Source: CEO Bihar Final VTR &amp; Press Note (23-10-2026)
+                </div>
+            </div>
+
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-4 text-center text-lg-start border-end-lg border-white border-opacity-10 pe-lg-4">
+                    <span class="text-white-50 extra-small fw-bold text-uppercase d-block mb-1">
+                        Final Official Voter Turnout (मतदान प्रतिशत)
+                    </span>
+                    <div class="display-4 fw-extrabold text-warning mb-1">
+                        <?php echo number_format($currPoll['turnout_final'], 2); ?>%
+                    </div>
+                    <div class="text-white-50 small mb-2">
+                        <span class="badge bg-success bg-opacity-25 text-white border border-success border-opacity-50 px-2 py-0.5 rounded-pill extra-small me-1">
+                            Final VTR
+                        </span>
+                        Interim 4 PM Poll: <?php echo number_format($currPoll['turnout_interim_4pm'], 2); ?>%
+                    </div>
+                    <div class="progress bg-white bg-opacity-20 rounded-pill" style="height: 10px;">
+                        <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?php echo min(100, $currPoll['turnout_final']); ?>%;"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 border-end-lg border-white border-opacity-10 px-lg-4">
+                    <span class="text-white-50 extra-small fw-bold text-uppercase d-block mb-2">
+                        Official Gender-wise Electorate (मतदाता सांख्यिकी)
+                    </span>
+                    <div class="row g-2 mb-2 text-center text-sm-start">
+                        <div class="col-6 col-sm-3">
+                            <div class="p-2 rounded bg-white bg-opacity-10">
+                                <span class="d-block extra-small text-white-50">Male (पुरुष)</span>
+                                <strong class="fs-6 text-white"><?php echo number_format($currPoll['electors']['male']); ?></strong>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div class="p-2 rounded bg-white bg-opacity-10">
+                                <span class="d-block extra-small text-white-50">Female (महिला)</span>
+                                <strong class="fs-6 text-white"><?php echo number_format($currPoll['electors']['female']); ?></strong>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div class="p-2 rounded bg-white bg-opacity-10">
+                                <span class="d-block extra-small text-white-50">Third Gender</span>
+                                <strong class="fs-6 text-white"><?php echo number_format($currPoll['electors']['third']); ?></strong>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div class="p-2 rounded bg-warning bg-opacity-25 border border-warning border-opacity-50">
+                                <span class="d-block extra-small text-warning fw-bold">Total (कुल)</span>
+                                <strong class="fs-6 text-warning"><?php echo number_format($currPoll['electors']['total']); ?></strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 text-white-50 extra-small">
+                        <span><i class="bi bi-person-lines-fill text-warning me-1"></i><strong><?php echo $currPoll['candidates_count']; ?> Candidates</strong> Nominated</span>
+                        <span>&bull;</span>
+                        <span><i class="bi bi-geo-alt-fill text-warning me-1"></i><strong><?php echo $currPoll['booths_total']; ?> Polling Booths</strong></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 ps-lg-4">
+                    <span class="text-white-50 extra-small fw-bold text-uppercase d-block mb-1">
+                        Elected MLC / Verdict Status
+                    </span>
+                    <h5 class="fw-bold text-white mb-0.5">
+                        <?php echo htmlspecialchars($currPoll['winner_name']); ?>
+                    </h5>
+                    <div class="text-warning small mb-1">
+                        <?php echo htmlspecialchars($currPoll['winner_name_hi']); ?> 
+                        <span class="badge bg-primary text-white rounded-pill extra-small ms-1"><?php echo htmlspecialchars($currPoll['party']); ?></span>
+                    </div>
+                    <p class="extra-small text-white-50 mb-3" style="line-height: 1.4;">
+                        <?php echo htmlspecialchars($currPoll['verdict']); ?>
+                    </p>
+                    <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo str_replace('-constituency', '', $cData['slug']); ?>" class="btn btn-warning btn-sm fw-bold text-dark rounded-pill px-3 py-1.5 d-inline-flex align-items-center gap-1.5 shadow-sm">
+                        <span>View Live Results Table</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-light px-4 py-2.5 d-flex flex-wrap align-items-center justify-content-between gap-2 border-top small">
+            <div class="text-muted extra-small">
+                <i class="bi bi-shield-check text-success me-1"></i> Data officially certified under Form 21C / 21D &amp; CEO Bihar Statistical Reports.
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/VTR/Final%20VTR%20in%20TC%20GC%20Election%202026.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline-danger btn-sm rounded-pill py-0.5 px-2.5 extra-small fw-semibold d-inline-flex align-items-center gap-1">
+                    <i class="bi bi-file-earmark-pdf-fill"></i> Final VTR PDF
+                </a>
+                <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/PressRelease2026/Press%20Note%2023-10-2026.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm rounded-pill py-0.5 px-2.5 extra-small fw-semibold d-inline-flex align-items-center gap-1">
+                    <i class="bi bi-newspaper"></i> Press Note 23-10-2026 PDF
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <!-- Returning Officer & Covered Districts Banner -->
     <div class="card border-0 rounded-4 shadow-sm mb-5 p-4 bg-white">

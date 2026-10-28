@@ -235,28 +235,109 @@ require_once __DIR__ . '/header.php';
 <main class="container my-4 my-lg-5">
     <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-4'); ?>
 
-    <!-- Active 2026 Election Notice for Teachers -->
-    <div class="card border-0 rounded-4 shadow-sm mb-5 text-white overflow-hidden" style="background: linear-gradient(135deg, #065f46 0%, #059669 50%, #047857 100%);">
-        <div class="p-4 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
-            <div class="d-flex align-items-start gap-3">
-                <div class="rounded-circle bg-white text-success d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 50px; height: 50px; font-size: 1.5rem;">
-                    <i class="bi bi-book-half"></i>
-                </div>
-                <div>
-                    <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
-                        <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">2026 Biennial Election</span>
-                        <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">Gazette: TCGCGajat2026</span>
+    <!-- Active 2026 Election Notice & Official Poll Turnout for Teachers -->
+    <div class="card border-0 rounded-4 shadow-sm mb-5 text-white overflow-hidden" style="background: linear-gradient(135deg, #064e3b 0%, #059669 50%, #047857 100%);">
+        <div class="p-4">
+            <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-3 pb-3 border-bottom border-white border-opacity-15">
+                <div class="d-flex align-items-start gap-3">
+                    <div class="rounded-circle bg-white text-success d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                        <i class="bi bi-book-half"></i>
                     </div>
-                    <h4 class="fw-extrabold text-white mb-1">4 Teachers' Constituencies Undergoing Polls in 2026</h4>
-                    <p class="text-white-50 mb-0 small" style="max-width: 820px;">
-                        Elections are currently underway for <strong>Patna</strong>, <strong>Tirhut</strong>, <strong>Darbhanga</strong>, and <strong>Saran</strong> Teachers' Constituencies. Polling concluded on <strong>23 October 2026</strong>, Counting begins on <strong>27 October 2026 at 08:00 AM IST</strong>.
-                    </p>
+                    <div>
+                        <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                            <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">2026 Biennial Election</span>
+                            <span class="badge bg-success text-white fw-bold px-2.5 py-1 rounded-pill">Official Turnout Declared: 82.85%</span>
+                            <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">Gazette: TCGCGajat2026</span>
+                        </div>
+                        <h4 class="fw-extrabold text-white mb-1">4 Teachers' Constituencies Official Poll Turnout &amp; Declared Winners</h4>
+                        <p class="text-white-50 mb-0 small" style="max-width: 820px;">
+                            Official polling concluded on <strong>23 October 2026</strong> across 335 polling booths. Total registered teacher electorate: <strong>40,253</strong> (Male: 30,677 | Female: 9,573 | Third: 3). Final official voting turnout: <strong>82.85%</strong>. All 4 seats declared.
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-warning fw-bold text-dark rounded-pill px-4 py-2.5 shadow-sm text-nowrap d-inline-flex align-items-center gap-2">
+                        <span>View Live Results Hub</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
-            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-warning fw-bold text-dark rounded-pill px-4 py-2.5 shadow-sm text-nowrap d-inline-flex align-items-center gap-2">
-                <span>View Full Election Hub</span>
-                <i class="bi bi-arrow-right"></i>
-            </a>
+
+            <!-- 4 Seats Poll Metrics Grid -->
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">Saran Teachers</span>
+                            <span class="badge bg-success text-white extra-small">IND WON</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">89.05%</span>
+                            <span class="text-white-50 extra-small">(State Record)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">Electorate: 10,748 &bull; 98 Booths &bull; 18 Candidates</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">Elected: Rahul Raj (IND)</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">Darbhanga Teachers</span>
+                            <span class="badge bg-success text-white extra-small">JAN SURAAJ WON</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">85.87%</span>
+                            <span class="text-white-50 extra-small">(High Turnout)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">Electorate: 9,026 &bull; 99 Booths &bull; 13 Candidates</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">Elected: Dr. Suresh Prasad Rai (JSP)</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">Tirhut Teachers</span>
+                            <span class="badge bg-success text-white extra-small">BJP WON</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">82.99%</span>
+                            <span class="text-white-50 extra-small">(High Turnout)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">Electorate: 8,760 &bull; 58 Booths &bull; 11 Candidates</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">Elected: Dr. Narendra Prasad Singh (BJP)</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-white-50 extra-small fw-bold text-uppercase">Patna Teachers</span>
+                            <span class="badge bg-success text-white extra-small">RJD WON</span>
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fs-4 fw-extrabold text-warning">74.75%</span>
+                            <span class="text-white-50 extra-small">(Upset Win)</span>
+                        </div>
+                        <small class="text-white-50 d-block extra-small mb-1">Electorate: 11,719 &bull; 80 Booths &bull; 18 Candidates</small>
+                        <div class="fw-semibold text-white extra-small text-truncate">Elected: Dr. Sanjeev Kumar (RJD)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Official PDF Citations -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-3 mt-3 border-top border-white border-opacity-10 extra-small">
+                <span class="text-white-50">
+                    <i class="bi bi-file-earmark-check-fill text-warning me-1"></i> Official Documents from Chief Electoral Officer (CEO), Bihar:
+                </span>
+                <div class="d-flex gap-2">
+                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/VTR/Final%20VTR%20in%20TC%20GC%20Election%202026.pdf" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none fw-semibold">
+                        <i class="bi bi-file-pdf text-danger me-0.5"></i> Final VTR Report (PDF)
+                    </a>
+                    <span class="text-white-50">&bull;</span>
+                    <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/PressRelease2026/Press%20Note%2023-10-2026.pdf" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none fw-semibold">
+                        <i class="bi bi-file-earmark-text text-info me-0.5"></i> Press Note 23-10-2026 (PDF)
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

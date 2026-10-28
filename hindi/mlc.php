@@ -659,9 +659,8 @@ require_once __DIR__ . '/includes/header.php';
                     $otherSample = array_slice($otherMlcs, 0, 5);
                     foreach ($otherSample as $om):
                         $omId = $om['id'] ?? $om['sr_no'];
-                        $omName = $om['name'] ?? '';
-                        $omNameHi = $om['name_hi'] ?? '';
-                        $omConst = $om['constituency'] ?? '';
+                        $omName = $om['name_hi'] ?? $om['name'] ?? '';
+                        $omConst = $om['constituency_hi'] ?? $om['constituency'] ?? '';
                         $omParty = $om['party'] ?? '';
                         $omImg = $om['image'] ?? '';
                     ?>
@@ -674,7 +673,7 @@ require_once __DIR__ . '/includes/header.php';
                                 </div>
                             <?php endif; ?>
                             <div class="flex-grow-1 text-truncate">
-                                <div class="fw-bold text-navy text-truncate small"><?php echo htmlspecialchars($omNameHi ?: $omName); ?></div>
+                                <div class="fw-bold text-navy text-truncate small"><?php echo htmlspecialchars($omName); ?></div>
                                 <div class="text-muted extra-small text-truncate" style="font-size: 0.72rem;"><?php echo htmlspecialchars($omConst); ?> &bull; <?php echo htmlspecialchars($omParty); ?></div>
                             </div>
                             <i class="bi bi-chevron-right text-muted small"></i>
@@ -690,23 +689,23 @@ require_once __DIR__ . '/includes/header.php';
 
 <?php else: ?>
 <!-- ========================================================================= -->
-<!-- ALL 75 MLCs DIRECTORY ROSTER TABLE VIEW (HINDI)                          -->
+<!-- ALL 75 MLCs DIRECTORY ROSTER TABLE VIEW (HINDI)                           -->
 <!-- ========================================================================= -->
 <!-- Hero Banner -->
 <section class="hero-section py-4 py-lg-5">
     <div class="container text-start">
         <div class="d-flex flex-wrap gap-2 mb-3">
             <span class="badge bg-info text-dark fw-bold px-3 py-2 rounded-pill shadow-sm">
-                📜 बिहार विधान परिषद (Legislative Council)
+                📜 बिहार विधान परिषद (Bihar Legislative Council)
             </span>
             <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
-                75 कुल सदस्य (MLCs)
+                75 कुल विधान पार्षद
             </span>
             <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill blink-anim shadow-sm">
-                <i class="bi bi-broadcast me-1"></i> 8 सीटों पर 2026 द्विवार्षिक चुनाव सक्रिय
+                <i class="bi bi-broadcast me-1"></i> 8 सीटों पर द्विवार्षिक चुनाव 2026 संपन्न
             </span>
             <span class="badge bg-warning bg-opacity-25 text-warning fw-bold px-3 py-2 rounded-pill">
-                स्थायी उच्च सदन
+                उच्च सदन (स्थाई सदन)
             </span>
         </div>
 
@@ -714,13 +713,13 @@ require_once __DIR__ . '/includes/header.php';
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb bg-white bg-opacity-10 px-3 py-2 rounded-pill mb-0 small border border-white border-opacity-10 d-inline-flex">
                 <li class="breadcrumb-item"><a href="<?php echo HINDI_BASE_URL; ?>" class="text-white-50 text-decoration-none">होम</a></li>
-                <li class="breadcrumb-item"><a href="<?php echo HINDI_BASE_URL; ?>representatives" class="text-white-50 text-decoration-none">प्रतिनिधि</a></li>
-                <li class="breadcrumb-item active text-warning fw-bold" aria-current="page">विधान परिषद (MLCs)</li>
+                <li class="breadcrumb-item"><a href="<?php echo HINDI_BASE_URL; ?>representatives" class="text-white-50 text-decoration-none">जनप्रतिनिधि</a></li>
+                <li class="breadcrumb-item active text-warning fw-bold" aria-current="page">विधान परिषद सदस्य (MLCs)</li>
             </ol>
         </nav>
 
         <h1 class="display-6 fw-extrabold text-white mb-2">
-            बिहार विधान परिषद (एमएलसी) डायरेक्टरी <br>
+            बिहार विधान परिषद सदस्य (MLCs) डायरेक्टरी <br>
             <span style="color: var(--accent-saffron);">75 सदस्यों की सूची एवं 2026 चुनाव विवरण</span>
         </h1>
         <p class="lead text-white-50 mb-4" style="font-size: 1.05rem; max-width: 850px;">
@@ -791,9 +790,9 @@ require_once __DIR__ . '/includes/header.php';
             'constituency' => 'Patna Graduates',
             'constituency_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
             'hub_slug' => 'patna-graduate-constituency',
-            'turnout' => 36.19,
-            'remark' => 'स्नातकों में सबसे कम',
-            'badge' => 'bg-danger text-white',
+            'turnout' => 57.56,
+            'remark' => 'स्नातकों में सर्वाधिक',
+            'badge' => 'bg-success text-white',
             'sitting_mlc' => 'नीरज कुमार',
             'party' => 'JD(U)',
             'term' => '16 नवंबर 2026'
@@ -804,8 +803,8 @@ require_once __DIR__ . '/includes/header.php';
             'constituency' => 'Tirhut Graduates',
             'constituency_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
             'hub_slug' => 'tirhut-graduate-constituency',
-            'turnout' => 42.15,
-            'remark' => 'सामान्य मतदान',
+            'turnout' => 48.51,
+            'remark' => 'स्नातकों में न्यूनतम',
             'badge' => 'bg-secondary text-white',
             'sitting_mlc' => 'वंशीधर ब्रजवासी',
             'party' => 'IND',
@@ -817,9 +816,9 @@ require_once __DIR__ . '/includes/header.php';
             'constituency' => 'Darbhanga Graduates',
             'constituency_hi' => 'दरभंगा स्नातक निर्वाचन क्षेत्र',
             'hub_slug' => 'darbhanga-graduate-constituency',
-            'turnout' => 42.00,
-            'remark' => 'सामान्य मतदान',
-            'badge' => 'bg-secondary text-white',
+            'turnout' => 54.73,
+            'remark' => 'मजबूत मतदान',
+            'badge' => 'bg-primary text-white',
             'sitting_mlc' => 'सर्वेश कुमार',
             'party' => 'BJP',
             'term' => '16 नवंबर 2026'
@@ -830,9 +829,9 @@ require_once __DIR__ . '/includes/header.php';
             'constituency' => 'Kosi Graduates',
             'constituency_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
             'hub_slug' => 'kosi-graduate-constituency',
-            'turnout' => 52.51,
-            'remark' => 'स्नातकों में सर्वाधिक वोटिंग',
-            'badge' => 'bg-success text-white',
+            'turnout' => 54.73,
+            'remark' => 'मजबूत मतदान',
+            'badge' => 'bg-primary text-white',
             'sitting_mlc' => 'डॉ. एनके यादव',
             'party' => 'BJP',
             'term' => '16 नवंबर 2026'
@@ -843,8 +842,8 @@ require_once __DIR__ . '/includes/header.php';
             'constituency' => 'Patna Teachers',
             'constituency_hi' => 'पटना शिक्षक निर्वाचन क्षेत्र',
             'hub_slug' => 'patna-teacher-constituency',
-            'turnout' => 56.89,
-            'remark' => 'शिक्षकों में सबसे कम',
+            'turnout' => 74.75,
+            'remark' => 'शिक्षकों में कम',
             'badge' => 'bg-warning text-dark',
             'sitting_mlc' => 'नवल किशोर यादव',
             'party' => 'BJP',
@@ -856,7 +855,7 @@ require_once __DIR__ . '/includes/header.php';
             'constituency' => 'Tirhut Teachers',
             'constituency_hi' => 'तिरहुत शिक्षक निर्वाचन क्षेत्र',
             'hub_slug' => 'tirhut-teacher-constituency',
-            'turnout' => 78.10,
+            'turnout' => 82.99,
             'remark' => 'भारी मतदान',
             'badge' => 'bg-primary text-white',
             'sitting_mlc' => 'संजय कुमार सिंह',
@@ -869,7 +868,7 @@ require_once __DIR__ . '/includes/header.php';
             'constituency' => 'Darbhanga Teachers',
             'constituency_hi' => 'दरभंगा शिक्षक निर्वाचन क्षेत्र',
             'hub_slug' => 'darbhanga-teacher-constituency',
-            'turnout' => 79.00,
+            'turnout' => 85.87,
             'remark' => 'भारी मतदान',
             'badge' => 'bg-primary text-white',
             'sitting_mlc' => 'डॉ. मदन मोहन झा',
@@ -882,7 +881,7 @@ require_once __DIR__ . '/includes/header.php';
             'constituency' => 'Saran Teachers',
             'constituency_hi' => 'सारण शिक्षक निर्वाचन क्षेत्र',
             'hub_slug' => 'saran-teacher-constituency',
-            'turnout' => 87.16,
+            'turnout' => 89.05,
             'remark' => 'राज्य में रिकॉर्ड मतदान',
             'badge' => 'bg-success text-white',
             'sitting_mlc' => 'अफाक अहमद',
@@ -897,20 +896,31 @@ require_once __DIR__ . '/includes/header.php';
             <div>
                 <div class="d-flex align-items-center gap-2">
                     <span class="badge bg-danger text-white fw-bold px-2.5 py-1 rounded-pill blink-anim">
-                        <i class="bi bi-broadcast me-1"></i> मतदान रिपोर्ट (Turnout Report)
+                        <i class="bi bi-broadcast me-1"></i> आधिकारिक अंतिम मतदान रिपोर्ट
                     </span>
-                    <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill">
-                        शाम 4 बजे तक मतदान समाप्त
+                    <span class="badge bg-success text-white fw-bold px-2.5 py-1 rounded-pill">
+                        CEO Bihar Final VTR
+                    </span>
+                    <span class="badge bg-white bg-opacity-25 border text-dark fw-semibold px-2.5 py-1 rounded-pill extra-small">
+                        गजट: TCGCGajat2026
                     </span>
                 </div>
                 <h5 class="fw-bold text-navy mb-0 mt-1.5 font-heading">
-                    बिहार विधान परिषद द्विवार्षिक चुनाव 2026: 8 सीटों पर मतदान प्रतिशत एवं वर्तमान विधान पार्षद
+                    बिहार विधान परिषद द्विवार्षिक चुनाव 2026: 8 सीटों पर आधिकारिक मतदान प्रतिशत एवं वर्तमान विधान पार्षद
                 </h5>
+                <div class="text-muted small">
+                    स्रोत: मुख्य निर्वाचन पदाधिकारी (CEO) बिहार द्वारा जारी आधिकारिक Final VTR एवं प्रेस विज्ञप्ति
+                </div>
             </div>
-            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
-                <span>विस्तृत चुनाव हब देखें</span>
-                <i class="bi bi-arrow-right"></i>
-            </a>
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/VTR/Final%20VTR%20in%20TC%20GC%20Election%202026.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
+                    <i class="bi bi-file-earmark-pdf-fill"></i> Final VTR PDF
+                </a>
+                <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
+                    <span>विस्तृत चुनाव हब</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
         </div>
 
         <!-- Highlight Metric Badges Row -->
@@ -919,29 +929,29 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
                         <span class="text-muted extra-small d-block">कुल औसत मतदान</span>
-                        <strong class="text-danger fs-6">59%+</strong>
-                        <span class="text-muted extra-small d-block">औसत वोटिंग</span>
+                        <strong class="text-danger fs-6">55.64%</strong>
+                        <span class="text-muted extra-small d-block">2,96,494 कुल पड़े मत</span>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
                         <span class="text-muted extra-small d-block">शिक्षक सीटें औसत</span>
-                        <strong class="text-success fs-6">74.55%</strong>
-                        <span class="text-success extra-small d-block">शिक्षकों में भारी उत्साह</span>
+                        <strong class="text-success fs-6">82.85%</strong>
+                        <span class="text-success extra-small d-block">रिकॉर्ड मतदान (40,253 मतदाता)</span>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
                         <span class="text-muted extra-small d-block">स्नातक सीटें औसत</span>
-                        <strong class="text-primary fs-6">43.87%</strong>
-                        <span class="text-muted extra-small d-block">स्नातकों में कम रुचि</span>
+                        <strong class="text-primary fs-6">53.42%</strong>
+                        <span class="text-primary extra-small d-block">भारी मतदान (4,92,594 मतदाता)</span>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
-                        <span class="text-muted extra-small d-block">मतगणना एवं परिणाम</span>
-                        <strong class="text-dark fs-6">27 अक्टूबर 2026</strong>
-                        <span class="text-muted extra-small d-block">सुबह 8 बजे से</span>
+                        <span class="text-muted extra-small d-block">परिणाम स्थिति</span>
+                        <strong class="text-dark fs-6">7 सीटें विजयी &bull; 1 गणना</strong>
+                        <span class="text-success extra-small d-block">प्ररूप 21C / 21D प्रमाणीकरण</span>
                     </div>
                 </div>
             </div>
@@ -952,7 +962,7 @@ require_once __DIR__ . '/includes/header.php';
                 <thead class="table-light text-uppercase text-secondary" style="font-size: 11px;">
                     <tr>
                         <th class="ps-3.5 py-3">निर्वाचन क्षेत्र</th>
-                        <th class="py-3" style="min-width: 170px;">मतदान प्रतिशत (शाम 4 बजे तक)</th>
+                        <th class="py-3" style="min-width: 170px;">अंतिम मतदान % (CEO Bihar VTR)</th>
                         <th class="py-3">वर्तमान विधान पार्षद (Sitting MLC)</th>
                         <th class="py-3 text-center">दल / पार्टी</th>
                         <th class="py-3">कार्यकाल समाप्ति</th>
