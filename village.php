@@ -167,8 +167,31 @@ if ($village) {
         $params[':gp_like'] = '%' . trim($gpParam) . '%';
     }
     if (!empty($searchParam)) {
-        $where[] = "(village_name LIKE :q OR village_code LIKE :q OR gram_panchayat_name LIKE :q OR cd_block_name LIKE :q OR district_name LIKE :q)";
-        $params[':q'] = '%' . trim($searchParam) . '%';
+        $cleanSearch = preg_replace('/(?:\b(mukhiya|sarpanch|pradhan|mla|mp|mlc|vidhayak|sansad|parishad|village|gaon|gao|gram|panchayat|pnachayat|block|prakhand|district|zila|of|in|the|at|ka|ki|ke|me|mein)\b|[\/,.\-\(\)]+)/iu', ' ', $searchParam);
+        $cleanSearch = trim(preg_replace('/\s+/', ' ', $cleanSearch));
+        if (strlen($cleanSearch) < 2) $cleanSearch = $searchParam;
+
+        $searchVariants = [$searchParam, $cleanSearch];
+        $wLower = strtolower($cleanSearch);
+        if (strpos($wLower, 'mukhar') !== false) {
+            $searchVariants[] = str_replace('mukhar', 'mukr', $wLower);
+            $searchVariants[] = str_replace('mukhar', 'mukhr', $wLower);
+        }
+        if (strpos($wLower, 'mukr') !== false) {
+            $searchVariants[] = str_replace('mukr', 'mukhar', $wLower);
+            $searchVariants[] = str_replace('mukr', 'mukhr', $wLower);
+        }
+        $searchVariants = array_unique(array_filter($searchVariants));
+
+        $sClauses = [];
+        $sIdx = 0;
+        foreach (array_slice($searchVariants, 0, 4) as $sv) {
+            $sClauses[] = "(village_name LIKE :sq{$sIdx} OR village_code = :sqc{$sIdx} OR gram_panchayat_name LIKE :sq{$sIdx} OR cd_block_name LIKE :sq{$sIdx} OR district_name LIKE :sq{$sIdx})";
+            $params[":sq{$sIdx}"] = '%' . trim($sv) . '%';
+            $params[":sqc{$sIdx}"] = trim($sv);
+            $sIdx++;
+        }
+        $where[] = '(' . implode(' OR ', $sClauses) . ')';
     }
 
     $whereSql = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';

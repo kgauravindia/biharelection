@@ -23,11 +23,11 @@ $graduatesSeats = [
         'ro_url' => 'https://patnadivision.bih.nic.in/',
         'districts' => ['Patna', 'Nalanda', 'Nawada'],
         'districts_hi' => ['पटना', 'नालंदा', 'नवादा'],
-        'status' => 'election_2026',
-        'status_label' => 'Biennial Election 2026 Active',
+        'status' => 'election_declared',
+        'status_label' => 'Biennial Election 2026 Declared',
         'poll_date' => '23 October 2026',
         'result_date' => '27 October 2026',
-        'incumbent' => 'Neeraj Kumar (JD-U) / Vacant for 2026 Poll',
+        'incumbent' => 'Neeraj Kumar (JD-U) - Re-elected MLC (4th Term)',
         'desc' => 'Encompasses the state capital region along with Nalanda and Nawada districts with high concentration of university graduates and civil services aspirants.'
     ],
     [
@@ -40,11 +40,11 @@ $graduatesSeats = [
         'ro_url' => 'https://tirhutdivision.bih.nic.in/',
         'districts' => ['Muzaffarpur', 'Vaishali', 'Sitamarhi', 'Sheohar'],
         'districts_hi' => ['मुजफ्फरपुर', 'वैशाली', 'सीतामढ़ी', 'शिवहर'],
-        'status' => 'election_2026',
-        'status_label' => 'Biennial Election 2026 Active',
+        'status' => 'election_declared',
+        'status_label' => 'Biennial Election 2026 Declared',
         'poll_date' => '23 October 2026',
         'result_date' => '27 October 2026',
-        'incumbent' => 'Devesh Chandra Thakur (JD-U) / Vacant for 2026 Poll',
+        'incumbent' => 'Banshidhar Brajwasi (IND) - Re-elected MLC',
         'desc' => 'Covers the central-north region of Tirhut division across 4 major districts centered around BRABU university hub in Muzaffarpur.'
     ],
     [
@@ -57,11 +57,11 @@ $graduatesSeats = [
         'ro_url' => 'https://darbhangadivision.bih.nic.in/',
         'districts' => ['Darbhanga', 'Madhubani', 'Samastipur', 'Begusarai'],
         'districts_hi' => ['दरभंगा', 'मधुबनी', 'समस्तीपुर', 'बेगूसराय'],
-        'status' => 'election_2026',
-        'status_label' => 'Biennial Election 2026 Active',
+        'status' => 'election_declared',
+        'status_label' => 'Biennial Election 2026 Declared',
         'poll_date' => '23 October 2026',
         'result_date' => '27 October 2026',
-        'incumbent' => 'Sarvesh Kumar (Independent) / Vacant for 2026 Poll',
+        'incumbent' => 'Dr. Sarvesh Kumar (BJP) - Re-elected MLC',
         'desc' => 'Encompasses the Mithila heartland including LNMU Darbhanga and agricultural-industrial belt across Samastipur and Begusarai.'
     ],
     [
@@ -74,11 +74,11 @@ $graduatesSeats = [
         'ro_url' => 'https://kosidivision.bih.nic.in/',
         'districts' => ['Saharsa', 'Supaul', 'Madhepura', 'Purnia', 'Araria', 'Kishanganj', 'Katihar', 'Bhagalpur', 'Banka', 'Munger', 'Jamui', 'Lakhisarai', 'Sheikhpura', 'Khagaria'],
         'districts_hi' => ['सहरसा', 'सुपौल', 'मधेपुरा', 'पूर्णिया', 'अररिया', 'किशनगंज', 'कटिहार', 'भागलपुर', 'बांका', 'मुंगेर', 'जमुई', 'लखीसराय', 'शेखपुरा', 'खगड़िया'],
-        'status' => 'election_2026',
-        'status_label' => 'Biennial Election 2026 Active',
+        'status' => 'election_declared',
+        'status_label' => 'Biennial Election 2026 Declared',
         'poll_date' => '23 October 2026',
         'result_date' => '27 October 2026',
-        'incumbent' => 'Dr. N. K. Yadav (BJP) / Vacant for 2026 Poll',
+        'incumbent' => 'Dr. N. K. Yadav (BJP) - Re-elected MLC (3rd Term)',
         'desc' => 'The largest constituency by geographical expanse covering 14 districts across Kosi, Purnia, Bhagalpur, and Munger divisions (BNMU, TMBU, Purnea University).'
     ],
     [
@@ -283,14 +283,14 @@ require_once __DIR__ . '/header.php';
                     <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <span class="text-white-50 extra-small fw-bold text-uppercase">Tirhut Graduates</span>
-                            <span class="badge bg-warning text-dark extra-small blink-anim">IND LEADING</span>
+                            <span class="badge bg-success text-white extra-small">IND WON</span>
                         </div>
                         <div class="d-flex align-items-baseline gap-2 mb-1">
-                            <span class="fs-4 fw-extrabold text-white">48.51%</span>
-                            <span class="text-white-50 extra-small">(Lowest in GC)</span>
+                            <span class="fs-4 fw-extrabold text-warning">48.51%</span>
+                            <span class="text-white-50 extra-small">(Final Result)</span>
                         </div>
                         <small class="text-white-50 d-block extra-small mb-1">Electorate: 1,43,988 &bull; 145 Booths &bull; 17 Candidates</small>
-                        <div class="fw-semibold text-white extra-small text-truncate">Leading: Banshidhar Brajwasi (IND)</div>
+                        <div class="fw-semibold text-white extra-small text-truncate">Elected: Banshidhar Brajwasi (IND)</div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
@@ -354,6 +354,7 @@ require_once __DIR__ . '/header.php';
     <div class="row g-4 mb-5">
         <?php foreach ($graduatesSeats as $seat): 
             $isOngoing = ($seat['status'] === 'election_2026');
+            $isDeclared = ($seat['status'] === 'election_declared');
         ?>
             <div class="col-md-6 col-lg-4" id="<?php echo $seat['id']; ?>">
                 <div class="constituency-card p-4">
@@ -362,7 +363,11 @@ require_once __DIR__ . '/header.php';
                             <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2.5 py-1 rounded-pill extra-small fw-bold">
                                 🎓 Graduates Quota
                             </span>
-                            <?php if ($isOngoing): ?>
+                            <?php if ($isDeclared): ?>
+                                <span class="badge bg-success text-white px-2.5 py-1 rounded-pill extra-small fw-bold">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Result Declared
+                                </span>
+                            <?php elseif ($isOngoing): ?>
                                 <span class="badge bg-danger text-white px-2.5 py-1 rounded-pill extra-small fw-bold blink-anim">
                                     <i class="bi bi-broadcast me-1"></i> Poll Oct 2026
                                 </span>
@@ -413,7 +418,7 @@ require_once __DIR__ . '/header.php';
 
                     <div class="pt-3 border-top mt-2">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-muted extra-small">Sitting Member:</span>
+                            <span class="text-muted extra-small"><?php echo $isDeclared ? 'Elected Member:' : 'Sitting Member:'; ?></span>
                             <span class="fw-bold text-navy extra-small text-end text-truncate" style="max-width: 180px;">
                                 <?php echo htmlspecialchars($seat['incumbent']); ?>
                             </span>
@@ -427,7 +432,11 @@ require_once __DIR__ . '/header.php';
                                 <i class="bi bi-geo-alt-fill"></i> View Polling Booths (मतदान केंद्र)
                             </a>
                         <?php endif; ?>
-                        <?php if ($isOngoing): ?>
+                        <?php if ($isDeclared): ?>
+                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-outline-success w-100 rounded-pill fw-semibold py-1.5">
+                                <i class="bi bi-trophy me-1"></i> 2026 Official Election Results
+                            </a>
+                        <?php elseif ($isOngoing): ?>
                             <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-outline-danger w-100 rounded-pill fw-semibold py-1.5">
                                 <i class="bi bi-box-arrow-up-right me-1"></i> 2026 Election Schedule &amp; Candidates
                             </a>

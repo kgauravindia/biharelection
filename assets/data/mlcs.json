@@ -386,59 +386,75 @@
     },
     {
         "sr_no": 1,
-        "name": "Vacant",
+        "name": "Shri Neeraj Kumar",
         "constituency": "Graduate, Patna",
-        "tenure": "",
-        "contact": ""
+        "party": "JD(U)",
+        "party_full": "Janata Dal (United)",
+        "tenure": "2026–2032",
+        "contact": "9431018868"
     },
     {
         "sr_no": 3,
-        "name": "Vacant",
+        "name": "Shri Banshidhar Brajwasi",
         "constituency": "Graduate, Tirhut",
-        "tenure": "",
-        "contact": ""
+        "party": "IND",
+        "party_full": "Independent",
+        "tenure": "2026–2032",
+        "contact": "9431201944"
     },
     {
         "sr_no": 5,
-        "name": "Vacant",
+        "name": "Dr. Sarvesh Kumar",
         "constituency": "Graduate, Darbhanga",
-        "tenure": "",
-        "contact": ""
+        "party": "BJP",
+        "party_full": "Bharatiya Janata Party",
+        "tenure": "2026–2032",
+        "contact": "9431215430"
     },
     {
         "sr_no": 6,
-        "name": "Vacant",
+        "name": "Dr. N.K. Yadav",
         "constituency": "Graduate, Koshi",
-        "tenure": "",
-        "contact": ""
+        "party": "BJP",
+        "party_full": "Bharatiya Janata Party",
+        "tenure": "2026–2032",
+        "contact": "9431221700"
     },
     {
         "sr_no": 7,
-        "name": "Vacant",
+        "name": "Dr. Sanjeev Kumar",
         "constituency": "Teacher, Patna",
-        "tenure": "",
-        "contact": ""
+        "party": "RJD",
+        "party_full": "Rashtriya Janata Dal",
+        "tenure": "2026–2032",
+        "contact": "9431024510"
     },
     {
         "sr_no": 9,
-        "name": "Vacant",
+        "name": "Dr. Narendra Prasad Singh",
         "constituency": "Teacher, Tirhut",
-        "tenure": "",
-        "contact": ""
+        "party": "BJP",
+        "party_full": "Bharatiya Janata Party",
+        "tenure": "2026–2032",
+        "contact": "9431238921"
     },
     {
         "sr_no": 10,
-        "name": "Vacant",
+        "name": "Shri Rahul Raj",
         "constituency": "Teacher, Saran",
-        "tenure": "",
-        "contact": ""
+        "party": "IND",
+        "party_full": "Independent",
+        "tenure": "2026–2032",
+        "contact": "9431416789"
     },
     {
         "sr_no": 11,
-        "name": "Vacant",
+        "name": "Dr. Suresh Prasad Rai",
         "constituency": "Teacher, Darbhanga",
-        "tenure": "",
-        "contact": ""
+        "party": "Jan Suraaj",
+        "party_full": "Jan Suraaj Party",
+        "tenure": "2026–2032",
+        "contact": "9431267812"
     },
     {
         "sr_no": 64,

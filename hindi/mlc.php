@@ -99,8 +99,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 अक्टूबर 2026',
                     'result_date' => '27 अक्टूबर 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'tirhut') !== false || strpos($const, 'तिरहुत') !== false) {
@@ -113,8 +113,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 अक्टूबर 2026',
                     'result_date' => '27 अक्टूबर 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'darbhanga') !== false || strpos($const, 'दरभंगा') !== false) {
@@ -127,8 +127,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 अक्टूबर 2026',
                     'result_date' => '27 अक्टूबर 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'koshi') !== false || strpos($const, 'kosi') !== false || strpos($const, 'कोसी') !== false) {
@@ -141,8 +141,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 अक्टूबर 2026',
                     'result_date' => '27 अक्टूबर 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
         }
@@ -159,8 +159,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 अक्टूबर 2026',
                     'result_date' => '27 अक्टूबर 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'tirhut') !== false || strpos($const, 'तिरहुत') !== false) {
@@ -173,8 +173,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 अक्टूबर 2026',
                     'result_date' => '27 अक्टूबर 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'darbhanga') !== false || strpos($const, 'दरभंगा') !== false) {
@@ -187,8 +187,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 अक्टूबर 2026',
                     'result_date' => '27 अक्टूबर 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'saran') !== false || strpos($const, 'सारण') !== false) {
@@ -201,8 +201,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 अक्टूबर 2026',
                     'result_date' => '27 अक्टूबर 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
         }
@@ -395,8 +395,8 @@ require_once __DIR__ . '/includes/header.php';
                         <?php echo htmlspecialchars($quotaType); ?> कोटा
                     </span>
                     <?php if ($singleOngoingInfo): ?>
-                        <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm blink-anim">
-                            <i class="bi bi-broadcast me-1"></i> द्विवार्षिक चुनाव 2026 जारी
+                        <span class="badge bg-success text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            <i class="bi bi-trophy-fill me-1"></i> परिणाम घोषित (2026-2032)
                         </span>
                     <?php endif; ?>
                     <?php if (!empty($desig)): ?>
@@ -427,28 +427,28 @@ require_once __DIR__ . '/includes/header.php';
 
     <!-- Ongoing Election Notice Banner (if applicable for this seat) -->
     <?php if ($singleOngoingInfo): ?>
-        <div class="card border-0 rounded-4 shadow-sm mb-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #dc2626 100%);">
+        <div class="card border-0 rounded-4 shadow-sm mb-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #065f46 0%, #047857 50%, #059669 100%);">
             <div class="p-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                 <div class="d-flex align-items-start gap-3">
-                    <div class="rounded-circle bg-white text-danger d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; font-size: 1.4rem;">
-                        <i class="bi bi-broadcast"></i>
+                    <div class="rounded-circle bg-white text-success d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; font-size: 1.4rem;">
+                        <i class="bi bi-trophy-fill"></i>
                     </div>
                     <div>
                         <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
-                            <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">सक्रिय द्विवार्षिक चुनाव 2026</span>
+                            <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">चुनाव परिणाम घोषित</span>
                             <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">मतदान: 23 अक्टूबर 2026</span>
+                            <span class="badge bg-light text-dark fw-semibold px-2.5 py-1 rounded-pill">मतगणना संपन्न</span>
                             <span class="text-white-50 small">&bull; गजट अधिसूचना: <?php echo htmlspecialchars($singleOngoingInfo['gazette']); ?></span>
                         </div>
-                        <h4 class="fw-extrabold text-white mb-1"><?php echo htmlspecialchars($singleOngoingInfo['name_hi']); ?> में चुनाव प्रक्रिया जारी</h4>
+                        <h4 class="fw-extrabold text-white mb-1"><?php echo htmlspecialchars($singleOngoingInfo['name_hi']); ?>: आधिकारिक परिणाम घोषित</h4>
                         <p class="text-white-50 mb-0 small" style="max-width: 820px;">
-                            इस निर्वाचन क्षेत्र के लिए <strong>बिहार विधान परिषद द्विवार्षिक चुनाव 2026</strong> संपन्न कराया जा रहा है। 
-                            मतगणना <strong>27 अक्टूबर 2026</strong> को होगी।
+                            इस निर्वाचन क्षेत्र के लिए <strong>बिहार विधान परिषद द्विवार्षिक चुनाव 2026</strong> के आधिकारिक परिणाम मुख्य निर्वाचन पदाधिकारी (CEO) एवं निर्वाची पदाधिकारी द्वारा प्रमाणित घोषित कर दिए गए हैं।
                         </p>
                     </div>
                 </div>
                 <div class="flex-shrink-0">
-                    <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $singleOngoingInfo['slug']; ?>" class="btn btn-warning fw-bold text-dark rounded-pill px-4 py-2.5 shadow-sm d-inline-flex align-items-center gap-1.5 text-nowrap">
-                        <span>संपूर्ण चुनाव कार्यक्रम एवं विवरण देखें</span>
+                    <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election#<?php echo $singleOngoingInfo['slug']; ?>" class="btn btn-warning fw-bold text-dark rounded-pill px-4 py-2.5 shadow-sm d-inline-flex align-items-center gap-1.5 text-nowrap">
+                        <span>विजेता व परिणाम विवरण देखें</span>
                         <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
@@ -476,8 +476,8 @@ require_once __DIR__ . '/includes/header.php';
                                 <?php echo htmlspecialchars($quotaType); ?> कोटा
                             </span>
                             <?php if ($singleOngoingInfo): ?>
-                                <span class="badge bg-danger text-white small px-2.5 py-1 ms-1 blink-anim">
-                                    चुनाव 2026 जारी
+                                <span class="badge bg-success text-white small px-2.5 py-1 ms-1">
+                                    निर्वाचित (2026-2032)
                                 </span>
                             <?php endif; ?>
                         </div>
@@ -701,8 +701,8 @@ require_once __DIR__ . '/includes/header.php';
             <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
                 75 कुल विधान पार्षद
             </span>
-            <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill blink-anim shadow-sm">
-                <i class="bi bi-broadcast me-1"></i> 8 सीटों पर द्विवार्षिक चुनाव 2026 संपन्न
+            <span class="badge bg-success text-white fw-bold px-3 py-2 rounded-pill shadow-sm">
+                <i class="bi bi-trophy-fill me-1"></i> 8 सीटों पर द्विवार्षिक चुनाव 2026 परिणाम घोषित
             </span>
             <span class="badge bg-warning bg-opacity-25 text-warning fw-bold px-3 py-2 rounded-pill">
                 उच्च सदन (स्थाई सदन)
@@ -720,15 +720,15 @@ require_once __DIR__ . '/includes/header.php';
 
         <h1 class="display-6 fw-extrabold text-white mb-2">
             बिहार विधान परिषद सदस्य (MLCs) डायरेक्टरी <br>
-            <span style="color: var(--accent-saffron);">75 सदस्यों की सूची एवं 2026 चुनाव विवरण</span>
+            <span style="color: var(--accent-saffron);">75 सदस्यों की सूची एवं 2026 चुनाव परिणाम</span>
         </h1>
         <p class="lead text-white-50 mb-4" style="font-size: 1.05rem; max-width: 850px;">
-            बिहार विधान परिषद सचिवालय के आधिकारिक रिकॉर्ड पर आधारित सभी 75 सदस्यों की अद्यतन डायरेक्टरी। स्थानीय प्राधिकार, स्नातक, शिक्षक, विधान सभा कोटा एवं मनोनीत सदस्यों का विवरण तथा वर्तमान में जारी द्विवार्षिक चुनाव की पूरी जानकारी।
+            बिहार विधान परिषद सचिवालय के आधिकारिक रिकॉर्ड पर आधारित सभी 75 सदस्यों की अद्यतन डायरेक्टरी। स्थानीय प्राधिकार, स्नातक, शिक्षक, विधान सभा कोटा एवं मनोनीत सदस्यों का विवरण तथा 2026 द्विवार्षिक चुनाव के आधिकारिक परिणाम।
         </p>
 
         <div class="d-flex flex-wrap gap-2">
-            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-danger fw-bold px-3.5 py-2 shadow-sm d-inline-flex align-items-center gap-1.5">
-                <i class="bi bi-broadcast"></i> 2026 चुनाव हब (8 सीटें)
+            <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election" class="btn btn-warning fw-bold px-3.5 py-2 text-dark shadow-sm d-inline-flex align-items-center gap-1.5">
+                <i class="bi bi-trophy-fill"></i> 2026 परिणाम हब (8 सीटें)
             </a>
             <a href="<?php echo HINDI_BASE_URL; ?>mla" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
                 <i class="bi bi-person-badge me-1"></i> 243 विधायक (MLAs)
@@ -751,27 +751,27 @@ require_once __DIR__ . '/includes/header.php';
     <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-4'); ?>
 
     <!-- Ongoing Election Notice Banner -->
-    <div class="card border-0 rounded-4 shadow-sm mb-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #dc2626 100%);">
+    <div class="card border-0 rounded-4 shadow-sm mb-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #065f46 0%, #047857 50%, #059669 100%);">
         <div class="p-3.5 p-lg-4 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
             <div class="d-flex align-items-start gap-3">
-                <div class="rounded-circle bg-white text-danger d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; font-size: 1.4rem;">
-                    <i class="bi bi-broadcast"></i>
+                <div class="rounded-circle bg-white text-success d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; font-size: 1.4rem;">
+                    <i class="bi bi-trophy-fill"></i>
                 </div>
                 <div>
                     <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
-                        <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">चुनाव प्रक्रिया जारी</span>
+                        <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">आधिकारिक परिणाम घोषित</span>
                         <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">द्विवार्षिक चुनाव 2026</span>
                         <span class="text-white-50 small">&bull; गजट: TCGCGajat2026</span>
                     </div>
-                    <h4 class="fw-extrabold text-white mb-1">बिहार विधान परिषद की 8 सीटों पर चुनाव जारी</h4>
+                    <h4 class="fw-extrabold text-white mb-1">बिहार विधान परिषद की 8 सीटों पर आधिकारिक चुनाव परिणाम घोषित</h4>
                     <p class="text-white-50 mb-0 small" style="max-width: 820px;">
-                        <strong>4 स्नातक</strong> (पटना, तिरहुत, दरभंगा, कोसी) एवं <strong>4 शिक्षक</strong> (पटना, तिरहुत, दरभंगा, सारण) निर्वाचन क्षेत्रों में द्विवार्षिक चुनाव प्रक्रिया जारी है। मतदान <strong>23 अक्टूबर 2026</strong> और मतगणना <strong>27 अक्टूबर 2026</strong> को होगी।
+                        <strong>4 स्नातक</strong> (पटना, तिरहुत, दरभंगा, कोसी) एवं <strong>4 शिक्षक</strong> (पटना, तिरहुत, दरभंगा, सारण) निर्वाचन क्षेत्रों में द्विवार्षिक चुनाव के आधिकारिक परिणाम घोषित कर दिए गए हैं। मतदान <strong>23 अक्टूबर 2026</strong> और मतगणना <strong>27 अक्टूबर 2026</strong> को संपन्न हुई।
                     </p>
                 </div>
             </div>
             <div class="d-flex flex-wrap gap-2 flex-shrink-0">
-                <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-warning fw-bold text-dark rounded-pill px-3.5 py-2 shadow-sm d-inline-flex align-items-center gap-1.5">
-                    <span>पूरा चुनाव कार्यक्रम एवं गजट देखें</span>
+                <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election" class="btn btn-warning fw-bold text-dark rounded-pill px-3.5 py-2 shadow-sm d-inline-flex align-items-center gap-1.5">
+                    <span>पूरा चुनाव परिणाम एवं गजट देखें</span>
                     <i class="bi bi-arrow-right"></i>
                 </a>
                 <button type="button" class="btn btn-outline-light rounded-pill px-3 py-2 fw-semibold" onclick="filterQuota('Election', document.querySelector('[data-quota=\'Election\']'))">
@@ -793,9 +793,9 @@ require_once __DIR__ . '/includes/header.php';
             'turnout' => 57.56,
             'remark' => 'स्नातकों में सर्वाधिक',
             'badge' => 'bg-success text-white',
-            'sitting_mlc' => 'नीरज कुमार',
+            'sitting_mlc' => 'नीरज कुमार (पुनर्निर्वाचित)',
             'party' => 'JD(U)',
-            'term' => '16 नवंबर 2026'
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Graduates',
@@ -806,9 +806,9 @@ require_once __DIR__ . '/includes/header.php';
             'turnout' => 48.51,
             'remark' => 'स्नातकों में न्यूनतम',
             'badge' => 'bg-secondary text-white',
-            'sitting_mlc' => 'वंशीधर ब्रजवासी',
+            'sitting_mlc' => 'वंशीधर ब्रजवासी (पुनर्निर्वाचित)',
             'party' => 'IND',
-            'term' => '16 नवंबर 2026'
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Graduates',
@@ -819,9 +819,9 @@ require_once __DIR__ . '/includes/header.php';
             'turnout' => 54.73,
             'remark' => 'मजबूत मतदान',
             'badge' => 'bg-primary text-white',
-            'sitting_mlc' => 'सर्वेश कुमार',
+            'sitting_mlc' => 'डॉ. सर्वेश कुमार (पुनर्निर्वाचित)',
             'party' => 'BJP',
-            'term' => '16 नवंबर 2026'
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Graduates',
@@ -832,9 +832,9 @@ require_once __DIR__ . '/includes/header.php';
             'turnout' => 54.73,
             'remark' => 'मजबूत मतदान',
             'badge' => 'bg-primary text-white',
-            'sitting_mlc' => 'डॉ. एनके यादव',
+            'sitting_mlc' => 'डॉ. एनके यादव (पुनर्निर्वाचित)',
             'party' => 'BJP',
-            'term' => '16 नवंबर 2026'
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Teachers',
@@ -845,9 +845,9 @@ require_once __DIR__ . '/includes/header.php';
             'turnout' => 74.75,
             'remark' => 'शिक्षकों में कम',
             'badge' => 'bg-warning text-dark',
-            'sitting_mlc' => 'नवल किशोर यादव',
-            'party' => 'BJP',
-            'term' => '16 नवंबर 2026'
+            'sitting_mlc' => 'डॉ. संजीव कुमार (नवनिर्वाचित)',
+            'party' => 'RJD',
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Teachers',
@@ -858,9 +858,9 @@ require_once __DIR__ . '/includes/header.php';
             'turnout' => 82.99,
             'remark' => 'भारी मतदान',
             'badge' => 'bg-primary text-white',
-            'sitting_mlc' => 'संजय कुमार सिंह',
-            'party' => 'CPI',
-            'term' => '16 नवंबर 2026'
+            'sitting_mlc' => 'डॉ. नरेंद्र प्रसाद सिंह (नवनिर्वाचित)',
+            'party' => 'BJP',
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Teachers',
@@ -871,9 +871,9 @@ require_once __DIR__ . '/includes/header.php';
             'turnout' => 85.87,
             'remark' => 'भारी मतदान',
             'badge' => 'bg-primary text-white',
-            'sitting_mlc' => 'डॉ. मदन मोहन झा',
-            'party' => 'INC',
-            'term' => '16 नवंबर 2026'
+            'sitting_mlc' => 'डॉ. सुरेश प्रसाद राय (नवनिर्वाचित)',
+            'party' => 'Jan Suraaj Party',
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Teachers',
@@ -884,21 +884,21 @@ require_once __DIR__ . '/includes/header.php';
             'turnout' => 89.05,
             'remark' => 'राज्य में रिकॉर्ड मतदान',
             'badge' => 'bg-success text-white',
-            'sitting_mlc' => 'अफाक अहमद',
-            'party' => 'Jan Suraaj Party',
-            'term' => '16 नवंबर 2026'
+            'sitting_mlc' => 'राहुल राज (नवनिर्वाचित)',
+            'party' => 'IND',
+            'term' => '2026 - 2032'
         ]
     ];
     ?>
 
-    <div class="card border-0 rounded-4 shadow-sm mb-4 bg-white overflow-hidden border-top border-4 border-danger">
+    <div class="card border-0 rounded-4 shadow-sm mb-4 bg-white overflow-hidden border-top border-4 border-success">
         <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
             <div>
                 <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-danger text-white fw-bold px-2.5 py-1 rounded-pill blink-anim">
-                        <i class="bi bi-broadcast me-1"></i> आधिकारिक अंतिम मतदान रिपोर्ट
-                    </span>
                     <span class="badge bg-success text-white fw-bold px-2.5 py-1 rounded-pill">
+                        <i class="bi bi-check-circle-fill me-1"></i> आधिकारिक चुनाव परिणाम घोषित
+                    </span>
+                    <span class="badge bg-primary text-white fw-bold px-2.5 py-1 rounded-pill">
                         CEO Bihar Final VTR
                     </span>
                     <span class="badge bg-white bg-opacity-25 border text-dark fw-semibold px-2.5 py-1 rounded-pill extra-small">
@@ -906,18 +906,18 @@ require_once __DIR__ . '/includes/header.php';
                     </span>
                 </div>
                 <h5 class="fw-bold text-navy mb-0 mt-1.5 font-heading">
-                    बिहार विधान परिषद द्विवार्षिक चुनाव 2026: 8 सीटों पर आधिकारिक मतदान प्रतिशत एवं वर्तमान विधान पार्षद
+                    बिहार विधान परिषद द्विवार्षिक चुनाव 2026: 8 सीटों पर आधिकारिक परिणाम एवं मतदान प्रतिशत
                 </h5>
                 <div class="text-muted small">
-                    स्रोत: मुख्य निर्वाचन पदाधिकारी (CEO) बिहार द्वारा जारी आधिकारिक Final VTR एवं प्रेस विज्ञप्ति
+                    स्रोत: मुख्य निर्वाचन पदाधिकारी (CEO) बिहार द्वारा जारी आधिकारिक Final VTR एवं चुनाव परिणाम
                 </div>
             </div>
             <div class="d-flex gap-2 flex-wrap">
                 <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/VTR/Final%20VTR%20in%20TC%20GC%20Election%202026.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
                     <i class="bi bi-file-earmark-pdf-fill"></i> Final VTR PDF
                 </a>
-                <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
-                    <span>विस्तृत चुनाव हब</span>
+                <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election" class="btn btn-success btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
+                    <span>विस्तृत परिणाम हब</span>
                     <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
@@ -950,7 +950,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
                         <span class="text-muted extra-small d-block">परिणाम स्थिति</span>
-                        <strong class="text-dark fs-6">7 सीटें विजयी &bull; 1 गणना</strong>
+                        <strong class="text-success fs-6">सभी 8 सीटें घोषित</strong>
                         <span class="text-success extra-small d-block">प्ररूप 21C / 21D प्रमाणीकरण</span>
                     </div>
                 </div>
@@ -963,9 +963,9 @@ require_once __DIR__ . '/includes/header.php';
                     <tr>
                         <th class="ps-3.5 py-3">निर्वाचन क्षेत्र</th>
                         <th class="py-3" style="min-width: 170px;">अंतिम मतदान % (CEO Bihar VTR)</th>
-                        <th class="py-3">वर्तमान विधान पार्षद (Sitting MLC)</th>
+                        <th class="py-3">नवनिर्वाचित विधान पार्षद (Elected MLC)</th>
                         <th class="py-3 text-center">दल / पार्टी</th>
-                        <th class="py-3">कार्यकाल समाप्ति</th>
+                        <th class="py-3">कार्यकाल</th>
                         <th class="py-3 text-end pe-3.5">बूथ हब</th>
                     </tr>
                 </thead>
@@ -1033,7 +1033,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="card-footer bg-light py-2.5 px-3.5 border-top d-flex flex-wrap justify-content-between align-items-center gap-2 extra-small text-muted">
             <div>
                 <i class="bi bi-info-circle text-primary me-1"></i>
-                कतार में लगे मतदाताओं के वोट डालने के बाद मतपेटियां सील होकर स्ट्रांग रूम भेजी गईं। परिणाम <strong>27 अक्टूबर 2026</strong> को मतगणना के बाद आएगा।
+                सभी 8 सीटों पर मतगणना पूरी होकर आधिकारिक परिणाम घोषित कर दिए गए हैं (प्ररूप 21C / 21D)।
             </div>
             <a href="https://www.livehindustan.com/bihar/bihar-mlc-election-2026-voting-live-bjp-rjd-jdu-chunav-latest-updates-live-blog-201792729617020.html" 
                target="_blank" 
@@ -1279,10 +1279,10 @@ require_once __DIR__ . '/includes/header.php';
                                         <?php endif; ?>
                                         <div>
                                             <?php if ($isVacant && $ongoingInfo): ?>
-                                                <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="fw-bold text-danger text-decoration-none hover-primary d-block" style="font-size: 0.95rem;">
-                                                    <i class="bi bi-exclamation-circle-fill me-1"></i>रिक्त सीट (चुनाव सक्रिय)
+                                                <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="fw-bold text-success text-decoration-none hover-primary d-block" style="font-size: 0.95rem;">
+                                                    <i class="bi bi-trophy-fill me-1 text-warning"></i>2026 चुनाव परिणाम घोषित
                                                 </a>
-                                                <div class="text-muted small">द्विवार्षिक चुनाव 2026 प्रक्रिया जारी</div>
+                                                <div class="text-success small fw-semibold">विजेता निर्वाचित (2026-2032)</div>
                                             <?php elseif ($isVacant): ?>
                                                 <span class="fw-bold text-secondary" style="font-size: 0.95rem;">
                                                     सीट रिक्त
@@ -1312,8 +1312,8 @@ require_once __DIR__ . '/includes/header.php';
                                             <?php echo $quotaIcon . ' ' . htmlspecialchars($quotaType); ?> कोटा
                                         </span>
                                         <?php if ($ongoingInfo): ?>
-                                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="badge bg-danger text-white text-decoration-none extra-small px-2 py-0.5 rounded-pill shadow-xs blink-anim">
-                                                <i class="bi bi-broadcast me-0.5"></i> चुनाव जारी (2026)
+                                            <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="badge bg-success text-white text-decoration-none extra-small px-2 py-0.5 rounded-pill shadow-xs">
+                                                <i class="bi bi-check-circle-fill me-0.5"></i> परिणाम घोषित
                                             </a>
                                         <?php endif; ?>
                                     </div>
@@ -1321,9 +1321,9 @@ require_once __DIR__ . '/includes/header.php';
 
                                 <td class="text-center" style="min-width: 120px;">
                                     <?php if ($ongoingInfo): ?>
-                                        <span class="badge bg-danger bg-opacity-15 text-danger border border-danger border-opacity-25 px-2.5 py-1 small fw-bold">
-                                            🗳️ मतदान 23 अक्टू.
-                                        </span>
+                                        <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="badge bg-success bg-opacity-15 text-success border border-success border-opacity-25 px-2.5 py-1 small fw-bold text-decoration-none">
+                                            🏆 परिणाम घोषित
+                                        </a>
                                     <?php elseif (!empty($party)): ?>
                                         <span class="badge-party <?php echo $partyCleanClass; ?>">
                                             <?php echo htmlspecialchars($party); ?>
@@ -1337,14 +1337,16 @@ require_once __DIR__ . '/includes/header.php';
 
                                 <td style="min-width: 210px;">
                                     <?php if ($ongoingInfo): ?>
-                                        <div class="extra-small text-danger fw-bold mb-0.5">
-                                            <i class="bi bi-calendar-check me-1"></i>मतदान: 23 अक्टूबर 2026 (सुबह 8-शाम 4)
-                                        </div>
                                         <div class="extra-small text-success fw-bold mb-0.5">
-                                            <i class="bi bi-bar-chart-fill me-1"></i>मतगणना: 27 अक्टूबर 2026
+                                            <i class="bi bi-check2-all me-1"></i>आधिकारिक परिणाम घोषित
+                                        </div>
+                                        <div class="extra-small text-muted mb-0.5">
+                                            <i class="bi bi-calendar-event me-1"></i>कार्यकाल: 2026 &ndash; 2032
                                         </div>
                                         <div class="extra-small text-muted">
-                                            <i class="bi bi-file-earmark-text me-1"></i>गजट: <?php echo htmlspecialchars($ongoingInfo['gazette']); ?>
+                                            <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="text-decoration-none text-primary fw-semibold">
+                                                <i class="bi bi-trophy-fill me-1 text-warning"></i>निर्वाचित एमएलसी देखें &rarr;
+                                            </a>
                                         </div>
                                     <?php else: ?>
                                         <?php if (!empty($phone)): ?>

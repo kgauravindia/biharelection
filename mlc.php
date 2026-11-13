@@ -100,8 +100,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 October 2026',
                     'result_date' => '27 October 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'tirhut') !== false || strpos($const, 'तिरहुत') !== false) {
@@ -114,8 +114,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 October 2026',
                     'result_date' => '27 October 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'darbhanga') !== false || strpos($const, 'दरभंगा') !== false) {
@@ -128,8 +128,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 October 2026',
                     'result_date' => '27 October 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'koshi') !== false || strpos($const, 'kosi') !== false || strpos($const, 'कोसी') !== false) {
@@ -142,8 +142,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 October 2026',
                     'result_date' => '27 October 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
         }
@@ -160,8 +160,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 October 2026',
                     'result_date' => '27 October 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'tirhut') !== false || strpos($const, 'तिरहुत') !== false) {
@@ -174,8 +174,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 October 2026',
                     'result_date' => '27 October 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'darbhanga') !== false || strpos($const, 'दरभंगा') !== false) {
@@ -188,8 +188,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 October 2026',
                     'result_date' => '27 October 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
             if (strpos($const, 'saran') !== false || strpos($const, 'सारण') !== false) {
@@ -202,8 +202,8 @@ if (!function_exists('getOngoingElectionInfo')) {
                     'poll_date' => '23 October 2026',
                     'result_date' => '27 October 2026',
                     'gazette' => 'TCGCGajat2026',
-                    'status_text' => 'Biennial Election 2026 in Progress',
-                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 जारी'
+                    'status_text' => 'Biennial Election 2026 Results Declared',
+                    'status_text_hi' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित'
                 ];
             }
         }
@@ -396,8 +396,8 @@ require_once __DIR__ . '/header.php';
                         <?php echo htmlspecialchars($quotaType); ?> Quota
                     </span>
                     <?php if ($singleOngoingInfo): ?>
-                        <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm blink-anim">
-                            <i class="bi bi-broadcast me-1"></i> Election in Progress (2026)
+                        <span class="badge bg-success text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            <i class="bi bi-check-circle-fill me-1"></i> Elected MLC (Biennial Election 2026–2032)
                         </span>
                     <?php endif; ?>
                     <?php if (!empty($desig)): ?>
@@ -428,29 +428,28 @@ require_once __DIR__ . '/header.php';
 
     <!-- Ongoing Election Notice Banner (if applicable for this seat) -->
     <?php if ($singleOngoingInfo): ?>
-        <div class="card border-0 rounded-4 shadow-sm mb-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #dc2626 100%);">
+        <div class="card border-0 rounded-4 shadow-sm mb-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #065f46 0%, #047857 50%, #059669 100%);">
             <div class="p-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                 <div class="d-flex align-items-start gap-3">
-                    <div class="rounded-circle bg-white text-danger d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; font-size: 1.4rem;">
-                        <i class="bi bi-broadcast"></i>
+                    <div class="rounded-circle bg-white text-success d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; font-size: 1.4rem;">
+                        <i class="bi bi-trophy-fill"></i>
                     </div>
                     <div>
                         <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
-                            <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">Active Biennial Election 2026</span>
-                            <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">Polling: Concluded 23 Oct</span>
-                            <span class="badge bg-success text-white fw-semibold px-2.5 py-1 rounded-pill">Counting: 27 Oct 2026, 8:00 AM</span>
+                            <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">Election Results Declared</span>
+                            <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">Polled: 23 Oct 2026</span>
+                            <span class="badge bg-light text-dark fw-semibold px-2.5 py-1 rounded-pill">Counting Completed</span>
                             <span class="text-white-50 small">&bull; Notification: <?php echo htmlspecialchars($singleOngoingInfo['gazette']); ?></span>
                         </div>
-                        <h4 class="fw-extrabold text-white mb-1">Elections Underway for <?php echo htmlspecialchars($const); ?></h4>
+                        <h4 class="fw-extrabold text-white mb-1">Official Results Declared for <?php echo htmlspecialchars($const); ?></h4>
                         <p class="text-white-50 mb-0 small" style="max-width: 820px;">
-                            This constituency is actively undergoing the <strong>Bihar Legislative Council Biennial Election 2026</strong>. 
-                            Counting of votes commences on <strong>Tuesday, 27 October 2026 at 08:00 AM IST</strong>.
+                            Official results for the <strong>Bihar Legislative Council Biennial Election 2026</strong> for this seat have been declared and certified under Form 21C / 21D by the Returning Officer and CEO Bihar.
                         </p>
                     </div>
                 </div>
                 <div class="flex-shrink-0">
                     <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $singleOngoingInfo['slug']; ?>" class="btn btn-warning fw-bold text-dark rounded-pill px-4 py-2.5 shadow-sm d-inline-flex align-items-center gap-1.5 text-nowrap">
-                        <span>View Election Hub &amp; Schedule</span>
+                        <span>View Official Winner &amp; Tally</span>
                         <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
@@ -478,8 +477,8 @@ require_once __DIR__ . '/header.php';
                                 <?php echo htmlspecialchars($quotaType); ?> Quota
                             </span>
                             <?php if ($singleOngoingInfo): ?>
-                                <span class="badge bg-danger text-white small px-2.5 py-1 ms-1 blink-anim">
-                                    Election 2026 Active
+                                <span class="badge bg-success text-white small px-2.5 py-1 ms-1">
+                                    Result Declared
                                 </span>
                             <?php endif; ?>
                         </div>
@@ -761,8 +760,8 @@ require_once __DIR__ . '/header.php';
             <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
                 75 Total MLCs
             </span>
-            <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill blink-anim shadow-sm">
-                <i class="bi bi-broadcast me-1"></i> 8 Seats Biennial Election 2026 Active
+            <span class="badge bg-success text-white fw-bold px-3 py-2 rounded-pill shadow-sm">
+                <i class="bi bi-trophy-fill me-1"></i> 8 Seats Biennial Election 2026 Results Declared
             </span>
             <span class="badge bg-warning bg-opacity-25 text-warning fw-bold px-3 py-2 rounded-pill">
                 Permanent Upper Chamber
@@ -780,15 +779,15 @@ require_once __DIR__ . '/header.php';
 
         <h1 class="display-6 fw-extrabold text-white mb-2">
             Bihar Vidhan Parishad (MLCs) Directory <br>
-            <span style="color: var(--accent-saffron);">75 Members of Bihar Legislative Council &amp; 2026 Election Status</span>
+            <span style="color: var(--accent-saffron);">75 Members of Bihar Legislative Council &amp; 2026 Election Results</span>
         </h1>
         <p class="lead text-white-50 mb-4" style="font-size: 1.05rem; max-width: 850px;">
-            Official directory of all 75 Members of the Bihar Legislative Council (विधान परिषद) sourced from Secretariat records. Covers Local Authorities, Graduates, Teachers, Assembly-elected, and Governor-nominated quotas, with live updates on the ongoing 2026 Biennial Election.
+            Official directory of all 75 Members of the Bihar Legislative Council (विधान परिषद) sourced from Secretariat records. Covers Local Authorities, Graduates, Teachers, Assembly-elected, and Governor-nominated quotas, with verified official results of the 2026 Biennial Election.
         </p>
 
         <div class="d-flex flex-wrap gap-2">
-            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-danger fw-bold px-3.5 py-2 shadow-sm d-inline-flex align-items-center gap-1.5">
-                <i class="bi bi-broadcast"></i> 2026 Election Hub (8 Seats)
+            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-warning fw-bold px-3.5 py-2 text-dark shadow-sm d-inline-flex align-items-center gap-1.5">
+                <i class="bi bi-trophy-fill"></i> 2026 Results Hub (8 Seats)
             </a>
             <a href="<?php echo SITE_URL; ?>/mla" class="btn btn-warning fw-bold px-3 py-2 text-dark shadow-sm">
                 <i class="bi bi-person-badge me-1"></i> 243 MLAs Directory
@@ -811,31 +810,31 @@ require_once __DIR__ . '/header.php';
     <?php renderGoogleAd('leaderboard', GOOGLE_AD_SLOT_HEADER, 'mb-4'); ?>
 
     <!-- Ongoing Election Notice Banner -->
-    <div class="card border-0 rounded-4 shadow-sm mb-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #dc2626 100%);">
+    <div class="card border-0 rounded-4 shadow-sm mb-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #065f46 0%, #047857 50%, #059669 100%);">
         <div class="p-3.5 p-lg-4 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
             <div class="d-flex align-items-start gap-3">
-                <div class="rounded-circle bg-white text-danger d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; font-size: 1.4rem;">
-                    <i class="bi bi-broadcast"></i>
+                <div class="rounded-circle bg-white text-success d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 48px; height: 48px; font-size: 1.4rem;">
+                    <i class="bi bi-trophy-fill"></i>
                 </div>
                 <div>
                     <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
-                        <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">Election in Progress</span>
+                        <span class="badge bg-warning text-dark fw-bold px-2.5 py-1 rounded-pill text-uppercase">Official Results Declared</span>
                         <span class="badge bg-white bg-opacity-25 text-white fw-semibold px-2.5 py-1 rounded-pill">Biennial Election 2026</span>
                         <span class="text-white-50 small">&bull; Notification: TCGCGajat2026</span>
                     </div>
-                    <h4 class="fw-extrabold text-white mb-1">Bihar Vidhan Parishad Elections Underway (8 Seats)</h4>
+                    <h4 class="fw-extrabold text-white mb-1">Bihar Vidhan Parishad Election Results Declared (All 8 Seats)</h4>
                     <p class="text-white-50 mb-0 small" style="max-width: 820px;">
-                        Biennial elections are actively underway for <strong>4 Graduates'</strong> (Patna, Tirhut, Darbhanga, Kosi) &amp; <strong>4 Teachers'</strong> (Patna, Tirhut, Darbhanga, Saran) Constituencies. Polling concluded on <strong>23 October 2026</strong>, Counting begins on <strong>27 October 2026 at 08:00 AM IST</strong>.
+                        Official certified results have been announced for all <strong>4 Graduates'</strong> (Patna, Tirhut, Darbhanga, Kosi) &amp; <strong>4 Teachers'</strong> (Patna, Tirhut, Darbhanga, Saran) Constituencies. Polling held on <strong>23 October 2026</strong>, Counting concluded on <strong>27 October 2026</strong>.
                     </p>
                 </div>
             </div>
             <div class="d-flex flex-wrap gap-2 flex-shrink-0">
                 <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-warning fw-bold text-dark rounded-pill px-3.5 py-2 shadow-sm d-inline-flex align-items-center gap-1.5">
-                    <span>Full Election Hub &amp; Gazette</span>
+                    <span>Full Results Hub &amp; Gazette</span>
                     <i class="bi bi-arrow-right"></i>
                 </a>
                 <button type="button" class="btn btn-outline-light rounded-pill px-3 py-2 fw-semibold" onclick="filterQuota('Election', document.querySelector('[data-quota=\'Election\']'))">
-                    <i class="bi bi-funnel me-1"></i> Filter 8 Ongoing Seats
+                    <i class="bi bi-funnel me-1"></i> Filter 8 Declared Seats
                 </button>
             </div>
         </div>
@@ -852,10 +851,10 @@ require_once __DIR__ . '/header.php';
             'turnout' => 57.56,
             'remark' => 'Highest in Graduates / स्नातकों में सर्वाधिक',
             'badge' => 'bg-success text-white',
-            'sitting_mlc' => 'Neeraj Kumar',
-            'sitting_mlc_hi' => 'नीरज कुमार',
+            'sitting_mlc' => 'Neeraj Kumar (Re-elected)',
+            'sitting_mlc_hi' => 'नीरज कुमार (पुनर्निर्वाचित)',
             'party' => 'JD(U)',
-            'term' => '16 Nov 2026'
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Graduates',
@@ -865,10 +864,10 @@ require_once __DIR__ . '/header.php';
             'turnout' => 48.51,
             'remark' => 'Lowest in Graduates / स्नातकों में न्यूनतम',
             'badge' => 'bg-secondary text-white',
-            'sitting_mlc' => 'Banshidhar Brajwasi',
-            'sitting_mlc_hi' => 'वंशीधर ब्रजवासी',
+            'sitting_mlc' => 'Banshidhar Brajwasi (Re-elected)',
+            'sitting_mlc_hi' => 'वंशीधर ब्रजवासी (पुनर्निर्वाचित)',
             'party' => 'IND',
-            'term' => '16 Nov 2026'
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Graduates',
@@ -878,10 +877,10 @@ require_once __DIR__ . '/header.php';
             'turnout' => 54.73,
             'remark' => 'Strong Voting / मजबूत मतदान',
             'badge' => 'bg-primary text-white',
-            'sitting_mlc' => 'Sarvesh Kumar',
-            'sitting_mlc_hi' => 'सर्वेश कुमार',
+            'sitting_mlc' => 'Dr. Sarvesh Kumar (Re-elected)',
+            'sitting_mlc_hi' => 'डॉ. सर्वेश कुमार (पुनर्निर्वाचित)',
             'party' => 'BJP',
-            'term' => '16 Nov 2026'
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Graduates',
@@ -891,10 +890,10 @@ require_once __DIR__ . '/header.php';
             'turnout' => 54.73,
             'remark' => 'Strong Voting / मजबूत मतदान',
             'badge' => 'bg-primary text-white',
-            'sitting_mlc' => 'Dr. N.K. Yadav',
-            'sitting_mlc_hi' => 'डॉ. एनके यादव',
+            'sitting_mlc' => 'Dr. N.K. Yadav (Re-elected)',
+            'sitting_mlc_hi' => 'डॉ. एनके यादव (पुनर्निर्वाचित)',
             'party' => 'BJP',
-            'term' => '16 Nov 2026'
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Teachers',
@@ -904,10 +903,10 @@ require_once __DIR__ . '/header.php';
             'turnout' => 74.75,
             'remark' => 'Lowest in Teachers / शिक्षकों में कम',
             'badge' => 'bg-warning text-dark',
-            'sitting_mlc' => 'Nawal Kishore Yadav',
-            'sitting_mlc_hi' => 'नवल किशोर यादव',
-            'party' => 'BJP',
-            'term' => '16 Nov 2026'
+            'sitting_mlc' => 'Dr. Sanjeev Kumar (New Winner)',
+            'sitting_mlc_hi' => 'डॉ. संजीव कुमार (नवनिर्वाचित)',
+            'party' => 'RJD',
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Teachers',
@@ -917,10 +916,10 @@ require_once __DIR__ . '/header.php';
             'turnout' => 82.99,
             'remark' => 'Heavy Voting / भारी मतदान',
             'badge' => 'bg-primary text-white',
-            'sitting_mlc' => 'Sanjay Kumar Singh',
-            'sitting_mlc_hi' => 'संजय कुमार सिंह',
-            'party' => 'CPI',
-            'term' => '16 Nov 2026'
+            'sitting_mlc' => 'Dr. Narendra Prasad Singh (New Winner)',
+            'sitting_mlc_hi' => 'डॉ. नरेंद्र प्रसाद सिंह (नवनिर्वाचित)',
+            'party' => 'BJP',
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Teachers',
@@ -930,10 +929,10 @@ require_once __DIR__ . '/header.php';
             'turnout' => 85.87,
             'remark' => 'Heavy Voting / भारी मतदान',
             'badge' => 'bg-primary text-white',
-            'sitting_mlc' => 'Dr. Madan Mohan Jha',
-            'sitting_mlc_hi' => 'डॉ. मदन मोहन झा',
-            'party' => 'INC',
-            'term' => '16 Nov 2026'
+            'sitting_mlc' => 'Dr. Suresh Prasad Rai (New Winner)',
+            'sitting_mlc_hi' => 'डॉ. सुरेश प्रसाद राय (नवनिर्वाचित)',
+            'party' => 'Jan Suraaj Party',
+            'term' => '2026 - 2032'
         ],
         [
             'quota' => 'Teachers',
@@ -943,22 +942,22 @@ require_once __DIR__ . '/header.php';
             'turnout' => 89.05,
             'remark' => 'Highest in Bihar / राज्य में रिकॉर्ड',
             'badge' => 'bg-success text-white',
-            'sitting_mlc' => 'Afaq Ahmad',
-            'sitting_mlc_hi' => 'अफाक अहमद',
-            'party' => 'Jan Suraaj Party',
-            'term' => '16 Nov 2026'
+            'sitting_mlc' => 'Rahul Raj (New Winner)',
+            'sitting_mlc_hi' => 'राहुल राज (नवनिर्वाचित)',
+            'party' => 'IND',
+            'term' => '2026 - 2032'
         ]
     ];
     ?>
 
-    <div class="card border-0 rounded-4 shadow-sm mb-4 bg-white overflow-hidden border-top border-4 border-danger">
+    <div class="card border-0 rounded-4 shadow-sm mb-4 bg-white overflow-hidden border-top border-4 border-success">
         <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
             <div>
                 <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-danger text-white fw-bold px-2.5 py-1 rounded-pill blink-anim">
-                        <i class="bi bi-broadcast me-1"></i> Official Final Turnout Report
-                    </span>
                     <span class="badge bg-success text-white fw-bold px-2.5 py-1 rounded-pill">
+                        <i class="bi bi-check-circle-fill me-1"></i> Official Final Results &amp; Turnout
+                    </span>
+                    <span class="badge bg-primary text-white fw-bold px-2.5 py-1 rounded-pill">
                         CEO Bihar Final VTR
                     </span>
                     <span class="badge bg-white bg-opacity-25 border text-dark fw-semibold px-2.5 py-1 rounded-pill extra-small">
@@ -966,18 +965,18 @@ require_once __DIR__ . '/header.php';
                     </span>
                 </div>
                 <h5 class="fw-bold text-navy mb-0 mt-1.5 font-heading">
-                    Bihar Vidhan Parishad 8 Seats Biennial Election 2026: Official Voting Turnout &amp; Incumbents
+                    Bihar Vidhan Parishad 8 Seats Biennial Election 2026: Official Results &amp; Final Turnout
                 </h5>
                 <div class="text-muted small" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                    बिहार विधान परिषद की शिक्षक और स्नातक कोटे की 8 सीटों का आधिकारिक अंतिम मतदान प्रतिशत (स्रोत: CEO Bihar Final VTR PDF)
+                    बिहार विधान परिषद की शिक्षक और स्नातक कोटे की 8 सीटों का आधिकारिक चुनाव परिणाम एवं मतदान प्रतिशत (स्रोत: CEO Bihar Final VTR)
                 </div>
             </div>
             <div class="d-flex gap-2 flex-wrap">
                 <a href="https://ceoelection.bihar.gov.in/PDF/Year_2026/VTR/Final%20VTR%20in%20TC%20GC%20Election%202026.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
                     <i class="bi bi-file-earmark-pdf-fill"></i> Final VTR PDF
                 </a>
-                <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
-                    <span>Full Election Hub</span>
+                <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election" class="btn btn-success btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1">
+                    <span>Full Results Hub</span>
                     <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
@@ -1010,8 +1009,8 @@ require_once __DIR__ . '/header.php';
                 <div class="col-6 col-md-3">
                     <div class="p-2 bg-white rounded-3 border">
                         <span class="text-muted extra-small d-block">Result Status</span>
-                        <strong class="text-dark fs-6">7 Declared Won &bull; 1 Count</strong>
-                        <span class="text-success extra-small d-block">Form 21C Certifications</span>
+                        <strong class="text-success fs-6">All 8 Declared Won</strong>
+                        <span class="text-success extra-small d-block">Form 21C / 21D Certifications</span>
                     </div>
                 </div>
             </div>
@@ -1023,9 +1022,9 @@ require_once __DIR__ . '/header.php';
                     <tr>
                         <th class="ps-3.5 py-3">Constituency &amp; Quota</th>
                         <th class="py-3" style="min-width: 170px;">Final Turnout % (CEO Bihar VTR)</th>
-                        <th class="py-3">Current Sitting MLC (वर्तमान विधान पार्षद)</th>
+                        <th class="py-3">Elected MLC 2026 (नवनिर्वाचित विधान पार्षद)</th>
                         <th class="py-3 text-center">Party</th>
-                        <th class="py-3">Tenure Expiry</th>
+                        <th class="py-3">Tenure</th>
                         <th class="py-3 text-end pe-3.5">Action</th>
                     </tr>
                 </thead>
@@ -1096,7 +1095,7 @@ require_once __DIR__ . '/header.php';
         <div class="card-footer bg-light py-2.5 px-3.5 border-top d-flex flex-wrap justify-content-between align-items-center gap-2 extra-small text-muted">
             <div>
                 <i class="bi bi-info-circle text-primary me-1"></i>
-                कतार में लगे मतदाताओं के वोट डालने के बाद मतपेटियां सील होकर स्ट्रांग रूम भेजी गईं। परिणाम <strong>27 अक्टूबर 2026</strong> को मतगणना के बाद आएगा।
+                सभी 8 सीटों पर मतगणना पूरी होकर आधिकारिक परिणाम घोषित कर दिए गए हैं (Form 21C / 21D)।
             </div>
             <a href="https://www.livehindustan.com/bihar/bihar-mlc-election-2026-voting-live-bjp-rjd-jdu-chunav-latest-updates-live-blog-201792729617020.html" 
                target="_blank" 
@@ -1342,10 +1341,10 @@ require_once __DIR__ . '/header.php';
                                         <?php endif; ?>
                                         <div>
                                             <?php if ($isVacant && $ongoingInfo): ?>
-                                                <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="fw-bold text-danger text-decoration-none hover-primary d-block" style="font-size: 0.95rem;">
-                                                    <i class="bi bi-exclamation-circle-fill me-1"></i>Seat Vacant (Election Active)
+                                                <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="fw-bold text-success text-decoration-none hover-primary d-block" style="font-size: 0.95rem;">
+                                                    <i class="bi bi-trophy-fill me-1 text-warning"></i>2026 Election Result Declared
                                                 </a>
-                                                <div class="text-muted small">Biennial Election 2026 In Progress</div>
+                                                <div class="text-success small fw-semibold">Winner Elected (2026-2032)</div>
                                             <?php elseif ($isVacant): ?>
                                                 <span class="fw-bold text-secondary" style="font-size: 0.95rem;">
                                                     Seat Vacant
@@ -1375,8 +1374,8 @@ require_once __DIR__ . '/header.php';
                                             <?php echo $quotaIcon . ' ' . htmlspecialchars($quotaType); ?> Quota
                                         </span>
                                         <?php if ($ongoingInfo): ?>
-                                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="badge bg-danger text-white text-decoration-none extra-small px-2 py-0.5 rounded-pill shadow-xs blink-anim">
-                                                <i class="bi bi-broadcast me-0.5"></i> Election Going On
+                                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="badge bg-success text-white text-decoration-none extra-small px-2 py-0.5 rounded-pill shadow-xs">
+                                                <i class="bi bi-check-circle-fill me-0.5"></i> Result Declared
                                             </a>
                                         <?php endif; ?>
                                     </div>
@@ -1384,9 +1383,9 @@ require_once __DIR__ . '/header.php';
 
                                 <td class="text-center" style="min-width: 120px;">
                                     <?php if ($ongoingInfo): ?>
-                                        <span class="badge bg-danger bg-opacity-15 text-danger border border-danger border-opacity-25 px-2.5 py-1 small fw-bold">
-                                            🗳️ Poll 23 Oct
-                                        </span>
+                                        <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="badge bg-success bg-opacity-15 text-success border border-success border-opacity-25 px-2.5 py-1 small fw-bold text-decoration-none">
+                                            🏆 Results Out
+                                        </a>
                                     <?php elseif (!empty($party)): ?>
                                         <span class="badge-party <?php echo $partyCleanClass; ?>">
                                             <?php echo htmlspecialchars($party); ?>
@@ -1400,14 +1399,16 @@ require_once __DIR__ . '/header.php';
 
                                 <td style="min-width: 210px;">
                                     <?php if ($ongoingInfo): ?>
-                                        <div class="extra-small text-danger fw-bold mb-0.5">
-                                            <i class="bi bi-calendar-check me-1"></i>Voting: 23 Oct 2026 (8 AM-4 PM)
-                                        </div>
                                         <div class="extra-small text-success fw-bold mb-0.5">
-                                            <i class="bi bi-bar-chart-fill me-1"></i>Counting: 27 Oct 2026 (8:00 AM)
+                                            <i class="bi bi-check2-all me-1"></i>Official Result Declared
+                                        </div>
+                                        <div class="extra-small text-muted mb-0.5">
+                                            <i class="bi bi-calendar-event me-1"></i>Term: 2026 &ndash; 2032
                                         </div>
                                         <div class="extra-small text-muted">
-                                            <i class="bi bi-file-earmark-text me-1"></i>Gazette: <?php echo htmlspecialchars($ongoingInfo['gazette']); ?>
+                                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $ongoingInfo['slug']; ?>" class="text-decoration-none text-primary fw-semibold">
+                                                <i class="bi bi-trophy-fill me-1 text-warning"></i>View Elected MLC &rarr;
+                                            </a>
                                         </div>
                                     <?php else: ?>
                                         <?php if (!empty($phone)): ?>

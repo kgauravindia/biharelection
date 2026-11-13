@@ -63,6 +63,10 @@ if ($db_menu) {
         <a href="districts.php" class="nav-link-custom <?php echo in_array($current_page, ['districts.php', 'edit-district.php']) ? 'active' : ''; ?>" title="38 Bihar Districts">
             <i class="fas fa-map-location-dot text-success"></i> <span>38 Districts</span>
         </a>
+        <a href="mlcs.php" class="nav-link-custom <?php echo in_array($current_page, ['mlcs.php', 'edit-mlc.php']) ? 'active' : ''; ?>" title="75 Vidhan Parishad MLCs Directory">
+            <i class="fas fa-scroll text-info"></i> <span>Vidhan Parishad MLCs</span>
+            <span class="badge rounded-pill bg-info text-dark">75</span>
+        </a>
 
         <div class="nav-section-title">Panchayat & Rural Governance</div>
         <a href="mukhiyas.php" class="nav-link-custom <?php echo ($current_page == 'mukhiyas.php') ? 'active' : ''; ?>" title="Gram Panchayat Mukhiyas">
@@ -148,8 +152,8 @@ if ($db_menu) {
         </a>
 
         <div class="nav-section-title">System & SEO</div>
-        <a href="git-push.php" class="nav-link-custom <?php echo ($current_page == 'git-push.php') ? 'active' : ''; ?>" title="Git Push & GitHub Deployment Console">
-            <i class="fab fa-git-alt text-danger"></i> <span>Git Push / Deploy</span>
+        <a href="git-push.php" class="nav-link-custom <?php echo ($current_page == 'git-push.php') ? 'active' : ''; ?>" title="Git Push & GitHub Version Control Console">
+            <i class="fab fa-git-alt text-danger"></i> <span>Version Control / Push</span>
         </a>
         <a href="sitemap.php" class="nav-link-custom <?php echo ($current_page == 'sitemap.php') ? 'active' : ''; ?>" title="XML Sitemap & SEO Tools">
             <i class="fas fa-sitemap text-warning"></i> <span>Sitemap & SEO</span>

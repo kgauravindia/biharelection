@@ -310,7 +310,7 @@ $newsSources = [
     ]
 ];
 
-// 8 सीटों का लाइव मतगणना विवरण, प्रत्याशी स्थिति एवं मीडिया स्रोत इनपुट (27 अक्टूबर 2026 अपडेटेड)
+// 8 सीटों के आधिकारिक चुनाव परिणाम, विजयी प्रत्याशी एवं मीडिया स्रोत इनपुट (सभी 8 परिणाम घोषित)
 $electionResults = [
     [
         'id' => 'tirhut-teachers',
@@ -391,9 +391,9 @@ $electionResults = [
         'name' => 'Patna Graduates',
         'name_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
         'slug' => 'patna-graduates',
-        'status' => 'जदयू आगे (त्रिकोणीय कड़ा मुकाबला)',
-        'status_badge' => 'bg-warning text-dark blink-anim',
-        'is_declared' => false,
+        'status' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
         'turnout' => 57.56,
         'booths' => 134,
         'counting_centre' => 'कला एवं शिल्प महाविद्यालय, पटना',
@@ -401,23 +401,23 @@ $electionResults = [
         'leading' => [
             'name' => 'नीरज कुमार',
             'party' => 'JD(U)',
-            'role' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी (बढ़त पर)'
+            'role' => 'विजयी घोषित (लगातार चौथी बार निर्वाचित) / जदयू - एनडीए'
         ],
         'trailing' => [
             'name' => 'दिलीप पटेल (कुमार)',
             'party' => 'RJD',
-            'role' => 'महागठबंधन प्रत्याशी (कड़ा मुकाबला)'
+            'role' => 'उप-विजेता (महागठबंधन प्रत्याशी)'
         ],
         'other_key' => [
             'name' => 'अनुज सिंह',
             'party' => 'Jan Suraaj',
             'role' => 'जन सुराज समर्थित (अनंत सिंह समर्थित)'
         ],
-        'trend_analysis' => 'प्रतिष्ठापूर्ण मुकाबला: 3 बार के जदयू विधान पार्षद नीरज कुमार राजद के दिलीप पटेल और जन सुराज समर्थित अनुज सिंह के खिलाफ कला एवं शिल्प महाविद्यालय केंद्र पर बढ़त बनाए हुए हैं।',
+        'trend_analysis' => 'आधिकारिक परिणाम घोषित: जदयू के वरिष्ठ नेता नीरज कुमार लगातार चौथी बार एमएलसी निर्वाचित हुए; कला एवं शिल्प महाविद्यालय केंद्र पर कोटा पार कर राजद के दिलीप पटेल व जन सुराज समर्थित अनुज सिंह को हराया।',
         'sources_cited' => [
-            'द वीक' => 'शुरुआती चक्रों में जदयू के नीरज कुमार और राजद के दिलीप पटेल के बीच पटना और नालंदा के मतपत्रों में करीबी मुकाबला।',
-            'दैनिक जागरण' => 'प्रमंडलीय आयुक्त की सीधी निगरानी में टेबल-दर-टेबल वरीयता मतपत्रों की छंटनी व सत्यापन जारी।',
-            'हिन्दुस्तान' => 'मोकामा की राजनीतिक सरगर्मियों के बीच जन सुराज समर्थित अनुज सिंह को भी महत्वपूर्ण मत; कोटा छंटनी जारी।'
+            'दैनिक जागरण' => 'जदयू के वरिष्ठ नेता नीरज कुमार लगातार चौथी बार पटना स्नातक क्षेत्र से एमएलसी निर्वाचित; जीत का प्रमाण पत्र प्राप्त किया।',
+            'हिन्दुस्तान' => 'कला एवं शिल्प महाविद्यालय केंद्र पर कोटा निर्धारण के बाद नीरज कुमार विजयी घोषित, समर्थकों में जश्न।',
+            'द वीक' => 'मोकामा व नालंदा के मतदाताओं का भारी समर्थन मिला; नीरज कुमार ने राजद प्रत्याशी को पराजित कर सीट पर कब्जा बनाए रखा।'
         ]
     ],
     [
@@ -463,9 +463,9 @@ $electionResults = [
         'name' => 'Tirhut Graduates',
         'name_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
         'slug' => 'tirhut-graduates',
-        'status' => 'निर्दलीय मजबूत बढ़त पर (अंतिम कोटा चक्र)',
-        'status_badge' => 'bg-warning text-dark blink-anim',
-        'is_declared' => false,
+        'status' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
         'turnout' => 48.51,
         'booths' => 145,
         'counting_centre' => 'एमआईटी परिसर, मुजफ्फरपुर',
@@ -473,23 +473,23 @@ $electionResults = [
         'leading' => [
             'name' => 'वंशीधर ब्रजवासी',
             'party' => 'IND',
-            'role' => 'निवर्तमान एमएलसी (निर्दलीय) / कोटा निर्धारण चक्र में आगे'
+            'role' => 'विजयी घोषित (सीट बरकरार रखी - निर्दलीय)'
         ],
         'trailing' => [
             'name' => 'अभिषेक झा',
             'party' => 'JD(U)',
-            'role' => 'एनडीए प्रत्याशी (कोटा चक्र में संघर्षरत)'
+            'role' => 'उप-विजेता (एनडीए / जदयू प्रत्याशी)'
         ],
         'other_key' => [
             'name' => 'डॉ. रश्मि गौतम / डॉ. विमोहन',
             'party' => 'RJD / Jan Suraaj',
             'role' => 'राजद प्रत्याशी व जन सुराज उम्मीदवार'
         ],
-        'trend_analysis' => 'अंतिम चक्र जारी: एमआईटी मुजफ्फरपुर में निवर्तमान एमएलसी वंशीधर ब्रजवासी (निर्दलीय) जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम के खिलाफ निर्णायक बढ़त बनाए हुए हैं।',
+        'trend_analysis' => 'आधिकारिक परिणाम घोषित: निर्दलीय विधान पार्षद वंशीधर ब्रजवासी ने तिरहुत स्नातक सीट पर अपनी जीत बरकरार रखी; जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम को कड़े मुकाबले में हराया।',
         'sources_cited' => [
-            'इंडिया टीवी' => 'शुरुआती रुझानों में निर्दलीय वंशीधर ब्रजवासी 2,813 मतों के साथ जदयू के अभिषेक झा (1,739) और डॉ. रश्मि गौतम (1,407) से आगे।',
-            'दैनिक जागरण' => 'एमआईटी मुजफ्फरपुर में 14 टेबलों पर 145 बूथों के मतपेटियों की छंटनी जारी।',
-            'हिन्दुस्तान' => 'तिरहुत प्रमंडल के 4 जिलों में जीत का कोटा हासिल करने के लिए कई चक्रों का एलिमिनेशन जारी।'
+            'हिन्दुस्तान' => 'निर्दलीय प्रत्याशी वंशीधर ब्रजवासी ने तिरहुत स्नातक सीट पर जीत बरकरार रखी; जीत का प्रमाण पत्र प्राप्त किया।',
+            'दैनिक जागरण' => 'एमआईटी मुजफ्फरपुर केंद्र पर तिरहुत प्रमंडलीय आयुक्त द्वारा वंशीधर ब्रजवासी को विजयी घोषित किया गया।',
+            'प्रभात खबर' => 'जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम को पछाड़ते हुए ब्रजवासी ने आवश्यक कोटा हासिल किया।'
         ]
     ],
     [
@@ -571,9 +571,9 @@ $electionResults = [
         'name' => 'Kosi Graduates',
         'name_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
         'slug' => 'kosi-graduates',
-        'status' => 'भाजपा भारी बढ़त पर (24,075 प्रथम वरीयता मत)',
-        'status_badge' => 'bg-primary text-white blink-anim',
-        'is_declared' => false,
+        'status' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
         'turnout' => 54.73,
         'booths' => 181,
         'counting_centre' => 'पूर्णिया / सहरसा मतगणना केंद्र',
@@ -581,23 +581,23 @@ $electionResults = [
         'leading' => [
             'name' => 'डॉ. एनके यादव',
             'party' => 'BJP',
-            'role' => 'वर्तमान विधान पार्षद (11 राउंड में 24,075 प्रथम वरीयता मत / कोटा: 32,201)'
+            'role' => 'विजयी घोषित (32,201 कोटा पार कर जीते) / भाजपा - एनडीए'
         ],
         'trailing' => [
             'name' => 'नितेश कुमार',
             'party' => 'RJD',
-            'role' => 'महागठबंधन प्रत्याशी (राउंड 11 के बाद 18,535 मत)'
+            'role' => 'उप-विजेता (महागठबंधन प्रत्याशी - 18,535 मत)'
         ],
         'other_key' => [
             'name' => 'रजनीश रंजन',
             'party' => 'Jan Suraaj',
-            'role' => 'जन सुराज प्रत्याशी (राउंड 11 के बाद 15,306 मत)'
+            'role' => 'जन सुराज प्रत्याशी (15,306 मत)'
         ],
-        'trend_analysis' => 'भाजपा के डॉ. एनके यादव 11 राउंड की प्रथम वरीयता गणना में 24,075 मतों के साथ राजद के नितेश कुमार (18,535) और जन सुराज के रजनीश रंजन (15,306) से आगे; 32,201 कोटा हेतु दूसरी वरीयता गिनती जारी।',
+        'trend_analysis' => 'आधिकारिक परिणाम घोषित: 14 जिलों में विस्तृत कोसी स्नातक सीट पर भाजपा के निवर्तमान एमएलसी डॉ. एन.के. यादव ने 32,201 का वैधानिक कोटा पार कर शानदार जीत दर्ज की; राजद के नीतीश कुमार और जन सुराज के रजनीश रंजन पराजित।',
         'sources_cited' => [
-            'दैनिक जागरण' => '11 राउंड की पहली वरीयता गिनती में डॉ. एनके यादव ने 24,075 मत पाकर 32,201 कोटे की ओर मजबूत बढ़त बनाई; दूसरी वरीयता की गिनती जारी।',
-            'हिन्दुस्तान' => 'भाजपा प्रत्याशी ने राजद के नितेश कुमार (18,535) और जन सुराज के रजनीश रंजन (15,306) पर 5,500+ मतों की ठोस बढ़त कायम रखी।',
-            'ईटीवी भारत' => 'सहरसा/पूर्णिया मतगणना केंद्र पर कड़ी सुरक्षा के बीच द्वितीय वरीयता की छंटनी जारी।'
+            'दैनिक जागरण' => 'भाजपा के डॉ. एन.के. यादव 32,201 का विजयी कोटा पार कर कोसी स्नातक से पुनः विधान पार्षद निर्वाचित हुए।',
+            'हिन्दुस्तान' => '14 जिलों के कोसी स्नातक क्षेत्र में भाजपा का दबदबा बरकरार; डॉ. एनके यादव ने राजद प्रत्याशी को बड़े अंतर से हराया।',
+            'ईटीवी भारत' => 'सहरसा/पूर्णिया केंद्र पर निर्वाची पदाधिकारी द्वारा डॉ. एन.के. यादव को जीत का आधिकारिक प्रमाण पत्र प्रदान किया गया।'
         ]
     ]
 ];
@@ -836,11 +836,11 @@ $timeline = [
         <div class="row align-items-center g-4">
             <div class="col-lg-8">
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                    <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-1.5">
-                        <span class="live-pulse-dot" style="background:#fff;"></span> मतगणना लाइव &bull; 28 अक्टूबर 2026
+                    <span class="badge bg-success text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-1.5">
+                        <i class="bi bi-check-circle-fill"></i> आधिकारिक चुनाव परिणाम &bull; सभी 8 सीटें घोषित
                     </span>
-                    <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold">
-                        5 परिणाम घोषित &bull; 3 सीटों पर गणना
+                    <span class="badge bg-primary text-white px-3 py-1.5 rounded-pill fw-bold">
+                        4 एनडीए &bull; 2 निर्दलीय &bull; 1 राजद &bull; 1 जन सुराज
                     </span>
                     <span class="badge bg-light text-dark px-3 py-1.5 rounded-pill fw-semibold">
                         8 सीटें (4 स्नातक + 4 शिक्षक)
@@ -851,17 +851,17 @@ $timeline = [
                     बिहार विधान परिषद् चुनाव परिणाम 2026
                 </h1>
                 <h2 class="h5 fw-normal text-light opacity-90 mb-3" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                    8 सीटों (4 स्नातक एवं 4 शिक्षक निर्वाचन क्षेत्र) की लाइव मतगणना, रुझान एवं परिणाम
+                    8 सीटों (4 स्नातक एवं 4 शिक्षक निर्वाचन क्षेत्र) के आधिकारिक चुनाव परिणाम एवं फाइनल टैली
                 </h2>
                 
                 <p class="lead fs-6 text-light opacity-90 mb-4" style="max-width: 720px; line-height: 1.6;">
-                    <strong>दैनिक जागरण, हिन्दुस्तान, प्रभात खबर एवं मुख्य निर्वाचन पदाधिकारी (CEO Bihar)</strong> द्वारा जारी आधिकारिक अधिसूचनाओं के आधार पर लाइव मतगणना आंकड़े, वरीयता चक्र एवं सीटवार स्थिति।
+                    <strong>दैनिक जागरण, हिन्दुस्तान, प्रभात खबर एवं मुख्य निर्वाचन पदाधिकारी (CEO Bihar)</strong> द्वारा जारी आधिकारिक अधिसूचनाओं के आधार पर सभी 8 निर्वाचन क्षेत्रों के प्रमाणित चुनाव परिणाम एवं आंकड़े।
                 </p>
 
                 <div class="d-flex flex-wrap gap-2 pt-1">
                     <a href="#election-results" class="btn btn-danger px-3.5 py-2.5 rounded-3 fw-bold text-white shadow-sm d-inline-flex align-items-center gap-2">
                         <i class="bi bi-trophy-fill"></i>
-                        <span>लाइव परिणाम एवं रुझान (Election Results) &rarr;</span>
+                        <span>आधिकारिक परिणाम व फाइनल टैली (Election Results) &rarr;</span>
                     </a>
                     <a href="#media-sources" class="btn btn-warning px-3 py-2.5 rounded-3 fw-bold text-dark d-inline-flex align-items-center gap-1.5">
                         <i class="bi bi-newspaper"></i> विभिन्न स्रोत संदर्भ (Sources Cited)
@@ -884,22 +884,22 @@ $timeline = [
                     <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 py-3 text-center">
                         <div class="d-inline-flex align-items-center gap-1.5 px-3 py-1 bg-success text-white rounded-pill extra-small fw-bold mb-2 shadow-sm">
                             <i class="bi bi-check-circle-fill"></i>
-                            <span>5 परिणाम घोषित &bull; 3 सीटों पर कोटा गणना जारी</span>
+                            <span>सभी 8 परिणाम घोषित &bull; आधिकारिक परिणाम प्रमाणित</span>
                         </div>
                         <h6 class="text-uppercase small fw-bold text-warning mb-0">
-                            <i class="bi bi-broadcast me-1"></i> वोटों की गिनती व परिणाम बुलेटिन
+                            <i class="bi bi-award-fill me-1"></i> आधिकारिक परिणाम एवं फाइनल टैली बुलेटिन
                         </h6>
-                        <span class="text-white small fw-bold">बुधवार, 28 अक्टूबर 2026 (सुबह का विशेष बुलेटिन)</span>
+                        <span class="text-white small fw-bold">बिहार विधान परिषद् द्विवार्षिक चुनाव 2026</span>
                     </div>
                     <div class="card-body p-4 text-center">
                         <!-- Round Status Pulse -->
-                        <div class="p-3 rounded-3 mb-3 text-start" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35);">
+                        <div class="p-3 rounded-3 mb-3 text-start" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.35);">
                             <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="live-pulse-dot" style="background:#22c55e;"></span>
-                                <strong class="text-warning small text-uppercase">स्थिति: 5 सीटें घोषित &bull; 3 पर द्वितीय वरीयता छंटनी</strong>
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                <strong class="text-success small text-uppercase">स्थिति: सभी 8 सीटें घोषित &bull; आधिकारिक प्रमाण पत्र जारी</strong>
                             </div>
                             <p class="small text-light opacity-90 mb-0" style="font-size: 12px; line-height: 1.45;">
-                                सभी 4 शिक्षक सीटों के नतीजे तय (भाजपा, निर्दलीय, जन सुराज व राजद को 1-1 सीट)। दरभंगा स्नातक में भाजपा के डॉ. सर्वेश कुमार विजयी। कोसी, पटना एवं तिरहुत स्नातक में कोटा राउंड्स जारी।
+                                एनडीए को 4 सीटें (भाजपा 3 - दर्भ. स्नातक, तिरहुत शिक्षक, कोसी स्नातक; जदयू 1 - पटना स्नातक), निर्दलीय को 2 सीटें (सारण शिक्षक - राहुल राज; तिरहुत स्नातक - वंशीधर ब्रजवासी), राजद को 1 (पटना शिक्षक - डॉ. संजीव कुमार) एवं जन सुराज को 1 (दर्भ. शिक्षक - डॉ. सुरेश राय)।
                             </p>
                         </div>
 
@@ -913,13 +913,13 @@ $timeline = [
                             <div>
                                 <i class="bi bi-trophy-fill text-warning me-1"></i> <strong>घोषित परिणाम:</strong>
                             </div>
-                            <span class="badge bg-success text-white fw-bold px-2 py-1">5 सीटें घोषित (विजेता तय)</span>
+                            <span class="badge bg-success text-white fw-bold px-2 py-1">सभी 8 सीटें घोषित (100%)</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
-                                <i class="bi bi-hourglass-split text-danger me-1"></i> <strong>गणना जारी:</strong>
+                                <i class="bi bi-patch-check-fill text-success me-1"></i> <strong>प्रमाणीकरण:</strong>
                             </div>
-                            <span class="text-warning fw-semibold">3 सीटों पर वरीयता छंटनी</span>
+                            <span class="text-success fw-semibold">प्ररूप 21C / 21D जारी</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
@@ -929,7 +929,7 @@ $timeline = [
                         </div>
                         <div class="mt-3 pt-2 border-top border-secondary border-opacity-25">
                             <a href="#election-results" class="btn btn-warning btn-sm w-100 fw-bold rounded-pill text-dark shadow-sm">
-                                <i class="bi bi-arrow-down-circle-fill me-1"></i> लाइव परिणाम व रुझान देखें
+                                <i class="bi bi-arrow-down-circle-fill me-1"></i> आधिकारिक चुनाव परिणाम देखें
                             </a>
                         </div>
                     </div>
@@ -947,16 +947,16 @@ $timeline = [
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">5 / 8</div>
+                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">8 / 8</div>
                     <div class="fw-semibold text-dark small">विजेता घोषित सीटें</div>
-                    <small class="text-muted">4 शिक्षक (BJP, IND, JSP, RJD) + दर्भ. स्नातक (BJP)</small>
+                    <small class="text-muted">सभी 8 सीटों के आधिकारिक नतीजे घोषित</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">3 / 8</div>
-                    <div class="fw-semibold text-dark small">वरीयता कोटा गणना जारी</div>
-                    <small class="text-muted">कोसी, पटना स्नातक, तिरहुत स्नातक</small>
+                    <div class="text-primary fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">4 NDA / 4 अन्य</div>
+                    <div class="fw-semibold text-dark small">अंतिम सीट टैली</div>
+                    <small class="text-muted">4 एनडीए (3 भाजपा, 1 जदयू) | 2 निर्दलीय | 1 राजद | 1 जन सुराज</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
@@ -968,12 +968,12 @@ $timeline = [
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-danger fw-bold display-6 mb-1 d-flex align-items-center justify-content-center gap-1.5" style="font-family: 'Outfit', sans-serif;">
-                        <span class="live-pulse-dot"></span>
-                        <span>LIVE</span>
+                    <div class="text-success fw-bold display-6 mb-1 d-flex align-items-center justify-content-center gap-1.5" style="font-family: 'Outfit', sans-serif;">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>FINAL</span>
                     </div>
-                    <div class="fw-semibold text-dark small">एकल संक्रमणीय मत पद्धति</div>
-                    <small class="text-muted">PR-STV नियम 75 के तहत गणना</small>
+                    <div class="fw-semibold text-dark small">आधिकारिक परिणाम प्रमाणित</div>
+                    <small class="text-muted">PR-STV नियम 75 के तहत वैधानिक घोषणा</small>
                 </div>
             </div>
         </div>
@@ -993,25 +993,25 @@ $timeline = [
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
                     <div>
                         <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge bg-danger text-white fw-bold text-uppercase px-2.5 py-1 d-inline-flex align-items-center gap-1.5 shadow-sm">
-                                <span class="live-pulse-dot" style="background:#fff;"></span> लाइव मतगणना परिणाम
+                            <span class="badge bg-success text-white fw-bold text-uppercase px-2.5 py-1 d-inline-flex align-items-center gap-1.5 shadow-sm">
+                                <i class="bi bi-check-circle-fill"></i> आधिकारिक चुनाव परिणाम
                             </span>
-                            <span class="badge bg-success text-white extra-small fw-semibold px-2 py-0.5 rounded-pill">
-                                5 सीटें घोषित
+                            <span class="badge bg-primary text-white extra-small fw-semibold px-2 py-0.5 rounded-pill">
+                                सभी 8 सीटें घोषित
                             </span>
                         </div>
                         <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
-                            विधान परिषद 8 सीटों के आधिकारिक चुनाव परिणाम एवं रुझान
+                            विधान परिषद 8 सीटों के आधिकारिक चुनाव परिणाम एवं फाइनल टैली
                         </h3>
                         <div class="text-muted small">
-                            दैनिक जागरण, हिन्दुस्तान, प्रभात खबर एवं मुख्य निर्वाचन पदाधिकारी बिहार द्वारा प्राप्त ताज़ा आंकड़े
+                            दैनिक जागरण, हिन्दुस्तान, प्रभात खबर एवं मुख्य निर्वाचन पदाधिकारी बिहार द्वारा प्रमाणित ताज़ा आंकड़े
                         </div>
                     </div>
                     <div class="text-end">
-                        <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
-                            <i class="bi bi-clock-history me-1"></i> अपडेट 07:30 AM IST
+                        <span class="badge bg-success text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            <i class="bi bi-check2-circle me-1"></i> आधिकारिक परिणाम घोषित
                         </span>
-                        <div class="extra-small text-muted mt-1">28 October 2026 Morning Bulletin</div>
+                        <div class="extra-small text-muted mt-1">निर्वाची पदाधिकारियों द्वारा विधिवत प्रमाणित</div>
                     </div>
                 </div>
 
@@ -1020,53 +1020,41 @@ $timeline = [
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #f97316 !important;">
                             <div class="text-uppercase extra-small fw-bold text-muted mb-1">NDA (BJP / JDU)</div>
-                            <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">2</span>
-                                <span class="small fw-bold text-success">Won</span>
-                                <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-primary">2</span>
-                                <span class="extra-small text-muted">Lead</span>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1.5">
+                                <span class="fs-2 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">4</span>
+                                <span class="small fw-bold text-success">सीटें विजयी</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Won: Tirhut Teach &amp; Dbg Grad &bull; Lead: Kosi, Patna Grad</div>
+                            <div class="extra-small text-muted mt-1">3 भाजपा (दर्भ. स्नातक, तिरहुत शिक्षक, कोसी स्नातक) + 1 जदयू (पटना स्नातक)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #16a34a !important;">
                             <div class="text-uppercase extra-small fw-bold text-muted mb-1">MGB (RJD / INC)</div>
-                            <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
-                                <span class="small fw-bold text-success">Won</span>
-                                <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-secondary">0</span>
-                                <span class="extra-small text-muted">Lead</span>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1.5">
+                                <span class="fs-2 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                                <span class="small fw-bold text-success">सीट विजयी</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Won: Patna Teachers (Dr. Sanjeev Kumar unseats BJP)</div>
+                            <div class="extra-small text-muted mt-1">पटना शिक्षक (डॉ. संजीव कुमार ने भाजपा को हराया)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #eab308 !important;">
-                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">Jan Suraaj Party</div>
-                            <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
-                                <span class="small fw-bold text-success">Won</span>
-                                <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-secondary">0</span>
-                                <span class="extra-small text-muted">Lead</span>
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">जन सुराज पार्टी</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1.5">
+                                <span class="fs-2 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                                <span class="small fw-bold text-success">सीट विजयी</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Won: Darbhanga Teachers (Dr. Suresh Rai - First Seat)</div>
+                            <div class="extra-small text-muted mt-1">दरभंगा शिक्षक (डॉ. सुरेश राय - पहली ऐतिहासिक जीत)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #64748b !important;">
-                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">Independents / Others</div>
-                            <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
-                                <span class="small fw-bold text-success">Won</span>
-                                <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-primary">1</span>
-                                <span class="extra-small text-muted">Lead</span>
+                            <div class="text-uppercase extra-small fw-bold text-muted mb-1">निर्दलीय / अन्य</div>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1.5">
+                                <span class="fs-2 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">2</span>
+                                <span class="small fw-bold text-success">सीटें विजयी</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Won: Saran Teach (Rahul Raj) &bull; Lead: Tirhut Grad (Brajwasi)</div>
+                            <div class="extra-small text-muted mt-1">सारण शिक्षक (राहुल राज) एवं तिरहुत स्नातक (वंशीधर ब्रजवासी)</div>
                         </div>
                     </div>
                 </div>
@@ -1131,10 +1119,13 @@ $timeline = [
                                     <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>सारण शिक्षक (दैनिक जागरण / लाइव हिन्दुस्तान):</strong> निर्दलीय प्रत्याशी एवं भाजपा बागी <strong>राहुल राज</strong> ने दूसरी वरीयता के मतों के हस्तांतरण के बाद 4,965 मत प्राप्त कर 800+ मतों से शानदार जीत दर्ज की; जन सुराज के मौजूदा एमएलसी अफाक अहमद और जदयू के आनंद पुष्कर पराजित।
                                 </li>
                                 <li>
-                                    <strong>कोसी स्नातक (दैनिक जागरण / लाइव हिन्दुस्तान):</strong> 14 जिलों में फेली कोसी सीट पर सभी 11 राउंड की प्रथम वरीयता गणना के बाद भाजपा के <strong>डॉ. एन.के. यादव</strong> 24,075 मतों के साथ मजबूत बढ़त पर (राजद के नीतीश कुमार 18,535 और जन सुराज के रजनीश रंजन 15,306)। वर्तमान में 32,201 के विजयी कोटा हेतु दूसरी वरीयता के मतों की गणना जारी।
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>कोसी स्नातक (दैनिक जागरण / लाइव हिन्दुस्तान / ईटीवी भारत):</strong> 14 जिलों में विस्तृत कोसी स्नातक सीट पर भाजपा के निवर्तमान एमएलसी <strong>डॉ. एन.के. यादव</strong> 32,201 का विजयी कोटा पार कर शानदार जीत दर्ज की; राजद के नीतीश कुमार और जन सुराज के रजनीश रंजन पराजित।
                                 </li>
                                 <li>
-                                    <strong>पटना एवं तिरहुत स्नातक (द वीक / प्रभात खबर):</strong> पटना स्नातक में जदयू के <strong>नीरज कुमार</strong> राजद के दिलीप पटेल और जन सुराज के अनुज सिंह के खिलाफ कड़े त्रिकोणीय मुकाबले में बढ़त बनाए हुए हैं। तिरहुत स्नातक में मौजूदा निर्दलीय एमएलसी <strong>वंशीधर ब्रजवासी</strong> प्रारंभिक दौर में 2,813 मतों के साथ जदयू के अभिषेक झा (1,739) और राजद की डॉ. रश्मी गौतम (1,407) से आगे चल रहे हैं।
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>पटना स्नातक (द वीक / दैनिक जागरण / लाइव हिन्दुस्तान):</strong> जदयू के वरिष्ठ नेता <strong>नीरज कुमार</strong> लगातार चौथी बार विधान परिषद सदस्य निर्वाचित हुए; कला एवं शिल्प महाविद्यालय केंद्र पर कोटा पार कर राजद के दिलीप पटेल और जन सुराज समर्थित डॉ. अनुज सिंह को हराया।
+                                </li>
+                                <li>
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>तिरहुत स्नातक (लाइव हिन्दुस्तान / दैनिक जागरण / इंडिया टीवी):</strong> निर्दलीय विधान पार्षद <strong>वंशीधर ब्रजवासी</strong> ने एमआईटी मुजफ्फरपुर केंद्र पर आवश्यक कोटा हासिल कर तिरहुत स्नातक सीट बरकरार रखी; जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम को पराजित किया।
                                 </li>
                             </ul>
                         </div>
@@ -1146,7 +1137,7 @@ $timeline = [
                     <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-trophy text-danger fs-5"></i>
-                            <span class="fw-bold text-dark">सीटवार लाइव मतगणना स्थिति एवं प्रमुख दावेदार</span>
+                            <span class="fw-bold text-dark">सीटवार आधिकारिक चुनाव परिणाम एवं निर्वाचित विधान पार्षद (MLCs)</span>
                         </div>
                         <div class="btn-group btn-group-sm" role="group" aria-label="Results Filter">
                             <button type="button" class="btn btn-outline-dark active fw-semibold" onclick="filterResultsTable('all', this)">सभी (8)</button>

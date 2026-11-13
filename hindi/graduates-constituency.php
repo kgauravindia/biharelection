@@ -23,11 +23,11 @@ $graduatesSeats = [
         'ro_url' => 'https://patnadivision.bih.nic.in/',
         'districts' => ['Patna', 'Nalanda', 'Nawada'],
         'districts_hi' => ['पटना', 'नालंदा', 'नवादा'],
-        'status' => 'election_2026',
-        'status_label' => 'द्विवार्षिक चुनाव 2026 सक्रिय',
+        'status' => 'election_declared',
+        'status_label' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित',
         'poll_date' => '23 अक्टूबर 2026',
         'result_date' => '27 अक्टूबर 2026',
-        'incumbent' => 'नीरज कुमार (जदयू) / 2026 चुनाव हेतु रिक्त',
+        'incumbent' => 'नीरज कुमार (जदयू) - पुनर्निर्वाचित (चतुर्थ कार्यकाल)',
         'desc' => 'राज्य की राजधानी पटना सहित नालंदा और नवादा जिलों के स्नातक मतदाताओं का प्रतिनिधित्व। सिविल सेवा अभ्यर्थियों और विश्वविद्यालय स्नातकों का प्रमुख गढ़।'
     ],
     [
@@ -40,11 +40,11 @@ $graduatesSeats = [
         'ro_url' => 'https://tirhutdivision.bih.nic.in/',
         'districts' => ['Muzaffarpur', 'Vaishali', 'Sitamarhi', 'Sheohar'],
         'districts_hi' => ['मुजफ्फरपुर', 'वैशाली', 'सीतामढ़ी', 'शिवहर'],
-        'status' => 'election_2026',
-        'status_label' => 'द्विवार्षिक चुनाव 2026 सक्रिय',
+        'status' => 'election_declared',
+        'status_label' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित',
         'poll_date' => '23 अक्टूबर 2026',
         'result_date' => '27 अक्टूबर 2026',
-        'incumbent' => 'देवेश चंद्र ठाकुर (जदयू) / 2026 चुनाव हेतु रिक्त',
+        'incumbent' => 'वंशीधर ब्रजवासी (निर्दलीय) - पुनर्निर्वाचित',
         'desc' => 'बीआरए बिहार विश्वविद्यालय मुजफ्फरपुर के अंतर्गत 4 प्रमुख उत्तर बिहार जिलों (मुजफ्फरपुर, वैशाली, सीतामढ़ी, शिवहर) का विस्तृत शैक्षणिक क्षेत्र।'
     ],
     [
@@ -57,11 +57,11 @@ $graduatesSeats = [
         'ro_url' => 'https://darbhangadivision.bih.nic.in/',
         'districts' => ['Darbhanga', 'Madhubani', 'Samastipur', 'Begusarai'],
         'districts_hi' => ['दरभंगा', 'मधुबनी', 'समस्तीपुर', 'बेगूसराय'],
-        'status' => 'election_2026',
-        'status_label' => 'द्विवार्षिक चुनाव 2026 सक्रिय',
+        'status' => 'election_declared',
+        'status_label' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित',
         'poll_date' => '23 अक्टूबर 2026',
         'result_date' => '27 अक्टूबर 2026',
-        'incumbent' => 'सर्वेश कुमार (निर्दलीय) / 2026 चुनाव हेतु रिक्त',
+        'incumbent' => 'डॉ. सर्वेश कुमार (भाजपा) - पुनर्निर्वाचित',
         'desc' => 'मिथिलांचल के 4 जिलों (दरभंगा, मधुबनी, समस्तीपुर, बेगूसराय) का प्रतिनिधित्व। ललित नारायण मिथिला विवि एवं औद्योगिक बेल्ट बेगूसराय का संयुक्त क्षेत्र।'
     ],
     [
@@ -74,11 +74,11 @@ $graduatesSeats = [
         'ro_url' => 'https://kosidivision.bih.nic.in/',
         'districts' => ['Saharsa', 'Supaul', 'Madhepura', 'Purnia', 'Araria', 'Kishanganj', 'Katihar', 'Bhagalpur', 'Banka', 'Munger', 'Jamui', 'Lakhisarai', 'Sheikhpura', 'Khagaria'],
         'districts_hi' => ['सहरसा', 'सुपौल', 'मधेपुरा', 'पूर्णिया', 'अररिया', 'किशनगंज', 'कटिहार', 'भागलपुर', 'बांका', 'मुंगेर', 'जमुई', 'लखीसराय', 'शेखपुरा', 'खगड़िया'],
-        'status' => 'election_2026',
-        'status_label' => 'द्विवार्षिक चुनाव 2026 सक्रिय',
+        'status' => 'election_declared',
+        'status_label' => 'द्विवार्षिक चुनाव 2026 परिणाम घोषित',
         'poll_date' => '23 अक्टूबर 2026',
         'result_date' => '27 अक्टूबर 2026',
-        'incumbent' => 'डॉ. एन. के. यादव (भाजपा) / 2026 चुनाव हेतु रिक्त',
+        'incumbent' => 'डॉ. एन. के. यादव (भाजपा) - पुनर्निर्वाचित (तृतीय कार्यकाल)',
         'desc' => 'भौगोलिक दृष्टि से सबसे बड़ा निर्वाचन क्षेत्र, जिसमें 14 जिले (कोसी, पूर्णिया, भागलपुर, मुंगेर प्रमंडल) शामिल हैं। बीएनएमयू, टीएमबीयू और पूर्णिया विवि का क्षेत्र।'
     ],
     [
@@ -504,14 +504,14 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <span class="text-white-50 extra-small fw-bold text-uppercase">तिरहुत स्नातक</span>
-                            <span class="badge bg-warning text-dark extra-small blink-anim">निर्दलीय आगे</span>
+                            <span class="badge bg-success text-white extra-small">निर्दलीय विजयी</span>
                         </div>
                         <div class="d-flex align-items-baseline gap-2 mb-1">
-                            <span class="fs-4 fw-extrabold text-white">48.51%</span>
-                            <span class="text-white-50 extra-small">(स्नातकों में न्यूनतम)</span>
+                            <span class="fs-4 fw-extrabold text-warning">48.51%</span>
+                            <span class="text-white-50 extra-small">(अंतिम परिणाम)</span>
                         </div>
                         <small class="text-white-50 d-block extra-small mb-1">मतदाता: 1,43,988 &bull; 145 बूथ &bull; 17 प्रत्याशी</small>
-                        <div class="fw-semibold text-white extra-small text-truncate">बढ़त: वंशीधर ब्रजवासी (निर्दलीय)</div>
+                        <div class="fw-semibold text-white extra-small text-truncate">निर्वाचित: वंशीधर ब्रजवासी (निर्दलीय)</div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
@@ -591,16 +591,21 @@ require_once __DIR__ . '/includes/header.php';
     <div class="row g-4 mb-5" id="seatsGrid">
         <?php foreach ($graduatesSeats as $seat): 
             $isOngoing = ($seat['status'] === 'election_2026');
+            $isDeclared = ($seat['status'] === 'election_declared');
             $districtsSearchStr = mb_strtolower(implode(' ', $seat['districts_hi']) . ' ' . implode(' ', $seat['districts']) . ' ' . $seat['name_hi'] . ' ' . $seat['name']);
         ?>
-            <div class="col-md-6 col-lg-4 seat-item" id="<?php echo $seat['id']; ?>" data-status="<?php echo $isOngoing ? 'election' : 'active'; ?>" data-search="<?php echo htmlspecialchars($districtsSearchStr); ?>">
-                <div class="constituency-card p-4 <?php echo $isOngoing ? 'election-active' : ''; ?>">
+            <div class="col-md-6 col-lg-4 seat-item" id="<?php echo $seat['id']; ?>" data-status="<?php echo ($isOngoing || $isDeclared) ? 'election' : 'active'; ?>" data-search="<?php echo htmlspecialchars($districtsSearchStr); ?>">
+                <div class="constituency-card p-4 <?php echo ($isOngoing || $isDeclared) ? 'election-active' : ''; ?>">
                     <div>
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2.5 py-1 rounded-pill extra-small fw-bold">
                                 🎓 स्नातक कोटा
                             </span>
-                            <?php if ($isOngoing): ?>
+                            <?php if ($isDeclared): ?>
+                                <span class="badge bg-success text-white px-2.5 py-1 rounded-pill extra-small fw-bold">
+                                    <i class="bi bi-check-circle-fill me-1"></i> परिणाम घोषित
+                                </span>
+                            <?php elseif ($isOngoing): ?>
                                 <span class="badge bg-danger text-white px-2.5 py-1 rounded-pill extra-small fw-bold blink-anim">
                                     <i class="bi bi-broadcast me-1"></i> मतदान 23 अक्टूबर 2026
                                 </span>
@@ -651,7 +656,7 @@ require_once __DIR__ . '/includes/header.php';
 
                     <div class="pt-3 border-top mt-2">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-muted extra-small">वर्तमान सदस्य:</span>
+                            <span class="text-muted extra-small"><?php echo $isDeclared ? 'निर्वाचित सदस्य:' : 'वर्तमान सदस्य:'; ?></span>
                             <span class="fw-bold text-navy extra-small text-end text-truncate" style="max-width: 180px;" title="<?php echo htmlspecialchars($seat['incumbent']); ?>">
                                 <?php echo htmlspecialchars($seat['incumbent']); ?>
                             </span>
@@ -665,8 +670,12 @@ require_once __DIR__ . '/includes/header.php';
                                 <i class="bi bi-geo-alt-fill"></i> मतदान केंद्र सूची (Polling Booths)
                             </a>
                         <?php endif; ?>
-                        <?php if ($isOngoing): ?>
-                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-outline-danger w-100 rounded-pill fw-semibold py-2 shadow-sm d-flex align-items-center justify-content-center gap-1">
+                        <?php if ($isDeclared): ?>
+                            <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-outline-success w-100 rounded-pill fw-semibold py-2 shadow-sm d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-trophy"></i> 2026 आधिकारिक चुनाव परिणाम
+                            </a>
+                        <?php elseif ($isOngoing): ?>
+                            <a href="<?php echo SITE_URL; ?>/hindi/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-outline-danger w-100 rounded-pill fw-semibold py-2 shadow-sm d-flex align-items-center justify-content-center gap-1">
                                 <i class="bi bi-box-arrow-up-right"></i> 2026 चुनाव कार्यक्रम एवं उम्मीदवार
                             </a>
                         <?php else: ?>

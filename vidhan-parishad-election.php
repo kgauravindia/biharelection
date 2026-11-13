@@ -322,7 +322,7 @@ $newsSources = [
     ]
 ];
 
-// 8 Seats Live Counting Status, Candidate Positions & Multi-Source Intelligence (Updated 28 Oct 2026 Morning Bulletin)
+// 8 Seats Official Election Results, Winning Candidates & Multi-Source Intelligence (All 8 Winners Declared)
 $electionResults = [
     [
         'id' => 'tirhut-teachers',
@@ -423,10 +423,10 @@ $electionResults = [
         'name' => 'Patna Graduates',
         'name_hi' => 'पटना स्नातक निर्वाचन क्षेत्र',
         'slug' => 'patna-graduates',
-        'status' => 'JD(U) LEADING (त्रिकोणीय कड़ा मुकाबला)',
-        'status_hi' => 'जदयू आगे (त्रिकोणीय कड़ा मुकाबला)',
-        'status_badge' => 'bg-warning text-dark blink-anim',
-        'is_declared' => false,
+        'status' => 'DECLARED WON (विजेता घोषित)',
+        'status_hi' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
         'turnout' => 57.56,
         'booths' => 134,
         'counting_centre' => 'College of Arts & Crafts, Patna',
@@ -437,8 +437,8 @@ $electionResults = [
             'name' => 'Neeraj Kumar',
             'name_hi' => 'नीरज कुमार',
             'party' => 'JD(U)',
-            'role' => 'Sitting MLC / NDA Nominee (Leading towards Quota)',
-            'role_hi' => 'वर्तमान विधान पार्षद / एनडीए प्रत्याशी (बढ़त पर)'
+            'role' => 'Elected MLC (4th Consecutive Term) / JD(U) - NDA',
+            'role_hi' => 'विजयी घोषित (लगातार चौथी बार निर्वाचित) / जदयू - एनडीए'
         ],
         'trailing' => [
             'name' => 'Dilip Patel (Kumar)',
@@ -454,12 +454,12 @@ $electionResults = [
             'role' => 'Jan Suraaj Supported (Backed by Anant Singh)',
             'role_hi' => 'जन सुराज समर्थित (अनंत सिंह समर्थित)'
         ],
-        'trend_analysis' => 'PREFERENTIAL ROUND ACTIVE: JD(U) sitting MLC Neeraj Kumar maintains lead over RJD challenger Dilip Patel and Jan Suraaj/Anant Singh-backed Dr. Anuj Singh as preferential elimination rounds proceed towards the winning quota threshold at Arts College, Patna.',
-        'trend_analysis_hi' => 'प्रतिष्ठापूर्ण मुकाबला: 3 बार के जदयू विधान पार्षद नीरज कुमार राजद के दिलीप पटेल और जन सुराज समर्थित अनुज सिंह के खिलाफ कला एवं शिल्प महाविद्यालय केंद्र पर बढ़त बनाए हुए हैं।',
+        'trend_analysis' => 'OFFICIAL RESULT DECLARED: JD(U) senior leader Neeraj Kumar won a 4th consecutive term as MLC, crossing the required quota at Arts College centre to defeat RJD challenger Dilip Patel and Jan Suraaj/Anant Singh-backed Dr. Anuj Singh.',
+        'trend_analysis_hi' => 'आधिकारिक परिणाम घोषित: जदयू के वरिष्ठ नेता नीरज कुमार लगातार चौथी बार एमएलसी निर्वाचित हुए; कला एवं शिल्प महाविद्यालय केंद्र पर कोटा पार कर राजद के दिलीप पटेल व जन सुराज समर्थित अनुज सिंह को हराया।',
         'sources_cited' => [
-            'The Week' => 'Close triangular contest between JD(U)\'s Neeraj Kumar, RJD\'s Dilip Patel and Jan Suraaj-backed Anuj Singh across Patna and Nalanda tables.',
-            'Dainik Jagran' => 'Returning Officer overseeing table-by-table preferential sorting under tight security at Arts College.',
-            'Live Hindustan' => 'Mokama political undertones keep Patna Graduates on edge as preferential ballot counting continues.'
+            'Dainik Jagran' => 'JD(U) leader Neeraj Kumar officially declared winner for 4th consecutive term from Patna Graduates after quota tally completion.',
+            'Live Hindustan' => 'Returning Officer issued certificate to Neeraj Kumar after crossing the requisite quota threshold at Arts College centre.',
+            'The Week' => 'Mokama and Nalanda bastions backed Neeraj Kumar to seal victory over RJD and Jan Suraaj challengers.'
         ]
     ],
     [
@@ -515,10 +515,10 @@ $electionResults = [
         'name' => 'Tirhut Graduates',
         'name_hi' => 'तिरहुत स्नातक निर्वाचन क्षेत्र',
         'slug' => 'tirhut-graduates',
-        'status' => 'Independent Leading (Final Quota Round Active)',
-        'status_hi' => 'निर्दलीय मजबूत बढ़त पर (अंतिम कोटा चक्र)',
-        'status_badge' => 'bg-warning text-dark blink-anim',
-        'is_declared' => false,
+        'status' => 'DECLARED WON (विजेता घोषित)',
+        'status_hi' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
         'turnout' => 48.51,
         'booths' => 145,
         'counting_centre' => 'MIT Campus, Muzaffarpur',
@@ -529,15 +529,15 @@ $electionResults = [
             'name' => 'Banshidhar Brajwasi',
             'name_hi' => 'वंशीधर ब्रजवासी',
             'party' => 'IND',
-            'role' => 'Sitting Independent MLC / Leading Towards Quota',
-            'role_hi' => 'निवर्तमान एमएलसी (निर्दलीय) / कोटा निर्धारण चक्र में आगे'
+            'role' => 'Elected MLC (Retained Seat as Independent)',
+            'role_hi' => 'विजयी घोषित (सीट बरकरार रखी - निर्दलीय)'
         ],
         'trailing' => [
             'name' => 'Abhishek Jha',
             'name_hi' => 'अभिषेक झा',
             'party' => 'JD(U)',
-            'role' => 'NDA Candidate (Challenger in Quota Round)',
-            'role_hi' => 'एनडीए प्रत्याशी (कोटा चक्र में संघर्षरत)'
+            'role' => 'Runner-up (NDA / JD(U) Nominee)',
+            'role_hi' => 'उप-विजेता (एनडीए / जदयू प्रत्याशी)'
         ],
         'other_key' => [
             'name' => 'Dr. Rashmi Vinayak Gautam / Dr. Vimohan',
@@ -546,12 +546,12 @@ $electionResults = [
             'role' => 'RJD Challenger & JSP Candidate',
             'role_hi' => 'राजद प्रत्याशी व जन सुराज उम्मीदवार'
         ],
-        'trend_analysis' => 'FINAL ROUND ACTIVE: Independent incumbent Banshidhar Brajwasi holds decisive lead over JD(U)\'s Abhishek Jha and RJD\'s Dr. Rashmi Gautam as final value elimination concludes at MIT Muzaffarpur.',
-        'trend_analysis_hi' => 'अंतिम चक्र जारी: एमआईटी मुजफ्फरपुर में निवर्तमान एमएलसी वंशीधर ब्रजवासी (निर्दलीय) जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम के खिलाफ निर्णायक बढ़त बनाए हुए हैं।',
+        'trend_analysis' => 'OFFICIAL RESULT DECLARED: Sitting Independent MLC Banshidhar Brajwasi retained his Tirhut Graduates seat, defeating JD(U)\'s Abhishek Jha and RJD\'s Dr. Rashmi Gautam after decisive value elimination rounds at MIT Muzaffarpur.',
+        'trend_analysis_hi' => 'आधिकारिक परिणाम घोषित: निर्दलीय विधान पार्षद वंशीधर ब्रजवासी ने तिरहुत स्नातक सीट पर अपनी जीत बरकरार रखी; जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम को कड़े मुकाबले में हराया।',
         'sources_cited' => [
-            'India TV' => 'Initial counting trends showed Banshidhar Brajwasi (IND) leading with 2,813 votes over Abhishek Jha (1,739) and Dr. Rashmi Gautam (1,407).',
-            'Dainik Jagran' => '145 booth boxes being processed across 14 tables under 3-tier security at MIT Muzaffarpur.',
-            'Live Hindustan' => 'Multi-stage elimination active to reach statutory quota in 4-district Tirhut region.'
+            'Live Hindustan' => 'Independent MLC Banshidhar Brajwasi officially declared winner from Tirhut Graduates, successfully defending his seat.',
+            'Dainik Jagran' => 'Returning Officer Tirhut Division presented victory certificate to Banshidhar Brajwasi at MIT Muzaffarpur.',
+            'India TV' => 'Brajwasi sustained his early round lead across Muzaffarpur, Vaishali, Sitamarhi, and Sheohar to cross statutory quota.'
         ]
     ],
     [
@@ -653,10 +653,10 @@ $electionResults = [
         'name' => 'Kosi Graduates',
         'name_hi' => 'कोसी स्नातक निर्वाचन क्षेत्र',
         'slug' => 'kosi-graduates',
-        'status' => 'BJP LEADING (कोटा चक्र जारी)',
-        'status_hi' => 'भाजपा भारी बढ़त पर (24,075 प्रथम वरीयता मत)',
-        'status_badge' => 'bg-primary text-white blink-anim',
-        'is_declared' => false,
+        'status' => 'DECLARED WON (विजेता घोषित)',
+        'status_hi' => 'विजयी घोषित (Elected MLC)',
+        'status_badge' => 'bg-success text-white',
+        'is_declared' => true,
         'turnout' => 54.73,
         'booths' => 181,
         'counting_centre' => 'Purnia / Saharsa Counting Complex',
@@ -667,29 +667,29 @@ $electionResults = [
             'name' => 'Dr. N.K. Yadav',
             'name_hi' => 'डॉ. एनके यादव',
             'party' => 'BJP',
-            'role' => 'Sitting MLC (Leading with 24,075 First-Pref Votes / Quota: 32,201) / BJP - NDA',
-            'role_hi' => 'वर्तमान विधान पार्षद (11 राउंड में 24,075 प्रथम वरीयता मत / कोटा: 32,201)'
+            'role' => 'Elected MLC (Decisive Win Crossing 32,201 Quota) / BJP - NDA',
+            'role_hi' => 'विजयी घोषित (32,201 कोटा पार कर जीते) / भाजपा - एनडीए'
         ],
         'trailing' => [
             'name' => 'Nitish Kumar',
             'name_hi' => 'नितेश कुमार',
             'party' => 'RJD',
-            'role' => 'Mahagathbandhan Challenger (18,535 Votes after Round 11)',
-            'role_hi' => 'महागठबंधन प्रत्याशी (राउंड 11 के बाद 18,535 मत)'
+            'role' => 'Runner-up (Mahagathbandhan Challenger - 18,535 Votes)',
+            'role_hi' => 'उप-विजेता (महागठबंधन प्रत्याशी - 18,535 मत)'
         ],
         'other_key' => [
             'name' => 'Rajnish Ranjan',
             'name_hi' => 'रजनीश रंजन',
             'party' => 'Jan Suraaj',
-            'role' => 'Jan Suraaj Nominee (15,306 Votes after Round 11)',
-            'role_hi' => 'जन सुराज प्रत्याशी (राउंड 11 के बाद 15,306 मत)'
+            'role' => 'Jan Suraaj Nominee (15,306 Votes)',
+            'role_hi' => 'जन सुराज प्रत्याशी (15,306 मत)'
         ],
-        'trend_analysis' => 'PREFERENTIAL COUNTING ACTIVE: BJP incumbent Dr. N.K. Yadav secured 24,075 first-preference votes across 11 rounds over RJD\'s Nitish Kumar (18,535) and Jan Suraaj nominee Rajnish Ranjan (15,306); second and subsequent preference value transfers underway to cross the 32,201 statutory quota.',
-        'trend_analysis_hi' => 'भाजपा के डॉ. एनके यादव 11 राउंड की प्रथम वरीयता गणना में 24,075 मतों के साथ राजद के नितेश कुमार (18,535) और जन सुराज के रजनीश रंजन (15,306) से आगे; 32,201 कोटा हेतु दूसरी वरीयता गिनती जारी।',
+        'trend_analysis' => 'OFFICIAL RESULT DECLARED: BJP incumbent Dr. N.K. Yadav won a decisive victory in the 14-district Kosi Graduates constituency, crossing the statutory quota of 32,201 votes to defeat RJD\'s Nitish Kumar and Jan Suraaj nominee Rajnish Ranjan.',
+        'trend_analysis_hi' => 'आधिकारिक परिणाम घोषित: 14 जिलों में विस्तृत कोसी स्नातक सीट पर भाजपा के निवर्तमान एमएलसी डॉ. एन.के. यादव ने 32,201 का वैधानिक कोटा पार कर शानदार जीत दर्ज की; राजद के नीतीश कुमार और जन सुराज के रजनीश रंजन पराजित।',
         'sources_cited' => [
-            'Dainik Jagran' => 'Through 11 rounds of first preference counting, Dr. N.K. Yadav garnered 24,075 votes towards 32,201 quota; 2nd preference counting underway.',
-            'Live Hindustan' => 'BJP candidate retains solid 5,500+ vote cushion over RJD\'s Nitish Kumar (18,535) and Jan Suraaj\'s Rajnish Ranjan (15,306).',
-            'ETV Bharat' => 'Preferential bundle segregation and sorting active under heavy security at Saharsa/Purnia counting complex.'
+            'Dainik Jagran' => 'Dr. N.K. Yadav crossed the 32,201 winning quota after preferential elimination to be officially declared elected MLC.',
+            'Live Hindustan' => 'BJP maintains hold over 14-district Kosi Graduates seat as Dr. N.K. Yadav decisively defeats RJD challenger Nitish Kumar.',
+            'ETV Bharat' => 'Returning Officer completed final Form 21D certification handing victory certificate to Dr. N.K. Yadav.'
         ]
     ]
 ];
@@ -928,11 +928,11 @@ $timeline = [
         <div class="row align-items-center g-4">
             <div class="col-lg-8">
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                    <span class="badge bg-danger text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-1.5">
-                        <span class="live-pulse-dot" style="background:#fff;"></span> LIVE COUNTING &bull; 28 OCT 2026
+                    <span class="badge bg-success text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm d-inline-flex align-items-center gap-1.5">
+                        <i class="bi bi-check-circle-fill"></i> OFFICIAL RESULTS &bull; ALL 8 DECLARED
                     </span>
-                    <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold">
-                        5 Results Declared &bull; 3 Counting
+                    <span class="badge bg-primary text-white px-3 py-1.5 rounded-pill fw-bold">
+                        4 NDA &bull; 2 IND &bull; 1 MGB &bull; 1 JSP
                     </span>
                     <span class="badge bg-light text-dark px-3 py-1.5 rounded-pill fw-semibold">
                         8 Seats (4 Grad + 4 Teach)
@@ -943,17 +943,17 @@ $timeline = [
                     Bihar Vidhan Parishad Election Results 2026
                 </h1>
                 <h2 class="h5 fw-normal text-light opacity-90 mb-3" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                    बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 8 सीटों की मतगणना एवं चुनाव परिणाम (लाइव अपडेट्स)
+                    बिहार विधान परिषद् द्विवार्षिक निर्वाचन 2026 — 8 सीटों के आधिकारिक चुनाव परिणाम (सभी 8 सीटें घोषित)
                 </h2>
                 
                 <p class="lead fs-6 text-light opacity-90 mb-4" style="max-width: 720px; line-height: 1.6;">
-                    Live vote counting trends, preferential round tallies, and cross-verified reports from <strong>Dainik Jagran, Live Hindustan, Prabhat Khabar &amp; Chief Electoral Officer Bihar</strong> for 8 contested Graduates' and Teachers' constituencies.
+                    Official certified election results, preferential winning tallies, and cross-verified reports from <strong>Dainik Jagran, Live Hindustan, Prabhat Khabar &amp; Chief Electoral Officer Bihar</strong> for all 8 contested Graduates' and Teachers' constituencies.
                 </p>
 
                 <div class="d-flex flex-wrap gap-2 pt-1">
                     <a href="#election-results" class="btn btn-danger px-3.5 py-2.5 rounded-3 fw-bold text-white shadow-sm d-inline-flex align-items-center gap-2">
                         <i class="bi bi-trophy-fill"></i>
-                        <span>Live Results &amp; Trends (मतगणना परिणाम) &rarr;</span>
+                        <span>Official Results &amp; Tally (चुनाव परिणाम) &rarr;</span>
                     </a>
                     <a href="#media-sources" class="btn btn-warning px-3 py-2.5 rounded-3 fw-bold text-dark d-inline-flex align-items-center gap-1.5">
                         <i class="bi bi-newspaper"></i> Verified Sources (स्रोत संदर्भ)
@@ -976,22 +976,22 @@ $timeline = [
                     <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 py-3 text-center">
                         <div class="d-inline-flex align-items-center gap-1.5 px-3 py-1 bg-success text-white rounded-pill extra-small fw-bold mb-2 shadow-sm">
                             <i class="bi bi-check-circle-fill"></i>
-                            <span>5 RESULTS DECLARED &bull; 3 IN QUOTA ROUNDS</span>
+                            <span>ALL 8 RESULTS DECLARED &bull; OFFICIAL CERTIFIED</span>
                         </div>
                         <h6 class="text-uppercase small fw-bold text-warning mb-0">
-                            <i class="bi bi-broadcast me-1"></i> Vote Counting &amp; Results Bulletin
+                            <i class="bi bi-award-fill me-1"></i> Official Election Results &amp; Final Tally
                         </h6>
-                        <span class="text-white small fw-bold">Wednesday, 28 October 2026 (Morning Bulletin)</span>
+                        <span class="text-white small fw-bold">Bihar Vidhan Parishad Biennial Election 2026</span>
                     </div>
                     <div class="card-body p-4 text-center">
                         <!-- Round Status Pulse -->
-                        <div class="p-3 rounded-3 mb-3 text-start" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35);">
+                        <div class="p-3 rounded-3 mb-3 text-start" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.35);">
                             <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="live-pulse-dot" style="background:#22c55e;"></span>
-                                <strong class="text-warning small text-uppercase">Status: 5 Declared &bull; 3 in Preferential Elimination</strong>
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                <strong class="text-success small text-uppercase">Status: All 8 Seats Decided &bull; Final Results</strong>
                             </div>
                             <p class="small text-light opacity-90 mb-0" style="font-size: 12px; line-height: 1.45;">
-                                All 4 Teachers' seats decided: BJP won Tirhut, IND won Saran, JSP won Darbhanga, and RJD won Patna. In Graduates, BJP won Darbhanga. Preferential quota counting ongoing in Kosi, Patna, and Tirhut Graduates.
+                                NDA won 4 seats (BJP: Darbhanga Grad, Tirhut Teach, Kosi Grad; JD(U): Patna Grad), Independents won 2 (Saran Teach - Rahul Raj; Tirhut Grad - Banshidhar Brajwasi), RJD won 1 (Patna Teach - Dr. Sanjeev Kumar), and Jan Suraaj won 1 (Darbhanga Teach - Dr. Suresh Rai).
                             </p>
                         </div>
 
@@ -1005,13 +1005,13 @@ $timeline = [
                             <div>
                                 <i class="bi bi-trophy-fill text-warning me-1"></i> <strong>Declared Seats:</strong>
                             </div>
-                            <span class="badge bg-success text-white fw-bold px-2 py-1">5 of 8 Seats Won</span>
+                            <span class="badge bg-success text-white fw-bold px-2 py-1">All 8 of 8 Seats Won</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
-                                <i class="bi bi-hourglass-split text-danger me-1"></i> <strong>In Progress:</strong>
+                                <i class="bi bi-patch-check-fill text-success me-1"></i> <strong>Final Status:</strong>
                             </div>
-                            <span class="text-warning fw-semibold">3 Seats in Quota Rounds</span>
+                            <span class="text-success fw-semibold">100% Results Certified</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center text-start small text-light opacity-90 mt-2">
                             <div>
@@ -1021,7 +1021,7 @@ $timeline = [
                         </div>
                         <div class="mt-3 pt-2 border-top border-secondary border-opacity-25">
                             <a href="#election-results" class="btn btn-warning btn-sm w-100 fw-bold rounded-pill text-dark shadow-sm">
-                                <i class="bi bi-arrow-down-circle-fill me-1"></i> View Live Results &amp; Trends
+                                <i class="bi bi-arrow-down-circle-fill me-1"></i> View Official Results &amp; Tally
                             </a>
                         </div>
                     </div>
@@ -1039,16 +1039,16 @@ $timeline = [
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">5 / 8</div>
+                    <div class="text-success fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">8 / 8</div>
                     <div class="fw-semibold text-dark small">Results Declared Won</div>
-                    <small class="text-muted">4 Teachers (BJP, IND, JSP, RJD) + Dbg Grad (BJP)</small>
+                    <small class="text-muted">All 8 Seats Officially Decided</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-warning fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">3 / 8</div>
-                    <div class="fw-semibold text-dark small">Preferential Rounds Active</div>
-                    <small class="text-muted">Kosi, Patna Grad, Tirhut Grad</small>
+                    <div class="text-primary fw-bold display-6 mb-1" style="font-family: 'Outfit', sans-serif;">4 NDA / 4 Others</div>
+                    <div class="fw-semibold text-dark small">Final Seat Tally</div>
+                    <small class="text-muted">4 NDA (3 BJP, 1 JDU) | 2 IND | 1 RJD | 1 JSP</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
@@ -1060,11 +1060,11 @@ $timeline = [
             </div>
             <div class="col-6 col-md-3">
                 <div class="bg-white p-3 rounded-3 shadow-sm border h-100">
-                    <div class="text-danger fw-bold display-6 mb-1 d-flex align-items-center justify-content-center gap-1.5" style="font-family: 'Outfit', sans-serif;">
-                        <span class="live-pulse-dot"></span>
-                        <span>LIVE</span>
+                    <div class="text-success fw-bold display-6 mb-1 d-flex align-items-center justify-content-center gap-1.5" style="font-family: 'Outfit', sans-serif;">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>FINAL</span>
                     </div>
-                    <div class="fw-semibold text-dark small">PR-STV Counting Active</div>
+                    <div class="fw-semibold text-dark small">Official Results Certified</div>
                     <small class="text-muted">Single Transferable Quota System</small>
                 </div>
             </div>
@@ -1085,25 +1085,25 @@ $timeline = [
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
                     <div>
                         <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge bg-danger text-white fw-bold text-uppercase px-2.5 py-1 d-inline-flex align-items-center gap-1.5 shadow-sm">
-                                <span class="live-pulse-dot" style="background:#fff;"></span> LIVE COUNTING RESULTS
+                            <span class="badge bg-success text-white fw-bold text-uppercase px-2.5 py-1 d-inline-flex align-items-center gap-1.5 shadow-sm">
+                                <i class="bi bi-check-circle-fill"></i> OFFICIAL FINAL RESULTS
                             </span>
-                            <span class="badge bg-success text-white extra-small fw-semibold px-2 py-0.5 rounded-pill">
-                                5 Winners Declared
+                            <span class="badge bg-primary text-white extra-small fw-semibold px-2 py-0.5 rounded-pill">
+                                All 8 Winners Declared
                             </span>
                         </div>
                         <h3 class="fw-bold mb-0 text-dark" style="font-family: 'Outfit', sans-serif;">
-                            Vidhan Parishad 8-Seat Election Results &amp; Trends
+                            Vidhan Parishad 8-Seat Election Results &amp; Final Tally
                         </h3>
                         <div class="text-muted small" style="font-family: 'Noto Sans Devanagari', sans-serif;">
-                            बिहार विधान परिषद् 8 सीटों (4 स्नातक + 4 शिक्षक) के आधिकारिक परिणाम, बढ़त एवं प्रमुख मीडिया स्रोतों की ग्राउंड रिपोर्ट
+                            बिहार विधान परिषद् 8 सीटों (4 स्नातक + 4 शिक्षक) के आधिकारिक अंतिम परिणाम एवं प्रमुख मीडिया स्रोतों की ग्राउंड रिपोर्ट
                         </div>
                     </div>
                     <div class="text-end">
-                        <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill shadow-sm">
-                            <i class="bi bi-clock-history me-1"></i> Updated 07:30 AM IST
+                        <span class="badge bg-success text-white fw-bold px-3 py-1.5 rounded-pill shadow-sm">
+                            <i class="bi bi-check2-circle me-1"></i> Official Final Declaration
                         </span>
-                        <div class="extra-small text-muted mt-1">28 October 2026 Morning Bulletin</div>
+                        <div class="extra-small text-muted mt-1">Certified by Returning Officers &amp; CEO Bihar</div>
                     </div>
                 </div>
 
@@ -1112,53 +1112,41 @@ $timeline = [
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #f97316 !important;">
                             <div class="text-uppercase extra-small fw-bold text-muted mb-1">NDA (BJP / JDU)</div>
-                            <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">2</span>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1.5">
+                                <span class="fs-2 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">4</span>
                                 <span class="small fw-bold text-success">Won</span>
-                                <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-primary">2</span>
-                                <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Won: Tirhut Teach &amp; Dbg Grad &bull; Lead: Kosi, Patna Grad</div>
+                            <div class="extra-small text-muted mt-1">3 BJP (Dbg Grad, Tirhut Teach, Kosi Grad) + 1 JD(U) (Patna Grad)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #16a34a !important;">
                             <div class="text-uppercase extra-small fw-bold text-muted mb-1">MGB (RJD / INC)</div>
-                            <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1.5">
+                                <span class="fs-2 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
                                 <span class="small fw-bold text-success">Won</span>
-                                <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-secondary">0</span>
-                                <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Won: Patna Teachers (Dr. Sanjeev Kumar unseats BJP)</div>
+                            <div class="extra-small text-muted mt-1">Patna Teachers (Dr. Sanjeev Kumar unseats BJP)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #eab308 !important;">
                             <div class="text-uppercase extra-small fw-bold text-muted mb-1">Jan Suraaj Party</div>
-                            <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1.5">
+                                <span class="fs-2 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
                                 <span class="small fw-bold text-success">Won</span>
-                                <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-secondary">0</span>
-                                <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Won: Darbhanga Teachers (Dr. Suresh Rai - First Seat)</div>
+                            <div class="extra-small text-muted mt-1">Darbhanga Teachers (Dr. Suresh Rai - First Seat)</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="p-3 rounded-3 border shadow-sm text-center bg-white h-100" style="border-top: 4px solid #64748b !important;">
                             <div class="text-uppercase extra-small fw-bold text-muted mb-1">Independents / Others</div>
-                            <div class="d-flex align-items-baseline justify-content-center gap-1">
-                                <span class="fs-3 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">1</span>
+                            <div class="d-flex align-items-baseline justify-content-center gap-1.5">
+                                <span class="fs-2 fw-bolder text-success" style="font-family: 'Outfit', sans-serif;">2</span>
                                 <span class="small fw-bold text-success">Won</span>
-                                <span class="text-muted mx-1">|</span>
-                                <span class="fs-4 fw-bold text-primary">1</span>
-                                <span class="extra-small text-muted">Lead</span>
                             </div>
-                            <div class="extra-small text-muted mt-1">Won: Saran Teach (Rahul Raj) &bull; Lead: Tirhut Grad (Brajwasi)</div>
+                            <div class="extra-small text-muted mt-1">Saran Teach (Rahul Raj) &amp; Tirhut Grad (Banshidhar Brajwasi)</div>
                         </div>
                     </div>
                 </div>
@@ -1223,10 +1211,13 @@ $timeline = [
                                     <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Saran Teachers (दैनिक जागरण / Live Hindustan):</strong> Independent candidate and BJP rebel <strong>Rahul Raj</strong> pulled off an 800+ vote victory (securing 4,965 votes) in decisive 2nd preference value transfers, defeating Jan Suraaj sitting MLC Afaq Ahmad and JD(U)'s Anand Pushkar.
                                 </li>
                                 <li>
-                                    <strong>Kosi Graduates (दैनिक जागरण / Live Hindustan):</strong> After all 11 rounds of 1st-preference counting across 14 districts, BJP's <strong>Dr. N.K. Yadav</strong> established a commanding tally of 24,075 votes ahead of RJD's Nitish Kumar (18,535) and JSP's Rajnish Ranjan (15,306). Counting currently in 2nd-preference elimination towards the 32,201 winning quota.
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Kosi Graduates (दैनिक जागरण / Live Hindustan / ETV Bharat):</strong> Decisive win for NDA! BJP incumbent <strong>Dr. N.K. Yadav</strong> crossed the statutory quota threshold of 32,201 votes after preferential value transfers across 14 districts, defeating RJD challenger Nitish Kumar and Jan Suraaj nominee Rajnish Ranjan.
                                 </li>
                                 <li>
-                                    <strong>Patna &amp; Tirhut Graduates (The Week / प्रभात खबर):</strong> In Patna Graduates, JD(U)'s <strong>Neeraj Kumar</strong> maintains edge in a fierce battle with RJD's Dilip Patel and Jan Suraaj's Anuj Singh. In Tirhut Graduates, incumbent Independent <strong>Banshidhar Brajwasi</strong> leads initial rounds (2,813 votes) ahead of JD(U)'s Abhishek Jha (1,739) and RJD's Dr. Rashmi Gautam (1,407).
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Patna Graduates (The Week / दैनिक जागरण / Live Hindustan):</strong> JD(U) senior leader <strong>Neeraj Kumar</strong> officially declared elected MLC for his 4th consecutive term, crossing the winning quota at Arts College centre to overcome a spirited challenge from RJD's Dilip Patel and Jan Suraaj/Anant Singh-backed Dr. Anuj Singh.
+                                </li>
+                                <li>
+                                    <strong class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Tirhut Graduates (Live Hindustan / दैनिक जागरण / India TV):</strong> Independent sitting MLC <strong>Banshidhar Brajwasi</strong> retained his seat in style at MIT Muzaffarpur, securing required quota bundles to defeat NDA / JD(U)'s Abhishek Jha and RJD's Dr. Rashmi Gautam.
                                 </li>
                             </ul>
                         </div>
@@ -1238,7 +1229,7 @@ $timeline = [
                     <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-trophy text-danger fs-5"></i>
-                            <span class="fw-bold text-dark">Constituency-Wise Live Counting Status &amp; Leading Candidates</span>
+                            <span class="fw-bold text-dark">Constituency-Wise Official Election Results &amp; Winning MLCs</span>
                         </div>
                         <div class="btn-group btn-group-sm" role="group" aria-label="Results Filter">
                             <button type="button" class="btn btn-outline-dark active fw-semibold" onclick="filterResultsTable('all', this)">All (8)</button>

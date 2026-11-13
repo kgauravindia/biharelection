@@ -1003,13 +1003,21 @@ class DataProvider {
         }
         self::$mlcs = DataCache::remember('provider_mlcs', 86400, function() {
             $pdo = Database::getConnection();
-            if (!$pdo) return [];
-            try {
-                $stmt = $pdo->query("SELECT * FROM mlcs ORDER BY id ASC");
-                return $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
-            } catch (Throwable $e) {
-                return [];
+            if ($pdo) {
+                try {
+                    $stmt = $pdo->query("SELECT * FROM mlcs ORDER BY id ASC");
+                    $rows = $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
+                    if (!empty($rows)) return $rows;
+                } catch (Throwable $e) {
+                    error_log("Error fetching mlcs: " . $e->getMessage());
+                }
             }
+            $jsonFile = __DIR__ . '/assets/data/mlcs.json';
+            if (file_exists($jsonFile)) {
+                $decoded = json_decode(file_get_contents($jsonFile), true);
+                if (is_array($decoded)) return $decoded;
+            }
+            return [];
         });
         return self::$mlcs ?: [];
     }

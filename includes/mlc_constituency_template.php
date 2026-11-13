@@ -65,14 +65,14 @@ $officialPollStats = [
         'candidates_count' => 17,
         'electors' => ['male' => 97998, 'female' => 45970, 'third' => 20, 'total' => 143988],
         'booths_total' => 145,
-        'result_status' => 'COUNTING IN PROGRESS (अंतिम कोटा चक्र)',
-        'result_badge' => 'bg-warning text-dark blink-anim',
+        'result_status' => 'DECLARED WON (विजेता घोषित)',
+        'result_badge' => 'bg-success text-white',
         'winner_name' => 'Banshidhar Brajwasi',
         'winner_name_hi' => 'वंशीधर ब्रजवासी',
         'party' => 'IND',
         'alliance' => 'Independent (Incumbent)',
-        'verdict' => 'Sitting MLC leading towards statutory quota over Abhishek Jha (JD[U]) and Dr. Rashmi Gautam (RJD).',
-        'verdict_hi' => 'निवर्तमान निर्दलीय एमएलसी वंशीधर ब्रजवासी जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम के खिलाफ अंतिम कोटा चक्र में मजबूत बढ़त पर।'
+        'verdict' => 'Officially declared winner; retained his MLC seat defeating Abhishek Jha (JD[U]) and Dr. Rashmi Gautam (RJD).',
+        'verdict_hi' => 'आधिकारिक रूप से विजयी घोषित; जदयू के अभिषेक झा और राजद की डॉ. रश्मि गौतम को हराकर तिरहुत स्नातक सीट बरकरार रखी।'
     ],
     'darbhanga-graduate-constituency' => [
         'turnout_final' => 54.73,
@@ -652,7 +652,7 @@ require_once __DIR__ . '/../header.php';
                         <?php echo htmlspecialchars($currPoll['verdict']); ?>
                     </p>
                     <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo str_replace('-constituency', '', $cData['slug']); ?>" class="btn btn-warning btn-sm fw-bold text-dark rounded-pill px-3 py-1.5 d-inline-flex align-items-center gap-1.5 shadow-sm">
-                        <span>View Live Results Table</span>
+                        <span>View Official Results Table</span>
                         <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>

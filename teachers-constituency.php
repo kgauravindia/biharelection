@@ -23,11 +23,11 @@ $teachersSeats = [
         'ro_url' => 'https://patnadivision.bih.nic.in/',
         'districts' => ['Patna', 'Nalanda', 'Nawada'],
         'districts_hi' => ['पटना', 'नालंदा', 'नवादा'],
-        'status' => 'election_2026',
-        'status_label' => 'Biennial Election 2026 Active',
+        'status' => 'election_declared',
+        'status_label' => 'Biennial Election 2026 Declared',
         'poll_date' => '23 October 2026',
         'result_date' => '27 October 2026',
-        'incumbent' => 'Nawal Kishore Yadav (BJP) / Vacant for 2026 Poll',
+        'incumbent' => 'Dr. Sanjeev Kumar (RJD) - Elected MLC',
         'desc' => 'Representing secondary, higher secondary, and collegiate faculty across the state capital Patna, Nalanda, and Nawada.'
     ],
     [
@@ -40,11 +40,11 @@ $teachersSeats = [
         'ro_url' => 'https://tirhutdivision.bih.nic.in/',
         'districts' => ['Muzaffarpur', 'Vaishali', 'Sitamarhi', 'Sheohar'],
         'districts_hi' => ['मुजफ्फरपुर', 'वैशाली', 'सीतामढ़ी', 'शिवहर'],
-        'status' => 'election_2026',
-        'status_label' => 'Biennial Election 2026 Active',
+        'status' => 'election_declared',
+        'status_label' => 'Biennial Election 2026 Declared',
         'poll_date' => '23 October 2026',
         'result_date' => '27 October 2026',
-        'incumbent' => 'Prof. Sanjay Kumar Singh (CPI/JD-U) / Vacant for 2026 Poll',
+        'incumbent' => 'Dr. Narendra Prasad Singh (BJP) - Elected MLC',
         'desc' => 'Representing teachers and university professors across secondary schools and constituent colleges in the Tirhut division.'
     ],
     [
@@ -57,11 +57,11 @@ $teachersSeats = [
         'ro_url' => 'https://darbhangadivision.bih.nic.in/',
         'districts' => ['Darbhanga', 'Madhubani', 'Samastipur', 'Begusarai'],
         'districts_hi' => ['दरभंगा', 'मधुबनी', 'समस्तीपुर', 'बेगूसराय'],
-        'status' => 'election_2026',
-        'status_label' => 'Biennial Election 2026 Active',
+        'status' => 'election_declared',
+        'status_label' => 'Biennial Election 2026 Declared',
         'poll_date' => '23 October 2026',
         'result_date' => '27 October 2026',
-        'incumbent' => 'Dr. Madan Mohan Jha (INC) / Vacant for 2026 Poll',
+        'incumbent' => 'Dr. Suresh Prasad Rai (Jan Suraaj) - Elected MLC',
         'desc' => 'Covering educator faculty in Mithila region (LNMU, KSDSU, colleges, and high schools across Darbhanga, Madhubani, Samastipur, Begusarai).'
     ],
     [
@@ -74,11 +74,11 @@ $teachersSeats = [
         'ro_url' => 'https://sarandivision.bih.nic.in/',
         'districts' => ['Saran', 'Siwan', 'Gopalganj', 'East Champaran', 'West Champaran'],
         'districts_hi' => ['सारण', 'सिवान', 'गोपालगंज', 'पूर्वी चंपारण', 'पश्चिमी चंपारण'],
-        'status' => 'election_2026',
-        'status_label' => 'Biennial Election 2026 Active',
+        'status' => 'election_declared',
+        'status_label' => 'Biennial Election 2026 Declared',
         'poll_date' => '23 October 2026',
         'result_date' => '27 October 2026',
-        'incumbent' => 'Afaque Ahmad / Vacant for 2026 Poll',
+        'incumbent' => 'Rahul Raj (IND) - Elected MLC',
         'desc' => 'Encompassing teachers and professors in the Saran and Champaran belt (Chapra, Siwan, Gopalganj, Motihari, Bettiah).'
     ],
     [
@@ -354,6 +354,7 @@ require_once __DIR__ . '/header.php';
     <div class="row g-4 mb-5">
         <?php foreach ($teachersSeats as $seat): 
             $isOngoing = ($seat['status'] === 'election_2026');
+            $isDeclared = ($seat['status'] === 'election_declared');
         ?>
             <div class="col-md-6 col-lg-4" id="<?php echo $seat['id']; ?>">
                 <div class="constituency-card p-4">
@@ -362,7 +363,11 @@ require_once __DIR__ . '/header.php';
                             <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2.5 py-1 rounded-pill extra-small fw-bold">
                                 📚 Teachers Quota
                             </span>
-                            <?php if ($isOngoing): ?>
+                            <?php if ($isDeclared): ?>
+                                <span class="badge bg-success text-white px-2.5 py-1 rounded-pill extra-small fw-bold">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Result Declared
+                                </span>
+                            <?php elseif ($isOngoing): ?>
                                 <span class="badge bg-danger text-white px-2.5 py-1 rounded-pill extra-small fw-bold blink-anim">
                                     <i class="bi bi-broadcast me-1"></i> Poll Oct 2026
                                 </span>
@@ -413,7 +418,7 @@ require_once __DIR__ . '/header.php';
 
                     <div class="pt-3 border-top mt-2">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-muted extra-small">Sitting Member:</span>
+                            <span class="text-muted extra-small"><?php echo $isDeclared ? 'Elected Member:' : 'Sitting Member:'; ?></span>
                             <span class="fw-bold text-navy extra-small text-end text-truncate" style="max-width: 180px;">
                                 <?php echo htmlspecialchars($seat['incumbent']); ?>
                             </span>
@@ -427,7 +432,11 @@ require_once __DIR__ . '/header.php';
                                 <i class="bi bi-geo-alt-fill"></i> View Polling Booths (मतदान केंद्र)
                             </a>
                         <?php endif; ?>
-                        <?php if ($isOngoing): ?>
+                        <?php if ($isDeclared): ?>
+                            <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-outline-success w-100 rounded-pill fw-semibold py-1.5">
+                                <i class="bi bi-trophy me-1"></i> 2026 Official Election Results
+                            </a>
+                        <?php elseif ($isOngoing): ?>
                             <a href="<?php echo SITE_URL; ?>/vidhan-parishad-election#<?php echo $seat['id']; ?>" class="btn btn-sm btn-outline-danger w-100 rounded-pill fw-semibold py-1.5">
                                 <i class="bi bi-box-arrow-up-right me-1"></i> 2026 Election Schedule &amp; Candidates
                             </a>
