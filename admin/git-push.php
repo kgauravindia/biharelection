@@ -239,6 +239,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $lastAction = "Git Pull (origin {$branch})";
             $pullTarget = !empty($githubToken) ? 'https://oauth2:' . rawurlencode($githubToken) . '@github.com/kgauravindia/biharelection.git' : 'origin';
             $actionResult = runGitCmd("git pull " . escapeshellarg($pullTarget) . " " . escapeshellarg($branch), $repoDir);
+        } elseif ($action === 'stash_and_pull') {
+            $lastAction = "Stash & Pull (origin {$branch})";
+            $pullTarget = !empty($githubToken) ? 'https://oauth2:' . rawurlencode($githubToken) . '@github.com/kgauravindia/biharelection.git' : 'origin';
+            
+            $r1 = runGitCmd("git stash", $repoDir);
+            $r2 = runGitCmd("git pull " . escapeshellarg($pullTarget) . " " . escapeshellarg($branch), $repoDir);
+            $r3 = runGitCmd("git stash pop", $repoDir);
+            
+            $combined = "=== 1. STASHING LOCAL SERVER EDITS ===\n" . ($r1['output'] ?: 'No local uncommitted changes to stash.') . "\n\n";
+            $combined .= "=== 2. PULLING FROM GITHUB ===\n" . ($r2['output'] ?: 'Pull done.') . "\n\n";
+            $combined .= "=== 3. RESTORING LOCAL STASH ===\n" . ($r3['output'] ?: 'Stash restored or unapplied.');
+            
+            $actionResult = [
+                'cmd' => "git stash && git pull origin $branch && git stash pop",
+                'output' => $combined,
+                'code' => $r2['code'],
+                'success' => $r2['success']
+            ];
+        } elseif ($action === 'force_pull') {
+            $lastAction = "Force Pull / Reset (origin/{$branch})";
+            $pullTarget = !empty($githubToken) ? 'https://oauth2:' . rawurlencode($githubToken) . '@github.com/kgauravindia/biharelection.git' : 'origin';
+            
+            $r1 = runGitCmd("git fetch " . escapeshellarg($pullTarget) . " " . escapeshellarg($branch), $repoDir);
+            $r2 = runGitCmd("git reset --hard FETCH_HEAD", $repoDir);
+            
+            $combined = "=== 1. FETCHING LATEST FROM GITHUB ===\n" . ($r1['output'] ?: 'Fetched latest commits.') . "\n\n";
+            $combined .= "=== 2. HARD RESET TO MATCH GITHUB ===\n" . ($r2['output'] ?: 'Working tree reset.');
+            
+            $actionResult = [
+                'cmd' => "git fetch && git reset --hard FETCH_HEAD",
+                'output' => $combined,
+                'code' => $r2['code'],
+                'success' => $r2['success']
+            ];
         } elseif ($action === 'fetch') {
             $lastAction = "Git Fetch";
             $fetchTarget = !empty($githubToken) ? 'https://oauth2:' . rawurlencode($githubToken) . '@github.com/kgauravindia/biharelection.git' : 'origin';
@@ -590,8 +624,16 @@ if ($execAvailable && $hasGitDir) {
                                     <i class="fas fa-paper-plane me-1"></i> Push to origin/<?php echo htmlspecialchars($currentBranch); ?>
                                 </button>
                                 
-                                <button type="submit" name="action" value="pull" class="btn btn-outline-secondary fw-semibold rounded-pill px-3">
+                                <button type="submit" name="action" value="pull" class="btn btn-outline-secondary fw-semibold rounded-pill px-3" title="Standard Git Pull">
                                     <i class="fas fa-cloud-arrow-down me-1"></i> Git Pull
+                                </button>
+
+                                <button type="submit" name="action" value="stash_and_pull" class="btn btn-outline-primary fw-semibold rounded-pill px-3" title="Stashes local edits, pulls from GitHub, then restores stash">
+                                    <i class="fas fa-layer-group me-1"></i> Stash &amp; Pull
+                                </button>
+
+                                <button type="submit" name="action" value="force_pull" class="btn btn-outline-warning text-dark fw-bold rounded-pill px-3" onclick="return confirm('⚠️ OVERWRITE WARNING:\nThis will discard uncommitted local server edits and hard-reset the working directory to match GitHub origin/' + '<?php echo htmlspecialchars($currentBranch); ?>' + ' exactly.\n\nProceed?');" title="Force sync and reset server files to match GitHub">
+                                    <i class="fas fa-arrows-rotate me-1"></i> Force Reset &amp; Pull
                                 </button>
 
                                 <button type="submit" name="action" value="fetch" class="btn btn-outline-secondary fw-semibold rounded-pill px-3">
