@@ -505,3 +505,4 @@ $mlcs = array_slice($filtered, $offset, $limit);
 <?php include 'admin-footer.php'; ?>
 </body>
 </html>
+

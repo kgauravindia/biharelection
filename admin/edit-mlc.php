@@ -342,3 +342,4 @@ $mlcSlug = !empty($mlc['slug']) ? $mlc['slug'] : slugify($mlc['name']);
 <?php include 'admin-footer.php'; ?>
 </body>
 </html>
+
