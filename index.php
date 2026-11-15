@@ -36,7 +36,7 @@ require_once __DIR__ . '/header.php';
 ?>
 
     <!-- Hero Section with Bootstrap 5.3 Responsive Grid -->
-    <section class="hero-section py-4 py-lg-5">
+    <section class="hero-section py-4 py-lg-5" style="position: relative; z-index: 50; overflow: visible !important;">
         <div class="container text-center py-2 py-lg-3">
             <div class="hero-badge mb-3">
                 <i class="bi bi-shield-check"></i> Non-Government Election Data Platform
@@ -50,7 +50,7 @@ require_once __DIR__ . '/header.php';
             </p>
 
             <!-- Search Hub Widget with Dynamic Suggestions Dropdown -->
-            <div class="search-widget mx-auto" style="max-width: 680px;">
+            <div class="search-widget mx-auto" style="max-width: 680px; position: relative; z-index: 1050;">
                 <div class="search-input-group">
                     <input 
                         type="text" 
