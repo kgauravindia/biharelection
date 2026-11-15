@@ -475,6 +475,8 @@ $totalStatePanch = array_sum($districtPanchCounts) ?: 96938;
 $totalStatePopulation = 104099452;
 
 // Page Meta & SEO
+$isMukhiyaMode = (strpos($_SERVER['REQUEST_URI'] ?? '', '/mukhiya') !== false || ($_GET['mode'] ?? '') === 'mukhiya');
+
 if ($singlePanchayat && $districtObj) {
     $pName = $singlePanchayat['panchayat_name'];
     $bName = $singlePanchayat['block'];
@@ -497,6 +499,10 @@ if ($singlePanchayat && $districtObj) {
     $pageTitle = "{$districtObj['name']} District CD Blocks & Panchayati Raj Directory (534 Blocks)";
     $pageDescription = "Explore {$districtObj['name']} District Community Development (CD) Blocks, Gram Panchayats distribution, census demographics, literacy rates, and administrative directory.";
     $pageCanonical = getPanchayatUrl($districtObj['slug']);
+} elseif ($isMukhiyaMode) {
+    $pageTitle = "Bihar Gram Mukhiya Directory 2021–2026: 7,346+ Elected Mukhiyas & Contact Details";
+    $pageDescription = "Official Bihar Gram Mukhiya Directory (2021–2026). Search and find elected Mukhiyas across 8,400+ Gram Panchayats, 534 Blocks, and 38 Districts with contact details, reservation category, and village connections.";
+    $pageCanonical = SITE_URL . "/mukhiya";
 } else {
     $pageTitle = "Bihar Panchayati Raj & CD Blocks Directory: 38 Districts & 534 Blocks";
     $pageDescription = "Complete administrative directory of Bihar Panchayati Raj: 38 Districts, 534 Community Development (CD) Blocks, and 8,400+ Gram Panchayats with demographics and local governance rosters.";
@@ -731,6 +737,19 @@ require_once __DIR__ . '/header.php';
                 <span class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
                     534 CD Blocks
                 </span>
+            <?php elseif ($isMukhiyaMode): ?>
+                <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm">
+                    👑 Gram Mukhiya Roster (7,346+)
+                </span>
+                <span class="badge bg-white bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    38 Districts
+                </span>
+                <span class="badge bg-success bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    534 CD Blocks
+                </span>
+                <span class="badge bg-info bg-opacity-25 text-white fw-bold px-3 py-2 rounded-pill">
+                    8,400+ Gram Panchayats
+                </span>
             <?php else: ?>
                 <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-sm">
                     🏛️ Panchayati Raj &amp; CD Blocks
@@ -761,6 +780,9 @@ require_once __DIR__ . '/header.php';
             <?php elseif ($districtObj): ?>
                 <?php echo htmlspecialchars($districtObj['name']); ?> District CD Blocks &amp; Panchayats <br>
                 <span style="color: var(--accent-saffron);"><?php echo htmlspecialchars($districtObj['name_hi'] ?? ''); ?> Panchayati Raj Directory</span>
+            <?php elseif ($isMukhiyaMode): ?>
+                Bihar Gram Mukhiya Directory &amp; Live Search <br>
+                <span style="color: var(--accent-saffron);">7,346+ Elected Mukhiyas across 38 Districts &amp; 534 Blocks</span>
             <?php else: ?>
                 Bihar Panchayati Raj &amp; CD Blocks Directory <br>
                 <span style="color: var(--accent-saffron);">38 Districts &amp; 534 Community Development Blocks</span>
@@ -774,10 +796,129 @@ require_once __DIR__ . '/header.php';
                 Explore all <strong><?php echo count($panchayatsInBlock); ?> Gram Panchayats</strong> in <?php echo htmlspecialchars($singleBlockObj['sub_district']); ?> Block. View elected Mukhiyas, Sarpanchs, local demographics, and direct links to each Panchayat profile.
             <?php elseif ($districtObj): ?>
                 Explore all Community Development (CD) Blocks, Gram Panchayats distribution, Census 2011 demographics, and official district &amp; block portals in <?php echo htmlspecialchars($districtObj['name']); ?> District.
+            <?php elseif ($isMukhiyaMode): ?>
+                Official roster and directory of <strong>7,346+ elected Mukhiyas (ग्राम मुखिया)</strong> across all 38 districts of Bihar. Search instantly by candidate name (English or Hindi), Gram Panchayat, CD Block, or mobile number.
             <?php else: ?>
                 Explore Bihar's 3-tier local governance structure across all 38 Districts and 534 CD Blocks. Access block demographics, gram panchayat rosters, census statistics, and representative directories.
             <?php endif; ?>
         </p>
+
+        <?php if ($isMukhiyaMode): ?>
+            <!-- Hero Instant Mukhiya Search Box -->
+            <div class="card border-0 shadow-lg rounded-4 p-3 p-md-4 mb-4 bg-white" style="max-width: 820px;">
+                <label for="mukhiyaHeroSearch" class="form-label fw-bold text-dark fs-6 mb-2">
+                    <i class="bi bi-search text-warning me-1"></i> Search Bihar Mukhiyas (7,346+ Records)
+                </label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light border-end-0 rounded-start-pill ps-3 text-warning">
+                        👑
+                    </span>
+                    <input type="text" id="mukhiyaHeroSearch" class="form-control bg-light border-start-0 border-end-0 px-2" placeholder="Type Mukhiya name (e.g. Rajesh Singh, मनोज कुमार), Panchayat, Block or Mobile..." autocomplete="off">
+                    <button class="btn btn-warning rounded-end-pill px-4 fw-bold text-dark" type="button" onclick="performMukhiyaHeroSearch()">
+                        Search
+                    </button>
+                </div>
+                <div class="small text-muted mt-2 d-flex flex-wrap gap-2 align-items-center">
+                    <span class="fw-semibold">Popular Searches:</span>
+                    <a href="javascript:void(0)" class="badge bg-light text-dark border text-decoration-none" onclick="quickMukhiyaSearch('Mukhiya Rajesh Singh')">Mukhiya Rajesh Singh</a>
+                    <a href="javascript:void(0)" class="badge bg-light text-dark border text-decoration-none" onclick="quickMukhiyaSearch('मनोज कुमार')">मनोज कुमार</a>
+                    <a href="javascript:void(0)" class="badge bg-light text-dark border text-decoration-none" onclick="quickMukhiyaSearch('Amra')">Amra</a>
+                    <a href="javascript:void(0)" class="badge bg-light text-dark border text-decoration-none" onclick="quickMukhiyaSearch('Mukharera')">Mukharera</a>
+                    <a href="javascript:void(0)" class="badge bg-light text-dark border text-decoration-none" onclick="quickMukhiyaSearch('Revelganj')">Revelganj</a>
+                    <a href="javascript:void(0)" class="badge bg-light text-dark border text-decoration-none" onclick="quickMukhiyaSearch('Arwal')">Arwal</a>
+                </div>
+                <!-- Dynamic Search Results Dropdown/Box -->
+                <div id="mukhiyaHeroResults" class="mt-3 d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-2 border-top pt-2">
+                        <span class="small fw-bold text-dark" id="mukhiyaResultsTitle">Live Results</span>
+                        <button type="button" class="btn btn-sm btn-link text-muted p-0 text-decoration-none" onclick="closeMukhiyaResults()">&times; Close</button>
+                    </div>
+                    <div id="mukhiyaResultsList" class="d-flex flex-column gap-2" style="max-height: 380px; overflow-y: auto;"></div>
+                </div>
+            </div>
+
+            <script>
+            let mukhiyaSearchTimer = null;
+            const mukhiyaInput = document.getElementById('mukhiyaHeroSearch');
+            if (mukhiyaInput) {
+                mukhiyaInput.addEventListener('input', function() {
+                    clearTimeout(mukhiyaSearchTimer);
+                    const q = this.value.trim();
+                    if (q.length >= 2) {
+                        mukhiyaSearchTimer = setTimeout(() => performMukhiyaHeroSearch(), 250);
+                    } else if (q.length === 0) {
+                        closeMukhiyaResults();
+                    }
+                });
+                mukhiyaInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        performMukhiyaHeroSearch();
+                    }
+                });
+            }
+
+            function quickMukhiyaSearch(val) {
+                if (!mukhiyaInput) return;
+                mukhiyaInput.value = val;
+                performMukhiyaHeroSearch();
+            }
+
+            function closeMukhiyaResults() {
+                const box = document.getElementById('mukhiyaHeroResults');
+                if (box) box.classList.add('d-none');
+            }
+
+            async function performMukhiyaHeroSearch() {
+                const q = mukhiyaInput ? mukhiyaInput.value.trim() : '';
+                if (!q) return;
+                const box = document.getElementById('mukhiyaHeroResults');
+                const list = document.getElementById('mukhiyaResultsList');
+                const title = document.getElementById('mukhiyaResultsTitle');
+                if (!box || !list) return;
+
+                box.classList.remove('d-none');
+                list.innerHTML = '<div class="text-center py-3 text-muted small"><div class="spinner-border spinner-border-sm text-warning me-1"></div> Searching Bihar Mukhiyas...</div>';
+
+                try {
+                    const resp = await fetch('<?php echo SITE_URL; ?>/api/search.php?q=' + encodeURIComponent(q));
+                    const data = await resp.json();
+                    
+                    const mukhiyas = Array.isArray(data) ? data.filter(d => d.type === 'mukhiya' || d.type === 'village') : [];
+                    
+                    if (mukhiyas.length === 0) {
+                        list.innerHTML = '<div class="alert alert-light border small text-muted mb-0"><i class="bi bi-info-circle me-1"></i> No matching Mukhiyas or Panchayats found for "' + escapeHtml(q) + '". Try searching by English name, Hindi name, Panchayat, or mobile number.</div>';
+                        title.innerText = '0 Results Found';
+                        return;
+                    }
+
+                    title.innerText = mukhiyas.length + ' Result(s) Found';
+                    let html = '';
+                    mukhiyas.forEach(item => {
+                        html += `
+                            <a href="${item.url}" class="card p-2.5 text-decoration-none border shadow-sm rounded-3 bg-light hover-shadow transition" style="color: inherit;">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="fw-bold text-dark fs-6">${item.title}</div>
+                                    <span class="badge bg-warning text-dark extra-small rounded-pill text-uppercase">${item.type}</span>
+                                </div>
+                                <div class="small text-muted mt-0.5">${item.subtitle}</div>
+                                <div class="extra-small text-secondary mt-1 border-top pt-1">${item.extra}</div>
+                            </a>
+                        `;
+                    });
+                    list.innerHTML = html;
+                } catch (e) {
+                    list.innerHTML = '<div class="text-danger small">Error searching. Please try again.</div>';
+                }
+            }
+
+            function escapeHtml(text) {
+                return text.replace(/[&<>"']/g, function(m) {
+                    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m];
+                });
+            }
+            </script>
+        <?php endif; ?>
 
         <div class="d-flex flex-wrap gap-2">
             <?php if ($singlePanchayat && $districtObj): ?>

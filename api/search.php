@@ -432,73 +432,180 @@ if ($pdo) {
 }
 
 // -------------------------------------------------------------
-// 6. Direct Search in Panchayats (Mukhiyas & Sarpanchs)
+// 6. Direct Search in Mukhiyas Directory & Panchayats (Mukhiyas & Sarpanchs)
 // -------------------------------------------------------------
 if ($pdo) {
     try {
-        $pClauses = [];
-        $pParams = [];
-        $combinedTerms = array_unique(array_merge($locationTerms, $allTerms, $matchedPanchayatNames));
+        $mukhiyaWhereClauses = [];
+        $mukhiyaParams = [];
+        
+        $isMobileQuery = (bool)preg_match('/^[0-9]{4,10}$/', trim($cleanQuery)) || (bool)preg_match('/^[0-9]{4,10}$/', trim($rawQuery));
+        $isJustMukhiya = ($intent === 'mukhiya' && (empty($cleanQuery) || strlen($cleanQuery) < 2));
 
-        foreach (array_slice($combinedTerms, 0, 5) as $t) {
-            $tLike = "%$t%";
-            $pClauses[] = "(current_mukhiya LIKE ? OR current_sarpanch LIKE ? OR panchayat_name LIKE ? OR panchayat_hi LIKE ?)";
-            $pParams[] = $tLike;
-            $pParams[] = $tLike;
-            $pParams[] = $tLike;
-            $pParams[] = $tLike;
-        }
-
-        if (!empty($pClauses)) {
-            $stmtM = $pdo->prepare("SELECT panchayat_name, panchayat_hi, district, district_slug, block, current_mukhiya, current_sarpanch, mukhiya_category 
-                                    FROM panchayats 
-                                    WHERE (" . implode(' OR ', $pClauses) . ") 
-                                      AND current_mukhiya IS NOT NULL AND current_mukhiya != '' 
-                                    LIMIT 10");
-            $stmtM->execute($pParams);
-            while ($m = $stmtM->fetch(PDO::FETCH_ASSOC)) {
-                $pName = $m['panchayat_name'];
+        if ($isJustMukhiya) {
+            // Return top Mukhiyas across Bihar
+            $stmtJustM = $pdo->query("SELECT candidate_name, candidate_name_en, post, district, district_slug, block, block_en, panchayat, panchayat_en, category, mobile, tenure 
+                                      FROM mukhiyas 
+                                      WHERE candidate_name IS NOT NULL AND candidate_name != '' 
+                                      ORDER BY id ASC LIMIT 8");
+            while ($m = $stmtJustM->fetch(PDO::FETCH_ASSOC)) {
+                $pName = $m['panchayat'] . (!empty($m['panchayat_en']) ? ' (' . $m['panchayat_en'] . ')' : '');
                 $dSlug = $m['district_slug'] ?: slugify($m['district']);
-                $bSlug = slugify($m['block']);
-                $pSlug = slugify($pName);
+                $bSlug = slugify($m['block_en'] ?: $m['block']);
+                $pSlug = slugify($m['panchayat_en'] ?: $m['panchayat']);
+                $nameDisplay = $m['candidate_name'] . (!empty($m['candidate_name_en']) ? ' (' . $m['candidate_name_en'] . ')' : '');
 
-                // Avoid duplicate mukhiya cards
-                $alreadyAdded = false;
-                foreach ($results['mukhiya'] as $existing) {
-                    if (stripos($existing['title'], $m['current_mukhiya']) !== false && stripos($existing['title'], $pName) !== false) {
-                        $alreadyAdded = true;
-                        break;
-                    }
+                $results['mukhiya'][] = [
+                    'type' => 'mukhiya',
+                    'title' => '👑 Mukhiya: ' . $nameDisplay,
+                    'subtitle' => '🌾 ' . $pName . ' Gram Panchayat',
+                    'extra' => 'Block: ' . ($m['block_en'] ?: $m['block']) . ' | District: ' . $m['district'] . (!empty($m['mobile']) ? ' | 📞 ' . $m['mobile'] : '') . (!empty($m['category']) ? ' | ' . $m['category'] : ''),
+                    'slug' => $pSlug,
+                    'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
+                ];
+            }
+        } elseif ($isMobileQuery) {
+            $mNum = preg_replace('/[^0-9]/', '', $cleanQuery ?: $rawQuery);
+            $stmtMob = $pdo->prepare("SELECT candidate_name, candidate_name_en, post, district, district_slug, block, block_en, panchayat, panchayat_en, category, mobile, tenure 
+                                      FROM mukhiyas 
+                                      WHERE mobile LIKE ? LIMIT 8");
+            $stmtMob->execute(["%$mNum%"]);
+            while ($m = $stmtMob->fetch(PDO::FETCH_ASSOC)) {
+                $pName = $m['panchayat'] . (!empty($m['panchayat_en']) ? ' (' . $m['panchayat_en'] . ')' : '');
+                $dSlug = $m['district_slug'] ?: slugify($m['district']);
+                $bSlug = slugify($m['block_en'] ?: $m['block']);
+                $pSlug = slugify($m['panchayat_en'] ?: $m['panchayat']);
+                $nameDisplay = $m['candidate_name'] . (!empty($m['candidate_name_en']) ? ' (' . $m['candidate_name_en'] . ')' : '');
+
+                $results['mukhiya'][] = [
+                    'type' => 'mukhiya',
+                    'title' => '👑 Mukhiya: ' . $nameDisplay,
+                    'subtitle' => '🌾 ' . $pName . ' Gram Panchayat',
+                    'extra' => '📞 Mobile: ' . $m['mobile'] . ' | Block: ' . ($m['block_en'] ?: $m['block']) . ' | District: ' . $m['district'],
+                    'slug' => $pSlug,
+                    'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
+                ];
+            }
+        } else {
+            // General & Bilingual Name/Place search in mukhiyas table
+            $combinedTerms = array_values(array_unique(array_filter(array_merge([$cleanQuery, $rawQuery], $locationTerms, $allTerms, $matchedPanchayatNames))));
+            $mClauses = [];
+            $mParams = [];
+            foreach (array_slice($combinedTerms, 0, 5) as $t) {
+                if (strlen($t) < 2) continue;
+                $tLike = "%$t%";
+                $mClauses[] = "(candidate_name LIKE ? OR candidate_name_en LIKE ? OR panchayat LIKE ? OR panchayat_en LIKE ? OR block LIKE ? OR block_en LIKE ? OR district LIKE ? OR mobile LIKE ?)";
+                for ($i = 0; $i < 8; $i++) {
+                    $mParams[] = $tLike;
                 }
+            }
 
-                if (!$alreadyAdded) {
-                    $results['mukhiya'][] = [
-                        'type' => 'mukhiya',
-                        'title' => '👑 Mukhiya: ' . $m['current_mukhiya'],
-                        'subtitle' => $pName . ' Gram Panchayat',
-                        'extra' => 'Block: ' . $m['block'] . ' | District: ' . $m['district'] . (!empty($m['current_sarpanch']) ? ' | Sarpanch: ' . $m['current_sarpanch'] : ''),
-                        'slug' => $pSlug,
-                        'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
-                    ];
-                }
+            if (!empty($mClauses)) {
+                $mSql = "SELECT candidate_name, candidate_name_en, post, district, district_slug, block, block_en, panchayat, panchayat_en, category, mobile, tenure 
+                         FROM mukhiyas 
+                         WHERE " . implode(' OR ', $mClauses) . " 
+                         ORDER BY (candidate_name_en LIKE ? OR candidate_name LIKE ?) DESC, 
+                                  (panchayat_en LIKE ? OR panchayat LIKE ?) DESC 
+                         LIMIT 10";
+                $leadTerm = "%" . ($cleanQuery ?: $rawQuery) . "%";
+                $mParamsOrder = array_merge($mParams, [$leadTerm, $leadTerm, $leadTerm, $leadTerm]);
+                $stmtMukh = $pdo->prepare($mSql);
+                $stmtMukh->execute($mParamsOrder);
+                while ($m = $stmtMukh->fetch(PDO::FETCH_ASSOC)) {
+                    $pName = $m['panchayat'] . (!empty($m['panchayat_en']) && $m['panchayat_en'] !== $m['panchayat'] ? ' (' . $m['panchayat_en'] . ')' : '');
+                    $dSlug = $m['district_slug'] ?: slugify($m['district']);
+                    $bSlug = slugify($m['block_en'] ?: $m['block']);
+                    $pSlug = slugify($m['panchayat_en'] ?: $m['panchayat']);
+                    $nameDisplay = $m['candidate_name'] . (!empty($m['candidate_name_en']) ? ' (' . $m['candidate_name_en'] . ')' : '');
 
-                if (!empty($m['current_sarpanch'])) {
-                    $alreadyAddedS = false;
-                    foreach ($results['sarpanch'] as $existing) {
-                        if (stripos($existing['title'], $m['current_sarpanch']) !== false && stripos($existing['title'], $pName) !== false) {
-                            $alreadyAddedS = true;
+                    // Avoid duplicate cards
+                    $alreadyAdded = false;
+                    foreach ($results['mukhiya'] as $existing) {
+                        if (stripos($existing['title'], $m['candidate_name']) !== false && stripos($existing['title'], $m['panchayat']) !== false) {
+                            $alreadyAdded = true;
                             break;
                         }
                     }
-                    if (!$alreadyAddedS) {
-                        $results['sarpanch'][] = [
-                            'type' => 'sarpanch',
-                            'title' => '⚖️ Sarpanch: ' . $m['current_sarpanch'],
-                            'subtitle' => $pName . ' Gram Kutchery',
-                            'extra' => 'Block: ' . $m['block'] . ' | District: ' . $m['district'] . ' | Mukhiya: ' . $m['current_mukhiya'],
+
+                    if (!$alreadyAdded) {
+                        $results['mukhiya'][] = [
+                            'type' => 'mukhiya',
+                            'title' => '👑 Mukhiya: ' . $nameDisplay,
+                            'subtitle' => '🌾 ' . $pName . ' Gram Panchayat',
+                            'extra' => 'Block: ' . ($m['block_en'] ?: $m['block']) . ' | District: ' . $m['district'] . (!empty($m['mobile']) ? ' | 📞 ' . $m['mobile'] : '') . (!empty($m['category']) ? ' | ' . $m['category'] : ''),
                             'slug' => $pSlug,
                             'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
                         ];
+                    }
+                }
+            }
+
+            // Also check Panchayats table for Sarpanchs and additional Mukhiya records
+            $pClauses = [];
+            $pParams = [];
+            foreach (array_slice($combinedTerms, 0, 4) as $t) {
+                if (strlen($t) < 2) continue;
+                $tLike = "%$t%";
+                $pClauses[] = "(current_mukhiya LIKE ? OR current_sarpanch LIKE ? OR panchayat_name LIKE ? OR panchayat_hi LIKE ?)";
+                $pParams[] = $tLike;
+                $pParams[] = $tLike;
+                $pParams[] = $tLike;
+                $pParams[] = $tLike;
+            }
+
+            if (!empty($pClauses)) {
+                $stmtM = $pdo->prepare("SELECT panchayat_name, panchayat_hi, district, district_slug, block, current_mukhiya, current_sarpanch, mukhiya_category 
+                                        FROM panchayats 
+                                        WHERE (" . implode(' OR ', $pClauses) . ") 
+                                          AND (current_mukhiya IS NOT NULL AND current_mukhiya != '' OR current_sarpanch IS NOT NULL AND current_sarpanch != '') 
+                                        LIMIT 8");
+                $stmtM->execute($pParams);
+                while ($m = $stmtM->fetch(PDO::FETCH_ASSOC)) {
+                    $pName = $m['panchayat_name'];
+                    $dSlug = $m['district_slug'] ?: slugify($m['district']);
+                    $bSlug = slugify($m['block']);
+                    $pSlug = slugify($pName);
+
+                    // Avoid duplicate mukhiya cards
+                    if (!empty($m['current_mukhiya'])) {
+                        $alreadyAdded = false;
+                        foreach ($results['mukhiya'] as $existing) {
+                            if (stripos($existing['title'], $m['current_mukhiya']) !== false && stripos($existing['title'], $pName) !== false) {
+                                $alreadyAdded = true;
+                                break;
+                            }
+                        }
+
+                        if (!$alreadyAdded) {
+                            $results['mukhiya'][] = [
+                                'type' => 'mukhiya',
+                                'title' => '👑 Mukhiya: ' . $m['current_mukhiya'],
+                                'subtitle' => $pName . ' Gram Panchayat',
+                                'extra' => 'Block: ' . $m['block'] . ' | District: ' . $m['district'] . (!empty($m['current_sarpanch']) ? ' | Sarpanch: ' . $m['current_sarpanch'] : ''),
+                                'slug' => $pSlug,
+                                'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
+                            ];
+                        }
+                    }
+
+                    if (!empty($m['current_sarpanch'])) {
+                        $alreadyAddedS = false;
+                        foreach ($results['sarpanch'] as $existing) {
+                            if (stripos($existing['title'], $m['current_sarpanch']) !== false && stripos($existing['title'], $pName) !== false) {
+                                $alreadyAddedS = true;
+                                break;
+                            }
+                        }
+                        if (!$alreadyAddedS) {
+                            $results['sarpanch'][] = [
+                                'type' => 'sarpanch',
+                                'title' => '⚖️ Sarpanch: ' . $m['current_sarpanch'],
+                                'subtitle' => $pName . ' Gram Kutchery',
+                                'extra' => 'Block: ' . $m['block'] . ' | District: ' . $m['district'] . (!empty($m['current_mukhiya']) ? ' | Mukhiya: ' . $m['current_mukhiya'] : ''),
+                                'slug' => $pSlug,
+                                'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
+                            ];
+                        }
                     }
                 }
             }

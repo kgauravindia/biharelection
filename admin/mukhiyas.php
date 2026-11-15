@@ -86,11 +86,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $panchayat = sanitize($_POST['panchayat'] ?? '');
     $address = sanitize($_POST['address'] ?? '');
     $d_slug = slugify($district);
+    $c_name_en = sanitize($_POST['candidate_name_en'] ?? '');
+    if (empty($c_name_en)) {
+        $c_name_en = ucwords(str_replace('-', ' ', slugify($c_name)));
+    }
+    $panchayat_en = sanitize($_POST['panchayat_en'] ?? '');
+    if (empty($panchayat_en)) {
+        $panchayat_en = ucwords(str_replace('-', ' ', slugify($panchayat)));
+    }
+    $block_en = sanitize($_POST['block_en'] ?? '');
+    if (empty($block_en)) {
+        $block_en = ucwords(str_replace('-', ' ', slugify($block)));
+    }
 
     if (!empty($c_name) && !empty($district) && !empty($panchayat)) {
-        $stmt = $conn->prepare("INSERT INTO `mukhiyas` (`candidate_name`, `post`, `district`, `district_slug`, `block`, `panchayat`, `gender`, `category`, `mobile`, `address`, `tenure`) VALUES (?, 'मुखिया', ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO `mukhiyas` (`candidate_name`, `candidate_name_en`, `post`, `district`, `district_slug`, `block`, `block_en`, `panchayat`, `panchayat_en`, `gender`, `category`, `mobile`, `address`, `tenure`) VALUES (?, ?, 'मुखिया', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         if ($stmt) {
-            $stmt->bind_param("ssssssssss", $c_name, $district, $d_slug, $block, $panchayat, $gender, $category, $mobile, $address, $tenure);
+            $stmt->bind_param("sssssssssssss", $c_name, $c_name_en, $district, $d_slug, $block, $block_en, $panchayat, $panchayat_en, $gender, $category, $mobile, $address, $tenure);
             if ($stmt->execute()) {
                 $message = "New Mukhiya record for '" . htmlspecialchars($c_name) . "' (" . htmlspecialchars($panchayat) . ") added successfully.";
             } else {
@@ -115,11 +127,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $panchayat = sanitize($_POST['panchayat'] ?? '');
     $address = sanitize($_POST['address'] ?? '');
     $d_slug = slugify($district);
+    $c_name_en = sanitize($_POST['candidate_name_en'] ?? '');
+    if (empty($c_name_en)) {
+        $c_name_en = ucwords(str_replace('-', ' ', slugify($c_name)));
+    }
+    $panchayat_en = sanitize($_POST['panchayat_en'] ?? '');
+    if (empty($panchayat_en)) {
+        $panchayat_en = ucwords(str_replace('-', ' ', slugify($panchayat)));
+    }
+    $block_en = sanitize($_POST['block_en'] ?? '');
+    if (empty($block_en)) {
+        $block_en = ucwords(str_replace('-', ' ', slugify($block)));
+    }
 
     if ($edit_id > 0 && !empty($c_name)) {
-        $stmt = $conn->prepare("UPDATE `mukhiyas` SET `candidate_name` = ?, `mobile` = ?, `category` = ?, `gender` = ?, `tenure` = ?, `district` = ?, `district_slug` = ?, `block` = ?, `panchayat` = ?, `address` = ? WHERE `id` = ?");
+        $stmt = $conn->prepare("UPDATE `mukhiyas` SET `candidate_name` = ?, `candidate_name_en` = ?, `mobile` = ?, `category` = ?, `gender` = ?, `tenure` = ?, `district` = ?, `district_slug` = ?, `block` = ?, `block_en` = ?, `panchayat` = ?, `panchayat_en` = ?, `address` = ? WHERE `id` = ?");
         if ($stmt) {
-            $stmt->bind_param("ssssssssssi", $c_name, $mobile, $category, $gender, $tenure, $district, $d_slug, $block, $panchayat, $address, $edit_id);
+            $stmt->bind_param("sssssssssssssi", $c_name, $c_name_en, $mobile, $category, $gender, $tenure, $district, $d_slug, $block, $block_en, $panchayat, $panchayat_en, $address, $edit_id);
             if ($stmt->execute()) {
                 $message = "Mukhiya record for '" . htmlspecialchars($c_name) . "' (" . htmlspecialchars($panchayat) . ") updated successfully.";
             } else {
@@ -217,11 +241,11 @@ if ($conn) {
         }
     }
 
-    // 4. Main Query with Dynamic Filtering
+    // 4. Main Query with Dynamic Filtering (Bilingual English + Hindi + Mobile + District)
     $where = "1=1";
     if (!empty($search)) {
         $esc_q = $conn->real_escape_string($search);
-        $where .= " AND (`candidate_name` LIKE '%$esc_q%' OR `panchayat` LIKE '%$esc_q%' OR `block` LIKE '%$esc_q%' OR `mobile` LIKE '%$esc_q%')";
+        $where .= " AND (`candidate_name` LIKE '%$esc_q%' OR `candidate_name_en` LIKE '%$esc_q%' OR `panchayat` LIKE '%$esc_q%' OR `panchayat_en` LIKE '%$esc_q%' OR `block` LIKE '%$esc_q%' OR `block_en` LIKE '%$esc_q%' OR `district` LIKE '%$esc_q%' OR `mobile` LIKE '%$esc_q%')";
     }
     if (!empty($filter_district)) {
         $esc_d = $conn->real_escape_string($filter_district);
@@ -506,7 +530,7 @@ usort($districts, function($a, $b) {
                     <div class="col-lg-3 col-md-4">
                         <div class="input-group">
                             <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
-                            <input type="text" name="q" class="form-control border-start-0" placeholder="Search name, mobile..." value="<?php echo htmlspecialchars($search); ?>">
+                            <input type="text" name="q" class="form-control border-start-0" placeholder="Search name (English / Hindi), GP, Block, Mobile..." value="<?php echo htmlspecialchars($search); ?>">
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-4">
@@ -611,7 +635,12 @@ usort($districts, function($a, $b) {
                             <?php foreach ($mukhiyas as $m): ?>
                                 <tr>
                                     <td>
-                                        <div class="fw-bold text-dark"><?php echo htmlspecialchars($m['candidate_name']); ?></div>
+                                        <div class="fw-bold text-dark">
+                                            <?php echo htmlspecialchars($m['candidate_name']); ?>
+                                            <?php if (!empty($m['candidate_name_en'])): ?>
+                                                <span class="text-secondary fw-normal small">(<?php echo htmlspecialchars($m['candidate_name_en']); ?>)</span>
+                                            <?php endif; ?>
+                                        </div>
                                         <?php if (!empty($m['tenure'])): ?>
                                             <span class="badge bg-success-subtle text-success small" style="font-size: 0.68rem;"><?php echo htmlspecialchars($m['tenure']); ?></span>
                                         <?php endif; ?>

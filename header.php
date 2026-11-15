@@ -337,6 +337,15 @@ $activeNav = $activeNav ?? 'home';
                                 </a>
                             </li>
                             <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo SITE_URL; ?>/mukhiya">
+                                    <span>👑</span>
+                                    <div>
+                                        <div class="fw-bold text-warning">Gram Mukhiyas Directory (7,346+)</div>
+                                        <small class="text-muted">Elected Mukhiyas, Contact &amp; Panchayat Roster</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="<?php echo getPanchayatUrl(); ?>">
                                     <span>🏡</span>
                                     <div>

@@ -105,11 +105,14 @@ CREATE TABLE IF NOT EXISTS `panchayats` (
 CREATE TABLE IF NOT EXISTS `mukhiyas` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `candidate_name` VARCHAR(150) NOT NULL,
+  `candidate_name_en` VARCHAR(150) DEFAULT NULL,
   `post` VARCHAR(50) DEFAULT 'मुखिया',
   `district` VARCHAR(100) NOT NULL,
   `district_slug` VARCHAR(100) DEFAULT NULL,
   `block` VARCHAR(100) NOT NULL,
+  `block_en` VARCHAR(100) DEFAULT NULL,
   `panchayat` VARCHAR(150) NOT NULL,
+  `panchayat_en` VARCHAR(150) DEFAULT NULL,
   `gender` VARCHAR(20) DEFAULT NULL,
   `category` VARCHAR(50) DEFAULT NULL,
   `mobile` VARCHAR(20) DEFAULT NULL,
@@ -118,8 +121,14 @@ CREATE TABLE IF NOT EXISTS `mukhiyas` (
   `tenure` VARCHAR(50) DEFAULT '2021-2026',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   INDEX (`district`),
+  INDEX (`district_slug`),
   INDEX (`block`),
-  INDEX (`panchayat`)
+  INDEX (`block_en`),
+  INDEX (`panchayat`),
+  INDEX (`panchayat_en`),
+  INDEX (`candidate_name`),
+  INDEX (`candidate_name_en`),
+  INDEX (`mobile`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 6. Elected Sarpanchs Roster
