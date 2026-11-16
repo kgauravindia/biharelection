@@ -243,16 +243,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $lastAction = "Stash & Pull (origin {$branch})";
             $pullTarget = !empty($githubToken) ? 'https://oauth2:' . rawurlencode($githubToken) . '@github.com/kgauravindia/biharelection.git' : 'origin';
             
-            $r1 = runGitCmd("git stash", $repoDir);
+            $r1 = runGitCmd("git stash --include-untracked", $repoDir);
             $r2 = runGitCmd("git pull " . escapeshellarg($pullTarget) . " " . escapeshellarg($branch), $repoDir);
             $r3 = runGitCmd("git stash pop", $repoDir);
             
-            $combined = "=== 1. STASHING LOCAL SERVER EDITS ===\n" . ($r1['output'] ?: 'No local uncommitted changes to stash.') . "\n\n";
+            $combined = "=== 1. STASHING LOCAL SERVER EDITS (INCLUDING UNTRACKED) ===\n" . ($r1['output'] ?: 'No local changes to stash.') . "\n\n";
             $combined .= "=== 2. PULLING FROM GITHUB ===\n" . ($r2['output'] ?: 'Pull done.') . "\n\n";
             $combined .= "=== 3. RESTORING LOCAL STASH ===\n" . ($r3['output'] ?: 'Stash restored or unapplied.');
             
             $actionResult = [
-                'cmd' => "git stash && git pull origin $branch && git stash pop",
+                'cmd' => "git stash --include-untracked && git pull origin $branch && git stash pop",
                 'output' => $combined,
                 'code' => $r2['code'],
                 'success' => $r2['success']
@@ -262,16 +262,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pullTarget = !empty($githubToken) ? 'https://oauth2:' . rawurlencode($githubToken) . '@github.com/kgauravindia/biharelection.git' : 'origin';
             
             $r1 = runGitCmd("git fetch " . escapeshellarg($pullTarget) . " " . escapeshellarg($branch), $repoDir);
-            $r2 = runGitCmd("git reset --hard FETCH_HEAD", $repoDir);
+            $r2 = runGitCmd("git clean -fd", $repoDir);
+            $r3 = runGitCmd("git reset --hard FETCH_HEAD", $repoDir);
             
             $combined = "=== 1. FETCHING LATEST FROM GITHUB ===\n" . ($r1['output'] ?: 'Fetched latest commits.') . "\n\n";
-            $combined .= "=== 2. HARD RESET TO MATCH GITHUB ===\n" . ($r2['output'] ?: 'Working tree reset.');
+            $combined .= "=== 2. CLEANING UNTRACKED CONFLICTING FILES ===\n" . ($r2['output'] ?: 'No untracked files to clean.') . "\n\n";
+            $combined .= "=== 3. HARD RESET TO MATCH GITHUB ===\n" . ($r3['output'] ?: 'Working tree reset.');
             
             $actionResult = [
-                'cmd' => "git fetch && git reset --hard FETCH_HEAD",
+                'cmd' => "git fetch && git clean -fd && git reset --hard FETCH_HEAD",
                 'output' => $combined,
-                'code' => $r2['code'],
-                'success' => $r2['success']
+                'code' => $r3['code'],
+                'success' => $r3['success']
             ];
         } elseif ($action === 'fetch') {
             $lastAction = "Git Fetch";
