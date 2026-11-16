@@ -225,7 +225,7 @@ $cacheStats = class_exists('DataCache') ? DataCache::stats() : ['count' => 0, 's
                             <code><?php echo htmlspecialchars(DB_USER); ?></code>
                         </div>
                         <div class="border-top pt-3">
-                            <a href="../install.php" target="_blank" class="btn btn-outline-danger btn-sm w-100 fw-bold">
+                            <a href="sync_db.php" target="_blank" class="btn btn-outline-danger btn-sm w-100 fw-bold">
                                 <i class="fas fa-database me-1"></i> Run Migration / Seeder
                             </a>
                         </div>

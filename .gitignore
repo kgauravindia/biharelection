@@ -21,3 +21,8 @@ tmp/
 *.xlsx
 *.xls
 assets/cache/
+cache/
+*.cache
+District_Files/
+District_Files
+2020/
