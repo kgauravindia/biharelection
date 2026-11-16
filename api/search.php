@@ -603,7 +603,7 @@ if ($pdo) {
                     'type' => 'mukhiya',
                     'title' => '👑 Mukhiya: ' . $nameDisplay,
                     'subtitle' => '🌾 ' . $pName . ' Gram Panchayat',
-                    'extra' => 'Block: ' . ($m['block_en'] ?: $m['block']) . ' | District: ' . $m['district'] . (!empty($m['mobile']) ? ' | 📞 ' . $m['mobile'] : '') . (!empty($m['category']) ? ' | ' . $m['category'] : ''),
+                    'extra' => 'Block: ' . ($m['block_en'] ?: $m['block']) . ' | District: ' . $m['district'] . (!empty($m['category']) ? ' | ' . $m['category'] : ''),
                     'slug' => $pSlug,
                     'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
                 ];
@@ -624,7 +624,7 @@ if ($pdo) {
                     'type' => 'mukhiya',
                     'title' => '👑 Mukhiya: ' . $nameDisplay,
                     'subtitle' => '🌾 ' . $pName . ' Gram Panchayat',
-                    'extra' => '📞 Mobile: ' . $m['mobile'] . ' | Block: ' . ($m['block_en'] ?: $m['block']) . ' | District: ' . $m['district'],
+                    'extra' => 'Block: ' . ($m['block_en'] ?: $m['block']) . ' | District: ' . $m['district'] . (!empty($m['category']) ? ' | ' . $m['category'] : ''),
                     'slug' => $pSlug,
                     'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
                 ];
@@ -672,7 +672,7 @@ if ($pdo) {
                             'type' => 'mukhiya',
                             'title' => '👑 Mukhiya: ' . $nameDisplay,
                             'subtitle' => '🌾 ' . $pName . ' Gram Panchayat',
-                            'extra' => 'Block: ' . ($m['block_en'] ?: $m['block']) . ' | District: ' . $m['district'] . (!empty($m['mobile']) ? ' | 📞 ' . $m['mobile'] : '') . (!empty($m['category']) ? ' | ' . $m['category'] : ''),
+                            'extra' => 'Block: ' . ($m['block_en'] ?: $m['block']) . ' | District: ' . $m['district'] . (!empty($m['category']) ? ' | ' . $m['category'] : ''),
                             'slug' => $pSlug,
                             'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
                         ];
@@ -705,7 +705,7 @@ if ($pdo) {
                     'type' => 'sarpanch',
                     'title' => '⚖️ Sarpanch: ' . $m['current_sarpanch'],
                     'subtitle' => '🌾 ' . $pName . ' Gram Kutchery',
-                    'extra' => 'Block: ' . $m['block'] . ' | District: ' . $m['district'] . (!empty($m['sarpanch_mobile']) ? ' | 📞 ' . $m['sarpanch_mobile'] : '') . (!empty($m['sarpanch_category']) ? ' | ' . $m['sarpanch_category'] : ''),
+                    'extra' => 'Block: ' . $m['block'] . ' | District: ' . $m['district'] . (!empty($m['sarpanch_category']) ? ' | ' . $m['sarpanch_category'] : ''),
                     'slug' => $pSlug,
                     'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
                 ];
@@ -768,7 +768,7 @@ if ($pdo) {
                                 'type' => 'sarpanch',
                                 'title' => '⚖️ Sarpanch: ' . $m['current_sarpanch'],
                                 'subtitle' => '🌾 ' . $pName . ' Gram Kutchery',
-                                'extra' => 'Block: ' . $m['block'] . ' | District: ' . $m['district'] . (!empty($m['sarpanch_mobile']) ? ' | 📞 ' . $m['sarpanch_mobile'] : '') . (!empty($m['sarpanch_category']) ? ' | ' . $m['sarpanch_category'] : ''),
+                                'extra' => 'Block: ' . $m['block'] . ' | District: ' . $m['district'] . (!empty($m['sarpanch_category']) ? ' | ' . $m['sarpanch_category'] : ''),
                                 'slug' => $pSlug,
                                 'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug)
                             ];
@@ -826,7 +826,7 @@ if ($pdo) {
                     'type' => 'ward',
                     'title' => '🗳️ Ward ' . $w['ward_no'] . ' Member: ' . $w['candidate_name'],
                     'subtitle' => '🌾 ' . $w['panchayat'] . ' Gram Panchayat (Ward ' . $w['ward_no'] . ')',
-                    'extra' => 'Block: ' . $w['block'] . ' | District: ' . $w['district'] . (!empty($w['mobile']) ? ' | 📞 ' . $w['mobile'] : '') . (!empty($w['reservation_status']) ? ' | ' . $w['reservation_status'] : ''),
+                    'extra' => 'Block: ' . $w['block'] . ' | District: ' . $w['district'] . (!empty($w['reservation_status']) ? ' | ' . $w['reservation_status'] : ''),
                     'slug' => $pSlug,
                     'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug) . '#tab-wards'
                 ];
@@ -876,7 +876,7 @@ if ($pdo) {
                         'type' => 'ward',
                         'title' => '🗳️ Ward ' . $w['ward_no'] . ' Member: ' . $w['candidate_name'],
                         'subtitle' => '🌾 ' . $w['panchayat'] . ' Gram Panchayat (Ward ' . $w['ward_no'] . ')',
-                        'extra' => 'Block: ' . $w['block'] . ' | District: ' . $w['district'] . (!empty($w['mobile']) ? ' | 📞 ' . $w['mobile'] : '') . (!empty($w['reservation_status']) ? ' | ' . $w['reservation_status'] : ''),
+                        'extra' => 'Block: ' . $w['block'] . ' | District: ' . $w['district'] . (!empty($w['reservation_status']) ? ' | ' . $w['reservation_status'] : ''),
                         'slug' => $pSlug,
                         'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug) . '#tab-wards'
                     ];
@@ -907,7 +907,7 @@ if ($pdo) {
                     'type' => 'panch',
                     'title' => '⚖️ Gram Panch: ' . $p['candidate_name'] . ' (Ward ' . $p['ward_no'] . ')',
                     'subtitle' => '🌾 ' . $p['panchayat'] . ' Gram Kutchery (Ward ' . $p['ward_no'] . ')',
-                    'extra' => 'Block: ' . $p['block'] . ' | District: ' . $p['district'] . (!empty($p['mobile']) ? ' | 📞 ' . $p['mobile'] : '') . ' | Judicial Ward Panch',
+                    'extra' => 'Block: ' . $p['block'] . ' | District: ' . $p['district'] . ' | Judicial Ward Panch',
                     'slug' => $pSlug,
                     'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug) . '#tab-panch'
                 ];
@@ -957,7 +957,7 @@ if ($pdo) {
                         'type' => 'panch',
                         'title' => '⚖️ Gram Panch: ' . $p['candidate_name'] . ' (Ward ' . $p['ward_no'] . ')',
                         'subtitle' => '🌾 ' . $p['panchayat'] . ' Gram Kutchery (Ward ' . $p['ward_no'] . ')',
-                        'extra' => 'Block: ' . $p['block'] . ' | District: ' . $p['district'] . (!empty($p['mobile']) ? ' | 📞 ' . $p['mobile'] : '') . ' | Judicial Ward Panch',
+                        'extra' => 'Block: ' . $p['block'] . ' | District: ' . $p['district'] . ' | Judicial Ward Panch',
                         'slug' => $pSlug,
                         'url' => getPanchayatUrl($dSlug, $bSlug, $pSlug) . '#tab-panch'
                     ];
@@ -986,7 +986,7 @@ if ($pdo) {
                     'type' => 'zila_parishad',
                     'title' => '🏛️ Zila Parishad Member: ' . $zm['candidate_name'],
                     'subtitle' => '📍 Territory #' . $terr . ' &bull; ' . $zm['district'] . ' Zila Parishad',
-                    'extra' => 'Block: ' . $zm['block'] . ' | District: ' . $zm['district'] . (!empty($zm['mobile']) ? ' | 📞 ' . $zm['mobile'] : '') . (!empty($zm['category']) ? ' | ' . $zm['category'] : ''),
+                    'extra' => 'Block: ' . $zm['block'] . ' | District: ' . $zm['district'] . (!empty($zm['category']) ? ' | ' . $zm['category'] : ''),
                     'slug' => $dSlug . '-' . $terr,
                     'url' => SITE_URL . '/zila-parishad/' . $dSlug . '/' . $terr
                 ];
@@ -1028,7 +1028,7 @@ if ($pdo) {
                         'type' => 'zila_parishad',
                         'title' => '🏛️ Zila Parishad Member: ' . $zm['candidate_name'],
                         'subtitle' => '📍 Territory #' . $terr . ' &bull; ' . $zm['district'] . ' Zila Parishad',
-                        'extra' => 'Block: ' . $zm['block'] . ' | District: ' . $zm['district'] . (!empty($zm['mobile']) ? ' | 📞 ' . $zm['mobile'] : '') . (!empty($zm['category']) ? ' | ' . $zm['category'] : ''),
+                        'extra' => 'Block: ' . $zm['block'] . ' | District: ' . $zm['district'] . (!empty($zm['category']) ? ' | ' . $zm['category'] : ''),
                         'slug' => $dSlug . '-' . $terr,
                         'url' => SITE_URL . '/zila-parishad/' . $dSlug . '/' . $terr
                     ];
@@ -1057,7 +1057,7 @@ if ($pdo) {
                     'type' => 'panchayat_samiti',
                     'title' => '🌾 Panchayat Samiti Member: ' . $sm['candidate_name'],
                     'subtitle' => '📍 Territory #' . ($sm['territory_no'] ?: '—') . ' &bull; ' . $sm['panchayat'] . ', ' . $sm['block'] . ' Block',
-                    'extra' => 'Block: ' . $sm['block'] . ' | District: ' . $sm['district'] . (!empty($sm['mobile']) ? ' | 📞 ' . $sm['mobile'] : '') . (!empty($sm['reservation_status']) ? ' | ' . $sm['reservation_status'] : ''),
+                    'extra' => 'Block: ' . $sm['block'] . ' | District: ' . $sm['district'] . (!empty($sm['reservation_status']) ? ' | ' . $sm['reservation_status'] : ''),
                     'slug' => $dSlug . '-' . $bSlug,
                     'url' => SITE_URL . '/panchayat-samiti-members?district=' . urlencode($dSlug) . '&block=' . urlencode($sm['block'])
                 ];
@@ -1098,7 +1098,7 @@ if ($pdo) {
                         'type' => 'panchayat_samiti',
                         'title' => '🌾 Panchayat Samiti Member: ' . $sm['candidate_name'],
                         'subtitle' => '📍 Territory #' . ($sm['territory_no'] ?: '—') . ' &bull; ' . $sm['panchayat'] . ', ' . $sm['block'] . ' Block',
-                        'extra' => 'Block: ' . $sm['block'] . ' | District: ' . $sm['district'] . (!empty($sm['mobile']) ? ' | 📞 ' . $sm['mobile'] : '') . (!empty($sm['reservation_status']) ? ' | ' . $sm['reservation_status'] : ''),
+                        'extra' => 'Block: ' . $sm['block'] . ' | District: ' . $sm['district'] . (!empty($sm['reservation_status']) ? ' | ' . $sm['reservation_status'] : ''),
                         'slug' => $dSlug . '-' . $bSlug,
                         'url' => SITE_URL . '/panchayat-samiti-members?district=' . urlencode($dSlug) . '&block=' . urlencode($sm['block'])
                     ];
@@ -1131,7 +1131,7 @@ if ($pdo) {
                             'type' => 'panchayat_samiti',
                             'title' => '🌾 Block Pramukh: ' . $pr['pramukh_name'],
                             'subtitle' => '🏢 ' . $pr['block'] . ' Block Panchayat Samiti',
-                            'extra' => 'District: ' . $pr['district'] . (!empty($pr['up_pramukh_name']) ? ' | Up-Pramukh: ' . $pr['up_pramukh_name'] : '') . (!empty($pr['mobile']) ? ' | 📞 ' . $pr['mobile'] : ''),
+                            'extra' => 'District: ' . $pr['district'] . (!empty($pr['up_pramukh_name']) ? ' | Up-Pramukh: ' . $pr['up_pramukh_name'] : ''),
                             'slug' => $dSlug . '-' . $bSlug,
                             'url' => getPanchayatSamitiUrl($dSlug, $bSlug)
                         ];
