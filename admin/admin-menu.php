@@ -169,9 +169,10 @@ if ($db_menu) {
         </a>
     </nav>
 
-    <div class="sidebar-footer">
-        <a href="logout.php" class="nav-link-custom text-danger" style="margin:0;">
+    <div class="sidebar-footer d-flex align-items-center justify-content-between">
+        <a href="logout.php" class="nav-link-custom text-danger m-0 p-0">
             <i class="fas fa-power-off"></i> <span>Log Out</span>
         </a>
+        <span class="badge bg-white bg-opacity-10 text-white-50 border border-white border-opacity-10 font-monospace" style="font-size:0.7rem;">v<?php echo defined('APP_VERSION') ? APP_VERSION : '3.2'; ?></span>
     </div>
 </aside>

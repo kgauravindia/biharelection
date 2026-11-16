@@ -5,6 +5,8 @@
 
 define('SITE_NAME', 'Bihar Election');
 define('SITE_TAGLINE', 'Bihar\'s Premier Election Data & Political Intelligence Platform');
+define('APP_VERSION', '3.2');
+define('SITE_VERSION', '3.2');
 
 // =========================================================================
 // Environment & Dynamic Base URL (Online Production vs Offline Localhost)

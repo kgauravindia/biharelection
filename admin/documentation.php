@@ -31,7 +31,7 @@ $pageTitle = 'Admin Documentation & Developer Knowledge Base';
                 <div>
                     <div class="d-flex align-items-center gap-2 mb-1">
                         <span class="badge bg-primary bg-opacity-10 text-primary fw-bold px-2 py-1">Internal Reference</span>
-                        <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">Version 2.6 (2026 Production)</span>
+                        <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">Version <?php echo defined('APP_VERSION') ? APP_VERSION : '3.2'; ?> (2026 Production)</span>
                     </div>
                     <h1 class="h3 fw-bold text-dark mb-1" style="font-family: 'Outfit', sans-serif;">📘 Bihar Election Admin Documentation & Knowledge Base</h1>
                     <p class="text-muted small mb-0">Comprehensive architectural manual, routing guidelines, security rules, and data operations.</p>

@@ -450,6 +450,7 @@ if ($execAvailable && $hasGitDir) {
                 <div class="d-flex align-items-center gap-2 mb-1">
                     <h1 class="h3 fw-bold mb-0" style="font-family: 'Outfit', sans-serif;">Git Push & Deployment Hub</h1>
                     <span class="badge bg-danger text-white rounded-pill px-3 py-1"><i class="fab fa-git-alt me-1"></i> Git Control</span>
+                    <span class="badge bg-dark text-white rounded-pill px-3 py-1 font-monospace">v<?php echo defined('APP_VERSION') ? APP_VERSION : '3.2'; ?></span>
                 </div>
                 <p class="text-muted mb-0">Push codebase updates, sync data tables, and manage GitHub deployment directly from admin.</p>
             </div>

@@ -104,7 +104,7 @@ require_once __DIR__ . '/config.php';
 
             <!-- Bottom Copyright & Social Icons Row -->
             <div class="pt-3 mt-3 border-top border-white border-opacity-10 d-flex flex-wrap justify-content-between align-items-center gap-3 small text-white-50">
-                <div>&copy; <?php echo date('Y'); ?> Bihar Election. All Rights Reserved. &bull; Non-Government Civic Information Platform &bull; <a href="<?php echo SITE_URL; ?>/admin/login.php" class="text-white-50 text-decoration-none footer-admin-link"><i class="bi bi-shield-lock"></i> Admin Portal</a></div>
+                <div>&copy; <?php echo date('Y'); ?> Bihar Election. All Rights Reserved. &bull; Non-Government Civic Information Platform &bull; <span class="badge bg-secondary bg-opacity-50 text-white-50 font-monospace">v<?php echo defined('APP_VERSION') ? APP_VERSION : '3.2'; ?></span> &bull; <a href="<?php echo SITE_URL; ?>/admin/login.php" class="text-white-50 text-decoration-none footer-admin-link"><i class="bi bi-shield-lock"></i> Admin Portal</a></div>
                 <div class="d-flex gap-2 align-items-center">
                     <a href="<?php echo WHATSAPP_CHANNEL_URL; ?>" target="_blank" class="footer-social-btn social-btn-whatsapp" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
                     <a href="<?php echo TELEGRAM_URL; ?>" target="_blank" class="footer-social-btn social-btn-telegram" title="Telegram"><i class="bi bi-telegram"></i></a>
@@ -198,7 +198,7 @@ require_once __DIR__ . '/config.php';
 
     <!-- Bootstrap 5.3 JavaScript Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="<?php echo SITE_URL; ?>/assets/js/app.js"></script>
+    <script src="<?php echo SITE_URL; ?>/assets/js/app.js?v=<?php echo defined('APP_VERSION') ? APP_VERSION : '3.2'; ?>"></script>
 
     <script>
     async function revealPhoneNumber(btn) {

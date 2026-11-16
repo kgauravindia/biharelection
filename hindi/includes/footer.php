@@ -110,7 +110,7 @@ require_once __DIR__ . '/functions.php';
             <!-- Bottom Copyright & Navigation Strip -->
             <div class="border-top border-secondary border-opacity-25 pt-4 mt-2 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 text-center text-md-start">
                 <div class="small text-white-50">
-                    &copy; <?php echo date('Y'); ?> <strong>BiharElection.com</strong> (बिहार इलेक्शन). सर्वाधिकार सुरक्षित।
+                    &copy; <?php echo date('Y'); ?> <strong>BiharElection.com</strong> (बिहार इलेक्शन). सर्वाधिकार सुरक्षित। <span class="badge bg-secondary bg-opacity-50 text-white-50 font-monospace">v<?php echo defined('APP_VERSION') ? APP_VERSION : '3.2'; ?></span>
                 </div>
                 <div class="d-flex flex-wrap justify-content-center gap-3 small text-white-50">
                     <a href="<?php echo hindi_base_url('privacy-policy'); ?>" class="text-white-50 text-decoration-none hover-underline">गोपनीयता नीति</a>
@@ -129,6 +129,6 @@ require_once __DIR__ . '/functions.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
     <!-- Custom Platform Script -->
-    <script src="<?php echo SITE_URL; ?>/assets/js/main.js?v=2.4"></script>
+    <script src="<?php echo SITE_URL; ?>/assets/js/app.js?v=<?php echo defined('APP_VERSION') ? APP_VERSION : '3.2'; ?>"></script>
 </body>
 </html>
