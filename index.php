@@ -56,7 +56,7 @@ require_once __DIR__ . '/header.php';
                         type="text" 
                         id="globalSearchInput" 
                         class="search-input" 
-                        placeholder="Search Village, Mukhiya, Sarpanch, MLA, MP, MLC, District, AC..."
+                        placeholder="Search MLC, MLA, MP, Mukhiya, Sarpanch, Ward, Panch, Zila Parishad, Samiti, Village, Panchayat, Block..."
                         autocomplete="off"
                         aria-label="Search Bihar election leaders and administrative units"
                     >

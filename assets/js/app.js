@@ -81,6 +81,26 @@ function fetchSearchData(query) {
                     icon = '⚖️';
                     tag = 'SARPANCH';
                     tagStyle = 'background: #ede9fe; color: #6b21a8; font-weight: 700;';
+                } else if (item.type === 'ward') {
+                    icon = '🗳️';
+                    tag = 'WARD MEMBER';
+                    tagStyle = 'background: #e0f2fe; color: #0369a1; font-weight: 700;';
+                } else if (item.type === 'panch') {
+                    icon = '⚖️';
+                    tag = 'GRAM PANCH';
+                    tagStyle = 'background: #f3e8ff; color: #7e22ce; font-weight: 700;';
+                } else if (item.type === 'zila_parishad') {
+                    icon = '🏛️';
+                    tag = 'ZILA PARISHAD';
+                    tagStyle = 'background: #fdf2f8; color: #be185d; font-weight: 700;';
+                } else if (item.type === 'panchayat_samiti') {
+                    icon = '🌾';
+                    tag = 'SAMITI';
+                    tagStyle = 'background: #ecfdf5; color: #047857; font-weight: 700;';
+                } else if (item.type === 'panchayat') {
+                    icon = '🏡';
+                    tag = 'PANCHAYAT';
+                    tagStyle = 'background: #fef9c3; color: #a16207; font-weight: 700;';
                 } else if (item.type === 'village') {
                     icon = '🏘️';
                     tag = 'VILLAGE';
